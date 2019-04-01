@@ -1,0 +1,14 @@
+<TMPL_IF HOME_IMAGES_{{SECTION_ID}}>
+       <TMPL_LOOP HOME_IMAGES_{{SECTION_ID}}>
+	      <script>
+		     var hi_temp=String('<TMPL_VAR DATA_BINDER>').split(',');
+		     
+		     if (hi_temp[1]=='href') {			
+			   G.$(hi_temp[0]).href='<TMPL_VAR CONTENT_SRC>'; 
+		     }else{		     
+		           G.$('<TMPL_VAR DATA_BINDER>').src='<TMPL_VAR CONTENT_SRC>';
+		     }
+		     
+	      </script>
+       </TMPL_LOOP>
+</TMPL_IF> 

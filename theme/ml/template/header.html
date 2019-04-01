@@ -1,0 +1,58 @@
+      <!-- Basic -->
+      <title>
+            <TMPL_IF PAGE_TITLE><TMPL_VAR PAGE_TITLE><TMPL_ELSE><TMPL_IF PARENT_TITLE><TMPL_VAR PARENT_TITLE><TMPL_ELSE><TMPL_VAR DEFAULT_TITLE></TMPL_IF></TMPL_IF>
+            <TMPL_IF PAGE_CONTENT_TITLE> - <TMPL_VAR PAGE_CONTENT_TITLE></TMPL_IF>         
+      </title>
+        
+      <!-- Define Charset -->
+      <meta charset="utf-8">
+    
+      <!-- Responsive Metatag -->
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <!-- keyword -->
+      <meta name="keywords" content="<TMPL_IF PAGE_KEYWORDS><TMPL_VAR PAGE_KEYWORDS><TMPL_ELSE><TMPL_IF PARENT_KEYWORDS><TMPL_VAR PARENT_KEYWORDS><TMPL_ELSE><TMPL_VAR DEFAULT_KEYWORDS></TMPL_IF></TMPL_IF>">  
+      <!-- Page Description and Author -->
+      <meta name="description" content="<TMPL_IF PAGE_DESCRIPTION><TMPL_VAR PAGE_DESCRIPTION><TMPL_ELSE><TMPL_IF PARENT_DESCRIPTION><TMPL_VAR PARENT_DESCRIPTION><TMPL_ELSE><TMPL_VAR DEFAULT_DESCRIPTION></TMPL_IF></TMPL_IF>">
+      <meta name="author" content="Webstars">
+      <meta name="revisit-after" content="2 days">
+      <meta name="contact" content="<TMPL_VAR PRIMARY_MAIL>">
+      <meta name="generator" content="Fibenis">
+
+      <link rel="icon" id="favicon" href="<TMPL_VAR TERMINAL_PATH>images/favicon_1.png" type="image/png">     
+      
+      <TMPL_VAR CORE_HEADER>
+          
+      <!--- Margo CSS Styles --->
+      <link rel="stylesheet" type="text/css" href="<TMPL_VAR THEME_ROUTE>/css/style.css" media="screen">
+    
+      <!--- Responsive CSS Styles --->
+      <link rel="stylesheet" type="text/css" href="<TMPL_VAR THEME_ROUTE>/css/responsive.css" media="screen">
+    
+      <!--- Css3 Transitions Styles --->
+      <link rel="stylesheet" type="text/css" href="<TMPL_VAR THEME_ROUTE>/css/animate.css" media="screen">
+      
+      <!--- Slicknav --->
+      <link rel="stylesheet" type="text/css" href="<TMPL_VAR THEME_ROUTE>/css/slicknav.css" media="screen">
+
+      <!--- Addon --->
+      <TMPL_IF COACH_THEME_BLEND>
+          <link rel="stylesheet" type="text/css" href="<TMPL_VAR THEME_ROUTE>/blend/<TMPL_VAR COACH_THEME_BLEND>.css" media="screen">
+      <TMPL_ELSE>
+          <link rel="stylesheet" type="text/css" href="<TMPL_VAR THEME_ROUTE>/blend/<TMPL_VAR THEME_BLEND>.css" media="screen">
+      </TMPL_IF>
+  
+      <!--- Margo Lite JS --->
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/js/jquery.migrate.js"></script>
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/js/modernizrr.js"></script>
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/asset/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/js/jquery.fitvids.js"></script>
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/js/owl.carousel.min.js"></script>      
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/js/jquery.appear.js"></script>
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/js/count-to.js"></script>
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/js/jquery.slicknav.js"></script>
+      <script type="text/javascript" src="<TMPL_VAR THEME_ROUTE>/js/form-validator.min.js"></script>
+      <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+      <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    
+    
+      <!---<TMPL_VAR LIB_PATH><TMPL_VAR CURRENT_YEAR><TMPL_VAR IS_HOME><TMPL_VAR IS_PAGE>--->

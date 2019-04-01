@@ -1,0 +1,36 @@
+<TMPL_IF HOME_TAB_TITLE_{{SECTION_ID}}>
+	   <section id="{{SECTION_ID}}" class="brdr_bottom">
+		      <div class="container">
+				 
+				 <TMPL_IF TAB_HEADING_{{SECTION_ID}}>
+					    <TMPL_LOOP TAB_HEADING_{{SECTION_ID}}>
+						       <div class="big-title text-center " data-animation="fadeInDown" data-animation-delay="01">
+								  <TMPL_IF HEADING><div>&nbsp;</div><div>&nbsp;</div><h1><TMPL_VAR HEADING></h1></TMPL_IF>
+								  <TMPL_IF SUB_HEADING><p class="title-desc"><TMPL_VAR SUB_HEADING></p></TMPL_IF>
+						       </div>
+					    </TMPL_LOOP>
+				 </TMPL_IF>
+				 
+				 <ul class="nav nav-tabs" role="tablist">
+					    <TMPL_LOOP HOME_TAB_TITLE_{{SECTION_ID}}>
+						       <li role="presentation" class="<TMPL_IF __first__>active</TMPL_IF>" aria-expanded="true" >
+								  <a href="#tab_<TMPL_VAR __COUNTER__>" aria-controls="tab_<TMPL_VAR __COUNTER__>" role="tab" data-toggle="tab">
+								     <TMPL_VAR TAB_TITLE>
+								  </a>
+						       </li>
+					    </TMPL_LOOP>
+				 </ul>
+				 
+				 <div class="tab-content">
+					    <TMPL_LOOP HOME_TAB_CONTENT_{{SECTION_ID}}>
+						       <div role="tabpanel" class="tab-pane <TMPL_IF __first__>active</TMPL_IF>" id="tab_<TMPL_VAR __COUNTER__>">					
+								  <div class="row col-md-12">				
+									     <p><TMPL_VAR TAB_CONTENT></p>
+									     <div>&nbsp;</div>
+								  </div>
+						       </div>
+					   </TMPL_LOOP>
+				 </div>
+		      </div>
+	   </section>
+</TMPL_IF>

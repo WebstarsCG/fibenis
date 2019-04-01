@@ -1,0 +1,1208 @@
+
+    <div  id="margo_loader">
+	  <div class="spinner">
+	    <div class="dot1"></div>
+	   <div class="dot2"></div>
+	  </div>
+    </div>
+	
+    
+    <!-- Start Header Section -->
+    <div class="hidden-header"></div>
+    <header class="clearfix">
+
+      <!-- Start Top Bar -->
+      <div class="top-bar">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- Start Contact Info -->
+              <ul class="contact-details">
+		
+		<TMPL_IF IS_HOME>
+		  
+		  
+		  <li><a href="#" class=" txt_size_14 b"><i class="fa fa-map-marker">&nbsp;</i><span id="menu_org_name"><TMPL_VAR HOME_ADD_NAME></span>&nbsp;&nbsp; </a></li>              
+		  <li id="menu_email_area"><a href="#" class=" txt_size_14"><i class="fa fa-send clr_pri">&nbsp;</i><span id="menu_email"><TMPL_VAR HOME_ADD_EMAIL></span>&nbsp;</a></li>		                
+		  <li id="menu_phone_area"><a href="#"  class=" txt_size_14"><i class="fa fa-phone clr_pri">&nbsp;</i><span id="menu_phone"><TMPL_VAR HOME_ADD_PHONE></span>&nbsp; </a></li>              
+		  <li id="menu_mobile_area"><a href="#"  class=" txt_size_14"><i class="fa fa-mobile clr_pri animated <TMPL_IF IS_HOME> infinite </TMPL_IF> bounceIn">&nbsp;</i><span id="menu_mobile"><TMPL_VAR HOME_ADD_MOBILE></span></a></li>
+		
+		</TMPL_IF>
+		 
+              </ul>
+              <!-- End Contact Info -->
+            </div>
+            
+          </div>
+          <!-- .row -->
+        </div>
+        <!-- .container -->
+      </div>
+      <!-- .top-bar -->
+      <!-- End Top Bar -->
+
+
+      <!-- Start  Logo & Naviagtion  -->
+      
+      <div class="navbar navbar-default navbar-top">
+        <div class="container">
+          <div class="navbar-header">
+            <!-- Stat Toggle Nav Link For Mobiles -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <i class="fa fa-bars"></i>
+            </button>
+            <!-- End Toggle Nav Link For Mobiles -->
+            <a class="navbar-brand" href="?home">
+              <img id="logo" alt="Home" src="<TMPL_VAR COACH_PATH>/<TMPL_VAR COACH_NAME>/images/logo_1.png"  class="img-responsive">
+            </a>
+          </div>
+          <div class="navbar-collapse collapse">
+            
+            <!-- Start Navigation List -->
+            <ul class="nav navbar-nav navbar-right">
+	      
+		    <TMPL_IF USER_SAD>
+			
+			<!--<li ><a  href="?dx=ps_connection"> <i class="fa fa-refresh"></i>&nbsp;
+			            PubSub
+			      </a>
+			</li>
+			
+			<li ><a  href="?d=entity_dash_board"> <i class="fa fa-th-list"></i>&nbsp;
+			            PublishedDataSet
+			      </a>
+			</li>
+			
+			
+			<li><a>|</a></li>
+			
+			
+			<li ><a  href="?d=entity_dash_board"> <i class="fa fa-download"></i>&nbsp;
+			            Download Client Certificate
+			      </a>
+			</li>
+			
+			<li><a>|</a></li>-->
+			
+			<li ><a  href="?d=entity_dash_board"> <i class="fa fa-pie-chart"></i>&nbsp;
+			Entity Dash&nbsp;</a></li>		    			
+			
+			<!---EA--->
+			<li>
+			    
+			    <a href="#"
+			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
+			      >
+			        <i class="fa fa-clone"></i>
+			        &nbsp;Entity Setup&nbsp;<span class="caret"></span>
+			    </a>
+			    
+			    <ul class="dropdown-menu" role="menu">
+				   <li> <a href="?d=entity">Entity</a></li>
+				   <li> <a href="?d=entity_attribute">Entity Attr.</a></li>
+				   <li> <a href="?d=external_attribute">External Attr.</a></li>
+				   <li> <a href="?d=entity_child">Entity Child</a></li>
+				   <li> <a href="?d=entity_child_base">Entity Child Base</a></li>
+				   <li> <a href="?d=entity_key_value">Entity Key Value</a></li>
+				   <li> <a href="?d=entity_grouping">Entity Grouping</a></li>
+				   <li> <a href="?d=master_panel">Master Panel</a></li>
+				   
+				   
+				 
+			    </ul>
+			    
+			</li>
+			
+			
+			<!---Page--->
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				&nbsp;
+				<i class="fa fa-file"></i>
+				&nbsp;Page&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			    <ul class="dropdown-menu" role="menu">
+				    <li><a href="?d=coach_eav">Coach</a></li>
+				    <li><a href="?d=cms_page_eav">Page Info</a></li>
+				    <li><a href="?d=page_addon">Page Addon</a></li>
+				    <li><a href="?d=page_addon_attribute">Page Addon Attribute</a></li>
+				    <li><a href="?d=page_layout">Page Layout</a></li>
+				    <li><a href="?d=page_template">Template</a></li>
+				    <li><a href="?d=create_theme">Theme</a></li>
+			    </ul>
+			    
+			</li>
+			
+			<!---EA--->
+			<li>
+			    
+			    <a href="#"
+			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
+			      >
+			        <i class="fa fa-clone"></i>
+			        &nbsp;Others&nbsp;<span class="caret"></span>
+			    </a>
+			    
+			    <ul class="dropdown-menu" role="menu">
+				   <li><a href="?d=contact_eav">Contact</a></li>
+				   <li><a href="?dx=demo__flat">Demo Flat</a></li>
+				   <li><a href="?dx=demo__eav">Demo EAV</a></li>
+				   <li> <a href="?d=issue">Issue</a></li>
+			    </ul>
+			    
+			</li>
+			
+			
+			
+			
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				&nbsp;
+				<i class="fa fa-user"></i>
+				&nbsp;Setup&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			    <ul class="dropdown-menu" role="menu">
+			          <li><a href="?d=def">App Definations</a></li>
+				   <li><a href="?d=log_action">Log Action</a></li>
+			          <li><a href="?d=user_neutral">User Neutral</a></li>
+				  <li><a href="?d=user_role">User Role</a></li>
+				  <li><a href="?d=user_role_permission">User Role Permissions</a></li>
+			    </ul>
+			    
+			</li>
+			
+			
+			
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+				&nbsp;Log&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			    <ul class="dropdown-menu" role="menu">
+				    <li> <a href="?d=status">Status Log</a></li>				    				
+				    <li> <a href="?d=sys_log">Sys Log</a></li>
+			    </ul>
+			    
+			</li>
+			
+			<!---Setup--->
+			<li>			    
+			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>
+				<span class="caret"></span>
+			    </a>			  
+			    <ul class="dropdown-menu" role="menu">
+				<li><a href="#" data-toggle="modal" data-target="#my-account">
+				    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+				    &nbsp;&nbsp;My Account
+				     </a>
+				</li>
+				<li class="divider"></li>
+				<li><a href="#" data-toggle="modal" data-target="#myModalChangePassword">
+				    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+				    &nbsp;&nbsp;Change Password
+				    </a>
+				</li>
+			    </ul>			  
+			</li>
+			
+			
+			
+		    </TMPL_IF>	 <!--- end of super admin---> 	
+			
+		    
+		     <!--- Dynamic Menu--->
+		     
+		     <TMPL_UNLESS USER_ADM>
+			
+			 <TMPL_UNLESS USER_SAD>
+		     
+			      <TMPL_LOOP PARENT_MENU>
+					 
+				 <TMPL_IF CHILD_MENU> 
+					<!--<TMPL_VAR menu_code>-->	
+				     <li>
+					 
+					 <a  href="#" title="<TMPL_VAR MENU_TITLE>"
+					     class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">			       
+					     <TMPL_VAR MENU_NAME>&nbsp;<span class="caret"></span>
+					 </a>
+					 
+					 <ul class="dropdown-menu" role="menu">
+					     
+					     <TMPL_LOOP CHILD_MENU>
+						 <li>
+						     <a href="<TMPL_VAR MENU_HREF>">
+							 <span class="<TMPL_VAR css_class>" aria-hidden="true"></span>
+							 &nbsp;&nbsp;<TMPL_VAR MENU_NAME> 
+							 <!-- <TMPL_VAR no_data>  -->
+						     </a>
+						 </li>
+					     </TMPL_LOOP>
+							  
+					 </ul> 
+				     </li>
+					 
+				 <TMPL_ELSE>
+				     <li ><a class="page-scroll"  id="<TMPL_VAR menu_code>" href="<TMPL_VAR menu_href>"><TMPL_VAR menu_name>&nbsp;</a></li>
+				 </TMPL_IF>
+						 
+			      </TMPL_LOOP>
+			      
+			      <!--- Dynamic Content--->
+			      
+				  <TMPL_IF is_directory>
+				       <li id="directory">
+					 <a href="?d=contact_card">
+					 <i class="fa fa-book clr_sec" aria-hidden="true">&nbsp;&nbsp;</i>
+					   Directory</a>
+				   </li>
+				 </TMPL_IF> 
+				 
+				  <TMPL_IF is_news_events> 
+				       <li id="news_events">
+					     <a href="?d=news_events">
+					     <i class="fa fa-calendar clr_sec" aria-hidden="true">&nbsp;&nbsp;</i>Events</a>
+				       </li>
+				  </TMPL_IF>   
+				
+				 <TMPL_IF is_blog> 
+				    <li id="blog">
+					  <a href="?d=blog">
+					  <i class="fa fa-pencil clr_sec" aria-hidden="true">&nbsp;&nbsp;</i>Blog</a>
+				    </li>
+				  </TMPL_IF>
+				 
+				 <TMPL_IF is_gallery>
+				    <li id="gallery">
+					  <a href="?d=gallery_view">
+					  <i class="fa fa-image clr_sec" aria-hidden="true">&nbsp;&nbsp;</i>Gallery</a>
+				    </li>
+				 </TMPL_IF>
+				 
+				 <!--<li><a href="#" data-toggle="modal" data-target="#myModalSignIn"><b><i class="fa fa-key">&nbsp;</i>Sign In</b></a>-->
+				  
+			</TMPL_UNLESS>
+			 
+			 
+			 
+		     </TMPL_UNLESS>
+		    
+		 
+		    
+		    
+		    <!---Admin--->  
+		    <TMPL_IF USER_SYS_ADM>
+			
+			    <!--<li id="my_tree"><a href="?d_series=report_desk">Reports</a></li>-->
+			
+			    <li>				
+				<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				    
+				    <i class="fa fa-cubes" aria-hidden="true"></i>
+				    &nbsp;CMS&nbsp;
+				    <span class="caret"></span>
+				</a>
+				    
+				<ul class="dropdown-menu" role="menu">
+				    
+					<li>
+					    <a href="?d=cms_page_eav">
+						<i class="fa fa-file-code-o" aria-hidden="true"></i>
+						Pages
+					    </a>
+					</li>					
+									    
+					
+					<li><a href="?d=cms_blog">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+						Blog
+					    </a>
+					</li>
+					
+					<li>
+					    <a href="?d=blog_category">
+						<i class="fa fa-plus-square" aria-hidden="true"></i>
+						Blog Category
+					    </a>
+					</li>					
+					
+					
+					<li>
+					    <a href="?d=cms_news_events">
+						<i class="fa fa-calendar" aria-hidden="true"></i>
+						News & Events
+					    </a>
+					</li>
+					
+					<li>
+					    <a href="?d=news_event_type">
+						<i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+						Events Type
+					    </a>
+					</li>					
+					
+					
+					<li>
+					    <a href="?d=contact">
+						<i class="fa fa-book" aria-hidden="true"></i>
+						Directory
+					    </a>
+					</li>
+					
+					
+					
+					<li>
+					    <a href="?d=contact_group">
+						<i class="fa fa-group" aria-hidden="true"></i>
+						Contact Group
+					    </a>
+					</li>
+					
+				       
+				       <li>
+					    <a href="?d=plug_gallery">
+						<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+						Gallery 
+					    </a>
+					</li>
+				       
+				           <li>
+					    <a href="?d=plug_image">
+						<i class="fa fa-file-image-o" aria-hidden="true"></i>
+						Site Images
+					    </a>
+				       </li>
+				
+				    
+					  
+				       <li>
+					    <a href="?d=menu_set">
+						<i class="fa fa-align-justify" aria-hidden="true"></i>
+						Manage Menu
+					    </a>
+				       </li>
+				       
+				       <li>
+					    <a href="?d=page_meta">
+						<i class="fa fa-align-justify" aria-hidden="true"></i>
+						Page Meta Updates
+					    </a>
+				       </li>
+					
+				</ul>
+			    </li>
+				
+				
+			    <TMPL_IF ADDON_TYPE>   
+			      <li>				
+				  <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">				    
+				      <i class="fa fa-cubes" aria-hidden="true"></i>
+				      &nbsp;Page Addon&nbsp;
+				      <span class="caret"></span>
+				  </a>
+				      
+				  <ul class="dropdown-menu" role="menu">				    
+					  <TMPL_LOOP ADDON_TYPE>					
+					    <li>
+						<a href='?d=cms_page_eav&default_addon={"at":"<TMPL_VAR ID>"}'>
+						    <TMPL_VAR SN>
+						</a>
+					    </li>					
+					  </TMPL_LOOP>					
+				  </ul>
+			      </li>
+			    </TMPL_IF>
+				
+			    <!--<li> <a href="?d=one_page&default_addon=mop_base">One Page</a></li>
+			    <li> <a href="?d=one_page&default_addon=fibenis">Fibenis</a></li>-->
+			    <li><a href="?d=coach">Coach</a></li>
+			    <li>
+				
+				<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				    
+				    <i class="fa fa-wrench" aria-hidden="true"></i>
+				    &nbsp;Home Setup&nbsp;
+				    <span class="caret"></span>
+				</a>
+				       <ul class="dropdown-menu" role="menu">
+					
+					<li> <a href="?d=about_us"> About Us</a></li>
+					
+					<li> <a href="?d=accordion"> Accordion</a></li>
+					
+					<li> <a href="?d=action_box">Action Box</a></li>
+					
+					<li> <a href="?d=home_address">Contact</a></li>
+					
+					<li> <a href="?d=client">Home Client</a></li>
+				   
+					<li> <a href="?d=counter">Home Counter</a></li>
+				   
+		  			<li> <a href="?d=home_banner">Home Banner</a></li>
+					
+					<li> <a href="?d=portfolio">Home Portfolio</a></li>
+				  
+  				        <li> <a href="?d=home_salient_features">Home Salient Features</a></li>
+				       
+				        <li> <a href="?d=home_scroller">Home Scroller</a></li>
+				
+					<li> <a href="?d=tab">Tab</a></li>
+					
+				        <li> <a href="?d=team">Team</a></li>
+				   
+				        <li> <a href="?d=testimonial">Testimonial</a></li>
+					
+					<li> <a href="?d=timeline">Timeline</a></li>
+					
+				       </ul>
+				</li>			        
+			    
+			    <li class="dropdown">				
+				
+				<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+				    &nbsp;Log&nbsp;<span class="caret"></span>
+				</a>
+				
+				<ul class="dropdown-menu" role="menu">
+				    <li><a href="?d_series=status_detail">Status Log</a></li>
+				    <li><a href="?d_series=view_log">Profile View Log</a></li>					    
+				    <li><a href="?d_series=sys_log">Sys Log</a></li>
+				</ul>
+				
+			    </li>
+			    
+			    <!--- Admin Info--->
+			    <li class="dropdown">
+				
+				<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				  <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+				  &nbsp;<TMPL_VAR USER_NAME>&nbsp;<span class="caret"></span>
+				</a>
+			      
+				<ul class="dropdown-menu" role="menu">				 				    
+				    <li>
+					<a href="#" data-toggle="modal" data-target="#myModalChangePassword">
+					    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+					    &nbsp;&nbsp;Change Password
+					</a>
+				    </li>				 
+				</ul>
+			   </li>
+			    
+		    </TMPL_IF>  <!--- end of SYSTEM admin--->
+		    
+		    
+		    <TMPL_IF USER_ADM>
+		      
+		      <li ><a  href="?d=entity_dash_board"> <i class="fa fa-pie-chart"></i>&nbsp;
+			Entity Dash&nbsp;</a></li>		    			
+			
+			
+			<!---Page--->
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				&nbsp;
+				<i class="fa fa-file"></i>
+				&nbsp;Page&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			    <ul class="dropdown-menu" role="menu">
+				    <li><a href="?d=coach_eav">Coach</a></li>
+				    <li><a href="?d=cms_page_eav">Page Info</a></li>
+				    <li><a href="?d=page_addon">Page Addon</a></li>
+				    <li><a href="?d=page_layout">Page Layout</a></li>
+			    </ul>
+			    
+			</li>
+			
+			<!---EA--->
+			<li>
+			    
+			    <a href="#"
+			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
+			      >
+			        <i class="fa fa-clone"></i>
+			        &nbsp;Others&nbsp;<span class="caret"></span>
+			    </a>
+			    
+			    <ul class="dropdown-menu" role="menu">
+				   <li><a href="?d=contact_eav">Contact</a></li>
+				   <li><a href="?dx=demo__flat">Demo Flat</a></li>
+				   <li><a href="?dx=demo__eav">Demo EAV</a></li>
+				   <li> <a href="?d=issue">Issue</a></li>
+			    </ul>
+			    
+			</li>
+					
+		      <li>			    
+			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>
+				<span class="caret"></span>
+			    </a>			  
+			    <ul class="dropdown-menu" role="menu">
+				<li><a href="#" data-toggle="modal" data-target="#my-account">
+				    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+				    &nbsp;&nbsp;My Account
+				     </a>
+				</li>
+				
+				<li><a href="#" data-toggle="modal" data-target="#myModalChangePassword">
+				    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+				    &nbsp;&nbsp;Change Password
+				    </a>
+				</li>
+			    </ul>			  
+		      </li>	
+			
+		    </TMPL_IF> <!--- End of Member A --->
+		    
+		    
+		    <!--- Base User---> 
+		    <TMPL_IF USER_BAS>
+		      
+		      <li><a>|</a></li>
+		      <li><a href="?dx=demo_flat">
+			  <i class="fa fa-lightbulb-o txt_size_1_2em clr_pri" aria-hidden="true">&nbsp;</i>
+			  Sample</a>
+		      </li>		
+		      <li>			    
+			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>
+				<span class="caret"></span>
+			    </a>			  
+			    <ul class="dropdown-menu" role="menu">
+				<li><a href="#" data-toggle="modal" data-target="#my-account">
+				    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+				    &nbsp;&nbsp;My Account
+				     </a>
+				</li>
+				
+				<!--<li><a href="?dx=my_profile">
+				    <i class="fa fa-user" aria-hidden="true">&nbsp;</i>
+				    &nbsp;&nbsp;My Profile
+				     </a>
+				</li>-->
+				
+				<li><a href="#" data-toggle="modal" data-target="#myModalChangePassword">
+				    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+				    &nbsp;&nbsp;Change Password
+				    </a>
+				</li>
+			    </ul>			  
+		      </li>	
+			
+		    </TMPL_IF> <!--- End of Member A --->	
+		     
+		    <!---Member B--->  
+		    <TMPL_IF USER_MEB>						       
+			   
+		    </TMPL_IF>	
+		     
+		     
+		    <!---Inactive User---> 
+		    <TMPL_IF USER_MED>
+			  	    			    
+		    </TMPL_IF>
+		    
+		     <TMPL_UNLESS NO_USER>
+			   <li>
+			      <a href="JavaScript:get_out();" class="txt_clr_red"
+				 rel="txtTooltip" title="Log Out" data-toggle="tooltip" data-placement="bottom"
+				 >
+			      
+				 <button class="btn btn-xs btn-danger" type="button">			
+				    <span class="glyphicon glyphicon-log-out pad_5" aria-hidden="true"></span>
+				 </button>
+			      </a>
+			   </li>
+		     </TMPL_UNLESS>		     
+		     
+		    <!---No User--->
+		    
+		    <TMPL_IF NO_USER>
+			
+			
+		      
+		      <TMPL_IF IS_OPEN>
+			  
+			   
+				    <li>
+					<a href="#" data-toggle="modal" data-target="#myModalSignIn" >
+					    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+					    &nbsp;&nbsp;Sign In
+					</a>
+				    </li>
+				  <li>
+					<a href="#" data-toggle="modal" data-target="#myModal_signUp">
+					    <span class="glyphicon glyphicon-edit" aria-hidden="true">
+					    </span>&nbsp;&nbsp;Sign Up
+					</a>
+				    </li>	
+				
+		      </TMPL_IF>
+					
+		    </TMPL_IF>
+		    
+		    
+		     <li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+            </ul>
+            <!-- End Navigation List -->
+          </div>
+        </div>
+
+       
+        <!-- Mobile Menu Start -->
+        <ul class="wpb-mobile-menu">	 
+	  
+	   <TMPL_IF USER_SAD>		      
+		      
+		        <li ><a  href="?d=entity_dash_board"> <i class="fa fa-pie-chart"></i>&nbsp;
+			Entity Dash&nbsp;</a></li>		    			
+			<!---EA--->
+			<li>
+			    
+			    <a href="#"
+			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
+			      >
+			        <i class="fa fa-clone"></i>
+			        &nbsp;Entity Setup&nbsp;<span class="caret"></span>
+			    </a>
+			    
+			    <ul class="dropdown-menu" role="menu">
+				   <li> <a href="?d=entity">Entity</a></li>
+				   <li> <a href="?d=entity_attribute">Entity Attr.</a></li>
+				   <li> <a href="?d=external_attribute">External Attr.</a></li>
+				   <li> <a href="?d=entity_child">Entity Child</a></li>
+				   <li> <a href="?d=entity_child_base">Entity Child Base</a></li>
+				   <li> <a href="?d=entity_key_value">Entity Key Value</a></li>
+				   <li> <a href="?d=entity_child_apex">Entity Child Apex</a></li>
+				   
+				 
+			    </ul>
+			    
+			</li>
+			
+			
+			<!---EA--->
+			<li>
+			    
+			    <a href="#"
+			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
+			      >
+			        <i class="fa fa-clone"></i>
+			        &nbsp;Others&nbsp;<span class="caret"></span>
+			    </a>
+			    
+			    <ul class="dropdown-menu" role="menu">
+				   <li> <a href="?d=time_range">Time Range HMS</a></li>
+				   <li> <a href="?d=issue">Issue</a></li>
+			    </ul>
+			    
+			</li>
+			
+					<!---Log--->
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				&nbsp;
+				<i class="fa fa-file"></i>
+				&nbsp;Page&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			    <ul class="dropdown-menu" role="menu">
+				    <li><a href="?d=def">App Definations</a></li>
+				    <li><a href="?d=coach">Coach</a></li>
+				    <li><a href="?d=cms_page_eav">Page Info</a></li>
+				    <li><a href="?d=page_layout">Page Layout</a></li>
+				    <li><a href="?d=page_addon">Page Addon</a></li>
+			    </ul>
+			    
+			</li>
+			
+			
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				&nbsp;
+				<i class="fa fa-user"></i>
+				&nbsp;Setup&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			    <ul class="dropdown-menu" role="menu">
+			          <li><a href="?d=user_neutral">User Neutral</a></li>
+				  <li><a href="?d=user_role">User Role</a></li>
+				  <li><a href="?d=user_role_permission">User Role Permissions</a></li>
+			    </ul>
+			    
+			</li>
+			
+			
+			
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+				&nbsp;Log&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			    <ul class="dropdown-menu" role="menu">
+				    <li> <a href="?d_series=status_detail">Status Log</a></li>				    				
+				    <li> <a href="?d_series=sys_log">Sys Log</a></li>
+			    </ul>
+			    
+			</li>
+			
+			<!---Setup--->
+			<li>			    
+			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>
+				<span class="caret"></span>
+			    </a>			  
+			    <ul class="dropdown-menu" role="menu">
+				<li><a href="#" data-toggle="modal" data-target="#my-account">
+				    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+				    &nbsp;&nbsp;My Account
+				     </a>
+				</li>
+				<li class="divider"></li>
+				<li><a href="#" data-toggle="modal" data-target="#myModalChangePassword">
+				    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+				    &nbsp;&nbsp;Change Password
+				    </a>
+				</li>
+			    </ul>			  
+			</li>
+			
+			
+			
+		    </TMPL_IF>	 <!--- end of super admin---> 	
+			
+		    
+		     <!--- Dynamic Menu--->
+		     
+		     <TMPL_UNLESS USER_ADM>
+			
+			 <TMPL_UNLESS USER_SAD>
+		     
+			      <TMPL_LOOP PARENT_MENU>
+					 
+				 <TMPL_IF CHILD_MENU> 
+					<!--<TMPL_VAR menu_code>-->	
+				     <li>
+					 
+					 <a  href="#" title="<TMPL_VAR MENU_TITLE>"
+					     class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">			       
+					     <TMPL_VAR MENU_NAME>&nbsp;<span class="caret"></span>
+					 </a>
+					 
+					 <ul class="dropdown-menu" role="menu">
+					     
+					     <TMPL_LOOP CHILD_MENU>
+						 <li>
+						     <a href="<TMPL_VAR MENU_HREF>">
+							 <span class="<TMPL_VAR css_class>" aria-hidden="true"></span>
+							 &nbsp;&nbsp;<TMPL_VAR MENU_NAME> 
+							 <!-- <TMPL_VAR no_data>  -->
+						     </a>
+						 </li>
+					     </TMPL_LOOP>
+							  
+					 </ul> 
+				     </li>
+					 
+				 <TMPL_ELSE>
+				     <li ><a class="page-scroll"  id="<TMPL_VAR menu_code>" href="<TMPL_VAR menu_href>"><TMPL_VAR menu_name>&nbsp;</a></li>
+				 </TMPL_IF>
+						 
+			      </TMPL_LOOP>
+			      
+			      <!--- Dynamic Content--->
+			      
+				  <TMPL_IF is_directory>
+				       <li id="directory">
+					 <a href="?d=contact_card">
+					 <i class="fa fa-book clr_sec" aria-hidden="true">&nbsp;&nbsp;</i>
+					   Directory</a>
+				   </li>
+				 </TMPL_IF> 
+				 
+				  <TMPL_IF is_news_events> 
+				       <li id="news_events">
+					     <a href="?d=news_events">
+					     <i class="fa fa-calendar clr_sec" aria-hidden="true">&nbsp;&nbsp;</i>Events</a>
+				       </li>
+				  </TMPL_IF>   
+				
+				 <TMPL_IF is_blog> 
+				    <li id="blog">
+					  <a href="?d=blog">
+					  <i class="fa fa-pencil clr_sec" aria-hidden="true">&nbsp;&nbsp;</i>Blog</a>
+				    </li>
+				  </TMPL_IF>
+				 
+				 <TMPL_IF is_gallery>
+				    <li id="gallery">
+					  <a href="?d=gallery_view">
+					  <i class="fa fa-image clr_sec" aria-hidden="true">&nbsp;&nbsp;</i>Gallery</a>
+				    </li>
+				 </TMPL_IF>
+				 
+				 <!--<li><a href="#" data-toggle="modal" data-target="#myModalSignIn"><b><i class="fa fa-key">&nbsp;</i>Sign In</b></a>-->
+				  
+			</TMPL_UNLESS>
+			 
+			 
+			 
+		     </TMPL_UNLESS>
+		    
+		 
+		    
+		    
+		    <!---Admin--->  
+		    <TMPL_IF USER_SYS_ADM>
+			
+			    <!--<li id="my_tree"><a href="?d_series=report_desk">Reports</a></li>-->
+			
+			    <li>				
+				<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				    
+				    <i class="fa fa-cubes" aria-hidden="true"></i>
+				    &nbsp;CMS&nbsp;
+				    <span class="caret"></span>
+				</a>
+				    
+				<ul class="dropdown-menu" role="menu">
+				    
+					<li>
+					    <a href="?d=cms_page_eav">
+						<i class="fa fa-file-code-o" aria-hidden="true"></i>
+						Pages
+					    </a>
+					</li>					
+									    
+					
+					<li><a href="?d=cms_blog">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+						Blog
+					    </a>
+					</li>
+					
+					<li>
+					    <a href="?d=blog_category">
+						<i class="fa fa-plus-square" aria-hidden="true"></i>
+						Blog Category
+					    </a>
+					</li>					
+					
+					
+					<li>
+					    <a href="?d=cms_news_events">
+						<i class="fa fa-calendar" aria-hidden="true"></i>
+						News & Events
+					    </a>
+					</li>
+					
+					<li>
+					    <a href="?d=news_event_type">
+						<i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+						Events Type
+					    </a>
+					</li>					
+					
+					
+					<li>
+					    <a href="?d=contact">
+						<i class="fa fa-book" aria-hidden="true"></i>
+						Directory
+					    </a>
+					</li>
+					
+					
+					
+					<li>
+					    <a href="?d=contact_group">
+						<i class="fa fa-group" aria-hidden="true"></i>
+						Contact Group
+					    </a>
+					</li>
+					
+				       
+				       <li>
+					    <a href="?d=plug_gallery">
+						<i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+						Gallery 
+					    </a>
+					</li>
+				       
+				           <li>
+					    <a href="?d=plug_image">
+						<i class="fa fa-file-image-o" aria-hidden="true"></i>
+						Site Images
+					    </a>
+				       </li>
+				
+				    
+					  
+				       <li>
+					    <a href="?d=menu_set">
+						<i class="fa fa-align-justify" aria-hidden="true"></i>
+						Manage Menu
+					    </a>
+				       </li>
+				       
+				       <li>
+					    <a href="?d=page_meta">
+						<i class="fa fa-align-justify" aria-hidden="true"></i>
+						Page Meta Updates
+					    </a>
+				       </li>
+					
+				</ul>
+			    </li>
+				
+				
+			    <TMPL_IF ADDON_TYPE>   
+			      <li>				
+				  <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">				    
+				      <i class="fa fa-cubes" aria-hidden="true"></i>
+				      &nbsp;Page Addon&nbsp;
+				      <span class="caret"></span>
+				  </a>
+				      
+				  <ul class="dropdown-menu" role="menu">				    
+					  <TMPL_LOOP ADDON_TYPE>					
+					    <li>
+						<a href='?d=cms_page_eav&default_addon={"at":"<TMPL_VAR ID>"}'>
+						    <TMPL_VAR SN>
+						</a>
+					    </li>					
+					  </TMPL_LOOP>					
+				  </ul>
+			      </li>
+			    </TMPL_IF>
+				
+			    <!--<li> <a href="?d=one_page&default_addon=mop_base">One Page</a></li>
+			    <li> <a href="?d=one_page&default_addon=fibenis">Fibenis</a></li>-->
+			    <li><a href="?d=coach">Coach</a></li>
+			    <li>
+				
+				<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				    
+				    <i class="fa fa-wrench" aria-hidden="true"></i>
+				    &nbsp;Home Setup&nbsp;
+				    <span class="caret"></span>
+				</a>
+				       <ul class="dropdown-menu" role="menu">
+					
+					<li> <a href="?d=about_us"> About Us</a></li>
+					
+					<li> <a href="?d=accordion"> Accordion</a></li>
+					
+					<li> <a href="?d=action_box">Action Box</a></li>
+					
+					<li> <a href="?d=home_address">Contact</a></li>
+					
+					<li> <a href="?d=client">Home Client</a></li>
+				   
+					<li> <a href="?d=counter">Home Counter</a></li>
+				   
+		  			<li> <a href="?d=home_banner">Home Banner</a></li>
+					
+					<li> <a href="?d=portfolio">Home Portfolio</a></li>
+				  
+  				        <li> <a href="?d=home_salient_features">Home Salient Features</a></li>
+				       
+				        <li> <a href="?d=home_scroller">Home Scroller</a></li>
+				
+					<li> <a href="?d=tab">Tab</a></li>
+					
+				        <li> <a href="?d=team">Team</a></li>
+				   
+				        <li> <a href="?d=testimonial">Testimonial</a></li>
+					
+					<li> <a href="?d=timeline">Timeline</a></li>
+					
+				       </ul>
+				</li>			        
+			    
+			    <li class="dropdown">				
+				
+				<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+				    &nbsp;Log&nbsp;<span class="caret"></span>
+				</a>
+				
+				<ul class="dropdown-menu" role="menu">
+				    <li><a href="?d_series=status_detail">Status Log</a></li>
+				    <li><a href="?d_series=view_log">Profile View Log</a></li>					    
+				    <li><a href="?d_series=sys_log">Sys Log</a></li>
+				</ul>
+				
+			    </li>
+			    
+			    <!--- Admin Info--->
+			    <li class="dropdown">
+				
+				<a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				  <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+				  &nbsp;<TMPL_VAR USER_NAME>&nbsp;<span class="caret"></span>
+				</a>
+			      
+				<ul class="dropdown-menu" role="menu">				 				    
+				    <li>
+					<a href="#" data-toggle="modal" data-target="#myModalChangePassword">
+					    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+					    &nbsp;&nbsp;Change Password
+					</a>
+				    </li>				 
+				</ul>
+			   </li>
+			    
+		    </TMPL_IF>  <!--- end of SYSTEM admin--->
+		    
+		    
+		    <TMPL_IF USER_ADM>
+		      
+		      <li><a>|</a></li>
+		      <li><a href="?dx=adm_prog">
+			  <i class="fa fa-lightbulb-o txt_size_1_2em clr_pri" aria-hidden="true">&nbsp;</i>
+			   Innovation</a>
+		      </li>		
+		      <li>			    
+			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>
+				<span class="caret"></span>
+			    </a>			  
+			    <ul class="dropdown-menu" role="menu">
+				<li><a href="#" data-toggle="modal" data-target="#my-account">
+				    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+				    &nbsp;&nbsp;My Account
+				     </a>
+				</li>
+				
+				<li><a href="#" data-toggle="modal" data-target="#myModalChangePassword">
+				    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+				    &nbsp;&nbsp;Change Password
+				    </a>
+				</li>
+			    </ul>			  
+		      </li>	
+			
+		    </TMPL_IF> <!--- End of Member A --->
+		    
+		    
+		    <!--- Base User---> 
+		    <TMPL_IF USER_BAS>
+		      
+		      <li><a>|</a></li>
+		      <li><a href="?dx=programme">
+			  <i class="fa fa-lightbulb-o txt_size_1_2em clr_pri" aria-hidden="true">&nbsp;</i>
+			  My Innovation</a>
+		      </li>		
+		      <li>			    
+			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>
+				<span class="caret"></span>
+			    </a>			  
+			    <ul class="dropdown-menu" role="menu">
+				<li><a href="#" data-toggle="modal" data-target="#my-account">
+				    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+				    &nbsp;&nbsp;My Account
+				     </a>
+				</li>
+				
+				<li><a href="?dx=my_profile">
+				    <i class="fa fa-user" aria-hidden="true">&nbsp;</i>
+				    &nbsp;&nbsp;My Profile
+				     </a>
+				</li>
+				
+				<li><a href="#" data-toggle="modal" data-target="#myModalChangePassword">
+				    <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+				    &nbsp;&nbsp;Change Password
+				    </a>
+				</li>
+			    </ul>			  
+		      </li>	
+			
+		    </TMPL_IF> <!--- End of Member A --->	
+		     
+		    <!---Member B--->  
+		    <TMPL_IF USER_MEB>						       
+			   
+		    </TMPL_IF>	
+		     
+		     
+		    <!---Inactive User---> 
+		    <TMPL_IF USER_MED>
+			  	    			    
+		    </TMPL_IF>
+		    
+		     <TMPL_UNLESS NO_USER>
+			   <li>
+			      <a href="JavaScript:get_out();" class="txt_clr_red"
+				 rel="txtTooltip" title="Log Out" data-toggle="tooltip" data-placement="bottom"
+				 >
+			      
+				 <button class="btn btn-xs btn-danger" type="button">			
+				    <span class="glyphicon glyphicon-log-out pad_5" aria-hidden="true"></span>
+				 </button>
+			      </a>
+			   </li>
+		     </TMPL_UNLESS>		     
+		     
+		    <!---No User--->
+		    
+		    <TMPL_IF NO_USER>
+		      
+		      <TMPL_IF IS_OPEN>
+			  
+			   
+				    <li>
+					<a href="#" data-toggle="modal" data-target="#myModalSignIn" >
+					    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+					    &nbsp;&nbsp;Sign In
+					</a>
+				    </li>
+				  <li>
+					<a href="#" data-toggle="modal" data-target="#myModal_signUp">
+					    <span class="glyphicon glyphicon-edit" aria-hidden="true">
+					    </span>&nbsp;&nbsp;Sign Up
+					</a>
+				    </li>	
+				
+		      </TMPL_IF>
+					
+		    </TMPL_IF>
+		    
+		    
+		     <li>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+         
+        </ul>
+        <!-- Mobile Menu End -->
+
+
+      </div>
+      <!-- End Header Logo & Naviagtion -->
+
+    </header>
+    <!-- End Header Section -->
+    
+   
+ 

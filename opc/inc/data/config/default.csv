@@ -1,0 +1,16 @@
+id,table_name,field_name,field_value,update_null
+1,user_info,profile_for_code,"""PRMY""",1
+2,user_info,gender_code,"""NANA""",1
+4,user_info,marital_status_code,"""MANM""",1
+5,user_info,physical_status_code,"""PSNR""",1
+6,user_info,height_code,"""0406""",1
+7,user_info,weight_code,"""W000""",1
+8,user_info,photo_in_profile,"""1""",1
+9,user_info,edu_code,"""EDBE""",1
+10,user_info,emp_type_code,"""NANA""",1
+11,user_info,nakshatra_code,"""NANA""",1
+12,user_info,padam,"""1""",1
+13,user_info,rasi_code,"""NANA""",1
+14,user_info,lagnam_code,"""NANA""",1
+15,user_info,dosham_code,"""DMNO""",1
+16,user_info,rk_dosham_code,"""DMNO""",1

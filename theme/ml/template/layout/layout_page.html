@@ -1,0 +1,60 @@
+
+         
+      <!---<TMPL_VAR PAGE_ID>
+      <TMPL_VAR PAGE_TITLE>
+      <TMPL_VAR PARENT_KEY_CODE>
+      <TMPL_VAR PARENT_NAME>
+      <TMPL_VAR PARENT_RIGHT_IMAGE>
+      <TMPL_VAR PARENT_HEADER_IMAGE>
+      <TMPL_VAR PAGE_HEADER_IMAGE>
+      <TMPL_VAR PAGE_RIGHT_IMAGE>
+      <TMPL_VAR SIDE_MENU>
+      <TMPL_VAR MENU_NAME>
+      <TMPL_VAR CODE>
+  --->
+  
+  
+  <TMPL_IF PAGE_TITLE>
+  
+    <div class="page-banner no-subtitle bg_clr_gray_e"
+	  <TMPL_IF PAGE_HEADER_IMAGE>
+	    style="background: url(<TMPL_VAR PAGE_HEADER_IMAGE>)"
+	  <TMPL_ELSE>
+	    <TMPL_IF PARENT_HEADER_IMAGE>
+	    style="background: url(<TMPL_VAR PARENT_HEADER_IMAGE>)"
+	    </TMPL_IF>
+	  </TMPL_IF> 
+	>     
+      <div class="container ">
+	  <div class="row">
+	    <div class="col-md-6">&nbsp;	      
+	    </div>
+	    <div class="col-md-6 align_RM">
+	      <ul class="breadcrumb">
+	      <li><a href="?<TMPL_VAR PARENT_KEY_CODE>"><TMPL_VAR PARENT_NAME></a></li>
+	      <li><TMPL_VAR PAGE_TITLE></li>
+	      </ul>
+	    </div>
+	  </div>
+      </div>
+    </div>
+    
+  </TMPL_IF>
+  
+  <div id="content">
+	<div class="container">	
+	    <div class="page-content">
+	        <div class="row pad_lr">
+			<div class="col-md-12 pad_lr">			    
+			    <TMPL_IF PAGE_TITLE><h4 class="classic-title"><span><TMPL_VAR PAGE_TITLE></span></h4></TMPL_IF>		  												    
+			    <TMPL_VAR PAGE_INFO>			    
+			</div>
+		</div>
+	    </div>
+	</div>
+  </div>
+
+
+
+
+

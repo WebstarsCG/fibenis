@@ -1,0 +1,45 @@
+<TMPL_LOOP DATA_INFO> 
+	
+		<table class="table table-striped col-md-12"  >
+			    <thead>
+				    <tr>
+					<th colspan="2" class="heading txt_case_capital" ><TMPL_VAR TITLE></th>
+													
+				    </tr>
+			    </thead>
+			    <!--<tbody>				    
+				    <tr>
+				    
+						<TMPL_IF LN><td><TMPL_VAR LN></td></TMPL_IF>
+				    </tr>
+						
+				    <tr>
+						<TMPL_IF DT><td><TMPL_VAR DT></td></TMPL_IF>
+				    </tr>	
+				
+			    </tbody>-->
+			    
+		</table>
+		<div class="panel panel-default">
+				
+				   <div class="panel-heading">
+				   <h4 class="panel-title">
+				   <a data-toggle="collapse"
+				      data-parent="#accordion"
+				      href="#collapse-<TMPL_VAR __COUNTER__>"
+				      aria-expanded="false"
+				      class="collapsed">
+				   <i class="fa fa-angle-up control-icon"></i>
+				   <i class="fa fa-question-circle"></i><TMPL_VAR LN>
+				   </a>
+				   </h4>
+				   </div>
+				   
+				
+				   
+				   <div id="collapse-<TMPL_VAR __COUNTER__>" class="panel-collapse collapse <TMPL_IF __first__>in</TMPL_IF>">
+				   <div class="panel-body"><TMPL_VAR DT></div>
+				   </div>
+			       </div>
+
+</TMPL_LOOP>

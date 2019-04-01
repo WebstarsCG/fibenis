@@ -1,0 +1,24 @@
+<TMPL_LOOP DATA_INFO> 
+	
+		<table class="table table-striped col-md-12"  >
+			    <thead>
+				    <tr>
+					<th colspan="2" class="heading txt_case_capital" ><TMPL_VAR TITLE></th>
+													
+				    </tr>
+			    </thead>
+			    <tbody>				    
+				    <tr>
+				    
+						<TMPL_IF LN><td><TMPL_VAR LN></td></TMPL_IF>
+				    </tr>
+						
+				    <tr>
+						<TMPL_IF DT><td><TMPL_VAR DT></td></TMPL_IF>
+				    </tr>	
+				
+			    </tbody>
+			    
+		</table>
+
+</TMPL_LOOP>

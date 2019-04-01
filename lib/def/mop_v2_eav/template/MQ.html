@@ -1,0 +1,11 @@
+<TMPL_IF MARQUEE_{{SECTION_ID}}>
+		<section  class="marquee_area">
+			<div class="container font-lusitana clr_gray_7">	  
+				<div class="marquee col-md-12 font-ptsans" id="marquee" name="fn-marquee">
+					<TMPL_LOOP MARQUEE_{{SECTION_ID}}>					
+						<a href="<TMPL_VAR URL>"><TMPL_VAR TITLE></a>			
+					</TMPL_LOOP>
+				</div>	  
+			</div>
+		</section>
+</TMPL_IF>

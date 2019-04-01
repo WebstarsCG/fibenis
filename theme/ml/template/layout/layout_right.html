@@ -1,0 +1,103 @@
+
+           <!---<TMPL_VAR PAGE_ID>
+      <TMPL_VAR PAGE_TITLE>
+      <TMPL_VAR PARENT_KEY_CODE>
+      <TMPL_VAR PARENT_NAME>
+      <TMPL_VAR PARENT_RIGHT_IMAGE>
+      <TMPL_VAR PARENT_HEADER_IMAGE>
+      <TMPL_VAR PAGE_HEADER_IMAGE>
+      <TMPL_VAR PAGE_RIGHT_IMAGE>
+      <TMPL_VAR SIDE_MENU>
+      <TMPL_VAR MENU_NAME>
+      <TMPL_VAR CODE>
+  --->
+
+    <TMPL_IF PAGE_TITLE>
+  
+    <div class="page-banner no-subtitle bg_clr_gray_e"
+	  <TMPL_IF PAGE_HEADER_IMAGE>
+	    style="background: url(<TMPL_VAR PAGE_HEADER_IMAGE>)"
+	  <TMPL_ELSE>
+	    <TMPL_IF PARENT_HEADER_IMAGE>
+	    style="background: url(<TMPL_VAR PARENT_HEADER_IMAGE>)"
+	    </TMPL_IF>
+	  </TMPL_IF> 
+	>     
+      <div class="container ">
+	  <div class="row">
+	    <div class="col-md-6">&nbsp;	      
+	    </div>
+	    <div class="col-md-6 align_RM">
+	      <ul class="breadcrumb">
+	      <li><a href="?<TMPL_VAR PARENT_KEY_CODE>"><TMPL_VAR PARENT_NAME></a></li>
+	      <li><TMPL_VAR PAGE_TITLE></li>
+	      </ul>
+	    </div>
+	  </div>
+      </div>
+    </div>
+    
+    </TMPL_IF>
+    <!-- End Page Banner -->
+    
+    
+    <div id="content">
+	<div class="container">	
+	    <div class="page-content">
+	        <div class="row pad_lr">
+			<div class="col-md-12 pad_lr">
+			    <!-- Page Content--->
+			    <div class="col-md-9  brdr_right_light ">
+			        <TMPL_IF PAGE_TITLE>
+				  <h4 class="classic-title">
+				    <span><TMPL_VAR PAGE_TITLE></span>
+				  </h4>
+				</TMPL_IF>		  									
+			    
+				<TMPL_VAR PAGE_INFO>
+			    </div>
+			    
+			    <!--- Side bar--->	
+			    <div class="col-md-3 sidebar right-sidebar"  id="sidebar">				    
+				      
+				      <div class="widget widget-categories">					   
+					<ul>
+					    <!---right image--->
+					    <TMPL_IF PAGE_RIGHT_IMAGE>
+					         <li>
+						    <a class="brdr_bottom  brdr_width_2 brdr_clr_gray_f" >	
+						      <img src="<TMPL_VAR PAGE_RIGHT_IMAGE>" class="img-responsive">
+						    </a>
+						  </li>      					     
+					    <TMPL_ELSE>
+						<TMPL_IF PARENT_RIGHT_IMAGE>
+						  <li>
+						    <a class="brdr_bottom  brdr_width_2 brdr_clr_gray_f" >	
+						      <img src="<TMPL_VAR PARENT_RIGHT_IMAGE>" class="img-responsive">
+						    </a>
+						  </li>      
+						</TMPL_IF>  				    
+					    </TMPL_IF>
+					    <TMPL_LOOP SIDE_MENU>												  
+						  <li>
+						    <a href="<TMPL_IF REDIRECT_URL><TMPL_VAR REDIRECT_URL><TMPL_ELSE>?<TMPL_VAR code></TMPL_IF>" id="<TMPL_VAR code>" class="col-md-12" >						    
+							<TMPL_IF IS_NO_CONTENT>
+							  <div class="col-md-9"><TMPL_VAR MENU_NAME></div>
+							  <div class="col-md-3"><span class="badge clr_box_light_green pad_5_tb txt_size_13" >&nbsp;<b><TMPL_VAR NO_DATA></b>&nbsp;</span></div>
+							<TMPL_ELSE>
+							  <TMPL_VAR MENU_NAME>
+							</TMPL_IF>  
+						    </a>
+						  </li>
+					    </TMPL_LOOP>
+					</ul>
+				      </div>
+			    </div> <!--end of sidebar-->			    
+			</div><!--- inner container--->
+		</div><!--/row-->
+	    </div><!--page- content-->
+	</div><!--container-->
+    </div><!--- Content--->  
+       
+
+

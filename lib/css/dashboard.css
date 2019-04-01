@@ -1,0 +1,85 @@
+
+    table.c3-tooltip{
+	border:0px !important;
+    }
+    .c3-tooltip th,
+    .c3-tooltip td{
+	white-space: nowrap !important;
+    }
+    
+    .c3-tooltip tr{
+	border	:	none !important;
+	border-top: 1px solid #f1f1f1 !important;
+	width	:	180px !important;	
+    }
+    
+    .c3-tooltip td{
+	border	:	none !important;
+	color     :       #454545;
+	float	: 	left;
+	margin:0px;
+	display:inline-block !important;
+	white-space: nowrap !important;
+    }
+    
+    .c3-tooltip td.name{
+       text-align:left;
+	width:50% !important;	
+    }
+    
+    .c3-tooltip td.value{
+	border-left: 1px solid #cacaca !important;
+	width:50% !important;	
+    }
+    
+  
+    .c3-tooltip td:first-child{
+	float: left;
+    }
+    
+    .c3-tooltip td.name span{
+	display:inline-block !important;
+	height:10px !important;
+	width:10px !important;	
+    }
+    
+    .c3-tooltip td{
+	float: right;
+    }
+    table.div_of_div{
+	  
+	    width	  : 100% !important;
+    }
+    
+    table.div_of_div tbody{
+	    display	: block !important;		
+	    width   	: 100%;
+    }
+    
+    table.div_of_div tr{	   
+	    display	: block !important;		
+	     width   	: 100%;
+    }
+    
+    table.div_of_div td{		
+	    border		: 1px solid #cacaca; 
+	    display:inline-block !important;
+	    
+    }
+	  
+    .panel td span{        
+	    display 		: block;
+	    width   		: 100%;         
+    
+    }
+       
+    .panel .title{
+	    background-color	: #f1f1f1;
+	    color          	: #565656;
+	    font-size      	: 12px;
+	    font-weight   	: bold;
+	    padding-top    	: 5px;
+	    padding-bottom 	: 5px; 
+	    margin-bottom  	: 25px;
+	    text-align     	: center;
+    }

@@ -1,0 +1,113 @@
+<TMPL_IF CONTACT_INFO_MAP_{{SECTION_ID}}>
+       <section id="{{SECTION_ID}}" class="brdr_bottom">	    
+		     
+	      <div class="col-md-12">&nbsp;</div>	    
+       
+	      <div class="container">
+		     <div class="row">
+			   
+			    <TMPL_LOOP CONTACT_INFO_MAP_{{SECTION_ID}}>
+				   <!--<h4 class="classic-title pad_lr"><span>Reach Us</span></h4>-->
+						 <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+						 		   <h1>Reach Us</h1>
+							
+						 </div>	  
+					  <div class="col-md-4 pad_lr">
+				    
+					 <div class="hr1" style="margin-bottom:10px;"></div>
+		
+				 
+					<ul class="icons-list">
+					    <div class="col-md-12">
+					    <div class="col-md-1 pad_lr"><li><i class="fa fa-envelope-o  txt_size_1_5em"></i></div>
+					    <div class="col-md-11"><strong>Address</strong></div>
+					    </div>
+					    
+					    <div class="col-md-12">
+					    <div class="col-md-1 pad_lr">&nbsp;</div>
+					    <div class="col-md-11"><TMPL_VAR ORG_NAME></div>			    
+					    </div>
+					    
+					    <div class="col-md-12">
+					    <div class="col-md-1 pad_lr">&nbsp;</div>
+					    <div class="col-md-11"><TMPL_VAR ADD_I></div>
+					    </div>
+				    
+					    <div class="col-md-12">
+					    <div class="col-md-1 pad_lr">&nbsp;</div>
+					    <div class="col-md-11"><TMPL_VAR ADD_II></div>
+					    </div>
+					    
+					    <TMPL_IF EMAIL>				   
+						   <div class="col-md-12">&nbsp;</div>	       
+						  
+						   <div class="col-md-12">
+							  <div class="col-md-1 pad_lr"><li><i class="fa fa-send txt_size_1_5em"></i></div>
+							  <div class="col-md-11"><strong>Email</strong></div>
+						   </div>
+						    
+						   <div class="col-md-12">
+							  <div class="col-md-1 pad_lr">&nbsp;</div>
+							  <div class="col-md-11"><TMPL_VAR EMAIL></div>
+						   </div>			    
+					    </TMPL_IF>
+					    
+					    <TMPL_IF MOBILE>			   
+						   <div class="col-md-12">&nbsp;</div>			   
+					    
+						   <div class="col-md-12">
+						     <div class="col-md-1 pad_lr"><li><i class="fa fa-mobile  txt_size_1_5em"></i></div>
+						     <div class="col-md-11"><strong>Mobile</strong></div>
+						   </div>
+						   
+						   <div class="col-md-12">  
+						     <div class="col-md-1 pad_lr">&nbsp;</div>
+						     <div class="col-md-11"><TMPL_VAR MOBILE></div>
+						   </div>
+					    </TMPL_IF>
+					
+					    <TMPL_IF PHONE>			   
+						   <div class="col-md-12">&nbsp;</div>			   
+					    
+						   <div class="col-md-12">
+						     <div class="col-md-1 pad_lr"><li><i class="fa fa-phone  txt_size_1_5em"></i></div>
+						     <div class="col-md-11"><strong>Phone</strong></div>
+						   </div>
+						     
+						   <div class="col-md-12">
+						      <div class="col-md-1 pad_lr">&nbsp;</div>
+						      <div class="col-md-11"><TMPL_VAR PHONE></div>
+						   </div>			       
+					    </TMPL_IF>   
+					     
+					   
+					</ul>
+								  
+				</div>	    
+			 
+
+			    <div class="col-md-1 pad_lr ">&nbsp;</div>
+			    
+			    
+			    
+			    <div class="col-md-7 pad_lr">
+				   
+				   <iframe src="<TMPL_VAR GOOGLE_MAP_URL>"
+					   class="col-md-12" height="360px"  frameborder="0" style="border:0" allowfullscreen></iframe>
+			    </div>
+							    
+			    <script>
+				     <TMPL_IF ORG_NAME>G.$('menu_org_name').innerHTML='<TMPL_VAR ORG_NAME>';</TMPL_IF>
+				     <TMPL_IF EMAIL>G.$('menu_email').innerHTML='<TMPL_VAR EMAIL>';<TMPL_ELSE>G.$('menu_email_area').style.display='none';</TMPL_IF>
+				     <TMPL_IF PHONE>G.$('menu_phone').innerHTML='<TMPL_VAR PHONE>';<TMPL_ELSE>G.$('menu_phone_area').style.display='none';</TMPL_IF>
+				     <TMPL_IF MOBILE>G.$('menu_mobile').innerHTML='<TMPL_VAR MOBILE>';<TMPL_ELSE>G.$('menu_mobile_area').style.display='none';</TMPL_IF>
+			    </script> 
+
+			   </TMPL_LOOP>
+
+		     </div>
+		     
+		     <div class="col-md-12">&nbsp;</div>
+	      </div>
+       </section>
+</TMPL_IF>

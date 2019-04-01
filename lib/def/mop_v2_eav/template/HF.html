@@ -1,0 +1,29 @@
+       <TMPL_IF FEATURES_{{SECTION_ID}}>
+	 
+	      <section id="{{SECTION_ID}}"  class="brdr_bottom">
+		     <div class="container">
+		    
+					     
+					  <TMPL_IF FEATURE_HEADING_{{SECTION_ID}}>
+						 <TMPL_LOOP FEATURE_HEADING_{{SECTION_ID}}>
+							<div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+							   <TMPL_IF HEADING><div>&nbsp;</div><div>&nbsp;</div><h1><TMPL_VAR HEADING></h1></TMPL_IF>
+							    <TMPL_IF SUB_HEADING><p class="title-desc"><TMPL_VAR SUB_HEADING></p></TMPL_IF>
+							</div>
+						 </TMPL_LOOP>
+					  </TMPL_IF>
+					  
+					  <TMPL_LOOP FEATURES_{{SECTION_ID}}> 
+					       <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="0<TMPL_VAR __counter__>">
+								  <div class="service-icon">
+										  <i class="fa <TMPL_VAR FA-ICON> icon-large"></i>
+								  </div>
+								  <div class="service-content">
+										  <h4><TMPL_VAR TITLE></h4>
+										  <p class="clr_gray_5"><TMPL_VAR HINT></p>
+								  </div>
+					       </div>
+					  </TMPL_LOOP>
+		     </div>
+	      </section>     
+     </TMPL_IF>
