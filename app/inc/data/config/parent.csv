@@ -1,0 +1,2 @@
+id,child_table,child_field,parent_table,parent_field,parent_action
+1,sys_log,user_id,user_info,id,SET id=0 WHERE email='0_email'

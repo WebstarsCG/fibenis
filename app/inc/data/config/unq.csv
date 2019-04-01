@@ -1,0 +1,9 @@
+id,table_name,field_name
+1,entity,code
+2,entity_attribute,code
+3,entity_child_base,token
+4,user_info,is_internal
+5,user_role,sn
+6,eav_addon_vc_128uniq,ea_value_hash
+7,exav_addon_vc_128uniq,exa_value_hash
+8,ecb_parent_child_matrix,parent_child_hash

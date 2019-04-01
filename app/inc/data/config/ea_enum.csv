@@ -1,0 +1,16 @@
+id,child_table,child_table_field,entity,default_code
+1,user_info,gender_code,GN,NANA
+2,user_info,profile_for_code,PR,NANA
+3,user_info,marital_status_code,MS,NANA
+4,user_info,physical_status_code,PS,NANA
+5,user_info,height_code,HT,NANA
+6,user_info,weight_code,WT,NANA
+7,user_info,rasi_code,RS,NANA
+8,user_info,nakshatra_code,NK,NANA
+9,user_info,dosham_code,DM,NANA
+10,user_info,edu_code,ED,NANA
+11,user_info,emp_type_code,EI,NANA
+12,user_info,father_status_code,LS,NANA
+13,user_info,mother_status_code,LS,NANA
+14,user_info,marital_status_code,MA,NANA
+15,user_info,lagnam_code,LM,NANA

@@ -1,0 +1,269 @@
+<TMPL_LOOP DATA_INFO><!---<TMPL_VAR ID>---><TMPL_IF HOME_BANNER_3872>
+       <section id="3872"  >
+	       
+	      <!-- Carousel -->
+	      <div id="main-slide" class="carousel slide" data-ride="carousel">
+       
+	       <!-- Indicators -->
+	      <ol class="carousel-indicators" id="carousel-indicators">
+		 <!--<li data-target="#main-slide" data-slide-to="0" class="active"></li>-->
+	      </ol>
+	      
+	      <div class="carousel-inner">
+		     <TMPL_LOOP HOME_BANNER_3872> 
+			  
+				  <div class="item <TMPL_IF __first__>active</TMPL_IF>">
+				       <img class="img-responsive" src="<TMPL_VAR img_src>" alt="slider">
+				       <div class="slider-content">
+					 <div class="col-md-12 text-center">
+					  <TMPL_LOOP HEADING>
+						 <h<TMPL_VAR __counter__> class="animated<TMPL_VAR __counter__> white"><TMPL_VAR TITLE></h<TMPL_VAR __counter__>>
+					  </TMPL_LOOP>
+					  <TMPL_IF URL><div>&nbsp;</div><p class="animated4"><a href="<TMPL_VAR url>" class="btn btn-success btn-large"><TMPL_VAR btn_title></a></p></TMPL_IF>
+					 </div>
+				       </div>
+				 </div>
+	       
+				 <script> G.$('carousel-indicators').innerHTML+='<li data-target="#main-slide" data-slide-to="'+(Number(<TMPL_VAR __counter__>)-1)+'" <TMPL_IF __first__>class="active"</TMPL_IF>></li>';</script>
+		      </TMPL_LOOP>
+	       </div>
+	       <!-- Carousel inner end-->
+       
+	       <!-- Controls -->
+	       <a class="left carousel-control" href="#main-slide" data-slide="prev">
+		 <span><i class="fa fa-angle-left"></i></span>
+	       </a>
+	       <a class="right carousel-control" href="#main-slide" data-slide="next">
+		 <span><i class="fa fa-angle-right"></i></span>
+	       </a>
+		       
+	      </div>
+	      <!-- /carousel -->
+		 
+       </section>
+</TMPL_IF><TMPL_IF MARQUEE_3974>
+		<section  class="marquee_area">
+			<div class="container font-lusitana clr_gray_7">	  
+				<div class="marquee col-md-12 font-ptsans" id="marquee" name="fn-marquee">
+					<TMPL_LOOP MARQUEE_3974>					
+						<a href="<TMPL_VAR URL>"><TMPL_VAR TITLE></a>			
+					</TMPL_LOOP>
+				</div>	  
+			</div>
+		</section>
+</TMPL_IF><TMPL_IF HOME_ABOUTUS_3894>
+      <section id="3894" class=" font_lato brdr_bottom">
+	<div class="container">
+	       <div class="col-md-12 mar_tb_3">&nbsp;</div>
+		     <TMPL_IF HOME_ABOUTUS_HEADING_3894>
+			    <TMPL_LOOP HOME_ABOUTUS_HEADING_3894>
+				    <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+				          <TMPL_IF HEADING><h1><TMPL_VAR HEADING></h1></TMPL_IF>
+					  <TMPL_IF SUB_HEADING><p class="title-desc"><TMPL_VAR SUB_HEADING></p></TMPL_IF>
+				    </div>
+			    </TMPL_LOOP>
+		     </TMPL_IF>	
+	      <TMPL_LOOP HOME_ABOUTUS_3894>
+		
+		 <a class="col-md-5 col-sm-6 col-xs-12 polaroid">
+		  <img src="<TMPL_VAR IMAGE>" alt="" title="" class="img-responsive frame_gray_1">
+		  <span class="primary"><TMPL_VAR TITLE></span>
+		 </a>
+		 <div class="col-md-7 col-sm-6 col-xs-12">
+		     <div class="col-md-12 mar_tb_10 visible-xs"></div>
+		     
+		     <p class="txt_size_13 align_J"><TMPL_VAR CONTENT></p>
+		     <div class="col-md-12 mar_tb_10"></div>
+		 </div>
+	      </TMPL_LOOP>
+	</div>
+     </section>	
+</TMPL_IF><TMPL_IF HOME_IMAGES_3914>
+       <TMPL_LOOP HOME_IMAGES_3914>
+	      <script>
+		     var hi_temp=String('<TMPL_VAR DATA_BINDER>').split(',');
+		     
+		     if (hi_temp[1]=='href') {			
+			   G.$(hi_temp[0]).href='<TMPL_VAR CONTENT_SRC>'; 
+		     }else{		     
+		           G.$('<TMPL_VAR DATA_BINDER>').src='<TMPL_VAR CONTENT_SRC>';
+		     }
+		     
+	      </script>
+       </TMPL_LOOP>
+</TMPL_IF>        <section id="4618" class="brdr_bottom">
+	  <div class="container">	
+	       <div class="row">
+		   <div class="col-md-12">
+				   <TMPL_IF ACCORDION_HEADING_4618>
+					<TMPL_LOOP ACCORDION_HEADING_4618>	
+						       <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+							   <TMPL_IF HEADING><div>&nbsp;</div><div>&nbsp;</div><h1><TMPL_VAR HEADING></h1></TMPL_IF>
+							<TMPL_IF SUB_HEADING><p class="title-desc"><TMPL_VAR SUB_HEADING></p></TMPL_IF>
+							</div>
+					   </TMPL_LOOP>	
+				   </TMPL_IF>
+				   
+			   <div class="panel-group" id="accordion_4618" >
+			    
+			    <TMPL_LOOP ACCORDION_4618>
+			       <div class="panel panel-default">
+				
+				   <div class="panel-heading">
+				   <h4 class="panel-title">
+				   <a data-toggle="collapse"
+				      data-parent="#accordion_4618"
+				      href="#collapse-4618_<TMPL_VAR __COUNTER__>"
+				    >
+				   <i class="fa fa-angle-up control-icon"></i>
+				   <i class="fa fa-chevron-circle-right"></i><TMPL_VAR QUESTION>
+				   </a>
+				   </h4>
+				   </div>
+				   
+				
+				   
+				   <div id="collapse-4618_<TMPL_VAR __COUNTER__>" class="panel-collapse collapse <TMPL_IF __first__>in</TMPL_IF>">
+				   <div class="panel-body"><TMPL_VAR ANSWER></div>
+				   </div>
+			       </div>
+			       </TMPL_LOOP>
+			   
+			   </div>
+		   </div>
+	       </div>
+	    </div>
+       </section> <TMPL_IF CONTACT_3948>
+	<section id="3948" class="brdr_bottom">	    
+	    <div class="col-md-12">&nbsp;</div>
+		<div id="content">
+		    <div class="container">
+			<div class="row">
+			   
+	    
+            <TMPL_IF CONTACT_3948>
+		<div class="col-md-5">
+		    <h4 class="classic-title"><span>Reach Us</span></h4>
+			 <div class="hr1" style="margin-bottom:10px;"></div>
+
+		    <TMPL_LOOP CONTACT_INFO_3948>
+			<ul class="icons-list">
+			    <div class="col-md-12">
+			    <div class="col-md-1 pad_lr"><li><i class="fa fa-globe"></i></div>
+			    <div class="col-md-11"><strong>Address:</strong></div>
+			    </div>
+			    
+			    <div class="col-md-12">
+			    <div class="col-md-1 pad_lr">&nbsp;</div>
+			    <div class="col-md-11"><TMPL_VAR ORG_NAME></div>			    
+			    </div>
+			    
+			    <div class="col-md-12">
+			    <div class="col-md-1 pad_lr">&nbsp;</div>
+			    <div class="col-md-11"><TMPL_VAR ADD_I></div>
+			    </div>
+		    
+			    <div class="col-md-12">
+			    <div class="col-md-1 pad_lr">&nbsp;</div>
+			    <div class="col-md-11"><TMPL_VAR ADD_II></div>
+			    </div>
+			    
+			    <TMPL_IF EMAIL>				   
+				   <div class="col-md-12">&nbsp;</div>	       
+				  
+				   <div class="col-md-12">
+					  <div class="col-md-1 pad_lr"><li><i class="fa fa-envelope-o"></i></div>
+					  <div class="col-md-11"><strong>Email:</strong></div>
+				   </div>
+				    
+				   <div class="col-md-12">
+					  <div class="col-md-1 pad_lr">&nbsp;</div>
+					  <div class="col-md-11"><TMPL_VAR EMAIL></div>
+				   </div>			    
+			    </TMPL_IF>
+			    
+			    <TMPL_IF MOBILE>			   
+				   <div class="col-md-12">&nbsp;</div>			   
+			    
+				   <div class="col-md-12">
+				     <div class="col-md-1 pad_lr"><li><i class="fa fa-mobile fa-2x"></i></div>
+				     <div class="col-md-11"><strong>Mobile:</strong></div>
+				   </div>
+				   
+				   <div class="col-md-12">  
+				     <div class="col-md-1 pad_lr">&nbsp;</div>
+				     <div class="col-md-11"><TMPL_VAR MOBILE></div>
+				   </div>
+			    </TMPL_IF>
+			
+			    <TMPL_IF PHONE>			   
+				   <div class="col-md-12">&nbsp;</div>			   
+			    
+				   <div class="col-md-12">
+				     <div class="col-md-1 pad_lr"><li><i class="fa fa-phone fa-2x"></i></div>
+				     <div class="col-md-11"><strong>Phone:</strong></div>
+				   </div>
+				     
+				   <div class="col-md-12">
+				      <div class="col-md-1 pad_lr">&nbsp;</div>
+				      <div class="col-md-11"><TMPL_VAR PHONE></div>
+				   </div>			       
+			    </TMPL_IF>   
+			     
+			     <script>
+				   <TMPL_IF ORG_NAME>G.$('menu_org_name').innerHTML='<TMPL_VAR ORG_NAME>';</TMPL_IF>
+				   <TMPL_IF EMAIL>G.$('menu_email').innerHTML='<TMPL_VAR EMAIL>';<TMPL_ELSE>G.$('menu_email_area').style.display='none';</TMPL_IF>
+				   <TMPL_IF PHONE>G.$('menu_phone').innerHTML='<TMPL_VAR PHONE>';<TMPL_ELSE>G.$('menu_phone_area').style.display='none';</TMPL_IF>
+				   <TMPL_IF MOBILE>G.$('menu_mobile').innerHTML='<TMPL_VAR MOBILE>';<TMPL_ELSE>G.$('menu_mobile_area').style.display='none';</TMPL_IF>
+			    </script> 
+			</ul>
+		    </TMPL_LOOP>
+		    <div>&nbsp;</div>
+		    <div>&nbsp;</div>
+		</div>	    
+	    </TMPL_IF>
+	    
+	    <div class="col-md-1 ">&nbsp;</div>
+	    
+	     <div class="col-md-6 brdr_left">
+				    <h4 class="classic-title"><span>Enquiry</span></h4>
+				    <form id="enquiry_form" class="has-validation-callback">
+					  <div class="form-group">				    
+						 <label for="name">Name:</label>
+						 <input type="name" class="form-control" id="a" placeholder="Enter name" name="a" data-validation="length" 
+					                            data-validation-length="3-32"  >
+					  </div>
+					<!--  <div class="form-group">
+					    <label for="email">Email:</label>
+					    <input type="email" class="form-control" id="b" placeholder="Enter email" name="b" data-validation="email" >
+					  </div>-->
+					  <div class="form-group">
+					    <label for="mobile">Mobile No./Contact Phone No.:</label>
+					    <input type="text" class="form-control" id="b" placeholder="Enter Mobile No./Contact Phone No." name="b"
+						            data-validation="length alphanumeric" data-validation-length="10-25">
+					  </div>
+					  <div class="form-group">
+					  	 <label for="sel1">Enquiry On:</label>
+						 <select class="form-control" id="c" data-validation="required"><option value="">Select</option>
+							<TMPL_LOOP ENQUIRY_ITEMS_3948>
+							     <TMPL_IF ITEM>
+							       <option><TMPL_VAR ITEM></option>
+							     </TMPL_IF>  
+							</TMPL_LOOP>
+						 </select>
+					  </div>
+				          <div class="form-group">
+						 <label for="comment">Comment:</label>
+						 <textarea class="form-control" rows="5" id="d" placeholder="Enter comment" maxlength="500" name="d"></textarea>
+					  </div>
+					  <button type="submit" class="btn-system btn-medium">Submit</button>
+					  <button type="reset" class="btn-system  border-btn btn-small">Reset</button>
+					  
+				    </form>
+			    </div>
+	     
+        </div>
+		    </div>
+		</div>
+	</section>
+    </TMPL_IF></TMPL_LOOP>
