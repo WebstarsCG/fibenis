@@ -1066,7 +1066,8 @@
 																
 								if(@($value['child_table'] && $value['child_attr_code'])){
 										
-										@$_POST["X".$key]=($value['type']=='autocomplete')?$rdsql->escape_string(@$_POST["X".$key."_hidden"]):$rdsql->escape_string(@$_POST["X".$key]);
+										@$_POST["X".$key]=($value['type']=='autocomplete')?@$_POST["X".$key."_hidden"]:@$_POST["X".$key];										
+										
 										array_push($vertical_eav,$key);
 																	
 								}else if(@$value['is_plugin']==1){
@@ -1761,7 +1762,7 @@
 								
 								if(@($value['child_table'] && $value['child_attr_code'])){
 										
-										@$_POST["X".$key]=($value['type']=='autocomplete')?$rdsql->escape_string(@$_POST["X".$key."_hidden"]):$rdsql->escape_string(@$_POST["X".$key]);
+										@$_POST["X".$key]=($value['type']=='autocomplete')?@$_POST["X".$key."_hidden"]:@$_POST["X".$key];
 										array_push($vertical_eav,$key);
 																	
 								}

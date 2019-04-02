@@ -6,10 +6,10 @@
 
 		#include($LIB_PATH."/inc/lib/filter.php");
 		
-		$PAGE_ID = $PAGE;
+		$PAGE_ID   = $PAGE;
 		
 		$PAGE_INFO = '';
-		
+				
 		# loader
 		
 		if(($PAGE_ID=='t_series') || ($PAGE_ID=='t') || ($PAGE_ID=='tx') ){
@@ -22,7 +22,16 @@
 				
 				if($router['action']){
 						
+						$T_SERIES['page_code'] = md5($PAGE_CODE);
+						
+						if(!$USER_ID && !$T_SERIES['session_off']){					
+								$SG->s_destroy('index.php');		
+						}else if($USER_ID){										
+								$SG->check_entry($SG->get_permission($T_SERIES['page_code']));	
+						}
+						
 						include($router['action']);
+						
 		
 				}else{
 						//echo 'Sorry';
