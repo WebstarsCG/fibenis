@@ -26,6 +26,7 @@
 		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/mode/javascript/javascript.js"></script>
 		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/addon/selection/active-line.js"></script>
+		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/addon/auto_refresh.js"></script>
 	
 	</TMPL_IF>
 
@@ -189,8 +190,7 @@
 		  
 			   <legend></legend>
 			   
-				<TMPL_IF DIVIDER>
-					
+				<TMPL_IF DIVIDER>					
 						<TMPL_IF IS_DIVIDER_TAB>
 					
 							<ul class="nav nav-tabs">
@@ -683,7 +683,7 @@
 						<script language="JavaScript" type="text/javascript">
 							input_temp.option['X<TMPL_VAR field_id>']=1;						
 						</script>
-				        </script>	
+				        	
 				        </div>					
 				</TMPL_IF>
 				<!---end of single & multiple list--->
@@ -1170,8 +1170,8 @@
 				<!---code editor---> 
 				<TMPL_IF field_type_code_editor>					    
 				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>" id="X<TMPL_VAR field_id>_panel">
-					  <span class="label"><TMPL_VAR field_name></span>
-					  <span class=value>
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value>
 							    <textarea id="X<TMPL_VAR field_id>" name="X<TMPL_VAR field_id>" <TMPL_VAR input_html>
 							    																	 
 									<TMPL_IF MAX_LENGTH>
@@ -1193,23 +1193,23 @@
 								     
 							    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
 							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
-							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>
+							    <span class="message" id="message_X<TMPL_VAR field_id>"></span>
 					  
-								<script>
-																												    
-								        input_temp['code_editor']['X<TMPL_VAR field_id>'] = 1;
-									input_temp['code_editor']['X<TMPL_VAR field_id>_obj'] =	CodeMirror.fromTextArea(document.getElementById("X<TMPL_VAR field_id>"), {
-																			mode: "application/xml",
-																			styleActiveLine: true,
-																			lineNumbers: true,
-																			lineWrapping: true,
-																	});
-																		
-								</script>
-					  </span>
-					  
-					 </span>
+							
+						</span>			
 				       </div>
+				       
+				        <script>																												    
+								input_temp['code_editor']['X<TMPL_VAR field_id>'] = 1;
+								input_temp['code_editor']['X<TMPL_VAR field_id>_obj'] =	CodeMirror.fromTextArea(document.getElementById("X<TMPL_VAR field_id>"), {
+																		mode: "application/xml",
+																		styleActiveLine: true,
+																		lineNumbers: true,
+																		lineWrapping: true,
+																		autoRefresh:true,
+																});				
+					</script>
+				    
 				</TMPL_IF>	 
 				<!--- code editor--->
 				
@@ -1230,7 +1230,7 @@
 										
 									<table style="width:100%" cellpadding="0" cellspacing="0" class="fibenis_table grid" id="fibenis_table<TMPL_VAR field_id>" >
 										<thead>
-											 <th width="5%">  </th>
+											<th width="5%">  </th>
 											<TMPL_LOOP fibenistable_head_info>		
 												 <th><TMPL_VAR column></th> 											
 											</TMPL_LOOP>

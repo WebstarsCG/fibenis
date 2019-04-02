@@ -25,15 +25,11 @@
                                             'ITTA'=>['table'=>'text'],
 					    'ITCE'=>['table'=>'text'],
 					    'ITTG'=>['table'=>'num'],
-                                            'ITG1'=>['table'=>'text'],
-					    'ITTE'=>['table'=>'text'],
-                                            'ITGX'=>['table'=>'text'],
+                                            'ITTE'=>['table'=>'text'],
                                             'ITSL'=>['table'=>'varchar'],
 					    'ITFT'=>['table'=>'text'],
 					    'ITFD'=>['table'=>'varchar'],
 					    'ITFI'=>['table'=>'varchar'],
-					    'ITEN'=>['table'=>'text'],
-					    'ITIN'=>['table'=>'text'],
 					    'ITDT'=>['table'=>'date'],
                                             'ITRG'=>['table'=>'varchar','action'=>function($data_in){return $data_in;}],
                                             'ITTB'=>['table'=>'varchar','action'=>function($data_in){  $data_in['end_label']='';
@@ -189,139 +185,6 @@
                                                                                        'type'=>'label',
 										       
 										       'attr'      => ['class'=>' col-md-12' ]
-                                                                      ];
-                                                        
-                                                        
-                                                }elseif($get_row->exa_type=="ITG1"){
-                                                        
-                                                        $temp_input = [
-                                                                                        'is_plugin'=>1,
-                                                                                        
-											'type'=>'handsontable',
-                                                                                        
-											'field_name'          => $get_row->title,
-                                                                                        
-											'field_id'	      => 'exa_value',
-                                                                                        
-                                                                                        'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],      // child table 
-                                                                                       
-                                                                                        'parent_field_id'     => 'parent_id',              // parent field
-                                                                                                               
-                                                                                        'child_attr_field_id' => 'exa_token',                // attribute code field
-                                                                                       
-                                                                                        'child_attr_code'     => $get_row->token,
-                                                                                       
-                                                                                        'is_mandatory'=>0,
-                                                                                        
-                                                                                        'hint' => 'Use down arrow to add new row. Maximum rows(25)',
-                                                                                        
-                                                                                        'default_rows_prop'=>array('start_rows'=>'4',
-                                                                                                                      'min_spare_rows'=>'1',
-                                                                                                                      'max_rows'=>'25',
-                                                                                                                      //'min_rows'=>'4'
-                                                                                                                      ),
-                                                                                        'colHeaders'=> array(
-                                                                                           
-                                                                                                    array('column'=>$get_row->title,'width'=>'300','type'=>'text'),
-                                                                                
-                                                                                         ),
-                                                                      ];
-                                                        
-                                                        
-                                                }elseif($get_row->exa_type=="ITGX"){
-                                                        
-                                                        
-                                                        $temp_grid = json_decode(stripslashes($get_row->grid_option));
-							
-                                                        $temp_grid_columns = [];
-                                                        
-                                                        foreach($temp_grid as $key=>$value){
-                                                                
-                                                                $temp_grid_prop    = [];
-                                                                
-                                                                if(strlen(@$value[0])>0){
-                                                                        
-                                                                        $temp_grid_prop['column'] = $value[0];                        
-                                                                                                                                        
-                                                                        $temp_grid_prop['width']  = ($value[1])?$value[1]:120;
-                                                                        
-                                                                        $temp_grid_prop['type']   = ($value[2])?strtolower($value[2]):'text';
-                                                                        
-                                                                        
-                                                                        // select static
-                                                                        $temp_gird_prop['selectstatic'] = function($param,$grid_row_value){                                                                                
-                                                                                                                                                                                
-                                                                                        return  f_addon_static_builder($param,$grid_row_value);
-                                                                        }; // end
-                                                                        
-                                                                        // select dynamic
-                                                                        $temp_gird_prop['selectdynamic'] = function($param,$grid_row_value){                                                                                
-                                                                                        
-                                                                                        return  f_addon_dynamic_builder($param,$grid_row_value);                                                                             
-                                                                        }; // end
-                                                                        
-                                                                        // autocomplete
-                                                                        $temp_gird_prop['autocomplete'] = function($param,$grid_row_value){                                                                                
-                                                                                        
-                                                                                        if((@$grid_row_value[5]) &&
-                                                                                           (@$grid_row_value[6]) &&
-                                                                                           (@$grid_row_value[7])){                                                                                         
-                                                                                                $param = f_addon_dynamic_builder($param,$grid_row_value);
-                                                                                                $param['type'] = 'autocomplete';
-                                                                                                return $param;
-                                                                                        }else{
-                                                                                        
-                                                                                                $param = f_addon_static_builder($param,$grid_row_value);
-                                                                                                $param['type'] = 'autocomplete';
-                                                                                                return $param;
-                                                                                        
-                                                                                        } // end
-                                                                                       
-                                                                        }; // end
-                                                                        
-                                                                        
-                                                                        // call divert
-                                                                        if(@$temp_gird_prop[$temp_grid_prop['type']]){
-                                                                                
-                                                                                        $temp_grid_prop=$temp_gird_prop[$temp_grid_prop['type']]($temp_grid_prop,$value);
-                                                                        }
-                                                                        
-                                                                        array_push($temp_grid_columns,$temp_grid_prop);
-                                                                        
-                                                                } // end
-                                                                
-                                                        } // each column
-                                                        
-                                                        #print_r($temp_grid);
-                                                        
-                                                        $temp_input = [
-                                                                                        'is_plugin'=>1,
-                                                                                        
-                                                                                        'type'=>'handsontable',
-                                                                                        
-                                                                                        'field_name'          => $get_row->title,
-                                                                                        
-                                                                                        'field_id'	      => 'exa_value',
-                                                                                        
-                                                                                        'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],      // child table 
-                                                                                       
-                                                                                        'parent_field_id'     => 'parent_id',              // parent field
-                                                                                                               
-                                                                                        'child_attr_field_id' => 'exa_token',                // attribute code field
-                                                                                       
-                                                                                        'child_attr_code'     => $get_row->token,
-                                                                                       
-                                                                                        'is_mandatory'=>0,
-                                                                                        
-                                                                                        'hint' => 'Use down arrow to add new row. Maximum rows(25)',
-                                                                                        
-                                                                                        'default_rows_prop'=>array('start_rows'=>'10',
-                                                                                                                      'min_spare_rows'=>'1',
-                                                                                                                      'max_rows'=>'25',
-                                                                                                                      'min_rows'=>'10'
-                                                                                                                      ),
-                                                                                        
-                                                                                        'colHeaders'=>$temp_grid_columns
                                                                       ];
                                                         
                                                         
@@ -498,9 +361,7 @@
                                                                                        
                                                                                        'allow' => 'd100',
                                                                                         
-                                                                                       
-										       
-										        'attr'           => [ 'class' => "w_400",
+                                                                                       'attr'           => [ 'class' => "w_400",
 													     'rows'=>4 
 													   ]
                                                                                        
@@ -509,39 +370,7 @@
                                                 
                                                                 #$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
                                                 
-                                                }
-						
-						//To in-activate a field, for internal use data type
-						
-						elseif($get_row->exa_type=="ITIN"){ 
-							
-							$temp_input =   [
-                                                                                       'field_name'=>$get_row->title,
-                                                                                       
-                                                                                       'field_id'=>'exa_value',
-                                                                                       
-                                                                                       'type'=>'text',
-                                                                                       
-                                                                                       'child_table'         => 'exav_addon_num',      // child table 
-                                                                                       
-                                                                                       'parent_field_id'     => 'parent_id',              // parent field
-                                                                                                               
-                                                                                       'child_attr_field_id' => 'exa_token',                // attribute code field
-                                                                                       
-                                                                                       'child_attr_code'     => $get_row->token,           // attribute code
-                                                                                       
-                                                                                       'is_mandatory'	     => 0,
-										       
-										       'ro'	=> 1,
-                                                                                        
-                                                                                       'attr'           => [ 'class' => "w_100",
-													
-													   ]
-                                                                                       
-                                                                                       
-                                                                                ];
-							
-						}elseif($get_row->exa_type=="ITDT"){
+                                                }elseif($get_row->exa_type=="ITDT"){
                                                                         
                                                                 $year = date("Y");
 									
@@ -783,36 +612,6 @@
                                                                                 ];
 								
 								$dd_val = NULL;
-                                                
-                                                }elseif($get_row->exa_type=="ITEN"){
-                                                                
-                                                                $temp_input =   [
-                                                                                       'field_name'=> 'Name',
-                                                                                       
-                                                                                       'field_id'=>'exa_value',
-                                                                                       
-                                                                                       'type'=>'option',
-                                                                                       
-                                                                                       'option_data'=>$g->option_builder('entity','code,sn',"WHERE code = '".$get_row->entity_code." ' ORDER BY sn ASC"),
-                                                                                       
-                                                                                       'child_table'         => 'exav_addon_varchar',      // child table 
-                                                                                       
-                                                                                       'parent_field_id'     => 'parent_id',              // parent field
-                                                                                                               
-                                                                                       'child_attr_field_id' => 'exa_token',                // attribute code field
-                                                                                       
-                                                                                       'child_attr_code'     => $get_row->token,           // attribute code
-                                                                                       
-                                                                                       'is_mandatory'	     => 1,
-										       
-										       'avoid_default_option'=>1,
-                                                                                       
-                                                                                        'attr'           => [ ]
-                                                                                       
-                                                                                ];
-                                                
-                                                
-                                                                #$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
                                                 
                                                 }elseif($get_row->exa_type=="ITSL"){
                                                                 

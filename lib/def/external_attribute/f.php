@@ -96,7 +96,7 @@
                                                                     'type'                => 'option',
                                                                     'option_data'         => $G->option_builder('entity_attribute','code,sn'," WHERE entity_code='IT' ORDER by sn ASC"),                                                               
                                                                     'is_mandatory'        => 1,
-                                                                    'input_html'          => ' onchange=input_type_action(this)',
+                                                                    //'input_html'          => ' onchange=input_type_action(this)',
                                                                                                                         
                                                                     //child table                                                                            
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
@@ -107,71 +107,14 @@
                                                                ),
                                                    
                                                    
-                                                     '7' =>array(   'field_name'          => 'Grid Detail',                                                                
-                                                                    'field_id'            => 'ea_value',				       
-                                                                    'is_plugin'           => 1,
-                                                                    'is_ro'               => 0,
-                                                                    'type'                => 'handsontable',
-                                                               
-                                                                    'is_mandatory'        => 0,
-                                                                    
-                                                                    // child table
-                                                                            
-                                                                    'child_table'         => 'ecb_av_addon_varchar', // child table 
-                                                                    'parent_field_id'     => 'parent_id',    // parent field
-                                                                                            
-                                                                    'child_attr_field_id' => 'ea_code',   // attribute code field
-                                                                    'child_attr_code'     => 'APGO',           // attribute code
-                                                                                                                        
-                                                                    'default_rows_prop'=>array('start_rows'=>'5',
-											           'min_spare_rows'=>'2',
-											           'max_rows'=>'10',
-											           
-                                                                                                   ),
-								     'colHeaders'=> array(
-						                                                    array('column'=>'Column Info','width'=>'120','type'=>'text'),
-                                                                                                   
-                                                                                                   
-                                                                                                    array('column'=>'Width',
-                                                                                                          'width'=>'75',
-                                                                                                          'type'=>'numeric',
-                                                                                                          //'source_url'=> "router.php?series=ax&action=rx_doctor&token=RXNW"
-                                                                                                    ),
-                                                                                                    
-                                                                                                    array('column'=>'Type',
-                                                                                                          'width'=>'100',
-                                                                                                          'type'=>'select',
-                                                                                                          'source'=>"'Text','Numeric','SelectStatic','SelectDynamic','AutoComplete'"
-                                                                                                    ),
-                                                                                                    
-                                                                                                    array('column'=>'Data',
-                                                                                                          'width'=>'150',
-                                                                                                          'type'=>'text'                                                                                                          
-                                                                                                    ),
-                                                                                                    
-                                                                                                    array('column'=>'Strict',
-                                                                                                          'width'=>'50',
-                                                                                                          'type'=>'select',
-                                                                                                          'source'=>"'True','False'"                                                                                                          
-                                                                                                    ),
-                                                                                                    
-                                                                                                    array('column'=>'Dyn. Data',      'width'=>'100','type'=>'select','source'=>'"Entity_Child_Base","Entity_Child"'),
-                                                                                                    array('column'=>'Entity Code',       'width'=>'75','type'=>'select','source'=>$G->get_list('entity',"concat(code,'->',sn)",' ORDER BY sn') ),
-                                                                                                    array('column'=>'Opt. Id',   'width'=>'50','type'=>'select','source'=>"'token','sn','ln','id','get_drug_name(id)','get_manufacturer_name(id)'"),
-                                                                                                    array('column'=>'Opt. Label','width'=>'75','type'=>'select','source'=>"'token','sn','ln','get_manufacturer_name(id)'"),
-                                                                                         ),
-                                                                     
-                                                                     'is_hide' => 1, 
-                                                                     
-                                                               ),
-                                                     
-                                                     
-                                                        '8' =>array(
+                                                    '8' =>array(
                                                                     'field_name'          => 'Option Data',
                                                                      'field_id'           => 'ea_value',
-                                                                    'is_plugin'           => 1,
-                                                                    'type'                => 'handsontable',
-                                                                    'is_ro'               =>1,    
+                                                                    'is_fibenistable'   => 1,
+								    'type'              => 'fibenistable',
+                                                                    //'is_ro'               =>1,
+                                                                    
+                                                                    
                                                                     'is_mandatory'        => 0,
                                                                     
                                                                        //child table
@@ -182,22 +125,24 @@
                                                                     'child_attr_field_id' => 'ea_code',             // attribute code field
                                                                     'child_attr_code'     => 'APSL',                // attribute code
                                                                                                                         
-                                                                        'default_rows_prop'=>array('start_rows'=>'2',
+                                                                        'default_rows_prop'=>array('start_rows'=>'1',
 											           'min_spare_rows'=>'0',
 											           'max_rows'=>'1',
 											           
                                                                                                    ),
 								     'colHeaders'=> array(
-						                                                    array('column'=>'Table','width'=>'200','type'=>'select','source'=>'"Entity_Child_Base","Entity_Child"'),
-                                                                                                    array('column'=>'Entity Code','width'=>'100','type'=>'select','source'=>$G->get_list('entity',"concat(code,'->',sn)",' ORDER BY sn') ),
-                                                                                                    array('column'=>'Option Id Field','width'=>'100','type'=>'select','source'=>'"token","sn","ln","id"'),
-                                                                                                    array('column'=>'Option Value Field','width'=>'125','type'=>'select','source'=>'"token","sn","ln","get_eav_addon_varchar(id,\'COFN\')"'),
                                                                                                     
+                                                                                                    
+                                                                                                    
+                                                                                                    array('column'=>'Table','width'=>'200','type'=>'dropDown','data'=>"<option value=Entity_Child_Base>Entity_Child_Base</option><option value=Entity_Child>Entity_Child</option>"),
+                                                                                                    array('column'=>'Entity Code','width'=>'200','type'=>'dropDown','data'=> $G->ft_option_builder('entity','concat(code,\'->\',sn),sn'," ORDER BY sn ASC")),
+                                                                                                    array('column'=>'Option Id Field','width'=>'200','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
+                                                                                                    array('column'=>'Option Id Value','width'=>'200','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
                                                                                                     array('column'=>'Filter','width'=>'100','type'=>'text'),
                                                                                                     
                                                                                          ),
                                                                      
-                                                                     'is_hide' => 1, 
+                                                                     'is_hide' => 0, 
                                                                      
                                                                ),
                                                         
@@ -567,9 +512,9 @@
                                                          
                                                     '32' =>array(   'field_name'          => 'Grid Detail',                                                                
                                                                     'field_id'            => 'ea_value',				       
-                                                                    'is_plugin'           => 1,
                                                                     'is_ro'               => 0,
-                                                                    'type'                => 'handsontable',
+                                                                    'is_fibenistable'   => 1,
+								    'type'              => 'fibenistable',
                                                                     'is_mandatory'        => 0,
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
                                                                     'parent_field_id'     => 'parent_id',            // parent field
@@ -586,60 +531,47 @@
                                                                                                    
                                                                                                    array('column'=>'Width',
                                                                                                           'width'=>'75',
-                                                                                                          'type'=>'numeric',
+                                                                                                          'type'=>'text',
+                                                                                                          'allow'=>'d10',
                                                                                                           //'source_url'=> "router.php?series=ax&action=rx_doctor&token=RXNW"
                                                                                                     ),
                                                                                                     
                                                                                                     array('column'=>'Type',
                                                                                                           'width'=>'100',
-                                                                                                          'type'=>'select',
-                                                                                                          'source'=>"'Text','Dropdown','Autocomplete','Date'",
-                                                                                                    ),
+                                                                                                          'type'=>'dropDown',
+                                                                                                          'data'=>"<option value=Text>Text</option><option value=Dropdown>Dropdown</option><option value=Autocomplete>Autocomplete</option><option value=Date>Date</option>"
+                                                                                                     ),
                                                                                                     
                                                                                                     array('column'=>'Table',
                                                                                                           'width'=>'100',
-                                                                                                          'type'=>'select',
-                                                                                                          'source'=>'"entity","entity_child_base","entity_child"'
+                                                                                                          'type'=>'dropDown',
+                                                                                                          'data'=>"<option value=Entity_Child>Entity Child</option><option value=Entity_Child_Base>Entity_Child_Base</option><option value=Entity_Child>Entity_Child</option>"
                                                                                                     ),
-                                                                                                   
-                                                                                                    //array('column'=>'Get data URL',
-                                                                                                    //      'width'=>'100',
-                                                                                                    //      'type'=>'select',
-                                                                                                    //      //'source'=>"'token','sn','ln','id','get_drug_name(id)','get_manufacturer_name(id)'"
-                                                                                                    //      'source' => "'inc/handson_data/new_data.php'",
-                                                                                                    //),
-                                                                                                    //
-                                                                                                    //array('column'=>'Set new entry',
-                                                                                                    //      'width'=>'100',
-                                                                                                    //      'type'=>'select',
-                                                                                                    //      //'source'=>"'token','sn','ln','get_manufacturer_name(id)'"
-                                                                                                    //       'source' => "'inc/handson_data/set_data.php'",
-                                                                                                    //),
                                                                                                     
-                                                                                                    array('column'=>'Op Id',
+                                                                                                     array('column'=>'Op Id',
                                                                                                           'width'=>'50',
-                                                                                                          'type'=>'select',
-                                                                                                          //'source'=>"'token','sn','ln','get_manufacturer_name(id)'"
-                                                                                                           'source' => "'id','sn','ln','token'",
+                                                                                                          'type'=>'dropDown',
+                                                                                                          'data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"
+                                                                                                          
                                                                                                     ),
                                                                                                     
                                                                                                     array('column'=>'Op Value',
                                                                                                           'width'=>'50',
-                                                                                                          'type'=>'select',
-                                                                                                          //'source'=>"'token','sn','ln','get_manufacturer_name(id)'"
-                                                                                                           'source' => "'sn','ln','token'",
+                                                                                                          'type'=>'dropDown',
+                                                                                                          'data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"
                                                                                                     ),
                                                                                                     
                                                                                                     array('column'=>'Entity Code',
                                                                                                           'width'=>'50',
-                                                                                                          'type'=>'select',
-                                                                                                          'source'=>$G->get_list('entity',"concat(code,'->',sn)",' ORDER BY sn'),
-                                                                                                    ),
+                                                                                                          'type'=>'dropDown',
+                                                                                                          'data'=> $G->ft_option_builder('entity','concat(code,\'->\',sn),sn'," ORDER BY sn ASC"),
+                                                                                                        ),
                                                                                                     
                                                                                                     array('column'=>'A series',
                                                                                                           'width'=>'50',
-                                                                                                          'type'=>'select',
-                                                                                                          'source'=>$G->get_list('entity_child_base',"concat(token,'->',sn)","WHERE entity_code = 'AX' ORDER BY sn"),
+                                                                                                          'type'=>'dropDown',
+                                                                                                          'data'=> $G->ft_option_builder('entity_child_base','concat(token,\'->\',sn),sn',"WHERE entity_code = 'AX'  ORDER BY sn ASC"),
+                                                                                                          
                                                                                                     ),
                                                                                                     
                                                                                                     array('column'=>'Allow',
@@ -648,8 +580,8 @@
                                                                                                     
                                                                                                      array('column'=>'Pre-Fill',
                                                                                                           'width'=>'50',
-                                                                                                          'type'=>'select',
-                                                                                                          'source' => "'no','yes'",
+                                                                                                          'type'=>'dropDown',
+                                                                                                          'data'=>"<option value=no>No</option><option value=yes>Yes</option>"
                                                                                                     ),
                                                                                                      
                                                                                                      array('column'=>'HTML',
@@ -759,9 +691,9 @@
                                                             
                                                             '40' =>array(   'field_name'          => 'Image Size',                                                                
                                                                     'field_id'            => 'ea_value',				       
-                                                                    'is_plugin'           => 1,
                                                                     'is_ro'               => 0,
-                                                                    'type'                => 'handsontable',
+                                                                    'is_fibenistable'   => 1,
+								    'type'              => 'fibenistable',
                                                                     'is_mandatory'        => 0,
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
                                                                     'parent_field_id'     => 'parent_id',            // parent field
@@ -774,11 +706,13 @@
 								     'colHeaders'=> array(
 						                                                   array('column'=>'Width',
                                                                                                           'width'=>'120',
-                                                                                                          'type'=>'numeric'),
+                                                                                                          'type'=>'text',
+                                                                                                          'allow'=>'d10'),
                                                                                                    
                                                                                                    array('column'=>'Height',
                                                                                                           'width'=>'75',
-                                                                                                          'type'=>'numeric',
+                                                                                                          'type'=>'text',
+                                                                                                          'allow'=>'d10'
                                                                                                     ),
                                                                                                     
                                                                                          ),

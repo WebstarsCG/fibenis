@@ -62,12 +62,15 @@
 							
 							3=>array('th'	=> 'Attr.', 'th_attr'=>' colspan=2 ',
 								     
-								'field'	=> "concat(id,':',(SELECT COUNT(*) FROM entity_attribute WHERE entity_code=entity.code))",
+								'field'	=> "concat(id,':',(SELECT COUNT(*) FROM entity_attribute WHERE entity_code=entity.code),':',is_lib)",
 								
 								'attr' =>  [ 'class'=>"", 'width' => "6%",],
 									
                                                                 'filter_out'=>function($data_in){
-													$temp = explode(':',$data_in);
+												
+												$temp = explode(':',$data_in);
+												
+												if($temp[2]==1){
 						
 													$data_out = array('id'   => $temp[0],
 												         'link_title'=>'  '.$temp[1],
@@ -77,7 +80,15 @@
 													 'is_fa_btn'=>' btn-default btn-sm w_50 ',
 													 'src'=>"?d=entity_attribute&menu_off=1&mode=simple&default_addon=$temp[0]",
 												         'style'=>"border:none;width:100%;height:600px;");
+												}else{
+													$data_out = array('id'   => '',
+												         'link_title'=>'',
+													 'is_fa'=>' fa fa-close clr_red',
+												         'title'=>'',
+													 'src'=>"",
+												         'style'=>"border:none;width:100%;height:600px;");
 													
+												}
 													 return json_encode($data_out);
 													 
 													 
@@ -91,20 +102,32 @@
 							
 							7=>array('th'	=> '',
 								     
-								  'field'	=> 'id',
+								  'field'	=> "concat(id,':',is_lib)",
 								  
 								  'attr' =>  [ 'class'=>"brdr_right"],
 									
 								  'filter_out'=>function($data_in){
-                                                                            
-													$data_out = array('id'   => $data_in,
+								  
+												$temp = explode(':',$data_in);
+												
+												if($temp[1]==1){
+						
+													$data_out = array('id'   => $temp[0],
 													'link_title'=>"Add Attribute",
 													'is_fa'=>' fa fa-plus-square-o clr_red fa-lg',
 													'title'=>'Add Attribute',
-													'src'=>"?f=entity_attribute&menu_off=1&mode=simple&default_addon=$data_in",
+													'src'=>"?f=entity_attribute&menu_off=1&mode=simple&default_addon=$temp[0]",
 													'style'=>"border:none;width:100%;height:600px;"
 													);
-														
+												}else{
+													$data_out = array('id'   => '',
+												         'link_title'=>'',
+													 'is_fa'=>' fa fa-close clr_red',
+												         'title'=>'',
+													 'src'=>"",
+												         'style'=>"border:none;width:100%;height:600px;");
+													
+												}	
 													return json_encode($data_out);
 													 
 												 },

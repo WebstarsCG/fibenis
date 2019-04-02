@@ -134,6 +134,8 @@
 									
 								    'type'              => 'fibenistable',
 								    
+								    'is_index'		=>1,
+								    
 								    'colHeaders'=> array(array(
 											    'column'    => 'A',
 											    'width'     => '50',
