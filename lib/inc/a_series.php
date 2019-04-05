@@ -30,18 +30,27 @@
 						 );
 										
 				
+				if($A_SERIES[$TOKEN]){
 		
-				echo $A_SERIES[$TOKEN]([
-								'data'	  => @$_GET['param'],
-								'sv' 	  => @$_GET['sv'],
-								'rdsql'   => $rdsql,
-								'G'	  => $G,
-								'user_id' => @$USER_ID,
-								'pass_id' => @$PASS_ID
-								
-								
-								
-				]);
+						echo $A_SERIES[$TOKEN]([
+										'data'	  => @$_GET['param'],
+										'sv' 	  => @$_GET['sv'],
+										'rdsql'   => $rdsql,
+										'G'	  => $G,
+										'user_id' => @$USER_ID,
+										'pass_id' => @$PASS_ID
+										
+										
+										
+						]);
+				}else{
+						
+						http_response_code(404);
+						
+						include ("$LIB_PATH/template/error/404.php");
+						
+						exit;	
+				}
 		}else{
 				
 				
@@ -50,10 +59,18 @@
 						'action_type'		=> 'UACE',						
 						'action'		=> ''
 						);
+				
+				$G->set_system_log($param);
+				
+				http_response_code(404);
+						
+				include ("$LIB_PATH/template/error/404.php");
+						
+				exit;
 		}
 		
 		
-		$G->set_system_log($param);
+		
 		
 		# action router
 		

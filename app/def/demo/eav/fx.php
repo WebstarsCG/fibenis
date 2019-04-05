@@ -143,6 +143,8 @@
 								    
 								    'type' 		=> 'option',
 								    
+								    'option_default'=> array('label'=>'Select Employment','value'=>'NANA'),
+								    
 								    'option_data'	=>$G->option_builder('entity_child_base','token,sn',
 													     'WHERE entity_code IN (SELECT code FROM entity WHERE is_lib = 0)
 													      ORDER by sn ASC'),
@@ -200,6 +202,8 @@
 								    'is_fibenistable'   => 1,
 									
 								    'type'              => 'fibenistable',
+								    
+								    'is_index'		=> 1,
 								    
 								    'colHeaders'=> array(array(
 											    'column'    => 'A',
@@ -282,29 +286,29 @@
 								    
 							    ),
 							
-							 '12' =>array( 'field_name'	=> 'Auto-complete', 
-                                                               
-								    'field_id' 		=> 'exa_value',
-								   
-								    'type' 		=> 'autocomplete',
-								   
-								    'remote_link' 	=> 'router.php?series=ax&action=demo__eav&token=FT_AUTT',
-								    
-								    'child_table'         	=> 'exav_addon_varchar', 	
-							       
-								    'parent_field_id'     	=> 'parent_id',    		
-										       
-								    'child_attr_field_id' 	=> 'exa_token',   		
-							       
-								    'child_attr_code'     	=> 'DEAU',
-		   
-                                                               ),
+//							 '12' =>array( 'field_name'	=> 'Auto-complete', 
+//                                                               
+//								    'field_id' 		=> 'exa_value',
+//								   
+//								    'type' 		=> 'autocomplete',
+//								   
+//								    'remote_link' 	=> 'router.php?series=ax&action=demo__eav&token=FT_AUTT',
+//								    
+//								    'child_table'         	=> 'exav_addon_varchar', 	
+//							       
+//								    'parent_field_id'     	=> 'parent_id',    		
+//										       
+//								    'child_attr_field_id' 	=> 'exa_token',   		
+//							       
+//								    'child_attr_code'     	=> 'DEAU',
+//		   
+//                                                               ),
 							 
 							'13' => array( 'field_name'   => 'Left right',
 				
 								    'field_id' => 'exa_value',
                                                                
-                                                                    'type' => 'option',
+                                                                    //'type' => 'list_left_right',
                                                                    
                                                                     'child_table'         => 'exav_addon_text', // child table
                                                                    

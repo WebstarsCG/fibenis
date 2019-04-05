@@ -2,7 +2,7 @@
         
         include($LIB_PATH."/def/external_attribute/f.php");
         
-        $LAYOUT - 'layout_right';
+        $LAYOUT = 'external_attribute';
         
         $temp = [];
         
@@ -13,6 +13,10 @@
                                 'ITSL' => [8],
                                 'ITTA' => [13],
                                 'ITIG' => [],
+                                'ITCE' => [],
+                                'ITTE' => [],
+                                'ITLA' => [],
+                                'ITTG' => [41,42,43,44,45],
                                 'ITFI' => [33,34,35,36,37,38,39,40],
                                 'ITFD' => [33,34,35,36,37,38,39,40],
                                 'ITDT' => [18,19,20,21,22,23],

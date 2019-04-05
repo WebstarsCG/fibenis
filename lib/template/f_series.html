@@ -1,8 +1,8 @@
 
 
 	<TMPL_IF HAS_TEXTAREA_EDITOR>	
-		<!--<script language="JavaScript" type="text/javascript" src="<TMPL_VAR LIB_PATH>/comp/ckeditor/ckeditor.js"></script>-->
-		<script src="//cdn.ckeditor.com/4.11.1/basic/ckeditor.js"></script>
+		<script language="JavaScript" type="text/javascript" src="<TMPL_VAR LIB_PATH>/comp/ckeditor/ckeditor.js"></script>
+		<!--<script src="//cdn.ckeditor.com/4.11.1/basic/ckeditor.js"></script>-->
 	</TMPL_IF>	
 		
 	<TMPL_IF HAS_HANDSONTABLE>	
@@ -671,7 +671,7 @@
 									</select>
 								    
 									<TMPL_IF option_multiple>
-										<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="">
+										<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" data-input-type="select-multiple" value="">
 									</TMPL_IF>
 								    
 									<TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
@@ -680,9 +680,11 @@
 									
 						</span>
 						
-						<script language="JavaScript" type="text/javascript">
-							input_temp.option['X<TMPL_VAR field_id>']=1;						
-						</script>
+						<TMPL_UNLESS option_multiple>
+							<script language="JavaScript" type="text/javascript">
+								input_temp.option['X<TMPL_VAR field_id>']=1;						
+							</script>
+						</TMPL_UNLESS>
 				        	
 				        </div>					
 				</TMPL_IF>
@@ -735,14 +737,14 @@
 													<script language="javascript" type="text/javascript">													
 														f_series.temp.__element_out.push({id:<TMPL_VAR ID>,name:'<TMPL_VAR SN>'});																										
 													</script>														
-														<option value="<TMPL_VAR ID>"><TMPL_VAR SN></option>														
+														<option value="<TMPL_VAR ID>" ><TMPL_VAR SN></option>														
 													</TMPL_LOOP>
 											</TMPL_IF>
 												
 										</select>
 										
-										<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
-											
+											<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+											<div>&nbsp;</div>	
 										</td>
 										
 										<td class="align_CM ">
@@ -785,7 +787,7 @@
 										</td>
 								</table>
 								
-								<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="">
+								<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="" data-input-type="select-left-right">
 								<input type="hidden" id="X<TMPL_VAR field_id>_RIGHT_TEXT"  name="X<TMPL_VAR field_id>_RIGHT_TEXT" value="">
 							    	
 								
@@ -2478,7 +2480,9 @@
 							E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
 						
 						}else{
-														
+								
+							
+							
 							if(input_temp.range['<TMPL_VAR ID>']==1){							
 							
 								init_range('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
@@ -2517,6 +2521,22 @@
 									$("#<TMPL_VAR ID>").trigger( "onchange");
 								}
 							
+							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-multiple'){							
+								//alert(ELEMENT('<TMPL_VAR ID>').dataset.inputType+'=='+'<TMPL_VAR VALUE>');
+								select_multiple_index_value('<TMPL_VAR ID>_TEMP','<TMPL_VAR VALUE>');
+								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+								if ( (ELEMENT('<TMPL_VAR ID>').onchange!=null) &&
+								     (ELEMENT('<TMPL_VAR ID>').dataset.updatePrefillOff!=1)
+								){
+									$("#<TMPL_VAR ID>").trigger( "onchange");
+								}
+							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-left-right'){							
+								
+								select_option_transfer_by_value(ELEMENT('<TMPL_VAR ID>_LEFT'),
+											 ELEMENT('<TMPL_VAR ID>_RIGHT'),
+											 '<TMPL_VAR VALUE>');
+								
 							}else{								
 								
 								E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));

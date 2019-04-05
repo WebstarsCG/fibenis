@@ -9,13 +9,26 @@
 				
 				'key_id'        => 'id',
                                 
-                                'data'	=>   array(	'1' =>array( 'field_name'	=> 'Text',
+                                'data'	=>   array(
+						   
+						    	'17' =>array( 'field_name'	=> 'Basic', 
+                                                               
+								   
+								    'type' 		=> 'heading',
+								    
+								   
+                                                            ),
+						   
+						    
+						   '1' =>array( 'field_name'	=> 'Text',
                                                                
 								    'field_id' 		=> 'text_flat',
 								    
 								    'type' 		=> 'text',
 								    
 								    'is_mandatory'	=>1,
+								    
+								    'allow'=>'x5',
 								    
 							       ),
 						   
@@ -26,6 +39,8 @@
 								    'type' 		=> 'textarea',
 								    
 								    'input_html'	=>'class="w_200"',
+								    
+								     'allow'=>'x10',
                                                                
 							       ),
 							
@@ -206,6 +221,16 @@
                 
 							    ),
 							
+							
+							'16' =>array( 'field_name'	=> 'Tab', 
+                                                               
+								   
+								    'type' 		=> 'heading',
+								    
+								   
+                                                            ),
+
+							
 							'14' =>array( 'field_name'	=> 'Text Editor', 
                                                                
 								    'field_id' 		=> 'text_editor',
@@ -215,6 +240,17 @@
 								    'input_html'	=>'class="w_100"',
 								    
 							    ),
+							
+							
+							
+							
+							'18' =>array( 'field_name'	=> 'Sub Heading', 
+                                                               
+								   
+								    'type' 		=> 'sub_heading',
+								    
+								   
+                                                            ),
 							
 							'15' =>array( 'field_name'	=> 'Code Editor', 
                                                                
@@ -236,6 +272,8 @@
 				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?dx=demo__flat', 'BACK_NAME'=>'Back'),
                                 
 				'flat_message'	=> 'Successfully Added',
+				
+				'divider'	=> 'tab',	
 				
 				'show_query'  => 0 	#for debugging
 				

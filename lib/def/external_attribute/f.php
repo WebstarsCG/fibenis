@@ -96,9 +96,9 @@
                                                                     'type'                => 'option',
                                                                     'option_data'         => $G->option_builder('entity_attribute','code,sn'," WHERE entity_code='IT' ORDER by sn ASC"),                                                               
                                                                     'is_mandatory'        => 1,
+                                                                    'is_hide'             => 1,
+                                                                    'option_default'=> array('label'=>'Text','value'=>'ITTX'),
                                                                     //'input_html'          => ' onchange=input_type_action(this)',
-                                                                                                                        
-                                                                    //child table                                                                            
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
                                                                     'parent_field_id'     => 'parent_id',            // parent field                                                                                            
                                                                     'child_attr_field_id' => 'ea_code',              // attribute code field
@@ -111,14 +111,10 @@
                                                                     'field_name'          => 'Option Data',
                                                                      'field_id'           => 'ea_value',
                                                                     'is_fibenistable'   => 1,
+                                                                    'is_index'          => 1,
 								    'type'              => 'fibenistable',
                                                                     //'is_ro'               =>1,
-                                                                    
-                                                                    
                                                                     'is_mandatory'        => 0,
-                                                                    
-                                                                       //child table
-                                                                            
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
                                                                     'parent_field_id'     => 'parent_id',           // parent field
                                                                                             
@@ -514,6 +510,7 @@
                                                                     'field_id'            => 'ea_value',				       
                                                                     'is_ro'               => 0,
                                                                     'is_fibenistable'   => 1,
+                                                                    'is_index'          => 1,
 								    'type'              => 'fibenistable',
                                                                     'is_mandatory'        => 0,
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
@@ -694,6 +691,7 @@
                                                                     'is_ro'               => 0,
                                                                     'is_fibenistable'   => 1,
 								    'type'              => 'fibenistable',
+                                                                    'is_index'          => 1,
                                                                     'is_mandatory'        => 0,
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
                                                                     'parent_field_id'     => 'parent_id',            // parent field
@@ -846,6 +844,71 @@
             $F_SERIES['data'][1]['option_data']=$G->option_builder('entity','code,sn',"WHERE is_lib=0 ORDER by sn ASC");
         
         } // default addon
+        
+        
+        // if(@$_GET['key']){
+        //    
+        //    $F_SERIES['data'][1]['option_data']=$G->option_builder('entity','code,sn'," WHERE code=(SELECT entity_code FROM entity_child_base WHERE id = $_GET[key])");
+        //}
+         
+        
+        
+        //ext_at_addon
+        
+        $LAYOUT = 'external_attribute';
+        
+        $temp = [];
+        
+        $temp ['input_type'] = ['EX'    => [0,1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45],
+                                'GN'    => [0,1,2,3,4,5,6,9,10,11,12,14,15,16,17],
+                                'ITTX'  => [13],
+                                'ITFT'  => [26,27,28,29,30,31,32],
+                                'ITSL'  => [8],
+                                'ITTA'  => [13],
+                                'ITIG'  => [],
+                                'ITCE'  => [],
+                                'ITTE'  => [],
+                                'ITSH'  => [],
+                                'ITHD'  => [],
+                                'ITLA'  => [],
+                                'ITTG'  => [41,42,43,44,45],
+                                'ITFI'  => [33,34,35,36,37,38,39,40],
+                                'ITFD'  => [33,34,35,36,37,38,39,40],
+                                'ITDT'  => [18,19,20,21,22,23],
+                             ];
+        
+        if(@$_GET['i_t']){
+                
+                if (array_key_exists($_GET['i_t'],$temp['input_type'])){
+                
+                        $F_SERIES['data'][6]['option_data']=$G->option_builder('entity_attribute','code,sn'," WHERE entity_code='IT' AND code= '$_GET[i_t]' ORDER by sn ASC");
+                        
+                        $F_SERIES['data'][6]['avoid_default_option']= 1;
+                        
+                        $temp['to_set']=array_merge($temp ['input_type']['GN'],$temp ['input_type'][$_GET['i_t']]);
+                        
+                        $temp['to_set_final']=array_diff($temp['input_type']['EX'],$temp['to_set']); 
+                
+                }else{
+                        
+                        $temp['to_set_final']=array_diff($temp ['input_type']['EX'],$temp['input_type']['GN']);
+                
+                }       
+        
+        }else{
+                
+                $temp['to_set_final']=array_diff($temp ['input_type']['EX'],$temp['input_type']['GN']);
+                
+        }
+        
+        
+        foreach($temp ['to_set_final'] as $key => $val){
+                
+                unset($F_SERIES['data'][$val]);
+                
+        };
+        
+        //end of ext_at_addon
     
 ?>
 <style>

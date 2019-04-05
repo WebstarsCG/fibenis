@@ -149,9 +149,9 @@
 	  
 	  $parent = $param['X8'];
 	  
-	  $path   = 	$G->get_one_column([ 'field'       => "token",
+	  $path   = 	$G->get_one_cell([ 'field'       => "token",
 					     'table'       => 'entity_child_base',
-					     'manipulation'=> "id=$parent"]);
+					     'manipulation'=> "WHERE id=$parent"]);
 	        
 	  
 	  $file = get_config('theme_path').'/'.$path.'/template/layout';

@@ -98,6 +98,8 @@
                                                                'type'=>'fibenistable',
 							       
 								'is_fibenistable'   => 1,
+								
+								'is_index' =>1,
 							       
 							       'colHeaders'=> array(array(
 											    'column'    => 'Field',
@@ -132,31 +134,7 @@
 							       'is_mandatory'=>0,
                                                                
                                                             ),
-						    
-//						    '5' =>array('field_name'=>'Secondary color',
-//                                                               
-//                                                               'type'=>'text',
-//                                                               
-//							       'field_id'=>'ea_value',
-//                                                               
-//                                                               'child_table'         => 'eav_addon_varchar', // child table
-//							       
-//							       'parent_field_id'     => 'parent_id',    // parent field
-//										       
-//							       'child_attr_field_id' => 'ea_code',   // attribute code field
-//							       
-//							       'child_attr_code'     => 'NBPM',           // attribute code
-//							       
-//							       'allow'     => 'w50[_]',
-//                                                               
-//							       'input_html'=>'class="w_100"',
-//							       
-//							       'is_mandatory'=>0,
-//                                                               
-//                                                               ),
-						  
 						   
-				    
                                 ),
                                     
 				'table_name'    => 'entity_child',
@@ -197,7 +175,7 @@
 		  $d_a = $_GET['default_addon'];
 		  
 		  $lib = $LIB_PATH.'/comp/guzzle_rest/vendor/autoload.php';				
-		  
+
 		  require_once $lib ;
 		  
 		  $client = new Client(['timeout'  => 2.0,]);
@@ -227,6 +205,31 @@
 												    ]
 											       ]
 					     );
+		    
+		    //to convert less to css
+		    
+		    require $LIB_PATH.'/comp/less/lessc.inc.php';
+		    
+		    $input = get_config('theme_path').'/'.$lv['theme'].'/blend/'.$lv['param']['X2'];
+		    
+		    $output = get_config('theme_path').'/'.$lv['theme'].'/blend/'.$lv['param']['X2'];
+		    
+		    $less = new lessc;
+		    
+		    try {
+		      
+			$less->compile(".block { padding: 3 + 4px }");
+			
+			$less->compileFile("$input.less");
+		
+			$less->checkedCompile("$input.less", "$output.css");
+		    
+		    } catch (exception $e) {
+		      
+		      echo "error";
+		    
+		    }
+
 		  
 	
     } # end

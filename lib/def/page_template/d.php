@@ -66,7 +66,7 @@
 					  token = (SELECT ea_value FROM eav_Addon_varchar WHERE ea_code='ECSN' aND parent_id = $default_addon))";
         	unset($D_SERIES['data'][1]);
 		unset($D_SERIES['export_csv']);
-		$D_SERIES['action']['is_edit']=0;
+		$D_SERIES['action']['is_edit']=1;
 		$D_SERIES['add_button']['is_add']=0;
 		$D_SERIES['del_permission']['able_del']=1;
 		$D_SERIES['summary_data'] = [];

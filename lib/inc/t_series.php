@@ -17,8 +17,7 @@
 				$router = action_router(array('page_id'      =>$PAGE_ID,
 							'page_name' => $PAGE_NAME,
 							'lib_path'  => $LIB_PATH
-							));
-					
+							));					
 				
 				if($router['action']){
 						
@@ -34,9 +33,11 @@
 						
 		
 				}else{
-						//echo 'Sorry';
+						http_response_code(404);
 						
-						header("location:?d=error&code=PG");
+						include ("$LIB_PATH/template/error/404.php");
+						
+						exit;
 				}
 		} # app key	
 		

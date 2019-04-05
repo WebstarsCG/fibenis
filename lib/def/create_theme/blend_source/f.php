@@ -92,6 +92,8 @@
                                                                'type'=>'fibenistable',
 							       
 								'is_fibenistable'   => 1,
+								
+								'is_index'	=>1 ,
 							       
 							       'colHeaders'=> array(array(
 											    'column'    => 'Field',

@@ -108,19 +108,23 @@
 				
 						//sys_log	
 				
-						$param = array('user_id'=>$USER_ID,
+						$param = array( 'user_id'    => $USER_ID,
 							       
-								'page_code'=>$D_SERIES['page_code'],
+								'page_code'  => $D_SERIES['page_code'],
 								
-								'action_type'=>'DVEW',
+								'action_type'=> 'DVEW',
 								
-								'action'=>'View the '.$app_key.' page');
+								'action'     => 'View the '.$app_key.' page');
 						
 						$G->set_system_log($param);
 						
 				}else{
-					
-					echo 'Sorry';
+				
+						http_response_code(404);
+						
+						include ("$LIB_PATH/template/error/404.php");
+						
+						exit;
 				}	
 				
 		} # app key	

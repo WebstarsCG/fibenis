@@ -77,7 +77,11 @@
 						
 						$G->set_system_log($param);
 				}else{
-						echo 'Sorry';
+						http_response_code(404);
+						
+						include ("$LIB_PATH/template/error/404.php");
+						
+						exit;
 				}
 				
 				
@@ -396,7 +400,7 @@
 								 'v'=>'is_value'
 								);
 				
-				// divide
+				// divider				
 				
 				
 				
@@ -424,239 +428,210 @@
 		    
 				foreach($data_def as $key=>$value){
 						
-						$temp 			   = array();
+						$temp 			   	= array();
 						
-						$temp['field_name']  	   = $value['field_name'];
-							
-						$temp['field_id']   	   = $key;
-
-						$temp['field_token']       = (@$value['field_token'])?@$value['field_token']:'';
+						$temp['field_name']  	   	= $value['field_name'];
 						
-						$temp['is_mandatory']      = (@$value['is_mandatory'])?1:0;
+						$temp['field_id']   	   	= $key;
+	
+						$temp['field_token']       	= (@$value['field_token'])?@$value['field_token']:'';
 						
+						$temp['is_mandatory']      	= (@$value['is_mandatory'])?1:0;
+	
+						$temp['input_html']	   	= (@$value['input_html'])?@$value['input_html']:@$attr;
+						
+						$temp['hint']		   	= (@$value['hint'])?@$value['hint']:'';
+						
+						$temp['is_hide']	   	= (@$value['is_hide'])?@$value['is_hide']:'';
+						
+						$temp['is_divider']     	= $lv['divider'];
+						
+						$temp['ro']             	= (@$value['ro'])?1:0;
+	
 						$attr='';
-						
-						#echo @$value['attr'];
+	
 						if(@$value['attr']){
+								
 								foreach(@$value['attr'] as $attr_key=> $attr_value ){
 										
 										$attr.= $attr_key.'="'.$attr_value.'"'; 
 								}
 						}
-													
-						$temp['input_html']	   = (@$value['input_html'])?@$value['input_html']:@$attr;
-						
-						$temp['hint']		   = (@$value['hint'])?@$value['hint']:'';
-						
-						$temp['is_hide']	   = (@$value['is_hide'])?@$value['is_hide']:'';
-						
-						$temp['is_divider']        = $lv['divider'];
-						
-						$temp['ro']                = (@$value['ro'])?1:0;
 							
-						// label
-						
-						if(@$value['type']=='label'){
-								
-								$temp['field_type_label'] =1;
-								
-						}
-												
 						// heading
 						
-						$temp['field_type_heading'] = 0;
-						
 						if(@$value['type']=='heading'){
+	
+								$temp['field_type_heading'] = 0;
+	
+								$lv['counter']['divider']++;		
+							       
+								$temp['field_type_heading'] ='heading';
 								
-						    $lv['counter']['divider']++;		
-						   
-						    $temp['field_type_heading'] ='heading';
+								if($lv['divider']){
 						    
-						    if($lv['divider']){
+										array_push($lv['heading'],['label'    => $temp['field_name'],
+																						 'id'       => $temp['field_id']
+																						]
+													);
+										
+										$temp['is_divider_'.$lv['is_divider_type']]=1;
 						    
-								array_push($lv['heading'],['label'    => $temp['field_name'],
-											   'id'       => $temp['field_id']
-											   ]
-									    );
-								
-								$temp['is_divider_'.$lv['is_divider_type']]=1;
+								} // if divider
 						    
-						    } // if divider
-						    
-						    // sub heading
-						    $lv['last_divider_id']        = $temp['field_id'];
-						    $lv['counter']['sub_heading'] = 0;						    
-						    $temp['has_sub_divider']      = $lv['has_sub_heading'];
-						    $lv['has_sub_heading']        = 0;
-						}
-						
 						// sub heading
-						
-						if((@$value['type']=='sub_heading') && ($lv['last_divider_id'])){
+		
+							    $lv['last_divider_id']        	= $temp['field_id'];
+							    $lv['counter']['sub_heading'] 	= 0;						    
+							    $temp['has_sub_divider']      	= $lv['has_sub_heading'];
+							    $lv['has_sub_heading']        	= 0;
+							    
+						}elseif((@$value['type']=='sub_heading') && ($lv['last_divider_id'])){
 								
 								$temp['field_type_sub_heading'] ='sub_heading';
 								$lv['has_sub_heading']          = 1;
 								$lv['counter']['sub_heading']++;
 								
-								$temp['is_first_sub_divider']= $lv['counter']['sub_heading'];
-								$temp['last_divider_id']     = $lv['last_divider_id'];
+								$temp['is_first_sub_divider']		= $lv['counter']['sub_heading'];
+								$temp['last_divider_id']     		= $lv['last_divider_id'];
 								
-								$lv['counter']['sub_heading']=-1;
+								$lv['counter']['sub_heading']		=-1;
 						} // end
 						
-						$temp['last_divider_id']=($lv['last_divider_id'])?$lv['last_divider_id']:'';
+	
 						
-						$temp['is_first_divider'] =  $lv['counter']['divider'];
-						$lv['counter']['divider'] = -1;
-						
-						if(@$value['type']=='toggle'){
+						// label
+	
+						elseif(@$value['type']=='label'){
+	
+							$temp['field_type_label'] =1;
+							
+						}
+		
+						// toggle
+					
+						elseif(@$value['type']=='toggle'){
 								
-								$temp['field_type_toggle'] 	    = 1;
-								$temp['is_round']                   =(@$value['is_round'])?1:0;
-								$temp['show_status_label']          =(@$value['show_status_label'])?1:0;
-								$temp['on_label']       	    =(@$value['on_label'])?$value['on_label']:'On';
-								$temp['off_label']          	    =(@$value['off_label'])?$value['off_label']:'Off';
-								$temp['is_default_on']              =(@$value['is_default_on'])?1:0;
+								$temp['field_type_toggle'] 	    	= 1;
+								$temp['is_round']                	=	(@$value['is_round'])?1:0;
+								$temp['show_status_label']       	=	(@$value['show_status_label'])?1:0;
+								$temp['on_label']       	    		=	(@$value['on_label'])?$value['on_label']:'On';
+								$temp['off_label']          	    =	(@$value['off_label'])?$value['off_label']:'Off';
+								$temp['is_default_on']            =	(@$value['is_default_on'])?1:0;
 								
 						}
 						
 						// code editor
 						
-						if(@$value['type']=='code_editor'){
-								
-								$temp['field_type_code_editor']     = 1;
-								$lv['form']['has_code_editor']      = 1; 
+						elseif(@$value['type']=='code_editor'){
+									
+									$temp['field_type_code_editor']     = 1;
+									$lv['form']['has_code_editor']      = 1; 
 						}
 						
 						// Field Date
+		
+						elseif(@$value['type']=='date'){
 						
-						$temp['field_type_date']   = (@$value['type'] =='date')?'date':0;
+								$temp['field_type_date']   	= (@$value['type'] =='date')?'date':0;
+								$temp['min_date']          	=  @$value['set']['min_date'];
+								$temp['max_date']          	=  @$value['set']['max_date'];
+								$temp['year_range']         =  @$value['year_range'];
+								$temp['default_date']       =  @$value['default_date'];
 						
-						$temp['min_date']          =  @$value['set']['min_date'];
-						$temp['max_date']          =  @$value['set']['max_date'];
-						
-						$temp['year_range']          =  @$value['year_range'];
-						
-						$temp['default_date']          =  @$value['default_date'];
-						
-						
-						// Field Text
-							
-						$temp['field_type_text']   = (@$value['type'] =='text')?'text':0;
-						
-						$temp['validate']   		= (@$value['validate'])?'1':0;
-						
-						$temp['validate_fun']   	= @$value['validate'];
-						
-						// allow addition
-						
-						if(@$value['allow']){
-								
-								$lv['allow_matches']=null;
-								preg_match('/([dwxcv]){1}(\d+)([\=\-\,]*)(\d*)((\[)(.*)(\]))*/i',$value['allow'],$lv['allow_matches']);
-								
-								//if($lv['allow_matches'][1])
-								
-								if(in_array(@$lv['allow_matches'][1],
-									    array_keys($lv['allow']['pattern'])
-									    )
-								){
-								
-										// set match pattern
-										$temp[ $lv['allow']['pattern'][ $lv['allow_matches'][1] ] ]  = 1;
-										
-										
-										
-										$temp['special_in'] = (@$lv['allow_matches'][7])?@$lv['allow_matches'][7]:'';
-										
-										if( (@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]=='=')){										
-												$temp['max_length'] = ($lv['allow_matches'][2])?$lv['allow_matches'][2]:'';
-												$temp['length_match']=@$lv['allow_matches'][3];
-												
-										}else if( (@$lv['allow_matches'][1]=='v') && (@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]=='-') && (@$lv['allow_matches'][4]) ){
-												
-												$temp['min_value']   = $lv['allow_matches'][2];												
-												$temp['max_value']   = $lv['allow_matches'][4];
-												$temp['max_length']  = strlen($lv['allow_matches'][4]);
-										
-										}else if( (@$lv['allow_matches'][1]!='v') &&(@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]=='-') && (@$lv['allow_matches'][4]) ){
-												
-												$temp['min_length']   = $lv['allow_matches'][2];												
-												$temp['max_length']   = $lv['allow_matches'][4];
-										
-										}else if((@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]==',') && (@$lv['allow_matches'][4]) ){
-												
-												$temp['left_length']   = $lv['allow_matches'][2];												
-												$temp['right_length']   = $lv['allow_matches'][4];
-										
-										}else if(@$lv['allow_matches'][2]){
-												
-												$temp['max_length']   = $lv['allow_matches'][2];
-										}
-								}
-								
-								#print_r($lv['allow_matches']);
 						}
 						
-						#echo @$value['validate'];
+						// Field Text
+		
+						elseif(@$value['type']=='text'){
+							
+								$temp['field_type_text']   	= (@$value['type'] =='text')?'text':0;
+								
+								$temp['validate']   				= (@$value['validate'])?'1':0;
+								
+								$temp['validate_fun']   		= @$value['validate'];
+						
+						}
+						
 						
 						// Field Password
+		
+						elseif(@$value['type']=='password'){
 						
-						$temp['field_type_password']   = (@$value['type']=='password')?'password':0;
+								$temp['field_type_password']   = (@$value['type']=='password')?'password':0;
+						
+						}
 						
 						// is hidden
+		
+						elseif(@$value['type']=='hidden'){
 						
-						$temp['field_type_hidden']     = (@$value['type']=='hidden')?'hidden':0;
+								$temp['field_type_hidden']     = (@$value['type']=='hidden')?'hidden':0;
+								
+						}
 						
 						// auto complete
-						$temp['field_type_autocomplete']   = (@$value['type'] =='autocomplete')?'autocomplete':0;
-						
-						
-						
-						$temp['field_type_auto_complete_v2']  	= (@$value['type']=='auto_complete')?'auto_complete':0;	
-						
-						$temp['remote_link']  	  	= @$value['remote_link'];
-						
-						$temp['restrict_new_entry']  	= @$value['restrict_new_entry'];
-						
-						if( (@$value['default']['id']) && (@$value['default']['label'])){
+		
+						elseif(@$value['type']=='autocomplete'){
+									
+								$temp['field_type_autocomplete']   = (@$value['type'] =='autocomplete')?'autocomplete':0;
 								
-							$temp['default_id'] = @$value['default']['id'];
-							$temp['default_label'] = @$value['default']['label'];
-						};
+								$temp['field_type_auto_complete_v2']  	= (@$value['type']=='auto_complete')?'auto_complete':0;	
+								
+								$temp['remote_link']  	  	= @$value['remote_link'];
+								
+								$temp['restrict_new_entry']  	= @$value['restrict_new_entry'];
+								
+								if( (@$value['default']['id']) && (@$value['default']['label'])){
+										
+									$temp['default_id'] = @$value['default']['id'];
+									$temp['default_label'] = @$value['default']['label'];
+								
+								};
+							}
 						
 						// Range
+		
+						elseif(@$value['type']=='range'){
 						
-						$temp['field_type_range']  	= (@$value['type']=='range')?'range':0;
-						
-						if($temp['field_type_range']){
-						
-								$temp['start_label']  	= @$value['start_label'];
-								$temp['end_label']  	= @$value['end_label'];
+								$temp['field_type_range']  	= (@$value['type']=='range')?'range':0;
 								
-								$temp['start_place_holder']  	= @$value['start_place_holder'];
-								$temp['end_place_holder']  	= @$value['end_place_holder'];
+								if($temp['field_type_range']){
+								
+										$temp['start_label']  	= @$value['start_label'];
+										$temp['end_label']  	= @$value['end_label'];
+										
+										$temp['start_place_holder']  	= @$value['start_place_holder'];
+										$temp['end_place_holder']  	= @$value['end_place_holder'];
+								
+								} // end
 						
-						} // end
+							}
 						
 						// HMS
+		
+						elseif(@$value['type']=='hms'){
 						
-						$temp['field_type_hms']  	= (@$value['type']=='hms')?'hms':0;	
+								$temp['field_type_hms']  	= (@$value['type']=='hms')?'hms':0;
+						}
 										
 						// Field File
+		
+						elseif(@$value['type']=='file'){
 							
-						$temp['field_type_file']   = (@$value['type'] =='file')?'file':0;
+								$temp['field_type_file']   = (@$value['type'] =='file')?'file':0;
+								
+								$temp['allow_ext']         = (@$value['allow_ext'])?implode($value['allow_ext'],','):'';
+								
+								$temp['max_size']          = (@$value['max_size'])?(@$value['max_size']):512;
+								
+								// doubt
+								$temp['up_key']      = (@$_GET['key'])?@$_GET['key']:0;
+						}
+				
+						// Field Textarea Editor
 						
-						$temp['allow_ext']         = (@$value['allow_ext'])?implode($value['allow_ext'],','):'';
-						
-						$temp['max_size']          = (@$value['max_size'])?(@$value['max_size']):512;
-						
-						$temp['up_key']      = (@$_GET['key'])?@$_GET['key']:0;
-						
-						
-						// Field Textarea
-						
-						if(@$value['type']=='textarea_editor'){
+						elseif(@$value['type']=='textarea_editor'){
 						
 								$temp['field_type_textarea_editor']   = 1;
 						
@@ -669,60 +644,72 @@
 								$lv['form']['has_textarea_editor'] = 1;
 								
 						}
+						
+						//Field Textarea
+		
+						elseif(@$value['type']=='textarea'){
 												
-						$temp['field_type_textarea']  = (@$value['type'] =='textarea')?'textarea':0;
+									$temp['field_type_textarea']  = (@$value['type'] =='textarea')?'textarea':0;
+						}
 						
 						// Field Option
-						
-						$temp['field_type_option']   = (@$value['type'] =='option')?'option':0;
-												
-						$temp['option_multiple']     = (@$value['is_list'])?1:0;
-						
 		
+						elseif(@$value['type']=='option'){
 						
-						$temp['option_data']   	     = @$value['option_data'];
-						
-						$temp['option_id_name']	     = @$value['option_id_name'];
-						
-						$temp['option_is_quick_search']	= (@$value['option_is_quick_search'])?$key:0;
-						
-						$temp['option_existing_data']= @$value['option_existing_data'];
-					
-						$temp['option_fun']          = @$value['option_fun'];
-						
-						$temp['option_label']        = (@$value['option_default']['label'])?@$value['option_default']['label']:'Select';
+								$temp['field_type_option']   = (@$value['type'] =='option')?'option':0;
+														
+								$temp['option_multiple']     = (@$value['is_list'])?1:0;
 								
-						$temp['option_value']        = @$value['option_default']['value'];
-						
-						$temp['avoid_default_option'] = @$value['avoid_default_option'];
+								$temp['option_data']   	     = @$value['option_data'];													
+							
+								$temp['option_fun']          = @$value['option_fun'];
+								
+								$temp['option_label']        = (@$value['option_default']['label'])?@$value['option_default']['label']:'Select';
+										
+								$temp['option_value']        = @$value['option_default']['value'];
+								
+								$temp['avoid_default_option'] = @$value['avoid_default_option'];
+						}
 						
 						// Field List Dual
+		
+						elseif(@$value['type']=='list_left_right'){
+								
+								$temp['field_type_list_left_right']   = (@$value['type'] =='list_left_right')?'list_left_right':0;
+								
+								$temp['option_data']   	     	      = @$value['option_data'];
+								
+								$temp['option_id_name']	     = @$value['option_id_name'];
+								
+								$temp['option_is_quick_search']	= (@$value['option_is_quick_search'])?$key:0;
+								
+								$temp['option_existing_data']= @$value['option_existing_data'];
+								
+								$temp['is_left_right_action']         = (@$value['is_left_right_action'])?@$value['is_left_right_action']:0;
+								
+								$temp['right_option_limit']           = (@$value['right_option_limit'])?@$value['right_option_limit']:0;
 						
-						$temp['field_type_list_left_right']   = (@$value['type'] =='list_left_right')?'list_left_right':0;
-						
-						$temp['is_left_right_action']         = (@$value['is_left_right_action'])?@$value['is_left_right_action']:0;
-						
-						$temp['right_option_limit']           = (@$value['right_option_limit'])?@$value['right_option_limit']:0; 
+						}
 						
 						//plug_in
 						
-						$temp['is_plugin']  		 = @$value['is_plugin'];
+						elseif(@$value['type']=='handsontable_type'){
+							
+							$temp['handsontable_type'] = (@$value['type'] =='handsontable')?'handsontable':0;
+							$temp['min_spare_rows']    =  (@$value['default_rows_prop']['min_spare_rows'])?(@$value['default_rows_prop']['min_spare_rows']):1;
+							$temp['start_rows']        =  (@$value['default_rows_prop']['start_rows'])?(@$value['default_rows_prop']['start_rows']):3;
+							$temp['max_rows']          =  (@$value['default_rows_prop']['max_rows'])?(@$value['default_rows_prop']['max_rows']):3;
+							$temp['min_rows']          =  (@$value['default_rows_prop']['min_rows'])?(@$value['default_rows_prop']['min_rows']):3;							
 						
-						$temp['handsontable_type']  	= (@$value['type'] =='handsontable')?'handsontable':0;
-						$temp['is_fibenistable']  		 = @$value['is_fibenistable'];
-						
-						
-					//	$temp['colHeaders']  		 =	 	json_encode(@$value['colHeaders']);
+						}
+												
+						//$temp['colHeaders']  		 =	 	json_encode(@$value['colHeaders']);
 						
 						//Handsontable Row properties(1st Apr 2015)
-						
 				
-						$temp['min_spare_rows']    =  (@$value['default_rows_prop']['min_spare_rows'])?(@$value['default_rows_prop']['min_spare_rows']):1;
-						$temp['start_rows']        =  (@$value['default_rows_prop']['start_rows'])?(@$value['default_rows_prop']['start_rows']):3;
-						$temp['max_rows']          =  (@$value['default_rows_prop']['max_rows'])?(@$value['default_rows_prop']['max_rows']):3;
-						$temp['min_rows']          =  (@$value['default_rows_prop']['min_rows'])?(@$value['default_rows_prop']['min_rows']):3;
-						
-						if(@$value['is_plugin']){
+						elseif(@$value['is_plugin']){
+							
+								$temp['is_plugin']  		 = @$value['is_plugin'];
 						
 								$handson_data_info = array();
 								
@@ -777,11 +764,13 @@
 						}
 						
 						
-						if(@$value['is_fibenistable']){
+						elseif(@$value['is_fibenistable']){
+							
+								$temp['is_fibenistable']  	= 	@$value['is_fibenistable'];
 								
-								$temp['start_rows']        =  (@$value['default_rows_prop']['start_rows'])?(@$value['default_rows_prop']['start_rows']):3;
+								$temp['start_rows']        	=  	(@$value['default_rows_prop']['start_rows'])?(@$value['default_rows_prop']['start_rows']):3;
 								
-								$num_colum = count($value['colHeaders'])-1;
+								$num_colum 			= 	count($value['colHeaders'])-1;
 								
 								$fibenisTable_row = array();
 								
@@ -812,6 +801,63 @@
 								$temp['fibenistable_row_info']  = $fibenisTable_row;
 								$temp['min_rows_to_fill']       = @$value['min_rows_to_fill'];
 								
+						} // end of columns
+						
+						
+						$temp['last_divider_id']  = ($lv['last_divider_id'])?$lv['last_divider_id']:'';						
+						$temp['is_first_divider'] =  $lv['counter']['divider'];
+						$lv['counter']['divider'] = -1;
+										
+						// allow
+						
+						
+						// allow addition
+						
+						if(@$value['allow']){
+								
+								$lv['allow_matches']=null;
+								preg_match('/([dwxcv]){1}(\d+)([\=\-\,]*)(\d*)((\[)(.*)(\]))*/i',$value['allow'],$lv['allow_matches']);
+								
+								//if($lv['allow_matches'][1])
+								
+								if(in_array(@$lv['allow_matches'][1],
+									    array_keys($lv['allow']['pattern'])
+									)
+								){
+								
+										// set match pattern
+		
+										$temp[$lv['allow']['pattern'][ $lv['allow_matches'][1] ] ]  = 1;
+									
+										$temp['special_in'] = (@$lv['allow_matches'][7])?@$lv['allow_matches'][7]:'';
+										
+										if( (@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]=='=')){										
+												$temp['max_length'] = ($lv['allow_matches'][2])?$lv['allow_matches'][2]:'';
+												$temp['length_match']=@$lv['allow_matches'][3];
+												
+										}else if( (@$lv['allow_matches'][1]=='v') && (@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]=='-') && (@$lv['allow_matches'][4]) ){
+												
+												$temp['min_value']   = $lv['allow_matches'][2];												
+												$temp['max_value']   = $lv['allow_matches'][4];
+												$temp['max_length']  = strlen($lv['allow_matches'][4]);
+										
+										}else if( (@$lv['allow_matches'][1]!='v') &&(@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]=='-') && (@$lv['allow_matches'][4]) ){
+												
+												$temp['min_length']   = $lv['allow_matches'][2];												
+												$temp['max_length']   = $lv['allow_matches'][4];
+										
+										}else if((@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]==',') && (@$lv['allow_matches'][4]) ){
+												
+												$temp['left_length']   = $lv['allow_matches'][2];												
+												$temp['right_length']   = $lv['allow_matches'][4];
+										
+										}else if(@$lv['allow_matches'][2]){
+												
+												$temp['max_length']   = $lv['allow_matches'][2];
+										}
+								}
+								
+								#print_r($lv['allow_matches']);
 						}
 										
 						array_push($temp_info,$temp);

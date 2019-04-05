@@ -249,7 +249,7 @@
 								
 					'add_button' => array( 'is_add' =>1,'page_link'=>'f=create_theme', 'b_name' => 'Add Theme' ),
 								
-					'del_permission' => array('able_del'=>1,
+					'del_permission' => array('able_del'=>0,
 								  
 								  'avoid_del_field' => "if(((SELECT 	(select count(*) FROM  eav_addon_ec_id as ec WHERE ea_code='ECPR' AND ec.ec_id = entity_child.id) )
 											> 0),1,0)",
@@ -292,28 +292,11 @@
 						    'manipulation'=>" WHERE ea_code='ECSN' AND parent_id=$param[key_id]" 
 						    ]);
 		
-		//$lv['dir'] = $LIB_PATH.'def/create_theme/template/'.$lv['result'];
+		$lv['dir'] = $LIB_PATH.'def/create_theme/template/'.$lv['result'];
 		
-		//$dirPath = get_config('theme_path').'/'.$lv['result'];
-		//
-		//if (! is_dir($dirPath)) {
-		//	
-		//	    throw new InvalidArgumentException("$dirPath must be a directory");
-		//
-		//}else{
-		//	if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
-		//	    $dirPath .= '/';
-		//	}
-		//	$files = glob($dirPath . '*', GLOB_MARK);
-		//	foreach ($files as $file) {
-		//	    if (is_dir($file)) {
-		//		rmdir($file);
-		//	    } else {
-		//		unlink($file);
-		//	    }
-		//	}
-		//	rmdir($dirPath);
-		//}
+		$dir = get_config('theme_path').'/'.$lv['result'];
+		
+		
 		
 	} // end
 	
