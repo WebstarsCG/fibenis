@@ -377,7 +377,7 @@
 						
 									
 						
-							<TMPL_IF is_edit><a  class="icon edit" href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF DEFAULT_ADDON>&default_addon=<TMPL_VAR DEFAULT_ADDON></TMPL_IF>"> Edit</a></TMPL_IF>
+							<TMPL_IF is_edit><a  class="icon edit" href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"> Edit</a></TMPL_IF>
 								
 							<TMPL_IF is_view><a class="icon pdf" href="JavaScript:d_series_view(<TMPL_VAR __counter__>);"> View</a></TMPL_IF>
 							    

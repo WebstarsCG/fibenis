@@ -205,7 +205,9 @@
         	$D_SERIES['key_filter'] ="AND  entity_code=(SELECT code FROM entity WHERE id = $default_addon)";
 		unset($D_SERIES['data'][1]);
 		unset($D_SERIES['export_csv']);
-		$D_SERIES['action']['is_edit']=0;
+		$D_SERIES['action']['is_edit']=1;
+		$D_SERIES['action']['action_menu_off']=@$_GET['menu_off'];
+		$D_SERIES['action']['action_default_addon']=@$_GET['default_addon'];
 		$D_SERIES['add_button']['is_add']=0;
 		$D_SERIES['del_permission']['able_del']=1;
 		$D_SERIES['summary_data'] = [];

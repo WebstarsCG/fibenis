@@ -1567,19 +1567,14 @@
 						 }
 					}					 
 					  
-					 $temp_data['is_edit'] = @$D_SERIES['action']['is_edit'];
+								 
+					 $temp_data+=@$D_SERIES['action'];
 					 
-					 $temp_data['page_f_series'] = $P_V['f_series'][$PAGE_ID]; 					 
-					 
-					 $temp_data['is_view'] = @$D_SERIES['action']['is_view'];
-					 
+					 $temp_data['page_f_series']  =  $P_V['f_series'][$PAGE_ID];
+					 $temp_data['is_narrow_down'] = @$D_SERIES['is_narrow_down'];
+					 					 
 					 $temp_data['action_th_attr'] = (@$D_SERIES['action']['action_th_attr'])?@$D_SERIES['action']['action_th_attr']:'width="5%"';
-					 
-					 $temp_data['is_narrow_down']=@$D_SERIES['is_narrow_down'];
-					 
-					 $temp_data['is_add_more_info']=@$D_SERIES['action']['is_add_more_info'];
-				         
-					 
+					 					 
 					 $temp_data['app_key'] = $P_V['app_key'];
 					 
 					 $temp_data['key_id'] =  (@$D_SERIES['key_id'])?$get_row->key_id:'';
@@ -1601,7 +1596,7 @@
 					 
 					 $temp_data['custom_action'] = custom_action($counter);
 				
-					 $temp_data['action_type']=($temp_data['is_edit']||$temp_data['is_view']||$temp_data['is_add_more_info']||$temp_data['custom_action'])?1:0;
+					 $temp_data['action_type']   =(@$temp_data['is_edit']||@$temp_data['is_view']||@$temp_data['is_add_more_info']||@$temp_data['custom_action'])?1:0;
 					 					
 					 $temp_data['hidden_data'] = $hidden_v;
 					 

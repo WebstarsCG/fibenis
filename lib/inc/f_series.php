@@ -265,9 +265,11 @@
 				$update_trans_query = (@$_POST['UPDATE'])?"&key=".@$_POST['UPDATE']:'';		  
 				
 				$temp_req_query     = $_SERVER['QUERY_STRING'];
+				
+				$temp_req_query_trim = preg_replace('/(\&trans_key\s*=\s*[0-9a-fA-F]{32})/i','',$temp_req_query);
 					
 				if(!@$F_SERIES['avoid_trans_key_direct']){
-						header("Location:?$temp_req_query&trans_key=$uniq_trans_key$update_trans_query");			
+						header("Location:?$temp_req_query_trim&trans_key=$uniq_trans_key$update_trans_query");			
 				}
 				
 		} # end
@@ -400,7 +402,7 @@
 								 'v'=>'is_value'
 								);
 				
-				// divider				
+				// divide
 				
 				
 				
