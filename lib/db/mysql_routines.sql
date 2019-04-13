@@ -351,3 +351,26 @@ BEGIN
         
 DELIMITER ;
 
+
+CREATE  FUNCTION get_ecb_parent_child_name_mode(temp_id INT, glue VARCHAR(2),mode VARCHAR(4)) RETURNS text CHARSET utf8
+BEGIN
+
+        IF mode='PAGE' THEN
+
+            RETURN CONCAT((SELECT token FROM entity_child_base WHERE id=(SELECT ecb_child_id FROM ecb_parent_child_matrix WHERE id=temp_id)),
+                           '=',
+                          (SELECT sn FROM entity_child_base WHERE id=(SELECT ecb_parent_id FROM ecb_parent_child_matrix WHERE id=temp_id))
+                          );
+                      
+        ELSE
+        
+            RETURN CONCAT((SELECT sn FROM entity_child_base WHERE id=(SELECT ecb_parent_id FROM ecb_parent_child_matrix WHERE id=temp_id)),
+                           glue,
+                          (SELECT sn FROM entity_child_base WHERE id=(SELECT ecb_child_id FROM ecb_parent_child_matrix WHERE id=temp_id))
+                          );
+                          
+        END IF;
+        
+           
+END$$
+

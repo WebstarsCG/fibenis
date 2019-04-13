@@ -38,6 +38,10 @@
         $lv;
         $lv['content']=[];
                 
+        # update def
+        
+        $rdsql->exec_query("UPDATE entity_child_base SET token=md5(sn) WHERE id=$key_id","0");
+                
         # empty matrix
         
         $rdsql->exec_query("DELETE FROM ecb_parent_child_matrix WHERE ecb_parent_id=$key_id","0");

@@ -12,6 +12,7 @@
 
                                       'is_user_base_query'=>0,
                                     
+                                     'is_narrow_down' =>1,
                                       #table data
                                     
                                        'data'=> array(
@@ -39,13 +40,104 @@
                                                                     
                                                             ),
                                                             
-                                                            3=>array('th'=>'Home Page URL',
+                                                            3=>array('th'=>'Default URL',
                                                                      
                                                                      'field'=>'home_page_url',
 								     
                                                                      'attr'=>["width"=>"25%"]
-                                                            )
+                                                            ),
 							    
+                                                            
+                                                            4=>array('th'=>'Permission',
+                                                                     
+                                                                     'field'=>"concat(id,':',IFNULL((SELECT user_permission_ids FROM user_role_permission WHERE user_role_id=user_role.id),''),':',".
+                                                                                            "IFNULL((SELECT user_role_permission.id FROM user_role_permission WHERE user_role_id=user_role.id LIMIT 1),''))",
+								     
+                                                                     'attr'=>["width"=>"10%",
+                                                                              "class"=>"align_CM"],
+                                                                     
+                                                                    'filter_out'=>function($data_in){
+												
+                                                                                                        $temp = explode(':',$data_in);
+                                                                                                        
+                                                                                                        
+                                                                                                        $data_out = array('id'         => $temp[0],
+                                                                                                                          'link_title' => '',
+                                                                                                                           'is_fa'=>' fa-plus clr_green ',
+													                   'is_fa_btn'=>' btn-default ',
+                                                                                                                          'title'      => 'Set Permission',
+                                                                                                                            'src'  =>  "?f=user_role_permission&default_addon=$temp[0]&menu_off=1",
+                                                                                                                            'style'=>  "border:none;width:100%;height:600px;",
+                                                                                                                             
+                                                                                                         );
+                                                                                                        
+                                                                                                        if($temp[1]){
+                                                                                                                $data_out['is_fa']            = ' fa-edit clr_blue ';
+                                                                                                                $data_out['src']              = "?f=user_role_permission&default_addon=$temp[0]&menu_off=1&key=$temp[2]";
+                                                                                                        }else{
+                                                                                                                $data_out['refresh_on_close'] = 1;  
+                                                                                                        }
+                                                                                                    
+													return json_encode($data_out);
+									},
+                                                                        
+                                                                        'js_call'=>'d_series.set_nd'
+                                                            ),
+                                                            
+                                                            
+                                                            5=>array('th'=>'Pages',
+                                                                     
+                                                                     'th_attr'=>' colspan=2',
+                                                                     
+                                                                     'field'=>"concat(id)",
+								     
+                                                                     'attr'=>["width"=>"5%",
+                                                                              "class"=>"align_CM"],
+                                                                     
+                                                                    'filter_out'=>function($data_in){
+												        
+                                                                                                        $data_out = array( 'id'              => $data_in,
+                                                                                                                           'link_title'      => '',
+                                                                                                                           'is_fa'           => ' fa-plus clr_green ',
+													                   'is_fa_btn'       => ' btn-default ',
+                                                                                                                           'title'           => 'Set User Role Pages',
+                                                                                                                           'src'             => "?f=user_role_page&default_addon=$data_in&menu_off=1",
+                                                                                                                           'style'           => "border:none;width:100%;height:600px;",
+                                                                                                                           'refresh_on_close'=> 1
+                                                                                                                        );
+                                                                                                        					
+													return json_encode($data_out);
+									},
+                                                                        
+                                                                        'js_call'=>'d_series.set_nd'
+                                                            ),
+                                                            
+                                                            6=>array('th'=>'',
+                                                                     
+                                                                     'field'=>"concat(id)",
+								     
+                                                                     'attr'=>["width"=>"5%",
+                                                                              "class"=>"align_CM"],
+                                                                     
+                                                                    'filter_out'=>function($data_in){
+												        
+                                                                                                        $data_out = array( 'id'              => $data_in,
+                                                                                                                           'link_title'      => '',
+                                                                                                                           'is_fa'           => ' fa-edit clr_green ',
+													                   'is_fa_btn'       => ' btn-default ',
+                                                                                                                           'title'           => 'Set User Role Pages',
+                                                                                                                           'src'             => "?d=user_role_page&default_addon=$data_in&menu_off=1",
+                                                                                                                           'style'           => "border:none;width:100%;height:600px;",
+                                                                                                                           #'refresh_on_close'=> 1
+                                                                                                                        );
+                                                                                                        					
+													return json_encode($data_out);
+									},
+                                                                        
+                                                                        'js_call'=>'d_series.set_nd'
+                                                            ),
+                                                            
+                                                            
 							    
 						),
 				       

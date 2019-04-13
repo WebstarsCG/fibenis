@@ -354,5 +354,52 @@
 			 
 	} // end
 	
+	
+	
+	
+	// App menu create
+	
+	function app_menu_create($param){
+			 
+			global $rdsql;
+			global $G;
+			 
+			$select_data =" SELECT
+						id,
+						get_ecb_parent_child_name_mode(user_page_id,'','MENU') as code_sn,
+						parent_id,
+						sn
+					FROM
+						user_role_page_matrix
+					WHERE
+						user_role_page_id IN (SELECT id FROM user_role_page WHERE 1=1 AND user_role_id=$param[user_role_id] ORDER BY line_order) AND parent_id=$param[parent_id] ";
+			
+			$exe_select_info = $rdsql->exec_query($select_data,'Test');
+			 
+			$result = array();
+			 
+			while($get_row	 = $rdsql->data_fetch_object($exe_select_info)){
+				 
+				$temp = array();
+				
+				list($temp['menu_title'],$temp['menu_href'])  = explode('[C]',$get_row->code_sn);
+				 
+				$temp['menu_href']="?".$temp['menu_href'];
+				
+				$temp['menu_title'] = (!$get_row->sn)?$temp['menu_title']:$get_row->sn;
+						 
+				 
+				if($get_row->parent_id==0){
+				  $temp['child_menu'] = app_menu_create(['user_role_id'=> $param['user_role_id'],
+									 'parent_id'   => $get_row->id]);		
+				}
+				 
+				array_push($result,$temp);
+			}
+			 		 
+			return $result;
+			 
+	} // end
+	
 
 ?>

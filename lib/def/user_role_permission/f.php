@@ -12,12 +12,8 @@
 						    
 						   'field_name' => 'User Role',
 						   'field_id' => 'user_role_id',
-						   'type' => 'option',
-						   'option_data'=>$G->option_builder('user_role','id,ln','where (select count(*) from user_role_permission where user_role_id=user_role.id) = 0 order by id ASC'),
-						   'is_mandatory'=>1,
-						   
-						   'validate'   => 'data_validate(\'user_role_permission\',this)',
-						   
+						   'type' => 'hidden',						 
+						   'is_mandatory'=>1,						   
 						   'attr'	=> [ 'class'=> ' w_200']
 						    
 					         ),
@@ -54,7 +50,7 @@
 								
                     # Communication
 								
-			'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?d=user_role_permission', 'BACK_NAME'=>'Back'),
+			'back_to'  => array( 'is_back_button' =>0, 'back_link'=>'?d=user_role_permission', 'BACK_NAME'=>'Back'),
                                 
 			'prime_index'   => 1,
 			
@@ -63,12 +59,25 @@
                     );
     
     # Edit
+
+    if(@$_GET['default_addon']){
+	
+	    $F_SERIES['data']['2']['option_id_name'] = $G->get_id_name('ecb_parent_child_matrix','id,get_ecb_parent_child_name(id,\'  \')'," WHERE ecb_parent_id IN(SELECT id FROM entity_child_base WHERE entity_code='DF')  ");
+	    
+	    $F_SERIES['data']['1']['avoid_default_option'] = 1;
+	    $F_SERIES['data']['1']['attr']                 = ['value'=>$_GET['default_addon']];
+	    
+	    $F_SERIES['back_to']['back_default_addon']     = @$_GET['default_addon'];
     
-    if(     @$_GET['key']){    before_update(@$_GET['key']);  }
-    
-    else{   $F_SERIES['data']['2']['option_data'] = $G->option_builder('ecb_parent_child_matrix','id,get_ecb_parent_child_name(id,\'  \')'," WHERE ecb_parent_id IN(SELECT id FROM entity_child_base WHERE entity_code='DF')  ");
-            $F_SERIES['data']['2']['option_id_name'] = $G->get_id_name('ecb_parent_child_matrix','id,get_ecb_parent_child_name(id,\'  \')'," WHERE ecb_parent_id IN(SELECT id FROM entity_child_base WHERE entity_code='DF')  ");
     }
+    
+    
+    //
+    //
+    //if(     @$_GET['key']){    before_update(@$_GET['key']);  }    
+    //else{   $F_SERIES['data']['2']['option_data'] = $G->option_builder('ecb_parent_child_matrix','id,get_ecb_parent_child_name(id,\'  \')'," WHERE ecb_parent_id IN(SELECT id FROM entity_child_base WHERE entity_code='DF')  ");
+    //       
+    //}
     
     // after add update / option builder action
     
@@ -90,9 +99,9 @@
 	    
 	    
 	    # role option data
-	    
-	    $F_SERIES['data']['1']['option_data']		= $G->option_builder('user_role','id,ln','where id='.$get_role_id.'');
-	    $F_SERIES['data']['1']['avoid_default_option']	= 1;
+	    //
+	    //$F_SERIES['data']['1']['option_data']		= $G->option_builder('user_role','id,ln','where id='.$get_role_id.'');
+	    //$F_SERIES['data']['1']['avoid_default_option']	= 1;
 	    
 	    # option prefill data
 	    

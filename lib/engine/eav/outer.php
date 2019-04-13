@@ -296,6 +296,8 @@
 						$M 	= new Template(array("filename" => $THEME_ROUTE."/template/menu.html",
 									     "debug"    => 0));						
 						
+						
+						
 						$M->AddParam('PARENT_MENU',menu_create(array('manipulation'=>" WHERE 1=1 $COACH[filter] AND entity_code='PG' AND IFNULL(get_ec_parent_id_eav(id),0)=0  ",
 											     'is_home'     => $IS_HOME
 											     ))
@@ -303,12 +305,25 @@
 																		
 						// User Role
 						
-						if($USER_ROLE){	
+						if($USER_ROLE){
+						    
 							$M->AddParam("USER_$USER_ROLE",1);
 							$M->AddParam('USER_NAME',@$USER_NAME);
 							$M->AddParam(array(
 										'addon_type'=>$G->get_id_name("entity_child_base","token as id, sn as name"," WHERE entity_code='AT'")
 									));
+							
+							if(is_file($THEME_ROUTE."/template/role_menu/$USER_ROLE.html")){
+							    
+							    $M_ROLE = new Template(array("filename" => $THEME_ROUTE."/template/role_menu/$USER_ROLE.html"));
+							    $M->AddParam('APP_MENU_TEXT', $M_ROLE->Output());
+							    
+							}else{
+							
+							    $M->AddParam('APP_MENU',app_menu_create(['user_role_id'=>2,
+												     'parent_id'   =>0
+												     ]));
+							}
 						}else{
 							$M->AddParam('NO_USER',1);
 						}

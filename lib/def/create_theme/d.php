@@ -270,8 +270,6 @@
 								
 				#export data
 				
-				'export_csv'   => array('is_export_file' => 1, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
-								
 				'page_code'    => 'DECA',
 				
 				'show_query' => 0,

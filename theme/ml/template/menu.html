@@ -60,8 +60,44 @@
             
             <!-- Start Navigation List -->
             <ul class="nav navbar-nav navbar-right">
+		  
+		  <TMPL_IF APP_MENU_TEXT>
+			      <TMPL_VAR APP_MENU_TEXT>
+		  <TMPL_ELSE>			
+			      <TMPL_LOOP APP_MENU>
+					  <TMPL_IF CHILD_MENU> 
+						    
+						 <li>
+						     
+						     <a  href="#" title="<TMPL_VAR MENU_TITLE>"
+							 class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">			       
+							 <TMPL_VAR MENU_TITLE>&nbsp;<span class="caret"></span>
+						     </a>
+						     
+						     <ul class="dropdown-menu" role="menu">
+							 
+							 <TMPL_LOOP CHILD_MENU>
+							     <li>
+								 <a href="<TMPL_VAR MENU_HREF>">
+								     <span class="<TMPL_VAR css_class>" aria-hidden="true"></span>
+								     &nbsp;&nbsp;<TMPL_VAR MENU_TITLE> 
+								    
+								 </a>
+							     </li>
+							 </TMPL_LOOP>
+								      
+						     </ul> 
+						 </li>
+						     
+					     <TMPL_ELSE>
+						 <li ><a href="<TMPL_VAR menu_href>"><TMPL_VAR menu_title>&nbsp;</a></li>
+					     </TMPL_IF>
+				    
+			      </TMPL_LOOP>
+		  </TMPL_IF>
+			
 	      
-		    <TMPL_IF USER_SAD>
+		  <TMPL_IF USER_SAD>
 			
 			<!--<li ><a  href="?dx=ps_connection"> <i class="fa fa-refresh"></i>&nbsp;
 			            PubSub
@@ -150,6 +186,7 @@
 				   <li><a href="?d=contact_eav">Contact</a></li>
 				   <li><a href="?dx=demo__flat">Demo Flat</a></li>
 				   <li><a href="?dx=demo__eav">Demo EAV</a></li>
+				   <li><a href="?dx=demo__ui_form">Faddon Form</a></li>
 				   <li> <a href="?d=issue">Issue</a></li>
 			    </ul>
 			    

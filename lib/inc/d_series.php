@@ -1531,7 +1531,6 @@
 						   $temp['VALUE']       = @$D_SERIES['data'][$key]['filter_out']($temp['VALUE']);
 						}
 						
-					       
 						array_push($TEMP_INFO,$temp);  
 						
 						$h_c = 'h'.$key;												

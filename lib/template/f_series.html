@@ -725,18 +725,18 @@
 													multiple="true"
 													id="X<TMPL_VAR field_id>_LEFT"  name="X<TMPL_VAR field_id>_LEFT"
 											> <!--- end of select--->
-											<TMPL_VAR option_data>
-												
-												
 											
-												
+											<TMPL_IF OPTION_DATA>
+												<TMPL_VAR OPTION_DATA>
+											</TMPL_IF>	
+																								
 											<TMPL_IF OPTION_ID_NAME>												
 													
 													<TMPL_LOOP OPTION_ID_NAME>
 														
-													<script language="javascript" type="text/javascript">													
-														f_series.temp.__element_out.push({id:<TMPL_VAR ID>,name:'<TMPL_VAR SN>'});																										
-													</script>														
+														<script language="javascript" type="text/javascript">													
+															f_series.temp.__element_out.push({id:<TMPL_VAR ID>,name:'<TMPL_VAR SN>'});																										
+														</script>														
 														<option value="<TMPL_VAR ID>" ><TMPL_VAR SN></option>														
 													</TMPL_LOOP>
 											</TMPL_IF>
@@ -2536,6 +2536,8 @@
 								select_option_transfer_by_value(ELEMENT('<TMPL_VAR ID>_LEFT'),
 											 ELEMENT('<TMPL_VAR ID>_RIGHT'),
 											 '<TMPL_VAR VALUE>');
+								
+								E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
 								
 							}else{								
 								

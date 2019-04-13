@@ -211,7 +211,10 @@
 		
         	$D_SERIES['key_filter'].="AND get_ec_parent_id_eav(id)=$default_addon";
 		
-		$D_SERIES['action']['is_edit']=0;
+		$D_SERIES['action']['is_edit']=1;
+		$D_SERIES['action']['action_menu_off']=@$_GET['menu_off'];
+		$D_SERIES['action']['action_default_addon']=@$_GET['default_addon'];
+		
 		
 		$D_SERIES['add_button']['is_add']=0;
 		

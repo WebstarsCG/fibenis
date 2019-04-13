@@ -385,7 +385,7 @@
 		
 		function build_form_data($data_def){
 				
-				global $F_SERIES;
+				global $F_SERIES,$G;
 				
 				$temp_info	  = array();
 				
@@ -440,7 +440,9 @@
 						
 						$temp['is_mandatory']      	= (@$value['is_mandatory'])?1:0;
 	
-						$temp['input_html']	   	= (@$value['input_html'])?@$value['input_html']:@$attr;
+						$lv['attr']='';
+	
+						
 						
 						$temp['hint']		   	= (@$value['hint'])?@$value['hint']:'';
 						
@@ -450,15 +452,7 @@
 						
 						$temp['ro']             	= (@$value['ro'])?1:0;
 	
-						$attr='';
-	
-						if(@$value['attr']){
-								
-								foreach(@$value['attr'] as $attr_key=> $attr_value ){
-										
-										$attr.= $attr_key.'="'.$attr_value.'"'; 
-								}
-						}
+			
 							
 						// heading
 						
@@ -535,41 +529,41 @@
 		
 						elseif(@$value['type']=='date'){
 						
-								$temp['field_type_date']   	= (@$value['type'] =='date')?'date':0;
-								$temp['min_date']          	=  @$value['set']['min_date'];
-								$temp['max_date']          	=  @$value['set']['max_date'];
+								$temp['field_type_date']    = (@$value['type'] =='date')?'date':0;
+								$temp['min_date']           =  @$value['set']['min_date'];
+								$temp['max_date']           =  @$value['set']['max_date'];
 								$temp['year_range']         =  @$value['year_range'];
 								$temp['default_date']       =  @$value['default_date'];
 						
 						}
 						
 						// Field Text
-		
 						elseif(@$value['type']=='text'){
 							
 								$temp['field_type_text']   	= (@$value['type'] =='text')?'text':0;
 								
-								$temp['validate']   				= (@$value['validate'])?'1':0;
+								$temp['validate']   		= (@$value['validate'])?'1':0;
 								
-								$temp['validate_fun']   		= @$value['validate'];
+								$temp['validate_fun']   	= @$value['validate'];
+								
+								if(@$value['is_line_order']){
+										@$value['attr']['value'] = (($G->get_one_cell(['table'=>$F_SERIES['table_name'],
+															     'field'=>'IFNULL(line_order,0)',
+															     'manipulation'=>" ORDER BY line_order DESC LIMIT 1  "]))+1);
+								}
 						
 						}
 						
-						
 						// Field Password
 		
-						elseif(@$value['type']=='password'){
-						
-								$temp['field_type_password']   = (@$value['type']=='password')?'password':0;
-						
+						elseif(@$value['type']=='password'){						
+								$temp['field_type_password']   = (@$value['type']=='password')?'password':0;						
 						}
 						
 						// is hidden
 		
-						elseif(@$value['type']=='hidden'){
-						
-								$temp['field_type_hidden']     = (@$value['type']=='hidden')?'hidden':0;
-								
+						elseif(@$value['type']=='hidden'){						
+								$temp['field_type_hidden']     = (@$value['type']=='hidden')?'hidden':0;																
 						}
 						
 						// auto complete
@@ -678,12 +672,17 @@
 						elseif(@$value['type']=='list_left_right'){
 								
 								$temp['field_type_list_left_right']   = (@$value['type'] =='list_left_right')?'list_left_right':0;
+															
+								if(@$value['option_is_quick_search']){
 								
-								$temp['option_data']   	     	      = @$value['option_data'];
-								
-								$temp['option_id_name']	     = @$value['option_id_name'];
-								
-								$temp['option_is_quick_search']	= (@$value['option_is_quick_search'])?$key:0;
+										$temp['option_is_quick_search']	= $key;
+										$temp['option_id_name']	     = @$value['option_id_name'];
+										$temp['option_data']   	     = [];
+								}else{
+										$temp['option_is_quick_search']	= 0;
+										$temp['option_id_name']	     = [];
+										$temp['option_data']   	     = @$value['option_data'];
+								}
 								
 								$temp['option_existing_data']= @$value['option_existing_data'];
 								
@@ -810,8 +809,17 @@
 						$temp['is_first_divider'] =  $lv['counter']['divider'];
 						$lv['counter']['divider'] = -1;
 										
-						// allow
-						
+						// attr
+						if(@$value['attr']){
+								
+								foreach(@$value['attr'] as $attr_key=> $attr_value ){
+										
+										$lv['attr'].= " $attr_key=\"$attr_value\""; 
+								}
+						}
+	
+	
+						$temp['input_html']	   	= (@$value['input_html'])?@$value['input_html']:$lv['attr'];
 						
 						// allow addition
 						

@@ -71,7 +71,7 @@
                                                                
                                                                'type'=>'textarea',
                                                                
-                                                               'is_mandatory'=>0,
+                                                               'is_mandatory'=>1,
                                                                
                                                                'input_html'=>'class="W_150"'
                                                                
