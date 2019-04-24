@@ -72,59 +72,6 @@
     }
     
     
-    //
-    //
-    //if(     @$_GET['key']){    before_update(@$_GET['key']);  }    
-    //else{   $F_SERIES['data']['2']['option_data'] = $G->option_builder('ecb_parent_child_matrix','id,get_ecb_parent_child_name(id,\'  \')'," WHERE ecb_parent_id IN(SELECT id FROM entity_child_base WHERE entity_code='DF')  ");
-    //       
-    //}
-    
-    // after add update / option builder action
-    
-    function before_update($key_id){
-	
-	global $G,$F_SERIES;
-	
-	if($key_id){
-	    
-	    
-	    
-	    # get role id
-	    
-	    $get_role_id    =    $G->get_one_columm(array('table'	 => 'user_role_permission',
-			  				  'field'	 => 'user_role_id',
-							  'manipulation' => " WHERE  id=$key_id  "
-					    ));
-	    
-	    
-	    
-	    # role option data
-	    //
-	    //$F_SERIES['data']['1']['option_data']		= $G->option_builder('user_role','id,ln','where id='.$get_role_id.'');
-	    //$F_SERIES['data']['1']['avoid_default_option']	= 1;
-	    
-	    # option prefill data
-	    
-	   
-	    
-	    $F_SERIES['temp']['user_permission_present_data']   = " WHERE  id NOT IN ( SELECT user_permission_id FROM user_role_permission_matrix WHERE user_role_id=$get_role_id)";
-	   
-	    $F_SERIES['temp']['user_permission_existing_data']  = " WHERE  id IN( SELECT user_permission_id FROM user_role_permission_matrix WHERE user_role_id=$get_role_id)"; 
-	    
-	    
-	    //$F_SERIES['temp']['user_permission_existing_data']='';
-	    
-	    $F_SERIES['data']['2']['option_data']		= $G->option_builder('ecb_parent_child_matrix','id,get_ecb_parent_child_name(id,\'->\')',$F_SERIES['temp']['user_permission_present_data'].' ');
-	    
-	    $F_SERIES['data']['2']['option_existing_data']	= $G->option_builder('ecb_parent_child_matrix','id,get_ecb_parent_child_name(id,\'->\')',$F_SERIES['temp']['user_permission_existing_data'].' ');
-	    
-	    $F_SERIES['data']['2']['option_id_name']            = $G->get_id_name('ecb_parent_child_matrix','id,get_ecb_parent_child_name(id,\'->\')',$F_SERIES['temp']['user_permission_present_data'].' ');
-	    
-	} # edit
-	
-	  
-	
-    } # end of add update action
     
     // after add update
     
@@ -195,7 +142,7 @@
 	} // end
 	
 	
-	before_update($key_id);
+	//before_update($key_id);
       
    } // end
     

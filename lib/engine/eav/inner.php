@@ -382,17 +382,21 @@
 				 
 				$temp = array();
 				
-				list($temp['menu_title'],$temp['menu_href'])  = explode('[C]',$get_row->code_sn);
-				 
-				$temp['menu_href']="?".$temp['menu_href'];
+				if($get_row->code_sn){
 				
-				$temp['menu_title'] = (!$get_row->sn)?$temp['menu_title']:$get_row->sn;
-						 
-				 
-				if($get_row->parent_id==0){
-				  $temp['child_menu'] = app_menu_create(['user_role_id'=> $param['user_role_id'],
-									 'parent_id'   => $get_row->id]);		
-				}
+					list($temp['menu_title'],$temp['menu_href'])  = explode('[C]',$get_row->code_sn);
+					 
+					$temp['menu_href']="?".$temp['menu_href'];
+					
+					$temp['menu_title'] = (!$get_row->sn)?$temp['menu_title']:$get_row->sn;
+							 
+					 
+					if($get_row->parent_id==0){
+					  $temp['child_menu'] = app_menu_create(['user_role_id'=> $param['user_role_id'],
+										 'parent_id'   => $get_row->id]);		
+					}
+					
+				} # end
 				 
 				array_push($result,$temp);
 			}
