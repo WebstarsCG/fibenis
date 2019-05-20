@@ -1,4 +1,0 @@
-id,table_name,field_name,check_value,set_value
-1,*,user_id,0,2
-2,*,user_id,8,2
-3,*,user_id,IS NULL,2
