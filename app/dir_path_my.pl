@@ -33,7 +33,7 @@
     
     # db
     
-    my $global={"db_name" => "fibenis_base",
+    my $global={"db_name" => "fibenis_nano",
                 "host"    => "localhost",
                 "user"    => "root",
                 "pass"    => ""                

@@ -2,12 +2,12 @@
 
         $temp_config=[
                         "host"          =>   "localhost",
-                        "db_name"       =>   "fibenis_base",
+                        "db_name"       =>   "fibenis_nano",
                         "user"          =>   "root",
                         "pass"          =>   "",
                         "db_engine"     =>  "rdsql_mysqli",
                         
-                        "domain_name"   =>  "localhost/wa_dev/fibenis/app/",
+                        "domain_name"   =>  "localhost/wa_dev/fibenis/nano/app/",
                         "lib_path"      =>  "../lib/",
                         
                         "is_smtp_mail"  =>  1,                            
@@ -21,7 +21,7 @@
                         "cc_mail"       =>  "",
                         "bcc_mail"      =>  "ratbew@gmail.com",
                         
-                        "title"         =>  "PSG STEP - Programme Management System",
+                        "title"         =>  "Fibenis - Web App Framework Based on Communiction Patterns",
                         "theme"         =>  "ml",
                         "theme_path"    =>  "../theme",
                         "theme_blend"   => "base",

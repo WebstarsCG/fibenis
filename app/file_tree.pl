@@ -38,44 +38,49 @@
     
     my @DIR=('../lib');
         
+ 
     # traverse each dir
     
     for my $dir(@DIR){
     
         for my $file ( $rule->all($dir) ) {
             
-            unless(-d $file){
+            if(-d $file){
                 
-                print $file_counter.")".$file."<br>";
+                   ($lv->{'filename'},$lv->{'dirs'},$lv->{'suffix'}) = fileparse($file,(".php"));            
+                    $lv->{'dirs'}=~s/$dir//ig;           
+                    $lv->{'dirs'}=~s/^\/|\/$//ig;
+                    $lv->{'dirs'}=~s/\//__/ig;
+                    
+                    push(@{$def->{$lv->{'dirs'}}},$lv->{'filename'});            
                 
-                $file_counter++;
+            }else{
+                
+                
+                    $lv->{'dirs'}= $file;   
+                    $lv->{'dirs'}=~s/$dir//ig;           
+                    $lv->{'dirs'}=~s/^\/|\/$//ig;
+                    $lv->{'dirs'}=~s/\//__/ig;                                        
+                    push(@{$def->{$lv->{'dirs'}}},'<b>'.$file.'</b>');   
+                
             }
             
-            ($lv->{'filename'},$lv->{'dirs'},$lv->{'suffix'}) = fileparse($file,(".php"));
-            
-            $lv->{'dirs'}=~s/$dir//ig;           
-            $lv->{'dirs'}=~s/^\/|\/$//ig;
-            $lv->{'dirs'}=~s/\//__/ig;
-                        
-            if ($lv->{'suffix'} eq ".php"){
-                
-                push(@{$def->{$lv->{'dirs'}}},$lv->{'filename'});            
-            }
+            $file_counter++;
             
         } # end
     }
     
     
-     # each module def
+    # each module def
     
-    #for my $def_name (sort keys(%{$def})){
-    #   
-    #    $lv->{'def_engine'} = [];
-    #
-    #    $lv->{'content'}.='<hr>'.$lv->{'counter'}->{'module'}.")<b>".$def_name."</b><br>";
-    #    
-    #    
-    #}
+    for my $def_name (sort keys(%{$def})){
+       
+        $lv->{'def_engine'} = [];
+    
+        $lv->{'content'}.=$lv->{'counter'}->{'module'}.") ".$def_name."<br>";
+        
+        $lv->{'counter'}->{'module'}++;
+    }
     
     
     print "<hr>".$lv->{'content'} if($lv->{'DEBUG'});
