@@ -78,32 +78,7 @@
 								 
 							    ),	
 						       
-						       
-						       '7'=>array( 'field_name'          => 'Enquiry Items',                                                                
-								
-								 'field_id'            => 'ea_value',				       
-						
-								 'is_fibenistable'=>1,
-								 
-								 'is_index' =>1,
-								 
-								 'type'                => 'fibenistable',
-								
-								 'child_table'         => 'eav_addon_varchar', // child table 
-								 
-								 'parent_field_id'     => 'parent_id',         // parent field
-											 
-								 'child_attr_field_id' => 'ea_code',   	      // attribute code field
-								
-								 'child_attr_code'     => 'CHEI', 
-									
-								 'colHeaders'          => [ ['column'=>'Items', // Column Header Name
-											    'width' =>'500',      // Column Width                                               
-											    'type'  =>'text']],  
-											
-				
-				
-							)
+						      
 				    ),
 					
 				    #Table Name
@@ -141,10 +116,7 @@
 			);
 	     
 	     
-	     if(@$_GET['key']){
-			  
-			  			  
-	     }
+	    
 	     
 	     # after add update
 	     
