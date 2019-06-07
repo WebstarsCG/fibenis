@@ -54,7 +54,8 @@
                                 
 			'prime_index'   => 1,
 			
-			'page_code'	=> 'FURP'
+			'page_code'	=> 'FURP',
+			
                              
                     );
     
@@ -71,78 +72,48 @@
     
     }
     
-    
-    
     // after add update
     
     function after_add_update($key_id){
       
-	global $rdsql;
-      
-	global $G;
-      
-	$session = $_SESSION;
-      
-	$param   = $_POST;
-	
-	$user_role_id  = $param['X1'];
-	
-	$current_items = explode(',',$param['X2']);
-	
-	$new_item_text = '';
+		global $rdsql,$USER_ID;		  
+			  
+		$param   = $_POST;
 		
-	// Delete old one
-	// comments
-	
-	//$delete_existing_query="DELETE FROM
-	//				user_role_permission_matrix
-	//			WHERE
-	//				user_role_permission_matrix.user_role_id=$user_role_id AND
-	//				LOCATE(user_permission_id,(SELECT user_permission_ids FROM user_role_permission WHERE user_role_permission.user_role_id=$user_role_id))=0";
-	
-	$delete_existing_query="DELETE FROM
-					user_role_permission_matrix
-				WHERE
-					user_role_permission_matrix.user_role_id=$user_role_id";
-	
-	
-	$rdsql->exec_query($delete_existing_query,'UPU');
-	
-	// take new one
-	
-	//$existing_available_items  =    $G->get_one_columm(array('table'	=> ' user_role_permission_matrix',
-	//							'field'		$current_itemsoncat(user_permission_id)',
-	//							'manipulation'	=> " WHERE  user_role_id=$user_role_id  "
-	//				    ));
-	//
-	//
-	//$existing_items = explode(',',$existing_available_items);	
-	
-	//$new_items      = array_diff($current_items,$existing_items);
-	
-	foreach ($current_items as &$item) {
-	        
-		$new_item_text.="($user_role_id,$item),";
-        }
-	
-	// if new item there
-	
-	if(strlen($new_item_text)>0){
-	    
-		    $new_item_text=substr($new_item_text,0,-1);
-	    
-		    $new_item_query = "INSERT INTO
-					    user_role_permission_matrix (user_role_id,user_permission_id)
-					values
-					    $new_item_text";
-					    
-					    
-		    $rdsql->exec_query($new_item_query,"UPI");
-	    
-	} // end
-	
-	
-	//before_update($key_id);
+		$user_role_id  = $param['X1'];
+		
+		$current_items = explode(',',$param['X2']);
+		
+		$new_item_text = '';
+		
+		$delete_existing_query="DELETE FROM
+											user_role_permission_matrix
+										WHERE
+											user_role_permission_matrix.user_role_id=$user_role_id";
+		
+		
+		$rdsql->exec_query($delete_existing_query,'UPU');
+		
+		// take new one	
+		
+		foreach ($current_items as &$item) {
+				
+			$new_item_text.="($user_role_id,$item,$USER_ID),";
+		}
+		
+		// if new item there		
+		if(strlen($new_item_text)>0){
+			
+				$new_item_text=substr($new_item_text,0,-1);
+			
+				$new_item_query = "INSERT INTO
+										user_role_permission_matrix (user_role_id,user_permission_id,user_id)
+									VALUES
+										$new_item_text";							
+							
+				$rdsql->exec_query($new_item_query,"UPI");
+			
+		} // end
       
    } // end
     
