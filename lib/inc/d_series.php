@@ -1566,8 +1566,10 @@
 						 }
 					}					 
 					  
+					 
+					 $temp_data=[];					 
 								 
-					 $temp_data+=@$D_SERIES['action'];
+					 #$temp_data+=@$D_SERIES['action'];
 					 
 					 $temp_data['page_f_series']  =  $P_V['f_series'][$PAGE_ID];
 					 $temp_data['is_narrow_down'] = @$D_SERIES['is_narrow_down'];
