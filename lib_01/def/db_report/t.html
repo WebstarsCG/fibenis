@@ -1,0 +1,37 @@
+<TMPL_LOOP DATA_INFO> 
+	
+		
+	<table class="basic" border="0" cellpadding="7px">
+			    <thead>
+				    <tr>
+					
+							
+					<th  class="inner_heading align_LM" width="7%">S.No</th>					
+					<th class="inner_heading align_LM" width="25%">Code</th>
+					<th class="inner_heading align_LM" width="15%">Name</th>
+					<th class="inner_heading align_LM" width="10%">Entity Attribute</th>
+					<th class="inner_heading align_LM" width="20%">Entity Child</th>
+					<th class="inner_heading align_LM" width="23%">Entity Child Base</th>
+					
+                                    
+													
+				    </tr>
+			    </thead>
+			    
+			   <tbody>	       
+                                    <TMPL_LOOP TEAM_MEMBER_DETAIL>                        
+                                                 <TMPL_IF name>                            
+							<tr  class=<TMPL_IF __odd__>odd<TMPL_ELSE>even</TMPL_IF>  
+								<td class="align_RM" width="7%"><TMPL_VAR __counter__></td>
+								<td class="align_LM" width="25%"><TMPL_VAR name></td>
+								<td class="align_LM" width="15%"><TMPL_IF aadhar_no><TMPL_VAR aadhar_no></TMPL_IF><TMPL_VAR pan_card></td>
+								<td class="align_LM" width="23%"><TMPL_VAR qualification></td>
+                                                        </tr>
+                                                </TMPL_IF>                        
+                                    </TMPL_LOOP>
+                                    </tbody>	
+			    
+			</table>
+	
+	
+</TMPL_LOOP>

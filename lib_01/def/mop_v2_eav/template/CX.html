@@ -1,0 +1,134 @@
+ <TMPL_IF CONTACT_{{SECTION_ID}}>
+	<section id="{{SECTION_ID}}" class="brdr_bottom">	    
+	    <div class="col-md-12">&nbsp;</div>
+		<div id="content">
+		    <div class="container">
+			<div class="row">
+			   
+	    
+            <TMPL_IF CONTACT_{{SECTION_ID}}>
+		<div class="col-md-5">
+		    <h4 class="classic-title"><span>Reach Us</span></h4>
+			 <div class="hr1" style="margin-bottom:10px;"></div>
+
+		    <TMPL_LOOP CONTACT_INFO_{{SECTION_ID}}>
+			<ul class="icons-list">
+			    <div class="col-md-12">
+			    <div class="col-md-1 pad_lr"><li><i class="fa fa-globe"></i></div>
+			    <div class="col-md-11"><strong>Address:</strong></div>
+			    </div>
+			    
+			    <div class="col-md-12">
+			    <div class="col-md-1 pad_lr">&nbsp;</div>
+			    <div class="col-md-11"><TMPL_VAR ORG_NAME></div>			    
+			    </div>
+			    
+			    <div class="col-md-12">
+			    <div class="col-md-1 pad_lr">&nbsp;</div>
+			    <div class="col-md-11"><TMPL_VAR ADD_I></div>
+			    </div>
+		    
+			    <div class="col-md-12">
+			    <div class="col-md-1 pad_lr">&nbsp;</div>
+			    <div class="col-md-11"><TMPL_VAR ADD_II></div>
+			    </div>
+			    
+			    <TMPL_IF EMAIL>				   
+				   <div class="col-md-12">&nbsp;</div>	       
+				  
+				   <div class="col-md-12">
+					  <div class="col-md-1 pad_lr"><li><i class="fa fa-envelope-o"></i></div>
+					  <div class="col-md-11"><strong>Email:</strong></div>
+				   </div>
+				    
+				   <div class="col-md-12">
+					  <div class="col-md-1 pad_lr">&nbsp;</div>
+					  <div class="col-md-11"><TMPL_VAR EMAIL></div>
+				   </div>			    
+			    </TMPL_IF>
+			    
+			    <TMPL_IF MOBILE>			   
+				   <div class="col-md-12">&nbsp;</div>			   
+			    
+				   <div class="col-md-12">
+				     <div class="col-md-1 pad_lr"><li><i class="fa fa-mobile fa-2x"></i></div>
+				     <div class="col-md-11"><strong>Mobile:</strong></div>
+				   </div>
+				   
+				   <div class="col-md-12">  
+				     <div class="col-md-1 pad_lr">&nbsp;</div>
+				     <div class="col-md-11"><TMPL_VAR MOBILE></div>
+				   </div>
+			    </TMPL_IF>
+			
+			    <TMPL_IF PHONE>			   
+				   <div class="col-md-12">&nbsp;</div>			   
+			    
+				   <div class="col-md-12">
+				     <div class="col-md-1 pad_lr"><li><i class="fa fa-phone fa-2x"></i></div>
+				     <div class="col-md-11"><strong>Phone:</strong></div>
+				   </div>
+				     
+				   <div class="col-md-12">
+				      <div class="col-md-1 pad_lr">&nbsp;</div>
+				      <div class="col-md-11"><TMPL_VAR PHONE></div>
+				   </div>			       
+			    </TMPL_IF>   
+			     
+			     <script>
+				   <TMPL_IF ORG_NAME>G.$('menu_org_name').innerHTML='<TMPL_VAR ORG_NAME>';</TMPL_IF>
+				   <TMPL_IF EMAIL>G.$('menu_email').innerHTML='<TMPL_VAR EMAIL>';<TMPL_ELSE>G.$('menu_email_area').style.display='none';</TMPL_IF>
+				   <TMPL_IF PHONE>G.$('menu_phone').innerHTML='<TMPL_VAR PHONE>';<TMPL_ELSE>G.$('menu_phone_area').style.display='none';</TMPL_IF>
+				   <TMPL_IF MOBILE>G.$('menu_mobile').innerHTML='<TMPL_VAR MOBILE>';<TMPL_ELSE>G.$('menu_mobile_area').style.display='none';</TMPL_IF>
+			    </script> 
+			</ul>
+		    </TMPL_LOOP>
+		    <div>&nbsp;</div>
+		    <div>&nbsp;</div>
+		</div>	    
+	    </TMPL_IF>
+	    
+	    <div class="col-md-1 ">&nbsp;</div>
+	    
+	     <div class="col-md-6 brdr_left">
+				    <h4 class="classic-title"><span>Enquiry</span></h4>
+				    <form id="enquiry_form" class="has-validation-callback">
+					  <div class="form-group">				    
+						 <label for="name">Name:</label>
+						 <input type="name" class="form-control" id="a" placeholder="Enter name" name="a" data-validation="length" 
+					                            data-validation-length="3-32"  >
+					  </div>
+					<!--  <div class="form-group">
+					    <label for="email">Email:</label>
+					    <input type="email" class="form-control" id="b" placeholder="Enter email" name="b" data-validation="email" >
+					  </div>-->
+					  <div class="form-group">
+					    <label for="mobile">Mobile No./Contact Phone No.:</label>
+					    <input type="text" class="form-control" id="b" placeholder="Enter Mobile No./Contact Phone No." name="b"
+						            data-validation="length alphanumeric" data-validation-length="10-25">
+					  </div>
+					  <div class="form-group">
+					  	 <label for="sel1">Enquiry On:</label>
+						 <select class="form-control" id="c" data-validation="required"><option value="">Select</option>
+							<TMPL_LOOP ENQUIRY_ITEMS_{{SECTION_ID}}>
+							     <TMPL_IF ITEM>
+							       <option><TMPL_VAR ITEM></option>
+							     </TMPL_IF>  
+							</TMPL_LOOP>
+						 </select>
+					  </div>
+				          <div class="form-group">
+						 <label for="comment">Comment:</label>
+						 <textarea class="form-control" rows="5" id="d" placeholder="Enter comment" maxlength="500" name="d"></textarea>
+					  </div>
+					  <button type="submit" class="btn-system btn-medium">Submit</button>
+					  <button type="reset" class="btn-system  border-btn btn-small">Reset</button>
+					  
+				    </form>
+			    </div>
+	     
+        </div>
+		    </div>
+		</div>
+	</section>
+    </TMPL_IF>

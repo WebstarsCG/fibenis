@@ -1,0 +1,40 @@
+<TMPL_IF PORTFOLIO_{{SECTION_ID}}>
+	  <section id="{{SECTION_ID}}"  class="bar_bg font brdr_bottom">
+	
+	  <TMPL_IF PORTFOLIO_HEADING_{{SECTION_ID}}>
+		    
+		    <div class="col-md-12 mar_tb_10">&nbsp;</div>
+		    <TMPL_LOOP PORTFOLIO_HEADING_{{SECTION_ID}}>   
+			      <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+					<TMPL_IF HEADING><h1><TMPL_VAR HEADING></h1></TMPL_IF>
+					<TMPL_IF SUB_HEADING><p class="title-desc"><TMPL_VAR SUB_HEADING></p></TMPL_IF>
+			      </div>
+		    </TMPL_LOOP>
+		   
+	  </TMPL_IF>
+		 <div class="full-width-portfolio">
+		      <ul id="portfolio-list" data-animated="fadeIn">
+				      <TMPL_LOOP PORTFOLIO_{{SECTION_ID}}>
+					 <li>
+							    <div  class="single-team  fadeInLeft">
+										<!--- <TMPL_VAR THUMB_IMAGE>--->
+									       <div  class="portfolio-item">
+												  <a  href="<TMPL_VAR THUMB_IMAGE>" href="<TMPL_VAR THUMB_IMAGE>" class="portfolio-link" data-toggle="modal"></a>		    
+														     <img class="img-responsive img-centered" src="<TMPL_VAR THUMB_IMAGE>" alt="">		    
+												  <div class="icon-list">
+														     <a class="zoom" rel="prettyPhoto['pf']" href="<TMPL_VAR MAX_IMAGE>"> <i class="fa fa-search-plus align_CM"></i></a>
+												  </div>
+												  
+												  <div class="portfolio-item-content">
+														     <span class="header"><TMPL_VAR TITLE></span>	     
+												  </div>  
+									       </div>
+									       
+						 
+							    </div>
+					 </li>
+				     </TMPL_LOOP>    
+		      </ul>
+		</div>
+       </section>
+</TMPL_IF>

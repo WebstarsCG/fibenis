@@ -1,0 +1,43 @@
+       <section id="{{SECTION_ID}}" class="brdr_bottom">
+	  <div class="container">	
+	       <div class="row">
+		   <div class="col-md-12">
+				   <TMPL_IF ACCORDION_HEADING_{{SECTION_ID}}>
+					<TMPL_LOOP ACCORDION_HEADING_{{SECTION_ID}}>	
+						       <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+							   <TMPL_IF HEADING><div>&nbsp;</div><div>&nbsp;</div><h1><TMPL_VAR HEADING></h1></TMPL_IF>
+							<TMPL_IF SUB_HEADING><p class="title-desc"><TMPL_VAR SUB_HEADING></p></TMPL_IF>
+							</div>
+					   </TMPL_LOOP>	
+				   </TMPL_IF>
+				   
+			   <div class="panel-group" id="accordion_{{SECTION_ID}}" >
+			    
+			    <TMPL_LOOP ACCORDION_{{SECTION_ID}}>
+			       <div class="panel panel-default">
+				
+				   <div class="panel-heading">
+				   <h4 class="panel-title">
+				   <a data-toggle="collapse"
+				      data-parent="#accordion_{{SECTION_ID}}"
+				      href="#collapse-{{SECTION_ID}}_<TMPL_VAR __COUNTER__>"
+				    >
+				   <i class="fa fa-angle-up control-icon"></i>
+				   <i class="fa fa-chevron-circle-right"></i><TMPL_VAR QUESTION>
+				   </a>
+				   </h4>
+				   </div>
+				   
+				
+				   
+				   <div id="collapse-{{SECTION_ID}}_<TMPL_VAR __COUNTER__>" class="panel-collapse collapse <TMPL_IF __first__>in</TMPL_IF>">
+				   <div class="panel-body"><TMPL_VAR ANSWER></div>
+				   </div>
+			       </div>
+			       </TMPL_LOOP>
+			   
+			   </div>
+		   </div>
+	       </div>
+	    </div>
+       </section>

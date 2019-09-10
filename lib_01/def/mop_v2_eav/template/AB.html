@@ -1,0 +1,37 @@
+		 <TMPL_IF ACTION_BOX_{{SECTION_ID}}>
+				  <section id="{{SECTION_ID}}" class="brdr_bottom">
+				      <div id="content">
+					  <div class="container">
+					     <div class="page-content">
+					   
+						   <TMPL_IF ACTION_BOX_HEADING_{{SECTION_ID}}>
+						      <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+							<TMPL_IF HEADING><h1><TMPL_VAR HEADING></h1></TMPL_IF>
+							<TMPL_IF SUB_HEADING><p class="title-desc"><TMPL_VAR SUB_HEADING></p></TMPL_IF>
+						      </div>
+						   </TMPL_IF>
+					     
+					      
+					      <TMPL_LOOP ACTION_BOX_{{SECTION_ID}}>
+						 <div class="call-action call-action-boxed call-action-style1 no-descripton clearfix">
+						    <div class="button-side"><a
+										<TMPL_IF IS_DOC>
+										target="blank"
+										href="<TMPL_VAR IS_DOC>" class="btn-system border-btn btn-medium"
+										<TMPL_ELSE>
+										     <TMPL_IF IS_DOC>
+												      target="blank"
+												      href="<TMPL_VAR BUTTON_LINK>" class="btn-system border-btn btn-medium"
+										     </TMPL_IF>
+								                 </TMPL_IF>
+										
+										><TMPL_VAR BUTTON_NAME></a></div>
+						    <h2 class="primary"><strong><TMPL_VAR CONTENT></strong></h2>
+						 </div>
+						 <div>&nbsp;</div>
+					       </TMPL_LOOP>
+					     </div>
+					  </div>
+				      </div>
+				  </section>
+		 </TMPL_IF>

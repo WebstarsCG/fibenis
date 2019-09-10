@@ -1,0 +1,27 @@
+<TMPL_IF G2_{{SECTION_ID}}>
+      <section id="{{SECTION_ID}}" class=" font_lato brdr_bottom">
+	<div class="container">
+	       <div class="col-md-12 mar_tb_3">&nbsp;</div>
+		     <TMPL_IF G2_HEADING_{{SECTION_ID}}>
+			    <TMPL_LOOP G2_HEADING_{{SECTION_ID}}>
+				    <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+				          <TMPL_IF HEADING><h1><TMPL_VAR HEADING></h1></TMPL_IF>
+					  <TMPL_IF SUB_HEADING><p class="title-desc"><TMPL_VAR SUB_HEADING></p></TMPL_IF>
+				    </div>
+			    </TMPL_LOOP>
+		     </TMPL_IF>	
+	      <TMPL_LOOP G2_{{SECTION_ID}}>		
+		 <a class="<TMPL_IF IS_IMAGE_URL>tip</TMPL_IF> col-md-4 col-sm-6 col-xs-12 polaroid" <TMPL_IF IS_IMAGE_URL>  rel="prettyPhoto['{{SECTION_ID}}']" href="<TMPL_VAR IMAGE>" </TMPL_IF>>
+		  <img src="<TMPL_VAR IMAGE>" alt="" title="" class="img-responsive frame_gray_1">
+		  <span class="primary"><TMPL_VAR TITLE></span>
+		 </a><TMPL_IF IS_IMAGE_URL> <span class="tooltiptext">Click for zoomed view..</span></TMPL_IF>
+		 <div class="col-md-8	 col-sm-6 col-xs-12">
+		     <div class="col-md-12 mar_tb_10 visible-xs"></div>
+		     
+		     <p class="txt_size_13 align_J"><TMPL_VAR CONTENT></p>
+		     <div class="col-md-12 mar_tb_10"></div>
+		 </div>
+	      </TMPL_LOOP>
+	</div>
+     </section>	
+</TMPL_IF>

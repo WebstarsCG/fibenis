@@ -1,0 +1,2617 @@
+
+
+	<TMPL_IF HAS_TEXTAREA_EDITOR>	
+		<script language="JavaScript" type="text/javascript" src="<TMPL_VAR LIB_PATH>/comp/ckeditor/ckeditor.js"></script>
+		<!--<script src="//cdn.ckeditor.com/4.11.1/basic/ckeditor.js"></script>-->
+	</TMPL_IF>	
+		
+	<TMPL_IF HAS_HANDSONTABLE>	
+		
+		<script src="<TMPL_VAR LIB_PATH>/comp/jquery-handsontable/dist/jquery.handsontable.full.js"></script>
+		
+		<link   data-jsfiddle="common"
+			rel="stylesheet"
+			media="screen"
+			href="<TMPL_VAR LIB_PATH>/comp/jquery-handsontable/dist/jquery.handsontable.full.css"> 
+	
+	</TMPL_IF>
+	
+	<TMPL_IF HAS_CODE_EDITOR>
+	
+		<link rel="stylesheet" href="<TMPL_VAR LIB_PATH>/comp/codemirror/codemirror.css">	
+			
+		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/codemirror.js"></script>
+		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/mode/xml/xml.js"></script>
+		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/mode/css/css.js"></script>
+		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/mode/javascript/javascript.js"></script>
+		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/addon/selection/active-line.js"></script>
+		<script src="<TMPL_VAR LIB_PATH>/comp/codemirror/addon/auto_refresh.js"></script>
+	
+	</TMPL_IF>
+
+	<TMPL_IF FORM_LAYOUT>
+		<link rel="stylesheet" href="<TMPL_VAR LIB_PATH>/css/<TMPL_VAR FORM_LAYOUT>.css">
+	</TMPL_IF>
+
+	<TMPL_IF is_top_js_file>	    
+		<script language="javascript" type="text/javascript"  src="<TMPL_VAR top_js_file>.js"></script>	    
+	</TMPL_IF>  
+	
+	<TMPL_IF is_title>
+		<h1><TMPL_VAR TITLE></h1>
+	</TMPL_IF>
+
+	<script language="JavaScript" type="text/javascript">
+		
+		var ckeditor_temp=new Array();
+		var input_temp   = new Object({'range':[],'toggle':[],'date':[],'code_editor':[],'option':[]});
+				
+		// Generation
+		<TMPL_IF GX>
+			f_series.is_must['is_json']=1;		
+		
+			<TMPL_LOOP FIELD_INFO>
+				f_series.is_must['data']['X<TMPL_VAR field_id>']=new Object({'is_active':false});
+			</TMPL_LOOP>
+			 
+			<TMPL_LOOP VALIDATE_INFO>			
+				f_series.is_must['data']['<TMPL_VAR ID>']['is_active']=true;
+			</TMPL_LOOP>
+			
+		</TMPL_IF>
+			
+		<TMPL_IF VALIDATE_INFO>	
+      
+		function validate_submit(){
+			
+			var refill_elements=new Array();
+			
+			if ((document.activeElement.id=='SAVE') && (G.$('UPDATE').value.length>0)) {
+				
+				// no checl
+				G.showLoader('Sending your request..');
+				
+			}else{
+				<TMPL_IF GX>
+					refill_elements= textTestV2(f_series.is_must);
+				<TMPL_ELSE>			
+					refill_elements = textTestV2(<TMPL_LOOP VALIDATE_INFO>document.getElementById('<TMPL_VAR ID>')<TMPL_UNLESS __last__>,</TMPL_UNLESS></TMPL_LOOP>);
+				</TMPL_IF>
+				   									   
+				if(refill_elements.length>=1){
+				 
+					ELEMENT('inpage_message').className='block_fail';				    
+					fade_in_out('#inpage_message',5000,'Please Fill the Marked Details');					   
+					return false;
+				      
+				}else{
+					
+					G.showLoader('Sending your request..');
+					return true;
+				
+				}
+				
+			} // end
+			     
+		     } // validate end
+	
+	          </TMPL_IF>	  
+	 
+	 </script>
+		
+		
+		<script>
+		function image_delete(param){
+					
+					
+					 var lv = new Object({});
+                     
+				
+                     lv.param = JSON.parse(decodeURIComponent(param));
+                    
+				      bootbox.confirm({
+					
+					message: "Are you sure to delete it? ",
+                                            
+						buttons: {
+						    confirm: {
+							label: 'Yes',
+							className: 'btn-success'
+						    },
+						    cancel: {
+							label: 'No',
+							className: 'btn-danger'
+						    }
+						},
+						
+						callback: function (result) {
+						    
+							if(result==true){
+								   
+								G.showLoader('Updating');
+		       
+								f_series.ajax.set_request('router.php?series='+lv.param['series']+'&action='+lv.param['action']+'&token='+lv.param['token']+'&key='+lv.param['key']+'&param='+JSON.stringify(lv.param['data'])+'&sv=Info' );    
+																   
+																  // alert('router.php?series='+lv.param['series']+'&action='+lv.param['action']+'&token='+lv.param['token']+'&param='+JSON.stringify(lv.param['data'])+'&sv=Info' );  
+																   
+																    
+								f_series.ajax.send_get(del_image_response);                                            
+								   
+							}
+						}
+                                        });
+					  
+					  
+		}
+		
+		function del_image_response(response){
+			
+				G.hideLoader();
+				
+				//alert(response);
+				var content_area = response.replace(/\s/g,'');
+				
+				document.getElementById("message_"+content_area).innerHTML = ""; 
+				
+				document.getElementById("del_data_out_"+content_area).innerHTML = "";
+				
+				document.getElementById("hidden_"+content_area).value= "";
+				
+				document.getElementById(content_area).value=""; 
+		}
+		
+		
+		
+		
+	</script>
+	
+	<div id="inpage_message">&nbsp;</div>
+	
+	<!--- header-->
+	 
+	 <TMPL_IF HEADER_CONTENT>
+	 
+		<div class="<TMPL_VAR HEADER_STYLE>">
+		       <TMPL_VAR HEADER_CONTENT>
+		</div>
+	 
+	 </TMPL_IF>
+
+	 <form id="PUB_A" name="PUB_A"  method="post" enctype="multipart/form-data" onsubmit ="JavaScript:return validate_submit();">	
+	 
+	 
+	
+	 <TMPL_IF FIELD_INFO>
+	
+	
+	 <div align="center">		  
+		 <fieldset align="center">
+		  
+			   <legend></legend>
+			   
+				<TMPL_IF DIVIDER>					
+						<TMPL_IF IS_DIVIDER_TAB>
+					
+							<ul class="nav nav-tabs">
+								<TMPL_LOOP DIVIDER>							
+									<li <TMPL_IF __first__>class="active"</TMPL_IF>><a data-toggle="tab" href="#X<TMPL_VAR ID>"><TMPL_VAR LABEL>
+																<span id="message_X<TMPL_VAR ID>"></span>								
+															</a>
+									</li>
+								</TMPL_LOOP>
+							</ul>
+							
+							<div class="tab-content">
+							
+						</TMPL_IF>
+						
+						<TMPL_IF IS_DIVIDER_ACCORDION>
+							<div class="panel-group" id="accordion">
+						</TMPL_IF>
+				</TMPL_IF>
+			 			  
+			
+				<TMPL_LOOP FIELD_INFO>
+				
+				<TMPL_IF IS_DIVIDER>
+					
+					<TMPL_IF field_type_heading>
+					
+						
+						
+						<TMPL_IF IS_DIVIDER_TAB>
+							
+							<TMPL_UNLESS IS_FIRST_DIVIDER>
+								
+								<TMPL_IF HAS_SUB_DIVIDER>
+												</div> <!--- end of sub body--->
+											</div> <!--- end of sub collaps--->
+										</div> <!--- end of sub section-->
+									</div> <!--- end of sub panel--->									
+								</TMPL_IF>
+					
+								</div> <!--- end of previous tab--->
+							</TMPL_UNLESS>
+					
+							<div id="X<TMPL_VAR field_id>" data-heading-type="TB" class="tab-pane fade <TMPL_IF IS_FIRST_DIVIDER>in active</TMPL_IF>">
+						
+						</TMPL_IF>
+						
+						<TMPL_IF IS_DIVIDER_ACCORDION>
+							
+							<TMPL_UNLESS IS_FIRST_DIVIDER>
+								
+								<TMPL_IF HAS_SUB_DIVIDER>
+												</div> <!--- end of sub body--->
+											</div> <!--- end of sub collaps--->
+										</div> <!--- end of sub section-->
+																		
+								</TMPL_IF>
+								
+										</div> <!--- end of body--->
+									</div> <!--- end of collaps--->
+								</div> <!--- end of section-->							
+							</TMPL_UNLESS>
+							
+							<div class="panel panel-default">
+								<!--- Heading--->
+								<div class="panel-heading">
+								  <h4 class="panel-title">
+								    <a data-toggle="collapse" data-parent="#accordion" href="#X<TMPL_VAR field_id>">
+									<TMPL_VAR field_name><span id="message_X<TMPL_VAR field_id>"></span>
+								    </a>
+								  </h4>
+								</div>
+								
+								<!--- Content--->
+								<div id="X<TMPL_VAR field_id>" data-heading-type="AC" class="panel-collapse collapse <TMPL_IF IS_FIRST_DIVIDER>in</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>">
+									<div class="panel-body">
+						</TMPL_IF>
+						
+					</TMPL_IF>
+					
+					<TMPL_IF FIELD_TYPE_SUB_HEADING>					
+									
+							<TMPL_UNLESS IS_FIRST_SUB_DIVIDER>
+											</div> <!--- end of sub body--->
+										</div> <!--- end of sub collaps--->
+									</div> <!--- end of sub section-->
+															
+							</TMPL_UNLESS>
+							
+							<TMPL_IF IS_FIRST_SUB_DIVIDER>
+								<div class="panel-group" id="accordion_<TMPL_VAR LAST_DIVIDER_ID>">
+							</TMPL_IF>
+							
+							<div class="panel panel-default">
+								<!--- Heading--->
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion_<TMPL_VAR LAST_DIVIDER_ID>" href="#X<TMPL_VAR field_id>">
+											<TMPL_VAR field_name>
+										</a>
+									</h4>
+								</div>
+								
+								<!--- Content--->
+								<div id="X<TMPL_VAR field_id>" class="panel-collapse collapse <TMPL_IF IS_FIRST_SUB_DIVIDER>in</TMPL_IF> <TMPL_IF FIELD_TOKEN><TMPL_VAR FIELD_TOKEN></TMPL_IF>">
+									<div class="panel-body">
+						
+						
+					</TMPL_IF>
+					
+				
+				<TMPL_ELSE>
+					<TMPL_IF FIELD_TYPE_HEADING>
+						<div class="row_heading <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"  id="X<TMPL_VAR field_id>_panel" <TMPL_VAR input_html>>
+							<TMPL_VAR field_name>
+						</div>
+					</TMPL_IF>
+				</TMPL_IF>
+				
+				<!---LL=label--->
+				<TMPL_IF FIELD_TYPE_LABEL>		
+					<!--<TMPL_VAR validate_fun> -->		
+				        <div id="X<TMPL_VAR field_id>_label"
+					    class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>">
+						<span <TMPL_VAR input_html> ><TMPL_VAR field_name></span>
+					</div>		      
+				</TMPL_IF>	
+				<!---end of label--->	
+				
+				<!---TD=date--->				
+				<TMPL_IF FIELD_TYPE_DATE>				
+					<div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"  id="X<TMPL_VAR field_id>_panel">
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value>
+									<input								
+										id	= "X<TMPL_VAR field_id>_SHOW"
+										name	= "X<TMPL_VAR field_id>_SHOW"  								
+										autocomplete="off"
+										<TMPL_VAR input_html>
+										type    = "text"
+										readonly="true"
+									>
+								    
+									<TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+									<span class=message id="message_X<TMPL_VAR field_id>"></span>
+						
+									<input								
+										id	= "X<TMPL_VAR field_id>"
+										name	= "X<TMPL_VAR field_id>"  								
+										autocomplete="off"
+										<TMPL_VAR input_html>
+										<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+										type    = "hidden"
+									>
+									
+									
+						</span>
+					</div>
+				      
+					<script type="text/javascript">					
+						$( "#X<TMPL_VAR field_id>_SHOW" ).datepicker({
+												altField: "#X<TMPL_VAR field_id>",
+												altFormat: "yy-mm-dd",
+												changeMonth: true,
+												changeYear: true,
+												
+												<TMPL_IF min_date>
+												  minDate: "<TMPL_VAR min_date>",
+												  maxDate: "<TMPL_VAR max_date>",
+												</TMPL_IF>
+												
+												<TMPL_IF year_range>
+													yearRange :"<TMPL_VAR year_range>",
+												</TMPL_IF>	
+												
+												<TMPL_IF default_date>
+												  defaultDate: "<TMPL_VAR default_date>",
+												 </TMPL_IF>
+												
+												// change,month & year 
+												onChangeMonthYear: function(year, month, datepicker) {
+												
+													if (datepicker.id == "X<TMPL_VAR field_id>_SHOW") {
+													    var newDate = new Date();
+													    newDate.setMonth(month -1);
+													    newDate.setYear(year);
+													    $('#X<TMPL_VAR field_id>_SHOW').datepicker("setDate", newDate);
+													}                    
+												}
+
+												
+										});
+						
+						// format
+						
+						$("#X<TMPL_VAR field_id>_SHOW" ).datepicker( "option", "dateFormat",'dd-mm-yy');
+						
+						<TMPL_IF default_date>
+							$("#X<TMPL_VAR field_id>_SHOW").datepicker("setDate",'<TMPL_VAR default_date>');
+							E_V_PASS("X<TMPL_VAR field_id>_SHOW","<TMPL_VAR default_date>");
+						</TMPL_IF>
+						
+						input_temp.date['X<TMPL_VAR field_id>']=1;
+						input_temp.date['X<TMPL_VAR field_id>_SHOW']=1;
+						
+					</script>
+					
+				</TMPL_IF>				
+				<!---end of date--->
+					
+				
+				<!---TX=text--->
+				<TMPL_IF FIELD_TYPE_TEXT>		
+					<!--<TMPL_VAR validate_fun> -->		
+				        <div id="X<TMPL_VAR field_id>_panel"
+					    class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>">
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value>
+						    
+						    
+							 <input type="text"  <TMPL_IF validate> onchange="<TMPL_VAR validate_fun>;" </TMPL_IF>  name="X<TMPL_VAR field_id>" autocomplete="off"  	id="X<TMPL_VAR field_id>"
+									      <TMPL_VAR input_html>
+										 <TMPL_IF IS_INTEGER>
+											 onkeypress  = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+											 onpaste     = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+											 data-type='d';
+										 </TMPL_IF>
+										 
+										 <TMPL_IF IS_ATOZ>
+											 onkeypress  = "return PR_All_Alphabetic(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+											 onpaste  = "return PR_All_Alphabetic(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+											 data-type='w';
+										 </TMPL_IF>
+										 
+										 <TMPL_IF IS_ATOZ_1TO9_DEFAULT>
+											 onkeypress  = "return PR_All_Alpha_Numeric(event,'., -_<TMPL_IF SPECIAL_IN><TMPL_VAR SPECIAL_IN></TMPL_IF>');"
+											 onpaste     = "return PR_All_Alpha_Numeric(event,'., -_<TMPL_IF SPECIAL_IN><TMPL_VAR SPECIAL_IN></TMPL_IF>');"
+											 data-type='x';
+										 </TMPL_IF>
+										 
+										 <TMPL_IF IS_DECIMAL>
+											 onkeypress  = "return PR_All_Numeric(event,'.');"
+											 onpaste     = "return PR_All_Numeric(event,'.');"
+											 data-type='d'
+											 data-pattern="^(\d{1,<TMPL_VAR LEFT_LENGTH>})((\.\d{1,<TMPL_VAR RIGHT_LENGTH>}){0,1})$"											 
+											 data-left-length=<TMPL_VAR LEFT_LENGTH>
+											 data-right-length=<TMPL_VAR RIGHT_LENGTH>
+										 </TMPL_IF>
+										 
+										 	
+										<TMPL_IF IS_VALUE>
+											 onkeypress  = "return PR_All_Numeric(event);"
+											 onpaste     = "return PR_All_Numeric(event);"
+											 data-type   = 'v'											 
+											 data-min-value=<TMPL_VAR MIN_VALUE>
+											 data-max-value=<TMPL_VAR MAX_VALUE>
+										</TMPL_IF>
+										 
+										 <TMPL_IF MAX_LENGTH>
+											 maxlength=<TMPL_VAR MAX_LENGTH>
+										 </TMPL_IF>
+										 
+										 <TMPL_IF MIN_LENGTH>
+											 data-min-length=<TMPL_VAR MIN_LENGTH>
+										 </TMPL_IF>
+										 
+										 <TMPL_IF LENGTH_MATCH>
+											 data-length-match=1
+										 </TMPL_IF>
+										 
+										 <TMPL_IF IS_MANDATORY>
+											 data-is-must=1
+											 onblur="JavaScript:checkIsMust(this);"									       
+										 <TMPL_ELSE>
+											 onblur="JavaScript:elementFocusOut(this);"
+										 </TMPL_IF>
+											 onfocus="JavaScript:elementFocus(this);"
+											 
+										<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+							 > <!--- end--->
+							  <!--onblur="JavaScript:checkIsMust(this);"-->
+								     
+									 <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+									 <span id="X<TMPL_VAR field_id>_v_msg">&nbsp;</span>	
+									 <TMPL_IF hint><div class="label_grand_child"><TMPL_VAR hint></div></TMPL_IF>								
+									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
+						</span>
+				        </div>					
+				</TMPL_IF>
+				<!---end of text--->
+				 
+				
+				<!---TG=toggle---> 
+				<TMPL_IF FIELD_TYPE_TOGGLE>				 
+				        <div id="X<TMPL_VAR field_id>_panel"
+					    class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>">
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value>
+							<label class="switch">
+								<input
+									name="X<TMPL_VAR field_id>"								
+									type="checkbox" value="1"
+									data-on-text="<TMPL_IF ON_LABEL><TMPL_VAR ON_LABEL></TMPL_IF>"
+									data-off-text="<TMPL_IF OFF_LABEL><TMPL_VAR OFF_LABEL></TMPL_IF>"		
+									onchange="JavaScript:toggle_action(this)"
+									<TMPL_IF IS_DEFAULT_ON>checked</TMPL_IF>
+								>
+								<span class="slider <TMPL_IF IS_ROUND>round</TMPL_IF>"></span>
+								<span  class="status<TMPL_UNLESS SHOW_STATUS_LABEL>_hide</TMPL_UNLESS>"
+									id="X<TMPL_VAR field_id>_status">
+									<TMPL_IF IS_DEFAULT_ON><TMPL_VAR ON_LABEL><TMPL_ELSE><TMPL_VAR OFF_LABEL></TMPL_IF>
+								</span>
+							</label>							
+					        </span>
+				        </div> <!--- set default-->
+				        <!--- set default-->
+				        
+					<script language="JavaScript" type="text/javascript">
+						//set_range('X<TMPL_VAR field_id>');					
+						input_temp.toggle['X<TMPL_VAR field_id>']=1;				       
+				        </script>					
+				</TMPL_IF>
+				
+				
+				
+				
+				<!---PW=password---> 
+				<TMPL_IF FIELD_TYPE_PASSWORD>				
+				        <div class="row <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"  id="X<TMPL_VAR field_id>_panel">
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value>
+									 <input  id		= "X<TMPL_VAR field_id>"
+										 name	= "X<TMPL_VAR field_id>"  
+										 
+										 autocomplete="off"
+										 <TMPL_VAR input_html>
+										 type    = "password"
+									 >
+								     
+									 <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+									 <div><TMPL_VAR hint></div>
+									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
+						</span>
+				        </div>					
+				</TMPL_IF>
+				<!---end of password--->
+				
+				<!---HN=hidden--->	 
+				<TMPL_IF FIELD_TYPE_HIDDEN>				
+					<input          id    = "X<TMPL_VAR field_id>"
+							name  = "X<TMPL_VAR field_id>"  										 										 
+							<TMPL_VAR input_html>
+							type  = "hidden">													
+				</TMPL_IF>
+				
+				
+				<TMPL_IF field_type_autocomplete>				
+				        <div class="row <TMPL_IF is_hide>hide</TMPL_IF>"  id="X<TMPL_VAR field_id>_panel">
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value>
+									<!-- onkeypress="remote_quick_list(this,'<TMPL_VAR remote_link>');"  --> 
+									 <input   id="X<TMPL_VAR field_id>"
+										 name	= "X<TMPL_VAR field_id>"  
+										 
+										 onkeypress="remote_auto_list(this,'<TMPL_VAR remote_link>');"
+										 
+										 <TMPL_VAR input_html>
+											<TMPL_IF DEFAULT_LABEL>value="<TMPL_VAR DEFAULT_LABEL>"</TMPL_IF>	
+											 
+											 <TMPL_IF restrict_new_entry>
+											   	onfocusout="JavaScript:check_exit_data(this,'<TMPL_VAR remote_link>');"
+												 
+											  <TMPL_ELSE> onfocusout="JavaScript:check_auto_data(this,'<TMPL_VAR remote_link>');" </TMPL_IF>
+											 
+										 type    = "text"
+										 
+										 <TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+									 >
+									 
+									 <input   id="X<TMPL_VAR field_id>_hidden"
+										 name	= "X<TMPL_VAR field_id>_hidden"  
+										 <TMPL_VAR input_html>
+											<TMPL_IF DEFAULT_LABEL>value="<TMPL_VAR DEFAULT_LABEL>"</TMPL_IF>	
+										 type    = "hidden"
+										 
+										 
+									 >
+								     
+									 
+									
+									 <TMPL_IF is_mandatory><font class="red_star">*</font></TMPL_IF>
+									 <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
+						</span>
+				       </div>					
+				</TMPL_IF>
+				
+				 
+				<TMPL_IF FIELD_TYPE_AUTO_COMPLETE_V2>				
+				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"  id="X<TMPL_VAR field_id>_panel">
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value>
+						
+									 <input  onkeypress="remote_quick_list(this,'<TMPL_VAR remote_link>');"  id="VX<TMPL_VAR field_id>"
+										 name	= "VX<TMPL_VAR field_id>"  
+										 
+										 autocomplete="off"
+										 <TMPL_VAR input_html>
+											<TMPL_IF DEFAULT_LABEL>value="<TMPL_VAR DEFAULT_LABEL>"</TMPL_IF>	
+										 type    = "text"
+									 >
+								     
+									 
+									  <input onkeypress="remote_quick_list(this,'<TMPL_VAR remote_link>');"  id= "X<TMPL_VAR field_id>"
+										 name	= "X<TMPL_VAR field_id>"  
+										 
+										 autocomplete="off"
+										 <TMPL_VAR input_html>
+											
+										<TMPL_IF DEFAULT_ID>value="<TMPL_VAR DEFAULT_ID>"</TMPL_IF>	
+											
+										 type    = "hidden"
+										 
+										 <TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+									 >
+									 <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+									 <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
+						</span>
+				       </div>					
+				</TMPL_IF>
+				 
+				<!----SL/ML=Single List & Multiple List---> 
+				<TMPL_IF field_type_option>				
+				        <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"  id="X<TMPL_VAR field_id>_panel">
+						<span class="label">	<TMPL_VAR field_name></span>
+						<span class=value>
+						
+									<select <TMPL_IF option_fun> <TMPL_VAR option_fun> </TMPL_IF> 
+										<TMPL_VAR input_html> 
+						
+										<TMPL_IF option_multiple>
+											multiple="true"
+											id="X<TMPL_VAR field_id>_TEMP"  name="X<TMPL_VAR field_id>_TEMP"
+											onchange="JavaScript:selectbox_capture_selected_value(G.$(this.id),G.$('X<TMPL_VAR field_id>'),',');"
+											
+										<TMPL_ELSE>
+											id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>"
+											
+										</TMPL_IF>
+										
+										 <TMPL_IF IS_MANDATORY>
+											 data-is-must=1
+											 onchange = "JavaScript:checkIsSelect(this);"
+											 onblur   = "JavaScript:checkIsSelect(this);"
+										 <TMPL_ELSE>
+											 onchange="JavaScript:elementFocusOut(this);"
+										 </TMPL_IF>
+										 
+											 onfocus="JavaScript:elementFocus(this);"
+										
+										<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+									
+									> <!--- end of select--->
+															
+										
+										<TMPL_UNLESS option_multiple>
+											<TMPL_UNLESS avoid_default_option>
+											<option value="<TMPL_VAR option_value>"><TMPL_VAR option_label></option>
+											</TMPL_UNLESS>
+										</TMPL_UNLESS>
+										
+										<TMPL_VAR option_data>
+											
+											
+										
+									</select>
+								    
+									<TMPL_IF option_multiple>
+										<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" data-input-type="select-multiple" value="">
+									</TMPL_IF>
+								    
+									<TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+									<span class=message id="message_X<TMPL_VAR field_id>"></span>
+									
+						</span>
+						
+						<TMPL_UNLESS option_multiple>
+							<script language="JavaScript" type="text/javascript">
+								input_temp.option['X<TMPL_VAR field_id>']=1;						
+							</script>
+						</TMPL_UNLESS>
+				        	
+				        </div>					
+				</TMPL_IF>
+				<!---end of single & multiple list--->
+				
+				
+				<!---LR=lefet & right--->
+				<TMPL_IF field_type_list_left_right>				
+				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"  id="X<TMPL_VAR field_id>_panel">
+				       <span class="label">	<TMPL_VAR field_name></span>
+				       <span class=value>
+					
+								<table>									
+									<tr>
+										<td class="align_LM v_top"> 
+																				
+											<TMPL_IF OPTION_IS_QUICK_SEARCH>
+												
+													<input type  = "text"							       
+													       id    = "X<TMPL_VAR field_id>_LEFT_SEARCH"
+													       name  = "X<TMPL_VAR field_id>_LEFT_SEARCH"
+													       onkeyup="JavaScript:list_box_search(this,'X<TMPL_VAR field_id>_LEFT');"
+														
+														class="pic zoom"						    
+													       /><span class="icon_inline "></span><br><br>
+											
+														<script language="javascript" type="text/javascript">													
+																f_series.__element_out_array['X<TMPL_VAR field_id>_LEFT'] = new Array();
+																f_series.temp.__element_out=f_series.__element_out_array['X<TMPL_VAR field_id>_LEFT'];
+														</script>
+												
+											</TMPL_IF>
+											
+											<div class="label">Out</div><br>	       
+												       
+										<select 																				
+											<TMPL_VAR input_html> 	
+													multiple="true"
+													id="X<TMPL_VAR field_id>_LEFT"  name="X<TMPL_VAR field_id>_LEFT"
+											> <!--- end of select--->
+											
+											<TMPL_IF OPTION_DATA>
+												<TMPL_VAR OPTION_DATA>
+											</TMPL_IF>	
+																								
+											<TMPL_IF OPTION_ID_NAME>												
+													
+													<TMPL_LOOP OPTION_ID_NAME>
+														
+														<script language="javascript" type="text/javascript">													
+															f_series.temp.__element_out.push({id:<TMPL_VAR ID>,name:'<TMPL_VAR SN>'});																										
+														</script>														
+														<option value="<TMPL_VAR ID>" ><TMPL_VAR SN></option>														
+													</TMPL_LOOP>
+											</TMPL_IF>
+												
+										</select>
+										
+											<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+											<div>&nbsp;</div>	
+										</td>
+										
+										<td class="align_CM ">
+											<TMPL_IF OPTION_IS_QUICK_SEARCH>
+												<span style="height:38px;display: block;">&nbsp;</span>
+											</TMPL_IF>
+											<input type=button  class="button" value=">>"
+											       onClick="JavaScript:left_right_action(<TMPL_VAR field_id>,<TMPL_VAR RIGHT_OPTION_LIMIT>);<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
+											<br>	<br>							
+											<input type=button class="button"  value="<<"
+											       onClick="JavaScript:parent_to_child(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_LEFT'));selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');selectbox_capture_text(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_RIGHT_TEXT'),'#');<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
+                            	                                 
+		                          
+										</td>
+										
+										<td class="align_LM v_top">
+								                               
+											<TMPL_IF OPTION_IS_QUICK_SEARCH>
+												<div style="height:70px;display: block;">&nbsp;</div>
+											</TMPL_IF>
+											        <div class="label">In</div><br>   
+												<select <TMPL_IF option_fun> <TMPL_VAR option_fun> </TMPL_IF> 
+												        <TMPL_VAR input_html> 
+													      multiple="true"
+													      id="X<TMPL_VAR field_id>_RIGHT"  name="X<TMPL_VAR field_id>_RIGHT"													      
+													      
+												>
+												
+												<TMPL_IF option_existing_data>
+													<TMPL_VAR option_existing_data>
+												</TMPL_IF>
+												
+											        </select>
+											        <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF><br/>
+												<a  href="JavaScript:select_up('X<TMPL_VAR field_id>_RIGHT');selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');" class="icon">Up</a>
+												<a  href="JavaScript:select_down('X<TMPL_VAR field_id>_RIGHT');selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');" class="icon">Down</a>
+												
+								
+								<!--<div><TMPL_VAR hint></div>-->
+										</td>
+								</table>
+								
+								<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="" data-input-type="select-left-right">
+								<input type="hidden" id="X<TMPL_VAR field_id>_RIGHT_TEXT"  name="X<TMPL_VAR field_id>_RIGHT_TEXT" value="">
+							    	
+								
+				       </span>
+				       </div>					
+				</TMPL_IF>
+				<!---end of left & right--->
+				
+				
+				<!--- range--->
+				<TMPL_IF field_type_range  id="X<TMPL_VAR field_id>_panel">					    
+				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>">
+					  <span class="label"><TMPL_VAR field_name></span>
+					  <span class=value>
+						            <TMPL_IF START_LABEL><TMPL_VAR START_LABEL></TMPL_IF>
+							    <input  id		= "X<TMPL_VAR field_id>_START"
+							    
+								     name	= "X<TMPL_VAR field_id>_START"
+								     
+								     placeholder = "<TMPL_IF START_PLACE_HOLDER><TMPL_VAR START_PLACE_HOLDER><TMPL_ELSE>From</TMPL_IF>"
+								     
+								     <TMPL_VAR input_html>
+									
+								     onkeyup="JavaScript:return set_range('X<TMPL_VAR field_id>');"
+									
+								     type	= "text"
+								     
+								     value	= ""> <TMPL_IF END_LABEL><TMPL_VAR END_LABEL><TMPL_ELSE>to</TMPL_IF>
+								     
+								<input  id	= "X<TMPL_VAR field_id>_END"
+							    
+								     name	= "X<TMPL_VAR field_id>_END"
+								     
+								     placeholder = "<TMPL_IF END_PLACE_HOLDER><TMPL_VAR END_PLACE_HOLDER><TMPL_ELSE>To</TMPL_IF>"
+								     
+								     <TMPL_VAR input_html>
+									
+								     onkeyup="JavaScript:return set_range('X<TMPL_VAR field_id>');"
+									
+								     type	= "text"
+								     
+								     value	= "">     
+								     
+							    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF><br>
+							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>
+					  
+							    <input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="">
+					  </span>
+				       </div>
+				       
+				        <!--- set default-->
+				       <script language="JavaScript" type="text/javascript">
+						
+						//set_range('X<TMPL_VAR field_id>');					
+						input_temp.range['X<TMPL_VAR field_id>']=1;
+				       
+				       </script>
+				       
+				</TMPL_IF>
+	 
+	 
+				<!--- hms--->
+				<TMPL_IF field_type_hms  id="X<TMPL_VAR field_id>_panel">					    
+				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>">
+					  <span class="label"><TMPL_VAR field_name></span>
+					  <span class=value>
+							    <select id		= "X<TMPL_VAR field_id>_1"
+							    
+								     name	= "X<TMPL_VAR field_id>_1"
+								     
+								     placeholder = "From"
+								     
+								     <TMPL_VAR input_html>
+									class      = "FI_75"
+									
+								     onchange="JavaScript:return set_hms('X<TMPL_VAR field_id>');"
+								
+								     class      = "FI_"
+								 	
+								     type	= "text"
+								     
+								     value	= "0"></select>:
+								     
+								<select  id	= "X<TMPL_VAR field_id>_2"
+							    
+								     name	= "X<TMPL_VAR field_id>_2"
+								     
+								     placeholder = "To"
+								     
+								     <TMPL_VAR input_html>
+									class      = "FI_50"
+									
+								      onchange="JavaScript:return set_hms('X<TMPL_VAR field_id>');"
+									
+								     type	= "text"
+								     
+								     value	= "0"> </select>
+								     &nbsp;&nbsp;
+								  <select  id	= "X<TMPL_VAR field_id>_3"
+							    
+								     name	= "X<TMPL_VAR field_id>_3"
+								     
+								     placeholder = "To"
+								     
+								     <TMPL_VAR input_html>
+									class      = "FI_50"
+									
+								      onchange="JavaScript:return set_hms('X<TMPL_VAR field_id>');"
+									
+								     type	= "text"
+								     
+								     value	= "0"> </select>    
+							    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>					  
+							    <input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="">
+					  </span>
+				       </div>
+				       
+				       <script language="javascript" type="text/javascript">
+					
+						Option_Builder({'select_box':ELEMENT("X<TMPL_VAR field_id>_1"),'options':f_series.temp.hour_options});
+						Option_Builder_Series({'select_box':ELEMENT("X<TMPL_VAR field_id>_2"),'start':0,'end':59});
+						Option_Builder({'select_box':ELEMENT("X<TMPL_VAR field_id>_3"),'options':f_series.temp.am_pm})
+				       </script>
+				       
+				</TMPL_IF>
+	 
+						
+				<!--- File--->		 
+				<TMPL_IF field_type_file>					    
+				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"   id="X<TMPL_VAR field_id>_panel">
+					  <span class="label"><TMPL_VAR field_name></span>
+					  <span class=value>
+					
+						<input
+							
+							id	= "X<TMPL_VAR field_id>"						
+							name	= "X<TMPL_VAR field_id>"
+							
+							<TMPL_VAR input_html>
+							   
+							type	= "file"							
+							value	= "<TMPL_VAR name>"
+							
+							<TMPL_IF allow_ext>
+							       data-file-in-formats = "<TMPL_VAR allow_ext>"							      
+							</TMPL_IF>
+							
+							<TMPL_IF max_size>
+								data-file-max-size  = "<TMPL_VAR max_size>"	
+							<TMPL_ELSE>
+							 	data-file-max-size="10"
+							</TMPL_IF>
+							
+							<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+							style="display:inline-block;"
+							onchange="check_file_in(this);"
+						><TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+							 
+						
+						<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+						<span class=message id="message_X<TMPL_VAR field_id>" ></span>
+						<span  id="del_data_out_X<TMPL_VAR field_id>" ></span>
+						
+						
+						<TMPL_IF up_key>
+							<span class=del id="del_image_X<TMPL_VAR field_id>" > </span>						
+							<input type="hidden" name="img_X<TMPL_VAR field_id>" id="img_X<TMPL_VAR field_id>" value="" >
+						</TMPL_IF>
+						
+						<input type="hidden" name="hidden_X<TMPL_VAR field_id>" id="hidden_X<TMPL_VAR field_id>" value="" >
+						
+					  </span>
+				       </div>
+				</TMPL_IF>
+				<!---end of file---> 
+				 
+				 
+				<!---TA=Text Area---> 
+				<TMPL_IF field_type_textarea>					    
+				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>" id="X<TMPL_VAR field_id>_panel">
+					  <span class="label"><TMPL_VAR field_name></span>
+					  <span class=value>
+							    <textarea id="X<TMPL_VAR field_id>" name="X<TMPL_VAR field_id>" <TMPL_VAR input_html>
+							    
+									<TMPL_IF IS_INTEGER>
+										onkeypress  = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+										onpaste     = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+										data-type='d';
+									</TMPL_IF>
+									
+									<TMPL_IF IS_ATOZ>
+										onkeypress  = "return PR_All_Alphabetic(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+										onpaste  = "return PR_All_Alphabetic(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+										data-type='w';
+									</TMPL_IF>
+									
+									<TMPL_IF IS_ATOZ_1TO9_DEFAULT>
+										onkeypress  = "return PR_All_Alpha_Numeric(event,'., -_<TMPL_IF SPECIAL_IN><TMPL_VAR SPECIAL_IN></TMPL_IF>');"
+										onpaste     = "return PR_All_Alpha_Numeric(event,'., -_<TMPL_IF SPECIAL_IN><TMPL_VAR SPECIAL_IN></TMPL_IF>');"
+										data-type='x';
+									</TMPL_IF>
+									
+									<TMPL_IF IS_DECIMAL>
+											 onkeypress  = "return PR_All_Numeric(event,'.');"
+											 onpaste     = "return PR_All_Numeric(event,'.');"
+											 data-type='d'
+											 data-pattern="^(\d{1,<TMPL_VAR LEFT_LENGTH>})((\.\d{1,<TMPL_VAR RIGHT_LENGTH>})*)$"
+											 data-left-length=<TMPL_VAR LEFT_LENGTH>
+											 data-right-length=<TMPL_VAR RIGHT_LENGTH>
+									</TMPL_IF>
+									
+									<TMPL_IF IS_VALUE>
+											 onkeypress  = "return PR_All_Numeric(event);"
+											 onpaste     = "return PR_All_Numeric(event);"
+											 data-type   = 'v'											 
+											 data-min-value=<TMPL_VAR MIN_VALUE>
+											 data-max-value=<TMPL_VAR MAX_VALUE>
+									</TMPL_IF>
+									 
+									<TMPL_IF MAX_LENGTH>
+										maxlength=<TMPL_VAR MAX_LENGTH>
+									</TMPL_IF>
+									
+									<TMPL_IF MIN_LENGTH>
+										data-min-length=<TMPL_VAR MIN_LENGTH>
+									</TMPL_IF>
+									
+									<TMPL_IF LENGTH_MATCH>
+										data-length-match=1
+									</TMPL_IF>
+									
+									<TMPL_IF IS_MANDATORY>
+										data-is-must=1
+										onblur="JavaScript:checkIsMust(this);"									       
+									<TMPL_ELSE>
+										onblur="JavaScript:elementFocusOut(this);"
+									</TMPL_IF>
+										onfocus="JavaScript:elementFocus(this);"
+										
+									<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+							    
+							    ></textarea>
+								     
+							    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>
+					  </span>
+					  
+					 </span>
+				       </div>
+				</TMPL_IF>	 
+				<!--- end of text area--->
+				 
+				  <TMPL_IF field_type_textarea_editor>					    
+				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>" id="X<TMPL_VAR field_id>_panel">
+					  <span class="label"><TMPL_VAR field_name></span>
+					  <span class=value>
+							    <textarea id="X<TMPL_VAR field_id>" name="X<TMPL_VAR field_id>" ></textarea>
+								     
+							    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF><br>
+							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>
+					  </span>
+					  
+					 </span>
+				       </div>
+					   
+					   <script type="text/javascript">
+					
+					
+						ckeditor_temp['X<TMPL_VAR field_id>']=CKEDITOR.replace('X<TMPL_VAR field_id>',
+								 
+						{			
+	
+						filebrowserImageUploadUrl : 'images/',
+
+						height 			  : '<TMPL_IF editor_height><TMPL_VAR editor_height><TMPL_ELSE>95%</TMPL_IF>',
+						
+						width 			  : '<TMPL_IF editor_width><TMPL_VAR editor_width><TMPL_ELSE>95%</TMPL_IF>',
+						
+						uiColor			  : '#EBFF9B',
+
+						toolbar 		  : [
+										////{ name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: ['Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+										////{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Scayt' ] },
+										//{ name: 'links', items: [ 'Link', 'Unlink' ] },
+										//{ name: 'insert', items: ['Image','Table', 'HorizontalRule', 'SpecialChar' ] }, // 'Image',
+										////{ name: 'tools', items: [ 'Maximize' ] },
+										
+										////{ name: 'others', items: [ '-' ] },
+										//'/',
+										{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Strike', '-', 'RemoveFormat' ] },
+										{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
+										{ name: 'font', items: [ 'FontSize', 'TextColor', 'BGColor']}, 
+										{ name: 'insert', items: ['Image','Table']},
+										{ name: 'links', items: [ 'Link', 'Unlink'] },										
+										{ name: 'styles', items: [ 'Styles', 'Format' ] },
+										{ name: 'tools', items: ['ShowBlocks' ] },
+										{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source' ] }
+										//{ name: 'about', items: [ 'About' ] }
+									    ],
+
+			       /*
+				* Style sheet for the contents
+			        */
+						contentsCss 		   : '<TMPL_IF editor_style>body {<TMPL_VAR editor_style>} p, ol, ul {margin-top: 0px; margin-bottom: 0px;}<TMPL_ELSE>body {color:#545454; background-color#FFF; font-family: Verdana; font-size:11px !important; line-height:22px;text-align:justify;} p, ol, ul {margin-top: 0px; margin-bottom: 0px;}</TMPL_IF>',
+
+				/*
+				 * Quirks doctype
+				 */
+						docType 		   : '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">',
+
+			        /*
+				 * Core styles.
+			         */
+						coreStyles_bold		   : { element : 'b' },
+						coreStyles_italic	   : { element : 'i' },
+						coreStyles_underline	   : { element : 'u'},
+
+				/*
+				 * Font face
+				 */
+				// Define the way font elements will be applied to the document. The "font"
+				// element will be used.
+						font_style :
+						{
+							element		   : 'font',
+							attributes	   : { 'face' : '#(family)' }
+						},
+
+			       /*
+				* Font sizes.
+				* The CSS part of the font sizes isn't used by Flash, it is there to get the
+				* font rendered correctly in CKEditor.
+				*/
+						fontSize_sizes 		    : '8px/8;9px/9;10px/10;11px/11;12px/12;14px/14;16px/16;18px/18;20px/20;22px/22;24px/24;26px/26;28px/28;36px/36;48px/48;72px/72',
+						fontSize_style 		    :
+							{
+								element	    : 'font',
+								attributes  : { 'size' : '#(size)' },
+								styles	    : { 'font-size' : '#(size)px' }
+							} ,
+
+			       /*
+				* Font colors.
+			        */
+						colorButton_enableMore 	    : true,
+
+						colorButton_foreStyle	    :
+							{
+								element     : 'font',
+								attributes  : { 'color' : '#(color)' }
+							},
+
+						colorButton_backStyle 	    :
+							{
+								element : 'font',
+								styles	: { 'background-color' : '#(color)' }
+							},
+
+
+						
+							});
+						
+						ckeditor_temp['X<TMPL_VAR field_id>'].on( 'change', function( evt ) {
+							
+							// getData() returns CKEditor's HTML content.
+    
+							ELEMENT("X<TMPL_VAR field_id>").value=evt.editor.getData();
+							//console.log( 'Total bytes: ' + evt.editor.getData()+'--'+ELEMENT("X<TMPL_VAR field_id>").value);
+						});
+			
+				</script>  
+				</TMPL_IF>
+				
+				
+				
+				
+				<!---code editor---> 
+				<TMPL_IF field_type_code_editor>					    
+				       <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>" id="X<TMPL_VAR field_id>_panel">
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value>
+							    <textarea id="X<TMPL_VAR field_id>" name="X<TMPL_VAR field_id>" <TMPL_VAR input_html>
+							    																	 
+									<TMPL_IF MAX_LENGTH>
+										maxlength=<TMPL_VAR MAX_LENGTH>
+									</TMPL_IF>
+									
+									
+									<TMPL_IF IS_MANDATORY>
+										data-is-must=1
+										onblur="JavaScript:checkIsMust(this);"									       
+									<TMPL_ELSE>
+										onblur="JavaScript:elementFocusOut(this);"
+									</TMPL_IF>
+										onfocus="JavaScript:elementFocus(this);"
+										
+									<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+							    
+							    ></textarea>
+								     
+							    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+							    <span class="message" id="message_X<TMPL_VAR field_id>"></span>
+					  
+							
+						</span>			
+				       </div>
+				       
+				        <script>																												    
+								input_temp['code_editor']['X<TMPL_VAR field_id>'] = 1;
+								input_temp['code_editor']['X<TMPL_VAR field_id>_obj'] =	CodeMirror.fromTextArea(document.getElementById("X<TMPL_VAR field_id>"), {
+																		mode: "application/xml",
+																		styleActiveLine: true,
+																		lineNumbers: true,
+																		lineWrapping: true,
+																		autoRefresh:true,
+																});				
+					</script>
+				    
+				</TMPL_IF>	 
+				<!--- code editor--->
+				
+				
+				 <TMPL_IF is_fibenistable>	
+				  		<div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>" id="X<TMPL_VAR field_id>_panel">
+							 <span class="label"><TMPL_VAR field_name></span>
+						  <span class=value>
+									<div  id="XP<TMPL_VAR field_id>" style="height:auto; width:auto; overflow: auto" >
+									</div>	 
+
+									<input type="hidden" id="X<TMPL_VAR field_id>" name="X<TMPL_VAR field_id>" value="" data-input-type="FT"
+																	
+										<TMPL_IF MIN_ROWS_TO_FILL>data-min-rows-to-fill="<TMPL_VAR MIN_ROWS_TO_FILL>"</TMPL_IF>
+										<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+										
+										/>
+										
+									<table style="width:100%" cellpadding="0" cellspacing="0" class="fibenis_table grid" id="fibenis_table<TMPL_VAR field_id>" >
+										<thead>
+											<th width="5%">  </th>
+											<TMPL_LOOP fibenistable_head_info>		
+												 <th><TMPL_VAR column></th> 											
+											</TMPL_LOOP>
+										</thead>
+										
+										<tbody id="ft_data">
+										
+										<!-- ROW_NO_FT_COL_NO -->
+										
+									   <TMPL_LOOP fibenistable_row_info>
+									   	 
+										<tr> 
+											<TMPL_IF is_index> <td id="ftindex"><span id="index_<TMPL_VAR __counter__>"> <TMPL_VAR __COUNTER__><span></td> 
+											<TMPL_ELSE>
+												<td id="ftindex">&nbsp; </td>
+											</TMPL_IF>
+											<TMPL_LOOP  fibenistable_cell_info>
+											
+											 <TMPL_IF is_text>
+												<td data-ft-type="fttext" width="<TMPL_VAR WIDTH>">
+												
+												
+												<input  type="text"  onkeyup="JavaScript:<TMPL_IF KEY_UP_ADDON><TMPL_VAR KEY_UP_ADDON>;</TMPL_IF>getfibenisTableData(this,<TMPL_VAR field_id>,'<TMPL_VAR is_update_route_point>','<TMPL_VAR route_url>');<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  <TMPL_VAR input_html>
+													<TMPL_IF IS_INTEGER>
+														onkeypress  = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+													</TMPL_IF>
+													
+													<TMPL_IF IS_ATOZ>
+														onkeypress  = "return PR_All_Alphabetic(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+													</TMPL_IF>
+													
+													<TMPL_IF IS_ATOZ_1TO9_DEFAULT>
+														onkeypress  = "return PR_All_Alpha_Numeric(event,'., -_<TMPL_IF SPECIAL_IN><TMPL_VAR SPECIAL_IN></TMPL_IF>');"
+													</TMPL_IF>
+													
+													<TMPL_IF MAX_LENGTH>
+														maxlength=<TMPL_VAR MAX_LENGTH>
+													</TMPL_IF>
+												/>
+												
+												
+												
+												</td>
+												
+												</TMPL_IF>
+												<TMPL_IF is_dropdown>
+													<td id="ftdropdown" width="<TMPL_VAR WIDTH>">
+													
+													 <select   onchange="JavaScript:getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" class="selectpicker"   data-width="100%" data-container="body" <TMPL_VAR input_html> >
+													 		<TMPL_IF is_default_value> <option value="0"> Select</option></TMPL_IF>
+															<TMPL_VAR select_data>
+													</select> 
+													
+														
+																			
+													</td>
+												</TMPL_IF>
+												
+												<TMPL_IF is_multiple_select>
+													<td id="ftMultipledropdown" width="<TMPL_VAR WIDTH>">
+													<select  name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  class="selectpicker" multiple="true" multiple data-done-button="true"  onchange="JavaScript:ft_selectbox_capture_selected_value(this);getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);"
+													<TMPL_VAR input_html>>
+														<TMPL_VAR select_data>
+													  </select>
+													  
+													  <input type="hidden" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden"  name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" value="">
+													</td>
+												</TMPL_IF>	
+													
+												
+												<TMPL_IF is_date>
+													<td id="ftdate" width="<TMPL_VAR WIDTH>">
+														
+														<input   type="date" data-date="" data-date-format="DD MMMM YYYY"   name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"     onchange="JavaScript:getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);<TMPL_IF CHANGE_ADDON><TMPL_VAR CHANGE_ADDON>;</TMPL_IF>" <TMPL_VAR input_html>  />
+												
+													
+														</td>
+												</TMPL_IF>	
+												
+													
+													
+											   
+											    <TMPL_IF is_autocomplete>
+													<td id="ftautocomplete" width="<TMPL_VAR WIDTH>">
+													<input type="text"  name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" 	onkeyup="JavaScript:fibenistableAutocomplete(this,'<TMPL_VAR get_data_url>','<TMPL_VAR s_field>');getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_IF entry_new_row> <TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);</TMPL_IF>" <TMPL_IF restrict_new_entry><TMPL_ELSE> onfocusout="JavaScript:check_data(this,'<TMPL_VAR get_data_url>','<TMPL_VAR s_field>');" </TMPL_IF>  <TMPL_VAR input_html> />
+												<input type="hidden" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" />							</td>
+											   </TMPL_IF>
+											   
+											   <!-- last col number ---->
+												<TMPL_IF __last__>
+													<input type="hidden" name="ft_last_col_no_<TMPL_VAR field_id>" id="ft_last_col_no_<TMPL_VAR field_id>" value="<TMPL_VAR __counter__>" >
+												</TMPL_IF>
+												
+												
+											</TMPL_LOOP> <!-- cell info ---->
+										</tr>	
+										
+											<!-- last row number ---->
+											<TMPL_IF __last__>
+													<input type="hidden" name="ft_last_row_no_<TMPL_VAR field_id>" id="ft_last_row_no_<TMPL_VAR field_id>" value="<TMPL_VAR __counter__>" >
+													
+											</TMPL_IF>
+										
+										</TMPL_LOOP><!-- row info -->
+										
+										
+									
+										</tbody>	
+											
+									</table>  
+									
+									<script>
+									        loadFtdata('<TMPL_VAR default_data>', '<TMPL_VAR field_id>');
+										getfibenisTableData('<TMPL_VAR field_id>');
+										var default_data ='<TMPL_VAR field_id>';
+										var field_id = '<TMPL_VAR field_id>';
+										
+										
+										function loadFtdata (default_data, field_id){
+			
+												var lv = new Object();
+												
+												if(default_data.length!=0){
+													
+													lv['default_data'] = JSON.parse(default_data);
+												 
+												
+													for(var default_i = 0; default_i<lv['default_data'].length; default_i++){
+														
+														var row_i = default_i+1;
+														
+														for( var default_j = 0 ; default_j<lv['default_data'][default_i].length; default_j++){
+														
+																var col_i  = default_j+1;
+																if(lv['default_data'][default_i][default_j].ms_name){
+																	
+																	lv['m_selecte_id'] =  lv['default_data'][default_i][default_j].id;
+																	
+																	lv['split_selecte_id'] = lv['m_selecte_id'].split(',');
+																	var select_array =[] ;
+																	for ( var data_i = 0; data_i <lv['split_selecte_id'].length; data_i++ ){
+																			if(lv['split_selecte_id'][data_i]){
+																				select_array.push(lv['split_selecte_id'][data_i]);
+																			}
+																		}	 
+																	//alert(select_array);
+																	
+																	$("#"+row_i+'_ft_'+col_i+'_'+field_id).val(select_array).prop("selected", true);	
+																	
+																	E_V_PASS(row_i+'_ft_'+col_i+'_'+field_id+'_hidden',lv['m_selecte_id']);	
+																	
+																}
+																else if(lv['default_data'][default_i][default_j].id){
+																	E_V_PASS(row_i+'_ft_'+col_i+'_'+field_id,lv['default_data'][default_i][default_j].name);
+																	E_V_PASS(row_i+'_ft_'+col_i+'_'+field_id+'_hidden',lv['default_data'][default_i][default_j].id);
+																}
+																
+																else{
+																	E_V_PASS(row_i+'_ft_'+col_i+'_'+field_id,lv['default_data'][default_i][default_j]);
+																}
+																
+														}
+														
+														
+													}
+												}
+												
+										}
+										
+										
+										function getfibenisTableData(field_id) {
+			
+											//alert(ele+'------'+field_id,is_route_point,route_url)
+											
+											var table= document.getElementById("fibenis_table"+field_id);
+											
+											var tbody = table.getElementsByTagName("tbody")[0];				
+											
+											var row_count = tbody.rows.length;
+											
+											
+											//alert(row_count);
+											
+											var get_data = [];
+											
+											for(row_count_i=0;row_count_i<row_count; row_count_i++){
+												
+												var colCount = tbody.rows[row_count_i].cells.length;
+												
+												//alert(colCount);
+												var data = [];
+											
+												var temp_data = '';
+												for(var col_i =0; col_i<colCount; col_i++) {
+														
+														var temp_cell = tbody.rows[row_count_i].cells[col_i];
+														
+														if(temp_cell.id == 'ftautocomplete'){
+															
+															//alert(temp_cell.children.length);
+															if(temp_cell.children.length == 4){
+																 var child_node_id =temp_cell.children[3].id;
+																// if(GET_E_VALUE(child_node_id)){
+																// data.push(GET_E_VALUE(child_node_id)); //}
+																data.push(GET_E_VALUE(child_node_id)); 
+																//temp_data = GET_E_VALUE(child_node_id);
+															}
+															
+															else if(temp_cell.children.length == 3){
+															
+																var child_node_id =temp_cell.children[2].id;
+																// if(GET_E_VALUE(child_node_id)){
+																//data.push(GET_E_VALUE(child_node_id));//} 
+																//temp_data = GET_E_VALUE(child_node_id);
+																data.push(GET_E_VALUE(child_node_id)); 
+															}
+															else{							
+																
+																var child_node_id =temp_cell.children[1].id;
+																// if(GET_E_VALUE(child_node_id)){
+																//data.push(GET_E_VALUE(child_node_id));// }
+																//temp_data = GET_E_VALUE(child_node_id);
+																data.push(GET_E_VALUE(child_node_id)); 
+															}
+															
+															
+														} //ft complete
+														
+														else if(temp_cell.id == 'ftdropdown'){	
+															
+															var outer_parent  = temp_cell.children[0];		
+															
+															if(outer_parent.children.length==2){
+																var child_node_id = outer_parent.children[1].id;
+																 //if(GET_E_VALUE(child_node_id)){								
+																//data.push(GET_E_VALUE(child_node_id));	//}
+																//temp_data = GET_E_VALUE(child_node_id);
+																data.push(GET_E_VALUE(child_node_id)); 
+															}	
+															
+															if(outer_parent.children.length==3){
+																var child_node_id = outer_parent.children[2].id;	
+																// if(GET_E_VALUE(child_node_id)){							
+																//data.push(GET_E_VALUE(child_node_id));	//}
+																//temp_data = GET_E_VALUE(child_node_id);
+																data.push(GET_E_VALUE(child_node_id)); 
+															}
+															
+																						
+														}// ftdropdown
+														
+															
+														else if(temp_cell.id == 'ftMultipledropdown'){
+																
+															var outer_parent  = temp_cell.children[0];	
+																
+															if(outer_parent.children.length==2){
+																var child_node_id = outer_parent.children[1].id;	
+																 //if(GET_E_VALUE(child_node_id)){							
+																data.push(GET_E_VALUE(child_node_id+'_hidden'));//}	
+																
+																//temp_data = GET_E_VALUE(child_node_id+'_hidden');
+															}	
+															
+															if(outer_parent.children.length==3){
+																var child_node_id = outer_parent.children[2].id;
+																 //if(GET_E_VALUE(child_node_id)){								
+																data.push(GET_E_VALUE(child_node_id+'_hidden'));//}	
+															   //temp_data = GET_E_VALUE(child_node_id+'_hidden');
+															}
+																
+														}//ftMultipledropdown	
+														
+														else if(temp_cell.id == 'ftdate'){
+															var child_node_id  = temp_cell.children[0].id;	
+															data.push(GET_E_VALUE(child_node_id)); 	
+														}
+														
+														else if(temp_cell.id == 'ftindex'){
+														
+														}
+														else{
+															var child_node_id =temp_cell.children[0].id;
+															data.push(GET_E_VALUE(child_node_id)); 
+														} //else other data						
+														
+														
+												}	
+												//alert(data.length);
+												if(data.length>0){
+												get_data.push(data);}
+														
+												
+											} 
+											
+											
+											
+											E_V_PASS('X'+field_id,JSON.stringify(get_data));
+											
+											
+											
+											
+										} //function
+									
+									</script>
+							 		
+									<TMPL_IF is_mandatory><span class="red_star">*</span><span class="txt_size_12 clr_gray_7"><TMPL_IF MIN_ROWS_TO_FILL>Fill atleast <script>html(G.getSingularPlural(<TMPL_VAR MIN_ROWS_TO_FILL>,'row'));</script>.<TMPL_ELSE>Fill all the rows</TMPL_IF></span></TMPL_IF>									
+									<span id="X<TMPL_VAR field_id>_v_msg">&nbsp;</span>	
+									<TMPL_IF hint><div class="label_grand_child"><TMPL_VAR hint></div></TMPL_IF>								
+									<span class=message id="message_X<TMPL_VAR field_id>"></span>
+						 </div>
+				</TMPL_IF>	
+				
+				
+						 
+				   <TMPL_IF is_plugin>	
+				  	<TMPL_IF handsontable_type>				    
+						   <div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>" id="X<TMPL_VAR field_id>_panel">
+						  <span class="label"><TMPL_VAR field_name></span>
+						  <span class=value>
+									<div  id="XP<TMPL_VAR field_id>" style="height:auto; width:auto; overflow: auto" >
+									</div>	 
+									<input type="hidden" id="X<TMPL_VAR field_id>" name="X<TMPL_VAR field_id>" value="" />								 
+									
+									<div class="label_grand_child"><TMPL_VAR hint></div>
+									<TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF><br>
+							 		
+									<script>
+																
+									
+									var $container<TMPL_VAR field_id> = $("#XP<TMPL_VAR field_id>");
+								   
+								   	var handsontable = $container<TMPL_VAR field_id>.data('handsontable');
+									
+									var autosaveNotification;
+									var $parent = $container<TMPL_VAR field_id>.parent();
+									
+									var mapped = {},checkId=0,check_new_entry=0,pass_table='';
+									
+									var binding_data ='';	
+									
+									var check_new_entry=0;
+									
+									$container<TMPL_VAR field_id>.handsontable({
+										
+										minSpareRows	:'<TMPL_VAR min_spare_rows>',										
+										startRows	:'<TMPL_VAR start_rows>',
+										startCols	: 0,
+										minRows 	:'<TMPL_VAR min_rows>',										
+										maxRows 	:'<TMPL_VAR max_rows>',
+										
+										rowHeaders	: true,										
+										colHeaders	: true,
+										contextMenu	: true,
+										//autoWrapCol 	: true,
+										autoWrapCol 	: false,
+										autoWrapRow 	: true,
+										autoColumnSize 	: true,
+										wordWrap	:false,
+										 
+										colWidths: [<TMPL_LOOP handson_data_info> '<TMPL_VAR width>',</TMPL_LOOP>],
+										
+										
+										colHeaders: [<TMPL_LOOP handson_data_info> '<TMPL_VAR column>',</TMPL_LOOP>],
+										  
+										
+										columns: [<TMPL_LOOP handson_data_info>
+									   					
+													<TMPL_IF is_text>
+													{		
+													 type: 'text',
+													},		
+													</TMPL_IF>	
+													
+													
+													<TMPL_IF is_select>
+														{
+															editor:'select',															
+															selectOptions: [<TMPL_VAR source>]														
+														},
+													</TMPL_IF>
+													
+													<TMPL_IF is_autocomplete>
+														{
+															type: 'autocomplete',
+																													
+															<TMPL_IF SOURCE_URL>															
+																source: function (query, process) {
+																	$.ajax({																	       
+																		url	: '<TMPL_VAR SOURCE_URL>',
+																		dataType: 'json',
+																		data	: {query: query},																	       
+																		success: function (data) {
+																			       console.log("response", data);																			       
+																			       process(data); // JSON.parse takes string as a argument
+																		} 
+																	});
+																},
+															<TMPL_ELSE>
+																<TMPL_IF SOURCE>
+																	source: [<TMPL_VAR source>],
+																</TMPL_IF>
+															</TMPL_IF>
+															minLength:3,
+															strict: true
+															
+														},
+													</TMPL_IF>
+												 
+													<TMPL_IF is_numeric>								
+														{
+															type:'numeric',																														
+														},
+													</TMPL_IF>
+												 
+													<TMPL_IF is_renderer>								
+														{
+															renderer: <TMPL_VAR renderer>,
+															validator: emailValidator,
+															
+														},
+													</TMPL_IF>
+												 	
+												</TMPL_LOOP>	],	
+									   		
+										
+										
+										afterChange: function (change, source){
+										 
+											if(source==='load' ){
+													return;
+											}	
+											
+											if(source === 'edit' ){
+												
+												var rowIndex = change[0][0], columnID = change[0][1], oldTextVal = change[0][2],  newIdVal = change[0][3];
+												
+												binding_data='';
+												 
+												binding_data =  JSON.stringify($("#XP<TMPL_VAR field_id>").handsontable('getData'));
+												
+												$('#X<TMPL_VAR field_id>').val(binding_data);																							
+											}		
+													
+										} // change
+										  
+										  
+									});
+									
+									
+									
+									
+									
+						</script>
+										 
+							
+								
+						  </span>
+						  
+						 </span>
+						</div>
+						   
+					   </TMPL_IF>	  
+				 </TMPL_IF>	 
+				 
+				<!--- RO --->
+				<input type="hidden" id="X<TMPL_VAR field_id>_RO" name="X<TMPL_VAR field_id>_RO" value="<TMPL_VAR ro>" />								 
+				 
+			   </TMPL_LOOP> 
+
+				<!--- Divider--->
+				
+				<TMPL_IF DIVIDER>
+					
+					
+					<TMPL_IF HAS_SUB_DIVIDER>
+									</div> <!--- end of sub body--->
+								</div> <!--- end of sub collaps--->
+							</div> <!--- end of sub section-->
+						</div> <!--- end of sub panel--->
+						
+					</TMPL_IF>
+					
+					<TMPL_IF IS_DIVIDER_TAB>					
+							</div> <!--- end of tab item--->
+						</div> <!--- end of tab content--->
+					</TMPL_IF>
+					
+					<TMPL_IF IS_DIVIDER_ACCORDION>
+						
+									</div> <!--- end of body--->
+								</div> <!--- end of collaps--->
+							</div> <!--- end of section-->							
+						
+						</div> <!--- end of accordian--->
+						
+					</TMPL_IF>
+					
+				</TMPL_IF>
+			   
+			   
+			   <div class="row form_action_row">
+				
+				<div class="label">&nbsp;</div>
+			      
+				<div class=value>
+				       
+					<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY>" >
+					
+					
+					
+					<input
+					
+						<TMPL_IF is_function>
+							type="button" onclick=JavaScript:f_series_validate();
+						<TMPL_ELSE>
+							type="submit"
+						</TMPL_IF>
+						
+						id="ADD"    name="ADD"     class = "button_add" 
+					      
+						<TMPL_IF KEY>
+							 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Update <TMPL_VAR TITLE></TMPL_IF>"
+						<TMPL_ELSE>
+							 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Add <TMPL_VAR TITLE></TMPL_IF>"   
+						</TMPL_IF>
+					
+					>
+						
+					<TMPL_IF KEY>					
+						<TMPL_IF IS_SAVE_FORM>					
+							<input type="submit" id="SAVE" name="SAVE" class = "button" value="Save <TMPL_VAR TITLE>">
+						</TMPL_IF>
+					</TMPL_IF>
+				
+				   
+					<TMPL_IF is_custom_button>
+						<script>G.$('ADD').value='<TMPL_VAR is_custom_button>';
+						        G.$('SAVE').value='<TMPL_VAR is_custom_button>';
+						</script>							
+					</TMPL_IF>
+					
+						
+					        
+						
+					<TMPL_IF is_back_button>
+						<a  class="btn btn-default" type="button" href="<TMPL_VAR back_link><TMPL_IF BACK_MENU_OFF>&menu_off=1</TMPL_IF><TMPL_IF BACK_DEFAULT_ADDON>&default_addon=<TMPL_VAR BACK_DEFAULT_ADDON></TMPL_IF>">
+							<TMPL_IF back_name><TMPL_VAR back_name><TMPL_ELSE>Back</TMPL_IF>
+						</a>
+						
+					</TMPL_IF> 
+			      </div>
+			   </div> <!--- end of row--->
+			 
+			 
+			 
+			 
+			   <div class="row">
+			      <div class="label"></div>
+			      <div class=value></div>
+			   </div>
+			   
+		 </fieldset>
+	    </div>
+	       
+	    </TMPL_IF>
+	     
+	    <!--- Data --->
+	    
+	    <input type="hidden" id="f_series" name="f_series" value="<TMPL_VAR f_series>">	    
+	    <input type="hidden" id="key" name="key" value="<TMPL_VAR key>">
+		
+		 <input type="hidden" id="primary_id" name="primary_id" value="<TMPL_VAR last_id>">
+	       
+	</form>
+	 
+	
+	<!--- footer-->
+	 
+	<TMPL_IF FOOTER_CONTENT>
+	 
+		<div class="<TMPL_VAR FOOTER_STYLE>">
+		       <TMPL_VAR FOOTER_CONTENT>
+		</div>
+	 
+	</TMPL_IF> 
+	 
+
+	 
+	 
+
+	<script language="javascript" type="text/javascript" >
+	
+	
+		
+	// ready for loading
+	
+	function ft_selectbox_capture_selected_value(ele){
+      
+		var connector=',';
+		var ele_length=ele.id.length;
+		    var ele_option='';
+		    var option_length = document.getElementById(ele.id).options.length;
+		    for(ei=0;ei<option_length;ei++){
+					  if(ele.options[ei].selected==true){
+							  ele_option+=ele.options[ei].value+''+connector;
+						  }
+		   }
+		  
+		E_V_PASS(ele.id+'_hidden',ele_option);
+	 
+	
+	}
+	
+	
+	function M_E_V_PASS(ele_id,ele_data){
+	
+	   var split_ele_data  = ele_data.split(',');
+		
+		var temp_select = document.getElementById(ele_id);
+		
+		var option_length = document.getElementById(ele_id).options.length;
+		
+		var ele_length=option_length;
+	
+		var select_array =[] ;
+		for ( var data_i = 0; data_i <split_ele_data.length; data_i++ ){
+				if(split_ele_data[data_i]){
+					select_array.push(split_ele_data[data_i]);
+				}
+			}	 
+			
+			$("#"+ele_id).val(select_array).prop("selected", true);
+			
+		     E_V_PASS(ele_id+'_hidden',ele_data);
+	}
+	
+	
+	function date_picker(ele){
+					
+					
+					$('#loading'+ele.id).show(); 
+					
+					alert('-----------');
+					$('#'+ele.id).datepicker({
+						altField: "#"+ele.id+"_hidden",
+						altFormat: "dd-mm-yy",
+						changeMonth: true,
+						changeYear: true,
+						show   : true,
+					});
+					$("#"+ele.id).datepicker( "option", "dateFormat",'dd-mm-yy');		
+					$('#loading'+ele.id).hide();
+					//$("#"+ele.id)..datepicker("option","dateFormat",'dd-mm-yy');
+					
+					//$("#<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>").datepicker("setDate",'29-03-2018');
+					
+			/*$( "#<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" ).datepicker({
+						altField: "#<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden",
+						altFormat: "yy-mm-dd",
+						changeMonth: true,
+						changeYear: true,
+						<TMPL_IF min_date>
+						  minDate: "<TMPL_VAR min_date>",
+						  maxDate: "<TMPL_VAR max_date>",
+						</TMPL_IF>
+						<TMPL_IF year_range>
+							yearRange :"<TMPL_VAR year_range>",
+						</TMPL_IF>	
+						
+						<TMPL_IF default_date>
+						  defaultDate: "<TMPL_VAR default_date>"
+						 </TMPL_IF>	 
+
+						
+				});
+		$("#<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" ).datepicker( "option", "dateFormat",'dd-mm-yy');		
+	
+		<TMPL_IF default_date>
+				$("#<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>").datepicker("setDate",'<TMPL_VAR default_date>');
+				E_V_PASS("<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>","<TMPL_VAR default_date>");
+		</TMPL_IF>*/
+		
+											
+	}
+	
+	
+	
+	
+	
+		
+		function check_data(ele,get_data_url,s_field){
+				
+				var lv = new Object();
+				lv['ele_id']     = ele.id;
+				
+				lv['ele_value']  =  ele.value;
+				
+				var ax_new_data         = new ajax();
+				
+				var url =  '&field='+s_field+'&query='+lv['ele_value']+'&check_data=1&col_field='+lv['ele_id'];
+				     
+				ax_new_data.set_request(get_data_url,url);
+				
+				G.set_global(lv['ele_id'],get_data_url);
+			       
+				var new_data = ax_new_data.send_get(get_data_response);
+		}
+		
+		
+	
+	// get data response
+	
+		function get_data_response(res){
+					
+			var lv = new Object();
+
+			lv['res_data'] = JSON.parse(res);
+		      
+			
+			console.log('N'+Number(lv['res_data'][0]['id']));
+			
+			if(Number(lv['res_data'][0]['id'])!=0){
+				 return false;	
+			
+			}else{
+				
+				
+				lv['confirm'] =  confirm("Are you want to add new entry!");
+				      
+				if(lv['confirm'] == true){
+					
+					var ax_new_data         = new ajax();
+					var url  =  '&field=sn&new_entry=1&query='+G.$(lv['res_data'][0]['col_field']).value+'&col_field='+lv['res_data'][0]['col_field'];				      
+					ax_new_data.set_request(G.get_global(lv['res_data'][0]['col_field']),url);
+					
+					var new_data = ax_new_data.send_get(get_new_data_response);
+				       
+				}else{
+					ELEMENT(lv['res_data'][0]['col_field']).focus();
+				}
+			}
+			
+		} // end
+	
+	
+	
+	
+	function get_new_data_response(res){
+			var lv = new Object();
+			lv['res_data'] = JSON.parse(res);
+			
+			$('#'+lv['res_data'][0]['col_field']+'_hidden').val(lv['res_data'][0]['id']);
+			return false;
+	}
+	
+	
+	
+	function fibenistableAutocomplete(ele,get_data_url,s_field){
+			var lv = new Object();
+			//alert('------');
+			lv['ele_id']    =ele.id;
+			
+			lv['ele_value'] =  ele.value;
+			
+			$('#'+lv['ele_id']).autocomplete({
+				
+					source: function( request, response) {
+							$.ajax({																	       
+									url	: get_data_url,																		
+									data : {query:lv['ele_value'], field:s_field,exit_data:'1'},
+									dataType: 'json',																       
+									 success: function( data ) {
+											
+											 response( $.map( data, function( item ) {
+												//console.log('---------'+item.id);
+													return {
+														id :item.id, 
+														label :item.name,
+													}
+													
+											 }));
+										 },
+								});
+					
+					},
+					
+					select: function( event, ui ) {
+						 $('#'+lv['ele_id']+'_hidden').val( ui.item.id);
+					}		
+				
+				})	
+				
+			
+					
+	}
+			
+			
+			
+			
+			
+	
+			
+			
+		 // get fibenis data
+		 
+		 	function getfibenisTableData(ele,field_id,is_route_point,route_url) {
+			
+				//alert(ele+'------'+field_id,is_route_point,route_url)
+				
+				var table= document.getElementById("fibenis_table"+field_id);
+				
+				var tbody = table.getElementsByTagName("tbody")[0];				
+				
+				var row_count = tbody.rows.length;
+				
+				
+				//alert(row_count);
+				
+				var get_data = [];
+				
+				for(row_count_i=0;row_count_i<row_count; row_count_i++){
+					
+					var colCount = tbody.rows[row_count_i].cells.length;
+					
+					//alert(colCount);
+					var data = [];
+				
+					var temp_data = '';
+					for(var col_i =0; col_i<colCount; col_i++) {
+							
+							var temp_cell = tbody.rows[row_count_i].cells[col_i];
+							
+							if(temp_cell.id == 'ftautocomplete'){
+								
+								//alert(temp_cell.children.length);
+								if(temp_cell.children.length == 4){
+									 var child_node_id =temp_cell.children[3].id;
+									// if(GET_E_VALUE(child_node_id)){
+									// data.push(GET_E_VALUE(child_node_id)); //}
+									data.push(GET_E_VALUE(child_node_id)); 
+									//temp_data = GET_E_VALUE(child_node_id);
+								}
+								
+								else if(temp_cell.children.length == 3){
+								
+									var child_node_id =temp_cell.children[2].id;
+									// if(GET_E_VALUE(child_node_id)){
+									//data.push(GET_E_VALUE(child_node_id));//} 
+									//temp_data = GET_E_VALUE(child_node_id);
+									data.push(GET_E_VALUE(child_node_id)); 
+								}
+								else{							
+									
+									var child_node_id =temp_cell.children[1].id;
+									// if(GET_E_VALUE(child_node_id)){
+									//data.push(GET_E_VALUE(child_node_id));// }
+									//temp_data = GET_E_VALUE(child_node_id);
+									data.push(GET_E_VALUE(child_node_id)); 
+								}
+								
+								
+							} //ft complete
+							
+							else if(temp_cell.id == 'ftdropdown'){	
+								
+								var outer_parent  = temp_cell.children[0];		
+								
+								if(outer_parent.children.length==2){
+									var child_node_id = outer_parent.children[1].id;
+									 //if(GET_E_VALUE(child_node_id)){								
+									//data.push(GET_E_VALUE(child_node_id));	//}
+									//temp_data = GET_E_VALUE(child_node_id);
+									data.push(GET_E_VALUE(child_node_id)); 
+								}	
+								
+								if(outer_parent.children.length==3){
+									var child_node_id = outer_parent.children[2].id;	
+									// if(GET_E_VALUE(child_node_id)){							
+									//data.push(GET_E_VALUE(child_node_id));	//}
+									//temp_data = GET_E_VALUE(child_node_id);
+									data.push(GET_E_VALUE(child_node_id)); 
+								}
+								
+															
+							}// ftdropdown
+							
+								
+							else if(temp_cell.id == 'ftMultipledropdown'){
+									
+								var outer_parent  = temp_cell.children[0];	
+									
+								if(outer_parent.children.length==2){
+									var child_node_id = outer_parent.children[1].id;	
+									 //if(GET_E_VALUE(child_node_id)){							
+									data.push(GET_E_VALUE(child_node_id+'_hidden'));//}	
+									
+									//temp_data = GET_E_VALUE(child_node_id+'_hidden');
+								}	
+								
+								if(outer_parent.children.length==3){
+									var child_node_id = outer_parent.children[2].id;
+									 //if(GET_E_VALUE(child_node_id)){								
+									data.push(GET_E_VALUE(child_node_id+'_hidden'));//}	
+								   //temp_data = GET_E_VALUE(child_node_id+'_hidden');
+								}
+									
+							}//ftMultipledropdown	
+							
+							else if(temp_cell.id == 'ftdate'){
+								var child_node_id  = temp_cell.children[0].id;	
+								data.push(GET_E_VALUE(child_node_id)); 	
+							}
+							
+							else if(temp_cell.id == 'ftindex'){
+							
+							}
+							else{
+								var child_node_id =temp_cell.children[0].id;
+								data.push(GET_E_VALUE(child_node_id)); 
+							} //else other data						
+							
+							
+					}	
+					//alert(data.length);
+					if(data.length>0){
+					get_data.push(data);}
+							
+					
+				} 
+				
+				
+				
+					E_V_PASS('X'+field_id,JSON.stringify(get_data));
+				
+				
+				if(is_route_point){
+
+								
+
+					/*var ajxrqst = new ajax();
+					
+					var req = '&field=detail&data='+JSON.stringify(get_data);
+					
+					//alert(req);
+					ajxrqst.set_request('router.php?series=a&action=test&token=FT_TEST&FTUPDATE=1212&key=1',req);
+					
+					var new_data = ajxrqst.send_get(ft_update_response);*/
+					
+					var ajxrqst = new ajax();
+					
+					var req = '&field=detail&data='+JSON.stringify(get_data);
+					
+
+					//alert(req);
+					ajxrqst.set_request(route_url,req);
+					
+					var new_data = ajxrqst.send_get(ft_update_response);
+				
+				}
+				
+				
+			} //function	
+			
+			
+			function ft_update_response(res){
+				
+				//alert(res);
+			}
+						
+			function ftNextrows(ele,field_id,max_no_row){
+			
+				var max_row = max_no_row ;
+				
+				//alert(max_row);
+			
+				var table = document.getElementById('fibenis_table'+field_id);
+				
+			    var tbody = table.getElementsByTagName("tbody")[0];				
+				
+				var rowCount = tbody.rows.length;
+				
+				//alert(rowCount+'---------'+max_row);
+				
+				//if(max_row && rowCount )
+				
+				var rowIndex = rowCount+1;
+				
+				var ele_id = ele.id;
+			
+				var split_cuurent_row = ele_id.split('_');
+				
+				if(  (split_cuurent_row[0] == rowCount &&  rowCount<max_row) ){
+						
+					nextRowmanipulation(tbody,ele,field_id,rowCount,rowIndex );	
+				} //if 
+				else if(split_cuurent_row[0] == rowCount && max_row==0 ){
+				
+					nextRowmanipulation(tbody,ele,field_id,rowCount,rowIndex );	
+				} 				
+					
+			}
+		
+			
+			
+			function nextRowmanipulation(tbody,ele,field_id,rowCount,rowIndex ){
+			
+					   var row = tbody.insertRow(rowCount);
+						
+						var colCount = tbody.rows[0].cells.length;
+						
+						for(var col_i =0; col_i<colCount; col_i++) {
+							
+							var temp_cell = tbody.rows[0].cells[col_i];
+							
+							//alert(temp_cell.id);
+							 
+							var newcell	= row.insertCell(col_i);
+							 
+							newcell.id  = temp_cell.id ;
+							
+							var temp_row =  	 tbody.rows[0].cells[col_i].innerHTML;
+							
+							if(temp_cell.id == 'ftindex'){
+								newcell.innerHTML = rowIndex;
+							}
+							
+							
+							/*else if(temp_cell.id == 'ftMultipledropdown'){
+							
+							}*/
+							
+							else{
+								newcell.innerHTML = temp_row.replace(/(1\_ft)/g,(rowCount+1)+'_ft');
+								E_V_PASS((rowCount+1)+'_ft_'+(col_i+1)+'_'+field_id,'');
+								E_V_PASS((rowCount+1)+'_ft_'+(col_i+1)+'_'+field_id+'_hidden','');
+							
+							}
+						} //for each row 	
+						
+						E_V_PASS('ft_last_row_no'+field_id, rowCount+1);
+						
+						
+			
+					    /*var row = tbody.insertRow(rowCount);
+						
+						var colCount = tbody.rows[0].cells.length;
+						
+						for(var col_i =0; col_i<colCount; col_i++) {
+							
+							var temp_cell = tbody.rows[0].cells[col_i];
+							
+							//alert(temp_cell.id);
+							 
+							var newcell	= row.insertCell(col_i);
+							 
+							newcell.id  = temp_cell.id ;
+							
+							var temp_row =  	 tbody.rows[0].cells[col_i].innerHTML;
+							
+							if(temp_cell.id == 'ftindex'){
+								newcell.innerHTML = rowIndex;
+							}
+							else{
+								newcell.innerHTML = temp_row.replace(/(1\_ft)/g,(rowCount+1)+'_ft');
+								E_V_PASS((rowCount+1)+'_ft_'+(col_i+1)+'_'+field_id,'');
+								E_V_PASS((rowCount+1)+'_ft_'+(col_i+1)+'_'+field_id+'_hidden','');
+							
+							}
+						} //for each row 	
+						
+						E_V_PASS('ft_last_row_no'+field_id, rowCount+1);
+						
+						*/
+			}
+			
+			
+		
+		
+		
+	       $(document).ready(function() {
+		
+		
+			<TMPL_LOOP SHOW_DATA_INFO>	
+			  
+			   
+				<TMPL_IF PLUGIN_KEY>
+				
+			  
+					<TMPL_IF fibenistable_info>
+			  				 
+							E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
+							
+							var key_id = <TMPL_VAR plugin_key>;
+														
+							<TMPL_IF VALUE>
+							
+							var fibenistableData= JSON.parse(decodeURI('<TMPL_VAR VALUE>'));
+							
+							var table= document.getElementById("fibenis_table<TMPL_VAR plugin_key>");
+							
+							var tbody = table.getElementsByTagName("tbody")[0];				
+					       
+						        var rowCount = tbody.rows.length;
+							 
+							var tempinsRow  =Number(rowCount)-1;
+							//index_
+							for(row_i = rowCount+1; row_i<=fibenistableData.length;  row_i++){
+								    
+								        // alert(row_i); 
+									var tempinsRow = tempinsRow+1;	
+									 
+									var row = tbody.insertRow(tempinsRow);
+								       
+									var colCount = tbody.rows[0].cells.length;
+								       
+									for(var col_i =0; col_i<colCount; col_i++) {
+								       // alert(col_i);
+										var temp_cell = tbody.rows[0].cells[col_i];
+								
+										var newcell	= row.insertCell(col_i);
+										 
+										newcell.id  = temp_cell.id ;
+										
+										//alert(newcell.id);
+										if(newcell.id == 'ftindex'){
+											
+											newcell.innerHTML = row_i;
+											
+										}
+										else{
+										
+											var temp_row =  	 tbody.rows[0].cells[col_i].innerHTML;
+										
+											newcell.innerHTML = temp_row.replace(/(1\_ft)/g,(row_i)+'_ft');
+										 }
+										 	
+								       
+								        }
+									
+								        E_V_PASS('ft_last_row_no', row_i);
+										       
+							        }
+							       
+						      // E_H_PASS('index_'+row_i,'123');
+							   
+							
+							
+							for(row_i = 0; row_i<fibenistableData.length;  row_i++){
+								    
+									   
+								       <TMPL_LOOP fibenistable_info>
+								       
+										       var row_field = row_i+1;
+										      
+										       var col_field = <TMPL_VAR __COUNTER__>;
+										       
+											<TMPL_IF is_autocomplete>	
+											 
+											       var query_id = fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1];
+											      
+											       if(query_id){
+											       
+													var ajxrqst = new ajax();
+												       
+													   
+													var req = '&query='+query_id+'&field=id&row_field='+row_field+'&col_field='+col_field+'&key_id='+key_id+'&exit_data=1';
+													ajxrqst.set_request('<TMPL_VAR get_data_url>',req);
+													
+													//alert('<TMPL_VAR get_data_url>'+'==='+req); 
+													ajxrqst.send_get(function(res){
+													       var lv = JSON.parse(res);
+														   
+													       var row_id = lv[0].row_field;
+													       var col_id = lv[0].col_field;
+													       var key_id = lv[0].key_id;
+														   
+													       E_V_PASS(row_id+'_ft_'+col_id+'_'+key_id,lv[0].name); 
+														   E_V_PASS(row_id+'_ft_'+col_id+'_'+key_id+'_hidden',lv[0].id); 
+													      
+													})
+												}
+												else{
+													  E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id,''); 
+													  E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id+'_hidden',''); 
+												
+												}
+											   </TMPL_IF> 
+												
+												<TMPL_IF is_multiple_select>   
+												
+												  	
+														M_E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id,fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]);
+														E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id+'_hiden',fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]); 
+												<TMPL_ELSE>
+													
+												
+												  E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id,fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]); 
+											 </TMPL_IF>
+											
+										       
+								       </TMPL_LOOP>
+									   
+									  // E_H_PASS('index_'+row_i,'123');
+								       
+						       }
+						       
+						       </TMPL_IF>
+						       
+						<TMPL_ELSE>
+						
+						        E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
+					 
+							var data<TMPL_VAR plugin_key>='';
+							
+							<TMPL_IF VALUE>
+								data<TMPL_VAR plugin_key> =  $.parseJSON(decodeURI('<TMPL_VAR VALUE>'));
+							       
+								$container<TMPL_VAR plugin_key>.handsontable('loadData', data<TMPL_VAR plugin_key>); 
+						       </TMPL_IF>
+						
+						</TMPL_IF>
+				
+				<TMPL_ELSE>	 
+						<TMPL_IF auto_type>
+						    							
+							var ajxrqst = new ajax();
+							var req = '<TMPL_VAR auto_remote_link>&query=<TMPL_VAR VALUE>&search_key=id&exit_data=1';
+							
+							ajxrqst.set_request(req);
+							
+							ajxrqst.send_get(function(res){
+										var lv = JSON.parse(res);
+										E_V_PASS('<TMPL_VAR ID>',lv[0].name);
+										E_V_PASS('<TMPL_VAR ID>_hidden',lv[0].id);
+									});
+							
+						</TMPL_IF>
+						
+						// other than CK-editor
+						
+						if(typeof(ckeditor_temp['<TMPL_VAR ID>'])=='object'){		
+						
+							ckeditor_temp['<TMPL_VAR ID>'].setData('<TMPL_VAR VALUE>');
+							E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+						
+						}else{
+								
+							
+							
+							if(input_temp.range['<TMPL_VAR ID>']==1){							
+							
+								init_range('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+							
+							}else if(input_temp.toggle['<TMPL_VAR ID>']==1){
+							
+								if(Number('<TMPL_VAR VALUE>')==1){
+									document.getElementsByName('<TMPL_VAR ID>')[0].checked=true;
+								}else{
+									document.getElementsByName('<TMPL_VAR ID>')[0].checked=false;
+								}
+								
+								toggle_action(document.getElementsByName('<TMPL_VAR ID>')[0]);
+							
+							}else if((input_temp.date['<TMPL_VAR ID>']==1) ||
+								 (input_temp.date['<TMPL_VAR ID>_SHOW']==1)){								
+								
+								if( (String('<TMPL_VAR VALUE>').length>0) &&
+								    (String('<TMPL_VAR VALUE>').indexOf('0000')==-1)){
+									
+									E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+								}								
+								
+							}else if(input_temp.code_editor['<TMPL_VAR ID>']==1){
+								
+								input_temp.code_editor['<TMPL_VAR ID>_obj'].getDoc().setValue('<TMPL_VAR VALUE>');
+								
+							}else if(input_temp.option['<TMPL_VAR ID>']==1){
+																								
+								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+								if ( (ELEMENT('<TMPL_VAR ID>').onchange!=null) &&
+								     (ELEMENT('<TMPL_VAR ID>').dataset.updatePrefillOff!=1)
+								){
+									$("#<TMPL_VAR ID>").trigger( "onchange");
+								}
+							
+							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-multiple'){							
+								//alert(ELEMENT('<TMPL_VAR ID>').dataset.inputType+'=='+'<TMPL_VAR VALUE>');
+								select_multiple_index_value('<TMPL_VAR ID>_TEMP','<TMPL_VAR VALUE>');
+								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+								if ( (ELEMENT('<TMPL_VAR ID>').onchange!=null) &&
+								     (ELEMENT('<TMPL_VAR ID>').dataset.updatePrefillOff!=1)
+								){
+									$("#<TMPL_VAR ID>").trigger( "onchange");
+								}
+							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-left-right'){							
+								
+								select_option_transfer_by_value(ELEMENT('<TMPL_VAR ID>_LEFT'),
+											 ELEMENT('<TMPL_VAR ID>_RIGHT'),
+											 '<TMPL_VAR VALUE>');
+								
+								E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
+								
+							}else{								
+								
+								E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
+								
+							} // end
+						
+						} // end
+					 
+				</TMPL_IF>
+			   
+			</TMPL_LOOP>			
+			
+			<TMPL_LOOP plugin_info></TMPL_LOOP>
+						
+			<TMPL_LOOP IMAGE_INFO>
+			
+				<TMPL_IF VALUE>
+					
+					<TMPL_IF data_src>
+					
+						E_H_PASS('message_<TMPL_VAR ID>','<TMPL_VAR data_src>');
+						
+						E_H_PASS('del_data_out_<TMPL_VAR ID>','<a href=JavaScript:image_delete(\'<TMPL_VAR del_data_info>\');>X</a>');
+						
+						//<TMPL_VAR IMAGE_LOC><TMPL_VAR LOCATION><TMPL_VAR KEY_ID>
+						
+					</TMPL_IF>
+				
+						E_V_PASS("hidden_<TMPL_VAR ID>",'<TMPL_VAR KEY_ID>');
+					
+				</TMPL_IF>
+				
+			</TMPL_LOOP>
+						
+			// focusing
+						
+			//add_focus_style_object({elements:[<TMPL_VAR FIELD_CSV>],
+			//		 
+			//		 on     : { 'border'    : '1px solid #6cac51',
+			//		            'boxShadow': '1px 1px 4px #dadada'
+			//			    },
+			//			    
+			//		 off    : {'background-color'  : '#ffffff',
+			//		           'boxShadow'         : 'none',
+			//		           'border'            : '1px solid #ababab' 
+			//		 }
+			//		
+			//		});
+			
+			<TMPL_IF message>
+			   
+				var message = new String('<TMPL_VAR message>');
+				 
+				var message_info = message.split(':');			
+				 
+				ELEMENT('inpage_message').className	=	 message_info[0];
+				 
+				fade_in_out('#inpage_message',5000,message_info[1]);
+				
+			</TMPL_IF>			   
+				
+			$(window).keydown(function(event){
+			    if(event.keyCode == 13) {
+				 return false;
+			    }
+			});
+		
+		
+		});
+	       
+	</script>
+			
+			
+	<TMPL_IF is_bottom_js_file>	    
+			<script language="javascript" type="text/javascript"  src="<TMPL_VAR bottom_js_file>.js"></script>	    
+	</TMPL_IF>  

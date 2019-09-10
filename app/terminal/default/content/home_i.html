@@ -1,0 +1,127 @@
+
+		   <style>
+				      
+		          header{display: none;}
+			  footer{display: none;}
+			  .login_panel .close {display: none;}
+			  #content{ margin-top:0px; }
+		   </style>		      
+
+		   <div class="container" id="content">
+
+				      <div class="col-md-4"></div>
+		   
+		   <div class="col-md-4">
+				      
+				      <div class="modal-dialog login_panel" style="width:300px">
+				      			 <div class="modal-content">
+		   					   <div class="modal-header align_CM">
+									     <img alt="" src="terminal/default/images/logo_1.png" >
+							     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							     <!--<h4 class="modal-title" id="myModalLabel">Welcome</h4>-->
+							   </div>
+				      			 <div class="modal-body">
+		   
+				      <form class="form-signin" id="form-sign-in" onsubmit="return  check_key();">
+	  
+	 <!-- <h5 class="modal-title" id="myModalLabel">Login</h5>-->
+	  
+			    <div class="form-group has-feedback" 
+				 id="inputEmail_area">
+				<label class="txt_size_12 clr_red" id="inputEmail_warn"></label>
+                             
+				<div class="input-group">				
+				    <span class="input-group-addon" id="basic-addon9">
+				      <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+				    </span>
+				     <input type="text" placeholder="Enter your email address"
+					    class="form-control"
+					    tabindex="1"
+					    id="inputEmail"
+					    maxlength="75"
+					    onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});"
+					    onkeypress  = "return PR_All_Alpha_Numeric(event,'@-_.');"
+					    onblur="return check_mail(this);"    
+					    
+					     aria-describedby="inputEmailStatus">
+				      <span id="inputEmail_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				    
+				 </div>
+			    </div>
+			    
+			      <div class="form-group has-feedback" 
+			            id="inputPassword_area">
+				  
+				  <div class="input-group">
+				     
+				    
+				    <span class="input-group-addon" >
+				      <span class="glyphicon  glyphicon-lock" aria-hidden="true"></span>
+				    </span>
+                                   <input type="password" placeholder="Enter your password"
+                                          class="form-control"
+                                          tabindex="2"
+                                          id="inputPassword"                                          
+                                         
+					  onkeydown="JavaScript:set_stlye_neutral(this);"
+					  onblur="return is_empty(this);" 
+					  >
+				    <span id="inputPassword_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+				  </div> 
+			      </div>   
+	 
+			      <div class="modal-footer">	
+					<button class="btn  btn-default btn-sm"
+						type="submit"
+						tabindex="3"
+						>
+					<span id="lbl-sign-in" class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;
+					Sign In
+					</button>
+					
+				
+					
+				     
+			      </div>
+			      
+				<!--<div class="modal-footer" style="text-align:right;">
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						-- <div class="fb-login-button"   data-scope="email"   data-show-faces="false"  onlogin="checkLoginState();"></div>
+			 <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+				</div>-->
+				
+			      <div class="modal-footer">
+			
+			<TMPL_IF IS_OPEN>
+			<a href="#" data-toggle="modal" data-target="#myModal_signUp">
+			<span class="glyphicon glyphicon-edit clr_green" aria-hidden="true"></span>
+			Sign Up</a>&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;
+			</TMPL_IF>
+			
+			      <a href="#" data-toggle="modal" class="clr_gray_9" data-target="#myModalForgetPassword">
+			<span class="glyphicon glyphicon-lock clr_gray_5" aria-hidden="true"></span>
+			Forgot Password</a>
+			      </div>
+	   
+			   
+		    </form>
+      </div></div></div>
+				  
+				      
+		   </div>
+		   
+		   
+		   <div class="col-md-4">
+				      
+				   
+				      
+		   </div>
+
+		   </div>
+
+     
+      

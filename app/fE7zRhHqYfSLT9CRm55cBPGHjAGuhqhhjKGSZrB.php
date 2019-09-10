@@ -8,7 +8,7 @@
                         "db_engine"     =>  "rdsql_mysqli",
                         
                         "domain_name"   =>  "localhost/wa_dev/fibenis/nano/app/",
-                        "lib_path"      =>  "../lib/",
+                        "lib_path"      =>  "../lib_01/",
                         
                         "is_smtp_mail"  =>  1,                            
                         "smpt_host"     =>  "webstarsdx.mail.pairserver.com",
