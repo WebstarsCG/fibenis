@@ -9,9 +9,9 @@
         
         $D_SERIES['is_narrow_down'] = 1;
 	
-	$D_SERIES['show_query'] = 0;
+		$D_SERIES['show_query'] = 0;
 	
-	$D_SERIES['add_button']     = array( 'is_add' =>1,'page_link'=>'f=coach_eav', 'b_name' => 'Add Coach' );
+		$D_SERIES['add_button']     = array( 'is_add' =>1,'page_link'=>'f=coach_eav', 'b_name' => 'Add Coach' );
         
         $D_SERIES['del_permission'] = array(    'able_del'=>1,								  
                                                 'avoid_del_field' => "if(((SELECT count(*) FROM entity_child as ec WHERE get_eav_addon_num(id,'ECPR')=entity_child.id) > 0),1,0)",								  
@@ -22,7 +22,7 @@
         $D_SERIES['js']    	=	array('is_top' => 1,'top_js'=> $LIB_PATH.'/def/coach_eav/d');
 	
 	
-	$D_SERIES['before_delete'] = 1;
+		$D_SERIES['before_delete'] = 1;
 	
         // 2
         
@@ -43,15 +43,15 @@
        
 	
 	
-	 $D_SERIES['data'][7] = array(   'th'       	=>  'Domain Name',
-									 
-                                        'field'     	=>  "get_eav_addon_varchar(id,'CHDN')",
-                                                 
-                                        'attr'  	=>  ['class'=>' txt_size_13 b clr_dark_blue'],
-                                                                                                                                                               
-                                        'is_sort'   	=>  0
-									 
-				    );
+		 $D_SERIES['data'][7] = array(   'th'       	=>  'Domain Name',
+										 
+											'field'     	=>  "get_eav_addon_varchar(id,'CHDN')",
+													 
+											'attr'  	=>  ['class'=>' txt_size_13 b clr_dark_blue'],
+																																								   
+											'is_sort'   	=>  0
+										 
+						);
 	 
 	 
 //	 $D_SERIES['data'][8] = array(   'th'       	=>  'Theme',
@@ -66,7 +66,7 @@
 	  
         $D_SERIES['data'][9] = array(   'th'        =>  'Actions',
 									 
-                                        'field'     =>  "concat(get_eav_addon_varchar(id,'ECSN'),',',lower(get_eav_addon_vc128uniq(id,'CHCD')))",
+                                        'field'     =>  "concat(get_eav_addon_vc128uniq(id,'CHCD'),',',get_eav_addon_varchar(id,'CHDN'))",
                                                  
                                         'td_attr'   =>  ' class="label_child align_LM" width="15%"',
                                                                                  
@@ -91,7 +91,7 @@
 	
 	function before_delete($param){
                 
-                // delete pages
+        // delete pages
 		$param['rdsql']->exec_query("DELETE FROM entity_child WHERE get_eav_ec_id(id,'PGCH')=$param[key_id]",'');
 		
 		// get ones column		
