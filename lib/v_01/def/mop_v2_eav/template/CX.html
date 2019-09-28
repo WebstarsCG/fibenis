@@ -1,0 +1,42 @@
+ <TMPL_IF CONTACT_{{SECTION_ID}}>
+	<section id="{{SECTION_ID}}" class="brdr_bottom">	    
+	  
+		     <div class="container">
+			    <div class="row">
+				   <div class="col-md-12">&nbsp;</div>
+		     <TMPL_IF CONTACT_{{SECTION_ID}}>		     
+			    <div class="col-md-12 text-center">
+				   
+				  <div class="big-title text-center animated fadeInDown delay-01" data-animation="fadeInDown" data-animation-delay="01">
+							   <div>&nbsp;</div><div>&nbsp;</div><h1>Reach Us</h1>							
+				   </div>
+				   
+				   <TMPL_LOOP CONTACT_INFO_{{SECTION_ID}}>
+				  
+					  <div class="col-md-12"><TMPL_VAR ORG_NAME></div>
+					  <div class="col-md-12"><TMPL_VAR ADD_I></div>
+					  <div class="col-md-12"><TMPL_VAR ADD_II></div>
+					    
+					  <div class="col-md-12">
+						 <TMPL_IF EMAIL><i class="fa fa-envelope-o"></i>&nbsp;<TMPL_VAR EMAIL></TMPL_IF>
+						 <TMPL_IF MOBILE><i class="fa fa-mobile"></i>&nbsp;<TMPL_VAR MOBILE></TMPL_IF> 
+						 <TMPL_IF PHONE><i class="fa fa-phone"></i>&nbsp;<TMPL_VAR PHONE></TMPL_IF>
+					  </div>
+				      
+					  <script>
+						 <TMPL_IF ORG_NAME>G.$('menu_org_name').innerHTML='<TMPL_VAR ORG_NAME>';</TMPL_IF>
+						 <TMPL_IF EMAIL>G.$('menu_email').innerHTML='<TMPL_VAR EMAIL>';<TMPL_ELSE>G.$('menu_email_area').style.display='none';</TMPL_IF>
+						 <TMPL_IF PHONE>G.$('menu_phone').innerHTML='<TMPL_VAR PHONE>';<TMPL_ELSE>G.$('menu_phone_area').style.display='none';</TMPL_IF>
+						 <TMPL_IF MOBILE>G.$('menu_mobile').innerHTML='<TMPL_VAR MOBILE>';<TMPL_ELSE>G.$('menu_mobile_area').style.display='none';</TMPL_IF>
+					  </script> 
+			       
+				   </TMPL_LOOP>
+				   
+				   <div>&nbsp;</div>
+				   <div>&nbsp;</div>			    
+			    </div>	    
+		     </TMPL_IF>
+		    </div>
+		</div>
+	</section>
+    </TMPL_IF>

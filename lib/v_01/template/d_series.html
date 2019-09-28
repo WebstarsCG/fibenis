@@ -1,0 +1,1007 @@
+	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js"></script>
+	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/general.c3001.js"></script>
+	
+	<TMPL_IF LAYOUT>
+		<link rel="stylesheet" href="<TMPL_VAR LIB_PATH>/css/<TMPL_VAR LAYOUT>.css">
+	</TMPL_IF>
+	
+	<TMPL_IF is_top_js_file>	    
+		<script language="javascript" type="text/javascript"  src="<TMPL_VAR top_js_file>.js"></script>	    
+	</TMPL_IF>   
+
+	<script language="javascript">
+		var pager = new Page_Number({current_page:<TMPL_VAR CURRENT_PAGE>, items_per_page :<TMPL_VAR SHOW_PAGE>});
+		
+	</script>
+	
+	<TMPL_IF HEADER_CONTENT>
+	 
+		<div class="<TMPL_VAR HEADER_STYLE>">
+		       <TMPL_VAR HEADER_CONTENT>
+		</div>
+	 
+	</TMPL_IF>
+
+	<TMPL_IF filter_off>
+	 	<!--<div class="box_filter"></div>-->
+	<TMPL_ELSE>
+
+	<div class="box_right box_filter" >
+		
+			<TMPL_LOOP custom_title>
+			
+					<TMPL_VAR filter_title>
+					<TMPL_IF field_type_option>
+						<select <TMPL_VAR fun> id="<TMPL_VAR key>" name="<TMPL_VAR key>" >
+							<option value="0"> Select All</option>	
+							<TMPL_VAR value>
+						</select>
+					</TMPL_IF>
+			
+			</TMPL_LOOP>
+			
+			<!--- Search Filter off --->
+			
+			<TMPL_IF search_filter_off>			
+				<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />			
+			<TMPL_ELSE>
+			
+				<label>Search by</label>
+							
+				<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />
+				
+				<input type="button" onclick="JavaScript:filter_data();" value=" Go "class="button"/>
+			
+			</TMPL_IF>
+			
+			<!--- Search Hidden Variables--->
+			
+			<input type="hidden" name="s_text_hidden" id="s_text_hidden" onKeyPress="JavaScript:auto_data();" value="" />
+			
+			<input type="hidden" name="s_text_id" id="s_text_id"  value="" />
+			
+			<input type="hidden" name="is_s_text_type" id="is_s_text_type"  value="0" />
+			
+			
+			
+			<TMPL_LOOP custom_filter>	
+			
+					<TMPL_IF filter_option>		
+							
+							<font class="spliter">|</font>
+						
+							<TMPL_VAR field_name>
+							
+							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="custom_filter();"  <TMPL_VAR HTML>>
+								
+								<TMPL_UNLESS NO_DEFAULT_OPTION>								
+									<option value="-1"><TMPL_VAR cus_default_label></option>
+								</TMPL_UNLESS>
+								
+								<TMPL_VAR option_value>								
+								
+							</select>
+					</TMPL_IF>
+					
+					<TMPL_IF multi_select>
+						
+						<TMPL_VAR field_name>
+						
+							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="multiple_select_data('<TMPL_VAR field_id>');"    class="selectpicker"  <TMPL_VAR HTML>  multiple>
+								<TMPL_UNLESS NO_DEFAULT_OPTION>								
+									<!--- <option value="-1"><TMPL_VAR cus_default_label></option> -->
+								</TMPL_UNLESS>
+								
+								<TMPL_VAR option_value>
+							</select>
+							 
+							<input class="button" type="button" id="go_multi_select"  name="go_multi_select" value="Go"  onclick="JavaScript:custom_filter();" />
+							<input type="hidden" name="<TMPL_VAR field_id>_hidden" id="<TMPL_VAR field_id>_hidden" value="";>
+							
+							
+					</TMPL_IF>
+					
+					
+					
+					<TMPL_IF search_text>		
+						<font class="spliter">|</font>
+						<input type="text" id="<TMPL_VAR field_id>"   name="<TMPL_VAR field_id>" placeholder="<TMPL_VAR placeholder>" onKeyPress="JavaScript:auto_data();" value="" class="w_125" />
+						
+						<input type="button" onclick="JavaScript:custom_filter();" value=" Go "class="button"/>
+					</TMPL_IF>
+					
+					
+					<TMPL_IF __LAST__>
+							<input type="hidden" name="CUSTOM_FILTER_COUNT" id="CUSTOM_FILTER_COUNT" value="<TMPL_VAR __COUNTER__>"  />
+					</TMPL_IF>
+					
+			</TMPL_LOOP>	
+				
+				<TMPL_IF is_date_filter>
+					
+						<font class="spliter">|</font>
+						
+						<label>From</label>
+						 <input type="text" name="s_date" id="s_date" value="" class="w_100" />
+						 
+						 <input type="hidden" name="s_date_hidden" id="s_date_hidden" value="" />
+						 
+						
+						<label>To</label>
+						 <input type="text" name="to_date" id="to_date" value="" class="w_100" />
+						 
+						 <input type="hidden" name="to_date_hidden" id="to_date_hidden" value="" />
+						 
+						 <span class="checkbox_wrapper"><input type="checkbox" id="is_check_date" name="is_check_date" value="1" /></span>
+						
+						<input class="button" type="button" id="go_date"  name="go_date" value="Go"  onclick="JavaScript:filter_data();" />
+						
+						
+				<TMPL_ELSE>
+					<input type="hidden" id="is_check_date" name="is_check_date" value="1"  />
+					
+					
+					
+				</TMPL_IF>
+				
+				<TMPL_IF hide_pager>
+					
+					<input type="hidden"
+					       id   = "page" 
+					       name = "page"
+					       value="0">
+					
+				<TMPL_ELSE>
+				
+					<font class="spliter">|</font>				
+					
+						
+					<TMPL_IF custom_sort_by>
+						Sort by <select id="sort_by" name="sort_by" onchange="JavaScript:filter_data();"  >
+								<option value="-1"><TMPL_IF CUSTOM_SORT_LABEL><TMPL_VAR CUSTOM_SORT_LABEL><TMPL_ELSE>Select Sort Option</TMPL_IF></option>
+								<TMPL_LOOP custom_sort_by>
+										<option value="<TMPL_VAR sort_value>"> <TMPL_VAR text_option></option>
+								</TMPL_LOOP>
+							</select>	
+					</TMPL_IF> 	
+							
+					
+					
+					
+					<label>Show</label>			
+			
+					<select 
+						id="page" 
+						name="page" 
+						onchange="JavaScript:filter_data();"  class="FI_50" title="Rows">
+							
+							<TMPL_IF PAGER_OPTION>
+									<TMPL_VAR PAGER_OPTION>
+								<TMPL_ELSE>
+									<option value=5>5</option>
+									<option value=10>10</option>
+									<option value=20>20 </option>
+									<option value=30>30</option>
+									<option value=50>50</option>
+									<option value=60>60</option>						
+									<option value=80>80</option>
+									<option value=100>100</option>												
+							</TMPL_IF>
+							
+					</select>
+					
+				</TMPL_IF>
+				
+					<font class="spliter">|</font>
+						
+
+							<TMPL_UNLESS HIDE_SHOW_ALL>
+							
+							<input type="button" 
+								   class="button" 
+								   name="go_date" 
+								   id="go_date" 
+								   value="<TMPL_VAR show_all_label>"  onclick="JavaScript:show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR app_key>');"/>
+								   
+							<font class="spliter">|</font>
+								
+							</TMPL_UNLESS>
+				
+							<TMPL_IF is_add>
+							   <!-- <TMPL_VAR title> -->   
+							   <a class="ficon" href="?<TMPL_VAR page_link><TMPL_IF DEFAULT_ADDON>&default_addon=<TMPL_VAR DEFAULT_ADDON></TMPL_IF>"><i class="fa fa-file-o clr_green"></i><TMPL_VAR b_name></a>
+							</TMPL_IF>
+							
+							<TMPL_IF TOP_ACTION>
+							   <TMPL_LOOP TOP_ACTION>
+								<a class="<TMPL_VAR STYLE>" href="<TMPL_VAR ACTION>"><TMPL_VAR LABEL></a>
+							   </TMPL_LOOP> 	
+							</TMPL_IF>
+							
+							<TMPL_IF is_export_file>
+								<a  id="export_id" name="export_id" class="icon excel"  href="JavaScript:export_csv_file();"><TMPL_VAR button_name></a>								
+							</TMPL_IF>				
+							
+			
+		</div>
+</TMPL_IF>
+		
+	<TMPL_IF summary>
+		
+		<table class="no_border_II"  width="95%" border="0" align="center">
+			<tr>
+				<td <TMPL_VAR html> >					
+					<TMPL_LOOP summary>
+						<div class="box_key_value">
+							<div ><TMPL_VAR field_name></div>
+							<div><TMPL_VAR summary_value></div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+						</div>
+					</TMPL_LOOP> 
+				</td>
+			</tr>
+
+		</table>
+	</TMPL_IF>
+
+
+
+	<form id="PUB_A" name="PUB_A" action=""  method="post"  >
+
+    		
+		<table  id="primary_table" <TMPL_IF table_attr> <TMPL_VAR table_attr><TMPL_ELSE>class="basic" width="100%" cellpadding=0 cellspacing="0" </TMPL_IF>>
+			
+			<TMPL_IF hide_header>
+				
+			<thead >
+			
+				<tr id="desk_header">
+			
+					<TMPL_IF HIDE_SNO>
+					<th width="5%">S.No</th>
+					</TMPL_IF>
+				
+					<TMPL_IF able_del>
+						<th width="5%"><input id="master_check_box" name="master_check_box"  type="checkbox" onclick="JavaScript:check_box_action(this,ELEMENT('COUNTER').value);">
+						</th>
+					</TMPL_IF>
+				
+		
+					<TMPL_LOOP TH_INFO>
+				
+						<th <TMPL_VAR th_attr>>					
+						
+						<TMPL_IF IS_SORT>
+							
+							<a class = "sort"											
+							   style = "cursor:pointer"
+								onclick="JavaScript:E_V_PASS('sort_field',<TMPL_VAR SORT_ID>);E_V_PASS('sort_direction',GET_E_VALUE('sort_col_<TMPL_VAR SORT_ID>'));filter_data();">
+								
+							<TMPL_VAR TH>
+												
+							</a><span id="sort_icon_<TMPL_VAR SORT_ID>" name="sort_icon_<TMPL_VAR SORT_ID>"></span>
+								
+							<input type="hidden" id="sort_col_<TMPL_VAR SORT_ID>" name="sort_col_<TMPL_VAR SORT_ID>">	
+								
+						<TMPL_ELSE>
+						
+							<TMPL_IF font>
+								
+								<a <TMPL_VAR font> <TMPL_IF html><TMPL_VAR html></TMPL_IF> > <TMPL_VAR TH></a>
+									<TMPL_VAR span>
+								<TMPL_ELSE>
+									<TMPL_IF TH><TMPL_VAR TH><TMPL_ELSE>&nbsp;</TMPL_IF>
+							</TMPL_IF>
+						
+						</TMPL_IF>
+						
+						</th>
+							
+					</TMPL_LOOP>
+			
+					<TMPL_IF is_action>
+						<th <TMPL_VAR action_th_attr>>Action</th>
+					</TMPL_IF>
+			
+				</tr>
+			</thead>
+			</TMPL_IF>
+			
+			<tbody>
+				<TMPL_LOOP DATA_INFO>
+					
+					
+					<tr     id="RX_<TMPL_VAR __counter__>" class="<TMPL_IF __odd__>row_odd<TMPL_ELSE>row_even</TMPL_IF>"
+						onMouseOver="JavaScript:d_series.row_in(this);"
+						onMouseOut ="JavaScript:d_series.row_out(this,<TMPL_VAR NAME=__counter__>);"											     
+						>
+						
+						<TMPL_IF HIDE_SNO>
+							<td class="align_RM">							
+								<script language="javascript" type="text/JavaScript">pager.write_item_number(<TMPL_VAR NAME=__counter__>);</script>						
+							</td>
+						</TMPL_IF>
+						
+						
+						<TMPL_IF able_del>
+							<td class="align_CM">						
+								<input type="checkbox" class="no_border"   <TMPL_IF is_row_able_del>disabled="disabled"</TMPL_IF>  id="c<TMPL_VAR __counter__>"   name="c<TMPL_VAR __counter__>" value="<TMPL_VAR key_id>"  />													
+							</td>
+						
+						</TMPL_IF>						
+						
+						
+						<input type="hidden" id="d<TMPL_VAR __COUNTER__>" name="d<TMPL_VAR __COUNTER__>" value='<TMPL_VAR del_name>' />
+						
+						<!--- hidden--->
+						<input type="hidden" id="key_id_<TMPL_VAR __COUNTER__>" name="key_id_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR key_id>"/>
+						
+						<TMPL_IF hidden_data>						
+							<TMPL_LOOP hidden_data>
+								<input type="hidden" id="HX_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>" name="HX_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR h_value>"/>	
+							</TMPL_LOOP>	
+						</TMPL_IF>
+						
+						<TMPL_LOOP COL_RESULT>
+							
+							<TMPL_UNLESS IS_HIDE>
+							
+							<td id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"  <TMPL_VAR TD_ATTR> >
+							
+								<TMPL_IF is_js>									
+									<script language="JavaScript" type="text/javascript"><TMPL_VAR JS_CALL>('<TMPL_VAR VALUE>');</script>																	
+								<TMPL_ELSE>									
+								     <TMPL_VAR VALUE>								     
+								</TMPL_IF>								
+							</td>
+							
+							</TMPL_UNLESS>
+							
+						</TMPL_LOOP>
+												
+					
+						<TMPL_IF action_type>
+							<td class="align_RM no_wrap">
+							<TMPL_IF custom_action>
+									<TMPL_LOOP custom_action>
+										<a <TMPL_VAR fun_name>
+										     <TMPL_IF html><TMPL_VAR html></TMPL_IF>
+										>
+										     <TMPL_VAR action_name>
+										</a> 
+										
+										<input type="hidden" id="row_index" name="row_index" value="<TMPL_VAR row_count>">
+									
+									</TMPL_LOOP>
+							</TMPL_IF> 
+						
+									
+						
+							<TMPL_IF is_edit><a  class="ficon" href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"><i class="fa fa-edit"></i>Edit</a></TMPL_IF>
+								
+							<TMPL_IF is_view><a class="icon pdf" href="JavaScript:d_series_view(<TMPL_VAR __counter__>);"> View</a></TMPL_IF>
+							    
+							<TMPL_IF is_add_more_info><a href="?f_series=<TMPL_VAR app_key>&key=<TMPL_VAR key_id>">Add More Info</a></TMPL_IF>
+							
+						
+							<TMPL_LOOP view>
+								<a class="icon pdf" href="<TMPL_VAR script>(<TMPL_VAR __counter__>);"></a>
+							</TMPL_LOOP> 
+				
+						</td>
+						</TMPL_IF>
+						
+						<input type="hidden" id="row_idx_<TMPL_VAR key_id>" name="row_idx_<TMPL_VAR key_id>" value="<TMPL_VAR __COUNTER__>">
+						
+					</tr>
+					
+					
+					<input type="hidden" id="id_<TMPL_VAR __COUNTER__>" name="id_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR key_id>">
+					
+					
+					
+					<TMPL_IF __LAST__>
+						<input type="hidden" name="COUNTER" id="COUNTER" value="<TMPL_VAR __COUNTER__>"  />
+						
+						<input type="hidden" name="D_COUNTER" id="D_COUNTER" value="<TMPL_VAR __COUNTER__>"  />
+					</TMPL_IF>
+					
+					
+					
+					<TMPL_IF is_narrow_down>		
+						<tr class="row_even" style="display:none;" id="nd_wall_<TMPL_VAR key_id>"  ><!--<TMPL_VAR col_count>-->
+							
+								
+								<td  id="nd_ground_<TMPL_VAR key_id>"  class="align_RM" colspan="<TMPL_VAR col_count>" style="padding:0px !important"></td>
+								
+								
+						</tr>	
+					</TMPL_IF>
+				
+				
+				</TMPL_LOOP>
+				
+				<TMPL_UNLESS DATA_INFO>
+					<tr>
+						<td  class="align_CM clr_gray_a txt_size_11 normal"></td>
+					</tr>
+				</TMPL_UNLESS>
+				
+				</tbody>
+			</table>
+				<TMPL_UNLESS DATA_INFO>
+					<script>
+						ELEMENT("primary_table").rows[1].cells[0].colSpan=Number(ELEMENT("primary_table").rows[0].children.length);
+						ELEMENT("primary_table").rows[1].cells[0].innerHTML='<TMPL_IF NO_DATA><TMPL_VAR NO_DATA><TMPL_ELSE>--- No Data ---</TMPL_IF>';
+					</script>		
+				</TMPL_UNLESS>
+			
+				<TMPL_IF able_del>			
+				<table align="center" width="95%" border="0">
+					<tr>
+						<td align="left">
+							 <div class="box_filter a_block box_left">
+								<TMPL_IF DATA_INFO>
+									<TMPL_IF DEL_BUTTON>
+										<button type="button" class="btn btn-danger"   value='Delete' onclick="d_series.check_delete();" >Delete</button>
+										<input type="hidden" id="DEL" name="DEL" value=0>
+									</TMPL_IF>
+								</TMPL_IF>
+						
+						
+						
+						<TMPL_IF cus_bulk_action>
+							<TMPL_LOOP cus_bulk_action>
+								<TMPL_IF is_bulk_button>
+									&nbsp;
+									<button type="button" class="btn btn-primary" onclick="<TMPL_VAR js_call>();"  ><TMPL_VAR button_name></button>									
+								</TMPL_IF>
+							</TMPL_LOOP>	
+						</TMPL_IF>
+						</div>
+					</td>
+					       
+					</tr>
+				</table>
+				</TMPL_IF>
+			
+		
+			
+		
+			<TMPL_UNLESS hide_pager>
+				<div class="box_filter a_block box_right">
+					<TMPL_VAR NAME="pager">
+				</div>
+			</TMPL_UNLESS>
+		
+		
+		
+			</form>
+	 
+	   <div id="inner_frame_area" name="inner_frame_area" class="light_window" style="height:600px;display:none;">
+ 
+				<table border="0" align="center" style="width:95%">
+					<tr>
+						<td  width="90%" class="header" id="inner_frame_title">Create Invoice </td>
+						<td width="10%"  class="close" align="right" id="exit" valign="top" height="40px">
+							<a href="JavaScript:inner_frame.hide();">x</a>&nbsp;&nbsp;
+						</td>
+						<td></td>
+					</tr>
+					<tr>				
+						<td colspan="2">
+							<div  id="error_div">
+								<iframe  id     = "inner_frame"
+										 name   = "inner_frame"	
+										 src    = ""  
+										 width  = "100%" 
+									     height = "520px"  
+										 style  = "border:none;">
+								</iframe>
+							</div>
+					</td>		
+					</tr>
+				</table>
+       </div>
+	 
+	 	
+	<input type="hidden" name="sort_field" id="sort_field"  value=""/>
+	<input type="hidden" name="sort_direction" id="sort_direction" value="0"/>
+	
+	<!--<input type="hidden" name="sort_col_<TMPL_VAR SORT_FIELD>" id="sort_col_<TMPL_VAR SORT_FIELD>" value=""/>-->
+	
+	<input type="hidden" name="sort_col_1" id="sort_col_1" value=""/>	
+	<input type="hidden" name="sort_col_2" id="sort_col_2" value=""/>
+	<input type="hidden" name="sort_col_3" id="sort_col_3" value=""/>
+	<input type="hidden" name="sort_col_4" id="sort_col_4" value=""/>
+	<input type="hidden" name="sort_col_5" id="sort_col_5" value=""/>
+	<input type="hidden" name="sort_col_6" id="sort_col_6" value=""/>
+	<input type="hidden" name="sort_col_7" id="sort_col_7" value=""/>
+	<input type="hidden" name="sort_col_8" id="sort_col_8" value=""/>
+	<input type="hidden" name="sort_col_9" id="sort_col_9" value=""/>
+	<input type="hidden" name="sort_col_10" id="sort_col_10" value=""/>
+	<input type="hidden" name="sort_col_11" id="sort_col_11" value=""/>
+	<input type="hidden" name="sort_col_12" id="sort_col_12" value=""/>
+	<input type="hidden" name="sort_col_13" id="sort_col_13" value=""/>
+	
+	<input type="hidden" name="start_page"id="start_page" value="0"/>
+	
+	<input type="hidden" name="key_id" id="key_id" value="<TMPL_VAR key_id>"/>
+	
+	<input type ="hidden" name="cus_filter" id="cus_filter" value="<TMPL_VAR filter_value>">
+	
+	<input type="hidden" name="app_key" id="app_key" value="<TMPL_VAR app_key>"/>
+	
+	<input type="hidden" name="PAGE_ID" id="PAGE_ID" value="<TMPL_VAR PAGE_ID>"/>
+	
+	<input type="hidden" name="PASS_ID" id="PASS_ID" value="<TMPL_VAR PASS_ID>"/>
+	
+	<form id="PUB_EXP" name="PUB_EXP" method="POST">
+				
+	<input type="hidden" name="export_data" id="export_data" value="" />
+	
+	<input type="hidden" name="filter_off_id" id="filter_off_id" value="<TMPL_VAR filter_off_id>" />
+
+	</form>
+	
+	<form id="EXP_LBL" name="EXP_LBL" method="POST">
+			
+	<input type="hidden" name="export_label" id="export_label" value="" />
+	
+	<input type="hidden" name="export_label_key" id="export_label_key" value="" />
+			
+	</form>
+	
+	
+	
+	
+
+	   	
+	  <script  language="javascript" type="text/javascript">
+	   	function set_inner_frame(title,url){	
+		
+			document.getElementById('inner_frame').src				= '';
+			
+			document.getElementById('inner_frame_title').innerHTML	= '';
+			
+			document.getElementById('inner_frame').src				= url;
+			
+			document.getElementById('inner_frame_title').innerHTML	= title;
+			
+			//alert(url);
+							
+			inner_frame.show();
+	
+		} // end
+			
+		
+	  </script>
+		  
+ <script language="javascript" type="text/javascript">
+ 
+ 	
+		//{id:'346',label:'Senthoor Auto Parts',category:'Customer Name',s_type:1}
+		
+		//var list_array =new Array({id:176,label:'Page Type: RM MANUAL'},{id:231,label:'Page Type: E-Audit'},{id:237,label:'Glo Colour Labs (P) Ltd'},{id:267,label:'Mathu Enterprise'},{id:268,label:'glo'},{id:270,label:'self'},{id:273,label:'Shree Maruthi'},{id:274,label:'Pranava Graphics'},{id:275,label:'sh'},{id:282,label:'Shree Maruthi printers'});
+		
+		// pre select menu
+		
+		if(ELEMENT('<TMPL_VAR APP_KEY>')!=undefined){
+		
+			ELEMENT('<TMPL_VAR APP_KEY>').style='color:#285BBA !important;';
+		}
+		
+		
+		var list_array =new Array(<TMPL_VAR list_array> );
+		
+			$(function() {
+			
+				  $("#s_date").datepicker({
+										firstDay: 1,
+										dateFormat:'dd-mm-yy',
+										numberOfMonths:1,
+										altField: "#s_date_hidden",
+										altFormat: "yy-mm-dd",
+								 });
+													
+				   $("#s_date").datepicker( "setDate", "<TMPL_VAR start_date>" );
+				   
+				   
+				   $("#to_date").datepicker({
+										firstDay: 1,
+										dateFormat:'dd-mm-yy',
+										numberOfMonths:1,
+										altField: "#to_date_hidden",
+										altFormat: "yy-mm-dd",
+								 });
+													
+				   $("#to_date").datepicker( "setDate", "<TMPL_VAR end_date>" );
+				   
+				   
+			});
+			
+			
+			
+			function auto_data(){
+						//alert('----------------aaaa------');
+						
+						$("#s_text").autocomplete({
+										
+							minLength: 2,
+							
+							source: list_array,
+								
+								
+							select: function( event, ui ) {
+									
+								document.getElementById('s_text_hidden').value=ui.item.id;
+							
+								document.getElementById('s_text_id').value=ui.item.s_type;
+								
+								document.getElementById('is_s_text_type').value=ui.item.is_s_text;
+								
+								//alert(ui.item.is_s_text);
+	
+								//return false;
+							}
+							
+						});
+						
+				//Hightlight the text:		
+							
+					String.prototype.replaceAt = function(index, char) {
+                    
+                                            return this.substr(0, index) + "<span style='font-weight:bold;'>" + char + "</span>";
+                                        
+					};//end replace
+					
+				
+                                        
+				        $.ui.autocomplete.prototype._renderItem = function(ul, item) {
+                                                
+                                                this.term = this.term.toLowerCase();
+                                                
+                                                var resultStr = item.label.toLowerCase();
+                                                
+                                                var txt = "";
+                                                
+                                                while (resultStr.indexOf(this.term) != -1) {
+                                                
+                                                        var index = resultStr.indexOf(this.term);
+                                                        
+                                                        txt = txt + item.label.replaceAt(index, item.label.slice(index, index + this.term.length));
+							
+                                                        resultStr = resultStr.substr(index + this.term.length);
+                                                        
+                                                        item.label = item.label.substr(index + this.term.length);
+                                                }//end while
+                        
+                                                return $("<li></li>").data("item.autocomplete", item).append("<a>" + txt + item.label + "</a>").appendTo(ul);
+
+					};//end renderItem
+             	                    
+							
+						
+					//Menu style:
+					
+			                      $.widget( "custom.autocomplete", $.ui.autocomplete, {
+                        
+                                                                _renderMenu: function( ul, items ) {
+									
+                                                                                    var that = this,
+                                                                                    
+                                                                                    currentCategory = "";
+                                                                                    
+                                                                                $.each( items, function( index, item ) {
+                                                                                    
+                                                                                    if ( item.category != currentCategory ) {
+                                                                                    
+												ul.append( "<li class='clr_green'>" + item.category + "</li>" );
+                                                                                    
+												currentCategory = item.category;
+                                                                                    
+											}//end if
+                                                                            
+												that._renderItemData( ul, item );
+										});//end each
+                                                                    
+								},//rendermenu
+								
+							//Menu Resize:
+                                                                _resizeMenu: function(){                                                                        
+                                                                        this.menu.element.outerWidth(270);                                                                                                                                                             
+                                                                },
+                                                                    
+								    
+								    
+						});//widget
+		               
+			}//end auto data
+			
+		
+			
+			function pager_act(start_page,current_page){
+			
+						E_V_PASS('start_page',start_page);	
+					
+						filter_data();
+					} //end
+			
+			function show_all(param){
+					
+					
+					
+					document.location.href='?<TMPL_VAR PAGE_ID>=<TMPL_VAR app_key>&PASS_ID=<TMPL_VAR PASS_ID>&show=1';
+			}
+			
+			
+			function multiple_select_data(set_value){
+				      var selectedOptionValue = $('#'+set_value+'').val();
+				      
+				      //alert(selectedOptionValue);
+				      if(selectedOptionValue==null){
+					      E_V_PASS(set_value+'_hidden',-1);
+				      }
+				      else{
+					 E_V_PASS(set_value+'_hidden',selectedOptionValue);
+				      }
+				      //document.getElementById("is_multi_"+set_value).checked = true;
+			      }								 
+			
+
+
+			
+			<TMPL_IF filter_value>
+			
+					function custom_filter(){
+						
+						var is_apply_date = document.getElementById('is_check_date').checked;
+					    if(is_apply_date){
+							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start,sort_f,sort_d,s_text_type,default_addon,start_date,end_date,start_alt_date,end_alt_date<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+														document.getElementById('s_text'),
+														document.getElementById('s_text_hidden'),
+														document.getElementById('s_text_id'),	
+														document.getElementById('page'),
+														document.getElementById('start_page'),
+														document.getElementById('sort_field'),
+														document.getElementById('sort_direction'),
+														document.getElementById('is_s_text_type'),
+														document.getElementById('default_addon'),
+														document.getElementById('s_date'),
+														document.getElementById('to_date'),
+														document.getElementById('s_date_hidden'),
+														document.getElementById('to_date_hidden')
+														<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
+														<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
+										);
+						
+						}
+						
+						else{
+						
+							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start,sort_f,sort_d,s_text_type,default_addon<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+														document.getElementById('s_text'),
+														document.getElementById('s_text_hidden'),
+														document.getElementById('s_text_id'),	
+														document.getElementById('page'),
+														document.getElementById('start_page'),
+														document.getElementById('sort_field'),
+														document.getElementById('sort_direction'),
+														document.getElementById('is_s_text_type'),
+														document.getElementById('default_addon')
+														<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
+														<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
+										);
+						
+						}
+							//alert(GET_E_VALUE('CUSTOM_FILTER_COUNT')+'<TMPL_VAR dtext>' );
+							
+							
+					}
+					
+			<TMPL_ELSE>
+			
+			           
+			</TMPL_IF> 
+			
+			
+			
+			
+			<TMPL_IF filter_off>
+					
+				function filter_data(){
+					show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&menu=off&filter_off=1&start,sort_f,sort_d,default_addon,filter_off_id,show',
+							       document.getElementById('start_page'),
+							       document.getElementById('sort_field'),
+							       document.getElementById('sort_direction'),
+							       document.getElementById('default_addon'),
+							       document.getElementById('filter_off_id'),
+							       document.getElementById('filter_off_id')
+							       
+							       
+				       ); 
+							
+	}	
+					
+					
+
+			
+			<TMPL_ELSE>
+			
+				function filter_data(){
+
+					var is_apply_date = document.getElementById('is_check_date').checked;
+					
+					if(is_apply_date){
+					
+							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start_date,end_date,start_alt_date,end_alt_date,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+									document.getElementById('s_text'),
+									document.getElementById('s_text_hidden'),		
+									document.getElementById('s_text_id'),		
+									document.getElementById('page'),
+									document.getElementById('s_date'),
+									document.getElementById('to_date'),
+									document.getElementById('s_date_hidden'),
+									document.getElementById('to_date_hidden'),
+									document.getElementById('start_page'),
+									document.getElementById('sort_field'),
+									document.getElementById('sort_direction'),
+									document.getElementById('is_s_text_type'),
+									document.getElementById('default_addon'),
+									document.getElementById('menu_off')
+									<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
+									<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
+									
+									
+								
+							);
+					}
+					
+					else{
+						
+						       show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+												document.getElementById('s_text'),
+												document.getElementById('s_text_hidden'),
+												document.getElementById('s_text_id'),	
+												document.getElementById('page'),
+												document.getElementById('start_page'),
+												document.getElementById('sort_field'),
+												document.getElementById('sort_direction'),
+												document.getElementById('is_s_text_type'),
+												document.getElementById('default_addon'),
+												document.getElementById('menu_off')
+												<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
+												<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
+							); 
+					
+					}		
+					
+			} // end of filter data
+			
+			
+			</TMPL_IF>
+			
+			
+			
+			
+						
+						
+			
+			<TMPL_IF SORT_FIELD>		
+				E_V_PASS("sort_field",'<TMPL_VAR SORT_FIELD>');	
+				E_V_PASS("sort_col_<TMPL_VAR 'SORT_FIELD'>","<TMPL_VAR 'DIRECATION_ON_OF'>");
+				E_H_PASS("sort_icon_<TMPL_VAR 'SORT_FIELD'>",SORT_ICON[<TMPL_VAR 'DIRECATION_ON_OF'>-1]);										
+			</TMPL_IF>
+			
+			<TMPL_IF sort_by>
+			     E_V_PASS("sort_by",'<TMPL_VAR sort_by>');	
+			</TMPL_IF>
+			
+			<TMPL_IF SORT_DIRECATION>						
+				E_V_PASS("sort_direction",'<TMPL_VAR SORT_DIRECATION>');					
+			</TMPL_IF>	
+				
+			<TMPL_IF page>
+				E_V_PASS('page','<TMPL_VAR page>');
+			</TMPL_IF>	
+				
+			<TMPL_IF type>	
+				E_V_PASS('t_type','<TMPL_VAR type>');
+			</TMPL_IF>	
+			
+			<TMPL_IF is_apply_date>
+				document.getElementById('is_check_date').checked= true;					
+			</TMPL_IF>	
+			
+			<TMPL_IF message>
+			
+				bootbox.alert({'message':'<TMPL_VAR message>',
+					       'size'   : 'small'
+					      });
+				
+			</TMPL_IF>
+			
+			//alert('===================<TMPL_VAR s_text>');
+			//url 
+				<TMPL_IF s_text_data>	
+					E_V_PASS('s_text','<TMPL_VAR s_text_data>');
+				</TMPL_IF>		
+				
+				<TMPL_IF s_id_data>	
+					E_V_PASS('s_text_hidden','<TMPL_VAR s_id_data>');
+				</TMPL_IF>	
+				
+				<TMPL_IF s_type_data>	
+					E_V_PASS('s_text_id','<TMPL_VAR s_type_data>');
+				</TMPL_IF>
+				
+				<TMPL_IF filter_value>
+				        E_V_PASS('cus_filter','<TMPL_VAR cus_filter>');
+			</TMPL_IF>
+			
+			
+			<TMPL_IF is_s_text_data>
+				  E_V_PASS('is_s_text_type','<TMPL_VAR is_s_text_data>');
+			</TMPL_IF>
+			
+			
+			function export_csv_file(){
+				
+					E_V_PASS('export_data',1);
+					
+					document.getElementById("PUB_EXP").submit();
+					
+			}
+			
+			
+			<TMPL_IF csv_file_name>
+				
+				open_csv();
+			
+			</TMPL_IF>
+			
+			function open_csv(){
+					
+					window.open('<TMPL_VAR csv_file_name>');
+					
+					document.location.href="";
+			}	
+			
+			// label
+			
+			function export_label(key){
+				
+				E_V_PASS('export_label',1);
+				E_V_PASS('export_label_key',key);
+				document.getElementById("EXP_LBL").submit();
+				
+			} // end of label
+			
+			<TMPL_IF label_file_name>
+			         open_file();
+			</TMPL_IF>
+			
+			function open_file(){
+					
+					window.open('<TMPL_VAR label_file_name>');					
+					document.location.href="";
+			}
+			
+			<TMPL_VAR get_cus_filter>
+			
+			<TMPL_IF pre_sort_by>
+			   E_V_PASS('sort_by','<TMPL_VAR pre_sort_by>');
+			</TMPL_IF> 
+								
+			
+</script>	 
+
+	<TMPL_IF is_bottom_js_file>
+		<TMPL_IF bottom_js_file>
+			<script language="javascript" type="text/javascript"  src="<TMPL_VAR bottom_js_file>.js"></script>
+		</TMPL_IF>
+	</TMPL_IF>
+	
+<!--- Updates--->
+<!--- 29082015- hidden fields taken to before column creation --->
+<!--- 27112015- default_addon added ---> 

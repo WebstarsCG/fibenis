@@ -131,22 +131,18 @@
 			      >
 			        <i class="fa fa-clone"></i>
 			        &nbsp;Entity Setup&nbsp;<span class="caret"></span>
-			    </a>
-			    
+			    </a>			    
 			    <ul class="dropdown-menu" role="menu">
-				   <li> <a href="?d=entity">Entity</a></li>
-				   <li> <a href="?d=entity_attribute">Entity Attr.</a></li>
-				   <li> <a href="?d=external_attribute">External Attr.</a></li>
-				   <li> <a href="?d=entity_child">Entity Child</a></li>
-				   <li> <a href="?d=entity_child_base">Entity Child Base</a></li>
-				   <li> <a href="?d=entity_key_value">Entity Key Value</a></li>
-				   <li> <a href="?d=entity_grouping">Entity Grouping</a></li>
-				   <li> <a href="?d=master_panel">Master Panel</a></li>
-				   
-				   
-				 
+				    <li> <a href="?d=entity">Entity</a></li>
+				    <li> <a href="?d=entity_attribute">Entity Attribute</a></li>
+				    <li> <a href="?d=external_entity">External Entity</a></li>
+				    <li> <a href="?d=external_attribute">External Attribute</a></li>				
+				    <li> <a href="?d=entity_child">Entity Child</a></li>
+				    <li> <a href="?d=entity_child_base">Entity Child Base</a></li>
+				    <li> <a href="?d=entity_key_value">Entity Key Value</a></li>
+				    <li> <a href="?d=entity_grouping">Entity Grouping</a></li>
+				    <li> <a href="?d=master_panel">Master Panel</a></li>
 			    </ul>
-			    
 			</li>
 			
 			
@@ -156,15 +152,16 @@
 			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
 				&nbsp;
 				<i class="fa fa-file"></i>
-				&nbsp;Page&nbsp;
+				&nbsp;Portal&nbsp;
 				<span class="caret"></span>
 			    </a>				
 				 
 			    <ul class="dropdown-menu" role="menu">
 				    <li><a href="?d=coach_eav">Coach</a></li>
-				    <li><a href="?d=cms_page_eav">Page Info</a></li>
+				    <li><a href="?d=cms_page_eav">Page Desk</a></li>
 				    <li><a href="?d=page_addon">Page Addon</a></li>
 				    <li><a href="?d=page_addon_attribute">Page Addon Attribute</a></li>
+				     <li><a href="?d=page_section__template">Page Section Template</a></li>
 				    <li><a href="?d=page_layout">Page Layout</a></li>
 				    <li><a href="?d=page_template">Template</a></li>
 				    <li><a href="?d=create_theme">Theme</a></li>
@@ -172,26 +169,22 @@
 			    
 			</li>
 			
-			<!---EA--->
-			<li>
-			    
+			
+			
+			
+			<!---Issues--->
+			<li>			    
 			    <a href="#"
 			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
 			      >
 			        <i class="fa fa-clone"></i>
-			        &nbsp;Others&nbsp;<span class="caret"></span>
+			        &nbsp;Apps&nbsp;<span class="caret"></span>
 			    </a>
 			    
-			    <ul class="dropdown-menu" role="menu">
-				   <li><a href="?d=contact_eav">Contact</a></li>
-				   <li><a href="?dx=demo__flat">Demo Flat</a></li>
-				   <li><a href="?dx=demo__eav">Demo EAV</a></li>
-				   <li><a href="?dx=demo__ui_form">Faddon Form</a></li>
+			    <ul class="dropdown-menu" role="menu">				 
 				   <li> <a href="?d=issue">Issue</a></li>
-			    </ul>
-			    
+			    </ul>			    
 			</li>
-			
 			
 			
 			
@@ -204,12 +197,13 @@
 				<span class="caret"></span>
 			    </a>				
 				 
-			    <ul class="dropdown-menu" role="menu">
-			          <li><a href="?d=def">App Definations</a></li>
-				   <li><a href="?d=log_action">Log Action</a></li>
-			          <li><a href="?d=user_neutral">User Neutral</a></li>
-				  <li><a href="?d=user_role">User Role</a></li>
-				  <li><a href="?d=user_role_permission">User Role Permissions</a></li>
+			     <ul class="dropdown-menu" role="menu">
+			            <li><a href="?d=def">App Definations</a></li>
+				    <li><a href="?d=log_action">Log Action</a></li>
+				    <li><a href="?d=contact_eav">Contact</a></li>
+			            <li><a href="?d=user_neutral">User Neutral</a></li>
+				    <li><a href="?d=user_role">User Role</a></li>
+				    <li><a href="?d=user_role_permission">User Role Permissions</a></li>
 			    </ul>
 			    
 			</li>
@@ -250,6 +244,26 @@
 				    </a>
 				</li>
 			    </ul>			  
+			</li>
+			
+			<!---EA--->
+			<li>
+			    
+			    <a href="#"
+			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
+			      >
+			        <i class="fa fa-clone"></i>
+			        &nbsp;Demo&nbsp;<span class="caret"></span>
+			    </a>
+			    
+			    <ul class="dropdown-menu" role="menu">
+				 
+				   <li><a href="?dx=demo__flat">Demo Flat</a></li>
+				   <li><a href="?dx=demo__eav">Demo EAV</a></li>
+				   <li><a href="?dx=demo__ui_form">Faddon Form</a></li>
+				 
+			    </ul>
+			    
 			</li>
 			
 			
@@ -1237,6 +1251,13 @@
 
       </div>
       <!-- End Header Logo & Naviagtion -->
+      <TMPL_UNLESS IS_PAGE>
+	    <section class="fbn_page_bar">
+		  <div class="container">
+			<span class="col-md-12"><b>&raquo;</b>&nbsp;<TMPL_VAR PAGE_TITLE></span>
+		  </div>
+	    </section>
+      </TMPL_UNLESS>
 
     </header>
     <!-- End Header Section -->

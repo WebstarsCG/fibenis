@@ -15,7 +15,7 @@
 
     <TMPL_IF PAGE_TITLE>
   
-    <div class="page-banner no-subtitle bg_clr_gray_e"
+    <div class="page-banner no-subtitle bg_clr_gray_e hide"
 	  <TMPL_IF PAGE_HEADER_IMAGE>
 	    style="background: url(<TMPL_VAR PAGE_HEADER_IMAGE>)"
 	  <TMPL_ELSE>
@@ -47,36 +47,30 @@
 	        <div class="row pad_lr">
 			<div class="col-md-12 pad_lr">
 			    <!-- Page Content--->
-			    <div class="col-md-9  brdr_right_light ">
-			        <TMPL_IF PAGE_TITLE>
-				  <h4 class="classic-title">
-				    <span><TMPL_VAR PAGE_TITLE></span>
-				  </h4>
-				</TMPL_IF>		  									
-			    
+			    <div class="col-md-10  brdr_right_light pad_lr">
 				<TMPL_VAR PAGE_INFO>
 			    </div>
 			    
 			    <!--- Side bar--->	
-			    <div class="col-md-3 sidebar right-sidebar"  id="sidebar">
+			    <div class="col-md-2 sidebar right-sidebar widget-categories"  id="sidebar">
 			      <ul>
-				      <li><a href="?f=external_attribute&i_t=ITCE">Code Editor</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITDT">Date</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITFT">Fiben Table</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITHD">Heading</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITIG">Integer</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITLA">Label</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITNM">Number</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITRG">Range</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITSL">Simple List</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITSH">Sub-heading</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITTX">Text</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITTA">Textarea</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITTE">Textarea Editor</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITTG">Toggle Switch</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITTB">Twin Box</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITFD">Upload Document</a></li>
-				      <li><a href="?f=external_attribute&i_t=ITFI">Upload Image</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITCE')">Code Editor</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITDT')">Date</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITFT')">Fiben Table</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITHD')">Heading</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITIG')">Integer</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITLA')">Label</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITNM')">Number</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITRG')">Range</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITSL')">Simple List</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITSH')">Sub-heading</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITTX')">Text</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITTA')">Textarea</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITTE')">Textarea Editor</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITTG')">Toggle Switch</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITTB')">Twin Box</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITFD')">Upload Document</a></li>
+				      <li><a href="javascript:external_attribute_load('&i_t=ITFI')">Upload Image</a></li>
 				      				      
 
 				      
@@ -123,7 +117,34 @@
 	</div><!--container-->
     </div><!--- Content--->  
        
-
+<script>
+    
+    
+  function external_attribute_load(url) {
+    
+      var lv = new Object({'default_addon':'','primary_id':''});
+    
+      url='?f='+document.getElementById('app_key').value+url;
+      
+      lv.default_addon   = document.getElementById('default_addon').value;
+      lv.primary_id      = document.getElementById('primary_id').value;
+    
+      if (lv.default_addon.length>0) {
+	  url+='&default_addon='+lv.default_addon;
+      }
+      
+      if (document.getElementById('menu_off').value==1) {
+	  url+='&menu_off=1';
+      }
+      
+      if (lv.primary_id.length>0) {
+	  url+='&key='+lv.primary_id;
+      }
+    
+      document.location.href=url;
+  }
+	
+</script>
 
 
 
