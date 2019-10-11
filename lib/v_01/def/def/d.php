@@ -73,20 +73,16 @@
 							     ),							
 							
 						       ),
-				   
-				   
 				
-				#check_field
+				    #check_field
 								
 					'check_field'   =>  array('id' => @$_GET['id']),								
 								
 					'add_button' => array( 'is_add' =>1,'page_link'=>'f=def', 'b_name' => 'Add Defination' ),
 								
-					'del_permission' => array('able_del'=>1,'user_flage'=>1), 
-								
-					'date_filter'  => array( 'is_date_filter' =>0,'date_field' =>  'timestamp'),									
-				  	
-                                        'page_code'    => 'DURP',
+					'del_permission' => array( 'able_del'        =>1,
+								   'avoid_del_field' => 'IF(((SELECT count(*) FROM ecb_parent_child_matrix WHERE ecb_parent_id=entity_child_base.id OR ecb_child_id=entity_child_base.id)>0),1,0)',
+							           'avoid_del_value' => 1 ),
 					
                             
                             );

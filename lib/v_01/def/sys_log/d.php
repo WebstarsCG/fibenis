@@ -19,7 +19,7 @@
 								
 								'field' =>"get_eav_addon_varchar((SELECT is_internal FROM user_info WHERE id = sys_log.user_id),'COFN')",
 								    
-								'td_attr' => ' class="align_LM" width="20%"',
+								'td_attr' => ' class="align_LM" width="10%"',
 								
 								'is_sort' => 0,	
 								
@@ -52,7 +52,7 @@
 							     
 							    4=>array('th'=>'Page Name',
                                                                      'th_attr'=>'  width="20%"',
-                                                                     'field'=>"get_ecb_parent_child_name_from_hash(page_code,'')",
+                                                                     'field'=>"get_ecb_parent_child_name_from_hash(page_code,'->')",
 								    
                                                                     'is_sort'=>1,
 								    
@@ -76,7 +76,7 @@
 							    6=>array(
 								     'th'=>'Action',
                                                                      
-								     'th_attr'=>'  width="35%"',
+								     'th_attr'=>'  width="25%"',
                                                                      
 								     'field'=>"action ",
 								     

@@ -52,19 +52,47 @@ $D_SERIES = array(
                                 'field' => 'is_active',
                          
                                 'attr' =>['class'=>'align_CM',
-                                                    'width'=> '10%'
+                                                    'width'=> '5%'
                                   ] ,
 			
                                 'js_call' => 'boolean_display'
 		),
                 
-                5 => array(
+                5=>array('th'=>'Password ',
+							 
+								'td_attr' => 'width="5%"',
+							
+								'field'	=> "concat(id,':',is_internal)",
+								
+								'filter_out'=>function($data_in){
+                                                                    
+                                                                                $temp = explode(':',$data_in);
+                                                                            
+										$data_out = array('id'   => $temp[0],
+												'link_title'=>'Modify Password',
+												'is_fa'=>'fa-key txt_size_18 clr_black ',
+												'title'=>'Modify Password',
+												'src'=>"?f=set_pwd&menu_off=1&mode=simple&default_addon=$temp[1]",
+												'style'=>"border:none;width:100%;height:600px;",
+												'refresh_on_close'=>0
+											);
+											
+											return json_encode($data_out);
+									},
+												 
+									'js_call'=>'d_series.set_nd',
+                                                                        
+                                                                    'attr'=>['class'=>'align_CM','width'=>'5%']
+                                                                
+								),
+                
+                6 => array(
                                 'th' => 'Last Login',
                                 
                                 'field' => "date_format(last_login,'%d-%b-%Y %T')",
                          
-                                'attr' =>['class'=>'label_grand_child',
-                                                    'width'=> '20%'
+                                'attr' =>['class'=>'label_grand_child align_RM ',
+                                                    'width'=> '10%'
                                         ] ,
                         
                                 'is_sort'=>1 
@@ -84,10 +112,10 @@ $D_SERIES = array(
 	'key_id' => 'id',
 
 	'key_filter' => '',
+        
+        'is_narrow_down' => 1,
 
 	# Default Additional Column
-
-	'is_user_id' => 'user_id',
 
 	'hidden_data'=>array('id','email'),
 
@@ -151,7 +179,9 @@ $D_SERIES = array(
 
 	'add_button' => array('is_add' => 1, 'page_link' => 'f=user_neutral', 'b_name' => 'Add User' ),
 
-	'del_permission' => array('able_del' => 1,'user_flage' => 1), 
+	'del_permission' => array('able_del' => 1,'user_flage' => 1),
+        
+        
 
 	'bulk_action' => array(
                                 array('is_bulk_button' => 1, 'button_name' => 'Deactivate', 'js_call'=>'deactive_users'),

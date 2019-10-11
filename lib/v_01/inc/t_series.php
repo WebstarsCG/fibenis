@@ -13,7 +13,7 @@
 		# loader
 		
 		if(($PAGE_ID=='t_series') || ($PAGE_ID=='t') || ($PAGE_ID=='tx') ){
-						
+															
 				$router = action_router(array('page_id'      =>$PAGE_ID,
 							'page_name' => $PAGE_NAME,
 							'lib_path'  => $LIB_PATH
@@ -21,16 +21,17 @@
 				
 				if($router['action']){
 						
-						$T_SERIES['page_code'] = md5($PAGE_CODE);
-						
 						if(!$USER_ID && !$T_SERIES['session_off']){					
 								$SG->s_destroy('index.php');		
 						}else if($USER_ID){										
-								$SG->check_entry($SG->get_permission($T_SERIES['page_code']));	
+								
+								$PAGE_CODE_HASH = md5($PAGE_CODE);
+								$SG->check_entry($SG->get_permission($PAGE_CODE_HASH));	
 						}
 						
 						include($router['action']);
 						
+						$T_SERIES['page_code'] = $PAGE_CODE_HASH;						
 		
 				}else{
 						http_response_code(404);
@@ -66,18 +67,29 @@
 				# output to global var
 				
 				$PAGE_INFO	= $T->Output();
+				
+				
+				
 		}
 		
 		# save
+		$param = array( 'user_id'    => $USER_ID,
+			        'page_code'  => $T_SERIES['page_code'],
+				'action'     => 'Template Process with '.$PAGE_NAME);
 		
 		if(@$T_SERIES['save_as']){
-			  
+				
 				save_content(['t_series'=>$T_SERIES,
 					      'lib_path'=>$LIB_PATH,
 					      'content' =>$PAGE_INFO
 					      ]);
-		} // save condition
+				
+				$param['action_type'] = 'TSAV';
+		}else{
+				$param['action_type'] = 'TRUN';
+		}
 		
+		$G->set_system_log($param);
 		
 				
 		// build template

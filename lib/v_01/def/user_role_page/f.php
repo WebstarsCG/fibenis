@@ -42,9 +42,9 @@
 											" WHERE ecb_parent_id IN(SELECT id FROM entity_child_base WHERE entity_code='DF')  "),
 						    'is_mandatory' =>  1,
 						    'option_is_quick_search'=>1,						    
-						    'input_html'   =>  ' class="w_400" rows="5"  style="height:200px !important"  '
+						    'input_html'   =>  ' class="w_400" rows="5"  style="height:200px !important"  ',
 						    
-						    
+						    'right_option_limit'=>10,
 					        ),
 				    
 				    '4' => array(
@@ -173,6 +173,6 @@
 	} // if new item
 	
    } // end of func
-    
+ 
     
 ?>

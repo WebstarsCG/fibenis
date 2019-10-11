@@ -25,10 +25,11 @@
 				
 				$param = array('user_id'		=> $USER_ID,					       
 						    'page_code'		=> $A_SERIES['page_code'],																
-						    'action_type'	=>'ROUT',						
-						    'action'		=> $TOKEN
+						    'action_type'	=>'ARUT',						
+						    'action'		=> "Token->".$TOKEN
 						 );
-										
+							
+				$G->set_system_log($param);			
 				
 				if($A_SERIES[$TOKEN]){
 		

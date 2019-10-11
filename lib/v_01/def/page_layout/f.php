@@ -140,6 +140,8 @@
 				'page_code'	=> 'FECB',
 				
 				'before_add_update' => 1,
+				
+				'form_layout' => 'form_100'
 			);
     
     
@@ -199,7 +201,7 @@
 		    $lv['temp_req']=$G->encrypt($lv['req'],$lv['trans_key']);
 		   
 		  		  
-		    $node_res = $client->GET($_SERVER["HTTP_HOST"].$_SERVER["SCRIPT_NAME"],['query'=>['t'         => $_GET['f'].'__create_html',
+		    $node_res = $client->GET($_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["HTTP_HOST"].$_SERVER["SCRIPT_NAME"],['query'=>['t'         => $_GET['f'].'__create_html',
 												      'req'       => $lv['temp_req'],
 												      'trans_key' => $lv['trans_key']
 												    ]
@@ -209,7 +211,7 @@
 		  
     } // end
     
-    if(isset($_GET['default_addon'])){
+     if(isset($_GET['default_addon'])){
      
 	  $LAYOUT = 'layout_full';
      
@@ -221,8 +223,13 @@
 	    
 	  $F_SERIES['data'][8]['option_data'] = $G->option_builder('entity_child_base','id,sn'," WHERE entity_code='TH' AND token = '$value[0]'");
           
-	  $F_SERIES['data'][8]['avoid_default_option'] = 1;                                                     
-    }
+	  $F_SERIES['data'][8]['avoid_default_option'] = 1;
+	  
+	  $F_SERIES['back_to']['back_menu_off']=@$_GET['menu_off'];
+	  
+	  $F_SERIES['back_to']['back_default_addon']=@$_GET['default_addon'];
+    
+     } //end
 
   
 ?>

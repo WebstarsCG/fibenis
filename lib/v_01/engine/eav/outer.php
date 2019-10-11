@@ -392,15 +392,14 @@
 		} // user id
 				
 		$TD->EchoOutput();
-		
-		
+				
 		# open log
 		
 		if($PV['is_page'] ){
 				
 				$access_key = (@$_GET[$PAGE])?$PAGE.'='.$_GET[$PAGE]:$PAGE ;
 				
-				$param=array('user_id'=>$USER_ID,'page_code'=>'ed3e225dad017ddafa66fa8a44fda21c','action_type'=>'VIEW','action'=>'General Page Access','access_key'=>$access_key );
+				$param      = array('user_id'=>$USER_ID,'page_code'=>'ed3e225dad017ddafa66fa8a44fda21c','action_type'=>'VIEW','action'=>'General Page Access','access_key'=>$access_key );
 								 
 				$G->set_system_log($param);
 		}			

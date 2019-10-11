@@ -119,6 +119,8 @@
         $lv->{'last_insert_id'} = $dbh->last_insert_id(undef,undef,'entity_child_base',undef);
                 
         
+        # child id
+        $lv->{'ecb_child'}=undef;
                 
         for my $engine (@{$def->{$def_name}}){
                         
@@ -126,7 +128,9 @@
             
             $lv->{'content'}.=$lv->{'counter'}->{'module_eng'}.")".$def_name."__".$engine."=".$lv->{parent_child_hash}."<br>";
             
-            if ($lv->{'engine_id'}->{$engine}->{'id'}) {            
+            if ($lv->{'engine_id'}->{$engine}->{'id'}) {
+                
+                push(@{$lv->{'ecb_child'}},$lv->{'engine_id'}->{$engine}->{'id'});
             
                 $lv->{'temp_content'}="($lv->{'last_insert_id'},
                                               $lv->{'engine_id'}->{$engine}->{'id'},
@@ -144,6 +148,14 @@
                 push(@{$lv->{'def_permission'}},$dbh->last_insert_id(undef,undef,'ecb_parent_child_matrix',undef));
             
             } #end
+            
+            # child data to flat reference
+            
+            if(@{$lv->{'ecb_child'}}){
+                
+                 $dbh->do("UPDATE entity_child_base SET note='".join(',',@{$lv->{'ecb_child'}})."' WHERE id=$lv->{'last_insert_id'}");
+                
+            }
                 
             $lv->{'counter'}->{'module_eng'}++;
             

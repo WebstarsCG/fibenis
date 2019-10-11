@@ -703,13 +703,15 @@
 																				
 											<TMPL_IF OPTION_IS_QUICK_SEARCH>
 												
-													<input type  = "text"							       
-													       id    = "X<TMPL_VAR field_id>_LEFT_SEARCH"
-													       name  = "X<TMPL_VAR field_id>_LEFT_SEARCH"
-													       onkeyup="JavaScript:list_box_search(this,'X<TMPL_VAR field_id>_LEFT');"
-														
-														class="pic zoom"						    
-													       /><span class="icon_inline "></span><br><br>
+																						       
+													       <div class="input-group margin-bottom-sm"><input class="form-control" type="text" 
+																	id    = "X<TMPL_VAR field_id>_LEFT_SEARCH"
+																	name  = "X<TMPL_VAR field_id>_LEFT_SEARCH"
+																	onkeyup="JavaScript:list_box_search(this,'X<TMPL_VAR field_id>_LEFT');"
+																	 placeholder="Search Option Item..."><span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span></div>
+																							
+															
+														      
 											
 														<script language="javascript" type="text/javascript">													
 																f_series.__element_out_array['X<TMPL_VAR field_id>_LEFT'] = new Array();
@@ -718,7 +720,7 @@
 												
 											</TMPL_IF>
 											
-											<div class="label">Out</div><br>	       
+											<div class="label clr_green"><span class="txt_size_12">Options Out</span></div><br>	       
 												       
 										<select 																				
 											<TMPL_VAR input_html> 	
@@ -763,9 +765,9 @@
 										<td class="align_LM v_top">
 								                               
 											<TMPL_IF OPTION_IS_QUICK_SEARCH>
-												<div style="height:70px;display: block;">&nbsp;</div>
+												<div style="height:30px;display: block;">&nbsp;</div>
 											</TMPL_IF>
-											        <div class="label">In</div><br>   
+											        <div class="label clr_dark_blue"><span class="txt_size_12">Options In</span></div><br>  
 												<select <TMPL_IF option_fun> <TMPL_VAR option_fun> </TMPL_IF> 
 												        <TMPL_VAR input_html> 
 													      multiple="true"

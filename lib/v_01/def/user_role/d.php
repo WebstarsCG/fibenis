@@ -179,12 +179,8 @@
 				    
 				    'del_permission' => array('able_del'=>1,'user_flage'=>1), 
 								
-			            'prime_index'   => 1,
+			            'prime_index'   => 2,
                                     
-                                    'show_query'    => 0,
                                 
-                                    'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
-								
-				    'page_code'    => 'DUSR'
                             
                             );

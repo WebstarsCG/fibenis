@@ -7,7 +7,7 @@
                         "pass"          =>   "",
                         "db_engine"     =>  "rdsql_mysqli",
                         
-                        "domain_name"   =>  "http://localhost/wa_dev/fibenis/app/nano",
+                        "domain_name"   =>  "http://localhost/wa_dev/fibenis/nano",
                         "lib_path"      =>  "../lib/v_01/",
                         
                         "is_smtp_mail"  =>  1,                            
@@ -28,7 +28,7 @@
                         
                         "engine"        => 'eav',
                         
-                        "is_open"       => 0,
+                        "is_open"       => 1,
                         "access_key"    => "fortknox",
                         
                         "is_multiple"   => 0,

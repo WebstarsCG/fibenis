@@ -24,14 +24,15 @@
     
     #$F_SERIES['avoid_trans_key_direct']     = 1;
     
-    # customization
+    # customizatiol
     
-    if(@$_GET['key']){    
-        $F_SERIES['temp']['option_data']      = "WHERE  entity_code='LX' AND dna_code='EBMS' AND id NOT IN (SELECT ecb_child_id FROM ecb_parent_child_matrix WHERE ecb_parent_id=$_GET[key])";            
-        $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base','id,sn',$F_SERIES['temp']['option_data'].' ORDER BY sn ASC');                
-    }else{
-        $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base',"id,sn","  WHERE entity_code='LX' AND dna_code='EBMS'");
-    }
+    //if(@$_GET['key']){    
+    //    $F_SERIES['temp']['option_data']      = "WHERE  entity_code='LX' AND dna_code='EBMS' AND id NOT IN (SELECT ecb_child_id FROM ecb_parent_child_matrix WHERE ecb_parent_id=$_GET[key])";            
+    //    $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base','id,sn',$F_SERIES['temp']['option_data'].' ORDER BY sn ASC');                
+    //}else{
+        $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base',"id,concat(ln,' (',sn,')')","  WHERE entity_code='LX' AND dna_code='EBMS'");
+        $F_SERIES['data']['5']['input_html']=" class='w_300'  style='height:200px !important' " ;
+    //}height='200px'"
     
      // after_add_update
     
@@ -73,7 +74,7 @@
             
         } // end
         
-        before_update($key_id);       
+       //before_update($key_id);       
         
     } # end
     

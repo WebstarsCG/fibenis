@@ -37,12 +37,12 @@
 				    							       
 				    '4' => array(
 						    
-						    'field_name'   => 'Search',
+						    'field_name'   => 'Entities',
 						    'field_id'     => 'note',
 						    'type'         => 'list_left_right',
-						    'option_data'  =>'',
+						    'option_data'  => $G->option_builder('entity','code,sn',' '), 
 						    'is_mandatory' =>  1,
-						    'option_is_quick_search'=>1,						    
+						   // 'option_is_quick_search'=>1,						    
 						    'input_html'   =>  ' class="w_400" rows="5"  style="height:200px !important"  '
 						    
 						),
@@ -88,7 +88,7 @@
 	
 	$F_SERIES['data'][3]['input_html'] = 'class="w_100" readonly';
 	
-	before_update(@$_GET['key']);	
+	//before_update(@$_GET['key']);	
     
     }else{
 	    
@@ -97,36 +97,8 @@
 	    $F_SERIES['data']['4']['option_id_name']            = $G->get_id_name('entity','code,sn',' ');
 	    
     }
-    
-    // after add update 
-    
-    function before_update($key_id){
-	
-	global $G,$F_SERIES;
-	
-	if($key_id){
-	    
-	    
-	    $get_data    =    $G->get_one_cell(array   (  'table'	 => 'entity_child_base',
-			  				  'field'	 => 'note',
-							  'manipulation' => " WHERE  id=$key_id  "
-					    ));
-	    
-	    $F_SERIES['temp']['present_data']   = " WHERE code IN (SELECT ea_value FROM ecb_av_addon_varchar WHERE parent_id=$key_id AND ea_code='GPEN' )";
-	    
-	    $F_SERIES['temp']['not_present_data']   = "WHERE code NOT IN (SELECT ea_value FROM ecb_av_addon_varchar WHERE parent_id=$key_id AND ea_code='GPEN' )";
-	    
-	    $F_SERIES['data']['4']['option_data']		= $G->option_builder('entity','code,sn',$F_SERIES['temp']['not_present_data'].' ');
-	   
-	    $F_SERIES['data']['4']['option_existing_data']	= $G->option_builder('entity','code,sn',$F_SERIES['temp']['present_data'].' ');
-	   
-	    $F_SERIES['data']['4']['option_id_name']            = $G->get_id_name('entity','code,sn',$F_SERIES['temp']['not_present_data'].' ');
-	    
-	} # edit
-	
-	  
-	
-    } # end of add update action
+        $F_SERIES['data']['4']['option_data']		= $G->option_builder('entity','code,sn',' ');
+ 
     
     // after add update
     
@@ -179,7 +151,7 @@
 	} // end
 	
 	
-	before_update($key_id);
+	//before_update($key_id);
       
    } // end
     

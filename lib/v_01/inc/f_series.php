@@ -691,7 +691,7 @@
 								$temp['is_left_right_action']         = (@$value['is_left_right_action'])?@$value['is_left_right_action']:0;
 								
 								$temp['right_option_limit']           = (@$value['right_option_limit'])?@$value['right_option_limit']:0;
-						
+														
 						}
 						
 						//plug_in
