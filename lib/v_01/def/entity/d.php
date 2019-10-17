@@ -347,7 +347,7 @@
                                 
                                     # Communication
                                 
-                                    'prime_index'   => 1,
+                                    'prime_index'   => 2,
 				    
 				    'key_filter'    => ' AND is_lib=1',	
 				    				    
@@ -400,8 +400,7 @@
 										 
 				
 				#check_field
-								
-					'check_field'   =>  array('user_id' => @$_GET['user_id'],'page_code' => @$_GET['page_code']),								
+												
 								
 					'add_button' => array( 'is_add' =>1,'page_link'=>'f=entity', 'b_name' => 'Add Entity' ),
 								
@@ -416,15 +415,15 @@
 								  
 							), 
 								
-					'date_filter'  => array( 'is_date_filter' =>0,'date_field' =>  'timestamp'),	
+					
 								
 				#export data
 				
-				'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
+				'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv',
+							
+							 'export_csv_data'=>[]),
 								
-				'page_code'    => 'DETY',
 				
-				'show_query'   => 0
                             
                             );
     
