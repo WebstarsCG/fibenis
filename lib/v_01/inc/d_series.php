@@ -669,7 +669,7 @@
 		
 		$T->AddParam(build_desk());
 		
-		$T->AddParam(((@$D_SERIES['add_button'])?@$D_SERIES['add_button']:[]));
+		$T->AddParam(((@$D_SERIES['add_button'])?@$D_SERIES['add_button']:((@$D_SERIES['add'])?@$D_SERIES['add']:[])));
 		
 		
 		

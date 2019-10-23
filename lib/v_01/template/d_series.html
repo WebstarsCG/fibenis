@@ -44,14 +44,14 @@
 			
 			<TMPL_IF search_filter_off>			
 				<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />			
-			<TMPL_ELSE>
-			
-				<label>Search by</label>
-							
-				<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />
-				
-				<input type="button" onclick="JavaScript:filter_data();" value=" Go "class="button"/>
-			
+			<TMPL_ELSE>				
+				<TMPL_IF LIST_ARRAY>			
+					<label>Search by</label>								
+					<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />					
+					<input type="button" onclick="JavaScript:filter_data();" value=" Go "class="button"/>					
+				<TMPL_ELSE>
+					<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />			
+				</TMPL_IF>	
 			</TMPL_IF>
 			
 			<!--- Search Hidden Variables--->
@@ -168,26 +168,24 @@
 					
 					
 					
-					<label>Show</label>			
-			
+					<label>Show</label>
 					<select 
-						id="page" 
-						name="page" 
-						onchange="JavaScript:filter_data();"  class="FI_50" title="Rows">
+						id       = "page" 
+						name     = "page" 
+						onchange = "JavaScript:filter_data();"  class="FI_50" title="Rows">
 							
-							<TMPL_IF PAGER_OPTION>
-									<TMPL_VAR PAGER_OPTION>
-								<TMPL_ELSE>
-									<option value=5>5</option>
-									<option value=10>10</option>
-									<option value=20>20 </option>
-									<option value=30>30</option>
-									<option value=50>50</option>
-									<option value=60>60</option>						
-									<option value=80>80</option>
-									<option value=100>100</option>												
-							</TMPL_IF>
-							
+						<TMPL_IF PAGER_OPTION>
+							<TMPL_VAR PAGER_OPTION>
+						<TMPL_ELSE>
+							<option value=5>5</option>
+							<option value=10>10</option>
+							<option value=20>20</option>
+							<option value=30>30</option>
+							<option value=40>40</option>
+							<option value=50>50</option>
+							<option value=75>75</option>													
+							<option value=100>100</option>												
+						</TMPL_IF>							
 					</select>
 					
 				</TMPL_IF>
@@ -197,19 +195,19 @@
 
 							<TMPL_UNLESS HIDE_SHOW_ALL>
 							
-							<input type="button" 
-								   class="button" 
-								   name="go_date" 
-								   id="go_date" 
-								   value="<TMPL_VAR show_all_label>"  onclick="JavaScript:show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR app_key>');"/>
-								   
-							<font class="spliter">|</font>
+								<input type="button" 
+									   class="button" 
+									   name="go_date" 
+									   id="go_date" 
+									   value="<TMPL_VAR show_all_label>"  onclick="JavaScript:show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR app_key>');"/>
+									   
+								<font class="spliter">|</font>
 								
 							</TMPL_UNLESS>
 				
 							<TMPL_IF is_add>
 							   <!-- <TMPL_VAR title> -->   
-							   <a class="ficon" href="?<TMPL_VAR page_link><TMPL_IF DEFAULT_ADDON>&default_addon=<TMPL_VAR DEFAULT_ADDON></TMPL_IF>"><i class="fa fa-file-o clr_green"></i><TMPL_VAR b_name></a>
+							   <a class="ficon" href="?<TMPL_VAR page_link><TMPL_IF DEFAULT_ADDON>&default_addon=<TMPL_VAR DEFAULT_ADDON></TMPL_IF>"><i class="fa fa-file-o clr_green"></i><TMPL_IF b_name><TMPL_VAR b_name><TMPL_ELSE><span>Add <TMPL_VAR TITLE></span></TMPL_IF></a>
 							</TMPL_IF>
 							
 							<TMPL_IF TOP_ACTION>
