@@ -219,7 +219,7 @@
 							</TMPL_IF>
 							
 							<TMPL_IF is_export_file>
-								<a  id="export_id" name="export_id" class="icon excel"  href="JavaScript:export_csv_file();"><TMPL_VAR button_name></a>								
+								<a  id="export_id" name="export_id" class="ficon"  href="JavaScript:export_csv_file();"><i class="fa fa-file-excel-o clr_green"></i><TMPL_VAR button_name></a>								
 							</TMPL_IF>				
 							
 			
@@ -915,9 +915,30 @@
 			
 			<TMPL_IF message>
 			
-				bootbox.alert({'message':'<TMPL_VAR message>',
-					       'size'   : 'small'
-					      });
+				<TMPL_IF CSV_FILE_NAME>			
+					bootbox.alert({
+						       'title'  : "Export CSV ",
+						       'message':'<TMPL_VAR message>',
+						       'size'   : 'small',
+						        
+							buttons : {
+									ok: {
+									    label: 'Open File',
+									    className: 'btn-success'
+									},
+								},
+						        
+							callback: function() {
+                                                
+										window.open('<TMPL_VAR CSV_FILE_NAME>');
+								}
+						
+						});				
+				<TMPL_ELSE>
+					
+					bootbox.alert({'message':'<TMPL_VAR message>',
+						       'size'   : 'small'});
+				</TMPL_IF>
 				
 			</TMPL_IF>
 			
@@ -945,26 +966,21 @@
 			</TMPL_IF>
 			
 			
-			function export_csv_file(){
-				
-					E_V_PASS('export_data',1);
-					
-					document.getElementById("PUB_EXP").submit();
-					
+			function export_csv_file(){				
+				E_V_PASS('export_data',1);					
+				document.getElementById("PUB_EXP").submit();					
 			}
 			
 			
-			<TMPL_IF csv_file_name>
-				
-				open_csv();
-			
-			</TMPL_IF>
+			//<TMPL_IF csv_file_name>				
+			//	open_csv();			
+			//</TMPL_IF>
 			
 			function open_csv(){
 					
-					window.open('<TMPL_VAR csv_file_name>');
+					//window.open('<TMPL_VAR csv_file_name>');
 					
-					document.location.href="";
+					//document.location.href="";
 			}	
 			
 			// label

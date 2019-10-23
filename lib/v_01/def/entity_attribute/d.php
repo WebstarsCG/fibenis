@@ -12,13 +12,15 @@
                                     #table data
                                     
                                     'data'=> array(
-                                                        1=>array('th'=>'Entity Code',
+                                                        1=>array('th'=>'Entity',
 								 
 								'field'=>'entity_code',
 									
-								'td_attr' => ' width="10%" ',
+								'td_attr' => ' width="2%" ',
 								
 								'is_sort' => 1,
+								
+								 
                                                                             
 								),
 							
@@ -28,6 +30,8 @@
 								'field'=>'(SELECT sn FROM entity WHERE code=entity_code)',
 									
 								'td_attr' => ' width="15%" ',
+								
+								'attr'    =>['class'=>'label_grand_child'],  
                                                                             
 								), 
 													
@@ -37,7 +41,7 @@
                                                                    
 								'is_sort'   =>1,
 								
-								'td_attr' => ' class="label_child align_LM" width="10%"',
+								'td_attr' => ' class="label_father b txt_size_14 align_LM" width="10%"',
 								
 									 
 								),
@@ -48,7 +52,7 @@
 									
 								'is_sort' => 1,
 								
-								'td_attr' => ' class="align_LM" width="15%" '
+								'td_attr' => ' class="align_LM" width="25%" '
 									      
 								),
 							
@@ -58,11 +62,11 @@
 									
 								'is_sort' => 1,
 								
-								'td_attr' => ' class="label_father align_LM" width="15%" ',
+								'td_attr' => ' class="label_grand_child align_LM" width="15%" ',
 									      
 								),
 							
-							6=>array('th'	=> 'Line Order',
+							6=>array('th'	=> 'Order',
 									      
 								'field'	=> 'line_order',
 									
@@ -70,7 +74,8 @@
 								
 								'td_attr' => ' class="line_order" ',
 									      
-								'td_attr' => ' class="align_LM" width="5%" '
+								'td_attr' => ' class="align_RM" width="5%" '
+								
 									      
 								),
 							
@@ -170,9 +175,7 @@
 								
 				#export data
 				
-				'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
-								
-				'page_code'    => 'DETA',
+				'export_csv'   => array('is_active' => 1),								
 				
 				'show_query'	=> 0,
                             
@@ -195,6 +198,10 @@
 		$D_SERIES['hide_pager'] = 1;
 		$D_SERIES['show_all_rows']=1;
 		$D_SERIES['filter_off'] = 1;
+	
+	}else{
+		
+		unset($D_SERIES['data'][4]);	
 	}
     
 ?>

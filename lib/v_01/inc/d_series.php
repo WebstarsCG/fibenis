@@ -11,11 +11,7 @@
 		$P_V['f_series']['d']	     = 'f';
 		$P_V['f_series']['dx']	     = 'fx';
 		
-		
-		
 		$PAGE_ID = $PAGE;
-		
-		
 		
 		// Generation oriented balancer functions
 		
@@ -508,7 +504,7 @@
 				$field_name = '';
 				$col_counter = 1;
 				
-				if($D_SERIES['export_csv']['export_csv_data']){
+				if(@$D_SERIES['export_csv']['export_csv_data']){
 							   
 					foreach($D_SERIES['export_csv']['export_csv_data'] as $key=>$value){
 						
@@ -825,9 +821,9 @@
 								
 								'is_date_filter' => @$D_SERIES['date_filter']['is_date_filter'],
 								
-								'is_export_file' => @$D_SERIES['export_csv']['is_export_file'],
+								'is_export_file' => @$D_SERIES['export_csv']['is_active'],
 								
-								'button_name'	 => @$D_SERIES['export_csv']['button_name'],
+								'button_name'	 => (@$D_SERIES['export_csv']['button_name'])?@$D_SERIES['export_csv']['button_name']:'Export CSV',
 								
 								'csv_file_name'	 => @$csv_file_name,
 								
@@ -1161,6 +1157,8 @@
 				
 				global $rdsql;
 				
+				global $PAGE_NAME;
+				
 				$WHERE_FILTER = ($P_V['WHERE_FILTER'])?$P_V['WHERE_FILTER']:'';
 				
 				$BUILD_ORDER  = ($P_V['BUILD_ORDER'])?$P_V['BUILD_ORDER']:'';
@@ -1178,7 +1176,7 @@
 				
 				$head_counter  = 0;
 				
-				if($D_SERIES['export_csv']['export_csv_data']){
+				if(@$D_SERIES['export_csv']['export_csv_data']){
 							   
 				
 						foreach(@$D_SERIES['export_csv']['export_csv_data'] as $key=>$value){
@@ -1246,10 +1244,8 @@
 					
 				} // end
 				
-				
-				
-				
-				$csv_file_name = $D_SERIES['export_csv']['csv_file_name'];
+								
+				$csv_file_name = (@$D_SERIES['export_csv']['csv_file_name'])?@$D_SERIES['export_csv']['csv_file_name'].".csv":"csv/$PAGE_NAME"."_".time().".csv";
 				
 				$P_V['csv_file_name'] = $G->set_csv_data(
 											$def=array(	

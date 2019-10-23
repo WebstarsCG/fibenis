@@ -419,11 +419,12 @@
 								
 				#export data
 				
-				'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv',
-							
-							 'export_csv_data'=>[]),
-								
-				
+				'export_csv'   => array('is_active' => 1,																				
+							'export_csv_data'=>  array(
+											array('th'   =>'Code','field'=>'code' ),
+											array('th'   =>'Name','field'=>'sn' )
+										) // end							
+							),
                             
                             );
     
