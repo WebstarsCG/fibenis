@@ -25,9 +25,9 @@
                                                                
                                                                 'is_mandatory'=>1,
                                                                 
-                                                                'allow'     => 'w4[1,2,3,4,5,6,7,8,9,0]',
+                                                                'allow'     => 'w4[1234567890]',
                                                                 
-                                                                'input_html'=>'class="w_50" onchange="check_en_code(this);"',
+                                                                'input_html'=>'class="w_50 txt_case_upper" onchange="check_en_code(this);"',
                                                                 
                                                                 ),
                                                    
@@ -43,8 +43,9 @@
                                                                
                                                                'allow'     => 'x50',
                                                                 
+                                                               'hint'   => 'Give Entity Name',
                                                                
-                                                               'hint'   => 'Give Entity Name'
+                                                               'attr'   => ['class'=>'w_300']
                                                                
                                                                ),
 				   
@@ -52,34 +53,15 @@
                                                                
                                                                'field_id'=>'ln',
                                                                
-                                                               'type'=>'text',
+                                                               'type'=>'textarea',
                                                                
                                                                 'allow'     => 'x1000',
                                                                 
-                                                                'input_html'=>'class="w_200"',
+                                                                'input_html'=>'class="w_300"',
                                                                
                                                                'is_mandatory'=>0
                                                                
                                                                ),
-                                                   //
-                                                   //'4' =>array('field_name'=>'Core Entity',
-                                                   //            
-                                                   //            'field_id'=>'is_lib',
-                                                   //            
-                                                   //            'type'=>'option',
-                                                   //            
-                                                   //            'type'                => 'option',
-                                                   //             
-                                                   //            'option_data'         => '<option value=0>No</option><option value=1>Yes</option>',                                                               
-                                                   //             
-                                                   //            'is_mandatory'=>0,
-                                                   //            
-                                                   //            'avoid_default_option' => 1
-                                                   //            
-                                                   //            
-                                                   //         ),
-									
-				    
                                 ),
                                     
 				#Table Name
@@ -104,15 +86,6 @@
                                 
 				'prime_index'   => 1,
                                 
-				# File Include
-                                
-				//'js'            => 'q_details',
-				
-				#Page Code
-				
-				'page_code'	=> 'FETY',
-                                
-                                'show_query'    => 0
                                 
 			);
     

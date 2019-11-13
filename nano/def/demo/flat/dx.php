@@ -1,8 +1,5 @@
 <?PHP
 			
-    
-	$LAYOUT	    	= 'layout_basic';
-               
         $D_SERIES       =   array(
                                    'title'=>'Demo Flat',
                                     
@@ -15,16 +12,7 @@
                                     #table data
                                     
                                     'data'=> array( 
-						        1=>array('th'=>'ID ',
-								
-								'field' =>"id",
-								
-								'td_attr' => ' class="label_father align_LM" width="5%"',
-								
-								'is_sort' => 0,	
-								
-								),
-							
+						        							
 							
 							2=>array('th'=>'Text ',
 								
@@ -48,9 +36,9 @@
                                                         
                                                         4=>array('th'=>'Date ',
 								
-								'field' =>"date_flat",
+								'field' =>"date_format(date_flat,'%d-%b-%Y')",
 								
-								'td_attr' => ' class="align_LM" width="20%"',
+								'td_attr' => ' class="align_LM" width="12%"',
 								
 								'is_sort' => 0,	
 								
@@ -66,7 +54,7 @@
 								
 								),
                                                         
-                                                        6=>array('th'=>'Autocomplete ',
+                                                        6=>array('th'=>'Auto Complete ',
 								
 								'field' =>"(SELECT sn FROM entity WHERE id = autocomplete)",
 								
@@ -77,9 +65,11 @@
 								),
                                                         
                                                         
-                                                        7=>array('th'=>'Left right ',
+                                                        7=>array('th'=>'Left Right ',
 								
-								'field' =>"left_right",
+								//'field' =>"(SELECT ".$DC->group_concat('text_flat')." FROM demo as d_out WHERE d_out.id IN (demo.left_right))",
+								
+								'field' =>"(SELECT group_concat(text_flat) FROM demo as d_out WHERE FIND_IN_SET(d_out.id,demo.left_right))",
 								
 								'td_attr' => ' class="align_LM" width="10%"',
 								

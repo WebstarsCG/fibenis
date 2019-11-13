@@ -11,16 +11,12 @@
                                 
                                 'data'	=>   array(
 						   
-						    	'17' =>array( 'field_name'	=> 'Basic', 
-                                                               
-								   
-								    'type' 		=> 'heading',
-								    
-								   
+						    	'1' =>array( 'field_name'	=> 'Basic', 
+								      'type' 		=> 'heading'
                                                             ),
 						   
 						    
-						   '1' =>array( 'field_name'	=> 'Text',
+						   '2' =>array( 'field_name'	=> 'Text',
                                                                
 								    'field_id' 		=> 'text_flat',
 								    
@@ -32,20 +28,20 @@
 								    
 							       ),
 						   
-							'2' =>array( 'field_name'	=> 'Text area',
+							'3' =>array( 'field_name'	=> 'Text area',
                                                                
 								    'field_id' 		=> 'text_area',
 								    
 								    'type' 		=> 'textarea',
-								    
+		    
 								    'input_html'	=>'class="w_200"',
 								    
-								     'allow'=>'x10',
+								    'allow'		=> 'x250',
                                                                
 							       ),
 							
 							
-							'3' =>array( 'field_name'	=> 'Decimal',
+							'4' =>array( 'field_name'	=> 'Decimal',
                                                                
 								    'field_id' 		=> 'decimal_flat',
 								       
@@ -60,7 +56,7 @@
 							       ),
 							
 							
-							'4' =>array( 'field_name'		=> 'Image',
+							'5' =>array( 'field_name'		=> 'Image',
 							                                                        
 								    'field_id' 			=> 'image_flat',
 								       
@@ -68,23 +64,25 @@
 								       
 								    'upload_type' 		=> 'image',
 								    
-								    'save_file_name_prefix'	=> 'inner_',
+								    'save_file_name_prefix'	=> 'fdb_',
 							    
-								    'save_file_name_suffix'	=> '_outer',
+								    'save_file_name_suffix'	=> '_img',
 							    
 								    'allow_ext'   		=> array('jpg','jpeg','png'),
 								    
 								    'max_size'    		=> 1024,
 							    
-								    'location'    		=> 'doc/image/',         
+								    'location'    		=> 'media/',         
 								       
 								    'is_mandatory'		=>0,
 								       
 								    'input_html'		=>'class="w_200"',
+								    
+								     'image_size'     		=>  array(320=>200)
 							                                                        
 							       ),
 							
-							'5' =>array( 'field_name'=> 'Documents',
+							'6' =>array( 'field_name'=> 'Document',
 							                                                        
 								    'field_id' => 'documents',
 								       
@@ -92,15 +90,15 @@
 								       
 								    'upload_type' => 'docs',
 								    
-								    'save_file_name_prefix'=> 'inner_',
+								    'save_file_name_prefix'=> 'fbn_',
 							    
-								    'save_file_name_suffix'=> '_outer',
+								    'save_file_name_suffix'=> '_doc',
 							    
 								    'allow_ext'   => array('pdf'),
-								    
+						    	    
 								    'max_size'    => 1024,
 							    
-								    'location'    => 'doc/doc/',         
+								    'location'    => 'media/',         
 								       
 								    'is_mandatory'=>0,
 								       
@@ -108,7 +106,7 @@
 							                                                        
 							       ),
 							
-						        '6' =>array( 'field_name'	=> 'Option single',
+						        '7' =>array( 'field_name'	=> 'Option Single',
                                                                
 								    'field_id' 		=> 'option_single',
 								    
@@ -118,13 +116,13 @@
 								    
 								    'is_mandatory'	=>0,
 								    
-								    'input_html'	=>'class="w_100"',
+								    'input_html'	=>'class="w_200"',
 								    
 								    'avoid_default_option' => 0,
                                                             
                                                                ),
 							
-							'7' =>array( 'field_name'	=> 'Option multiple',
+							'8' =>array( 'field_name'	=> 'Option Multiple',
                                                                
 								    'field_id' 		=> 'option_multiple',
 								    
@@ -136,12 +134,12 @@
 								    
 								    'is_mandatory'	=>0,
 								    
-								    'input_html'   =>  ' class="w_100"  style="height:200px !important"  ',
+								    'input_html'   =>  ' class="w_200"  style="height:200px !important"  ',
                 
 								    
 							    ),
 							
-							'8' =>array( 'field_name'	=> 'Fiben Table',
+							'9' =>array( 'field_name'	=> 'Fiben Table',
                                                                
 								    'field_id' 		=> 'fiben_table',
 								   
@@ -165,7 +163,7 @@
                                                             
                                                                ),
 							
-							'9' =>array( 'field_name'	=> 'Date',
+							'10' =>array( 'field_name'	=> 'Date',
                                                                
 								    'field_id' 		=> 'date_flat',
 								   
@@ -173,7 +171,7 @@
 							       
 							       ),
 							
-							'10' =>array( 'field_name'	=> 'Range',
+							'11' =>array( 'field_name'	=> 'Range',
                                                                
 								    'field_id' 		=> 'range_flat',
 								   
@@ -181,7 +179,7 @@
 								    
 							    ),
 							
-							'11' => array( 'field_name'   	=> 'Toggle switch',
+							'12' => array( 'field_name'   	=> 'Toggle',
 								
 								    'field_id'     	=> 'toggle_switch',
 								
@@ -198,7 +196,7 @@
 								    'is_default_on' 	=> 1,     	# set on status by default 
 							    ),
 							
-							 '12' =>array( 'field_name'	=> 'Auto-complete', 
+							 '13' =>array( 'field_name'	=> 'Auto Ccomplete', 
                                                                
 								    'field_id' 		=> 'autocomplete',
 								   
@@ -208,11 +206,10 @@
 		   
                                                                ),
 							 
-							'13' => array( 'field_name'   => 'Left right',
+							'14' => array( 'field_name'   => 'Left Right',
 				
 								    'field_id' => 'left_right',
-                                                               
-                                                                   
+								    
                                                                     'type'         => 'list_left_right',
                 
 								    'option_data'  => $G->option_builder("demo","id,text_flat","order by text_flat ASC"),
@@ -222,7 +219,7 @@
 							    ),
 							
 							
-							'16' =>array( 'field_name'	=> 'Tab', 
+							'15' =>array( 'field_name'	=> 'Tab', 
                                                                
 								   
 								    'type' 		=> 'heading',
@@ -231,7 +228,7 @@
                                                             ),
 
 							
-							'14' =>array( 'field_name'	=> 'Text Editor', 
+							'16' =>array( 'field_name'	=> 'Text Editor', 
                                                                
 								    'field_id' 		=> 'text_editor',
 								   
@@ -244,15 +241,14 @@
 							
 							
 							
-							'18' =>array( 'field_name'	=> 'Sub Heading', 
-                                                               
+							'18' =>array( 'field_name'	=> 'Sub Heading',                                                                
 								   
 								    'type' 		=> 'sub_heading',
 								    
 								   
                                                             ),
 							
-							'15' =>array( 'field_name'	=> 'Code Editor', 
+							'17' =>array( 'field_name'	=> 'Code Editor', 
                                                                
 								    'field_id' 		=> 'code_editor',
 								   
@@ -265,17 +261,17 @@
 					    ),
                                     
 				
-				'is_user_id'       => 'user_id',
+				'is_user_id'   	=> 'user_id',
 				
 				# Communication
 				
-				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?dx=demo__flat', 'BACK_NAME'=>'Back'),
+				'back_to'  	=> array( 'is_back_button' =>1, 'back_link'=>'?dx=demo__flat', 'BACK_NAME'=>'Back'),
                                 
 				'flat_message'	=> 'Successfully Added',
 				
 				'divider'	=> 'tab',	
 				
-				'show_query'  => 0 	#for debugging
+				'show_query'  	=> 0 	#for debugging
 				
                                 
 			);
