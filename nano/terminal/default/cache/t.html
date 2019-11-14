@@ -134,16 +134,40 @@
 				   </div>
 				   
 				   <TMPL_LOOP CONTACT_INFO_3948>
-				  
-					  <div class="col-md-12"><TMPL_VAR ORG_NAME></div>
-					  <div class="col-md-12"><TMPL_VAR ADD_I></div>
-					  <div class="col-md-12"><TMPL_VAR ADD_II></div>
+					  
+					  
+					  <div class="align_CM txt_size_20 clr_gray_2 txt_lh_2em"><TMPL_VAR ORG_NAME></div>
+					  <div class="align_CM txt_size_16 clr_gray_8 txt_lh_2em"><TMPL_VAR ADD_I></div>
+					  <div class="align_CM txt_size_16 clr_gray_8 txt_lh_2em"><TMPL_VAR ADD_II></div>
+		     
+					  <div class="align_CM txt_size_16 clr_gray_9 txt_lh_2em">
+						 
+						 <TMPL_IF PHONE>
+							<span class="glyphicon glyphicon-phone-alt txt_size_18 clr_orange" aria-hidden="true"></span>
+					                <TMPL_VAR PHONE>&nbsp;&nbsp;&nbsp;
+							<span class="txt_size_18 clr_gray_b hidden-xs">|</span>&nbsp;&nbsp;&nbsp;
+							<br class="visible-xs">
+						 </TMPL_IF>
+						 
+						 <TMPL_IF MOBILE>
+							<span class="glyphicon glyphicon-phone txt_size_18 clr_green" aria-hidden="true"></span>
+					                <TMPL_VAR MOBILE>&nbsp;&nbsp;&nbsp;
+							<span class="txt_size_18 clr_gray_b hidden-xs">|</span>&nbsp;&nbsp;&nbsp;
+							<br class="visible-xs">
+						 </TMPL_IF>
+						 
+						  <TMPL_IF EMAIL>
+							<span class="glyphicon glyphicon-envelope txt_size_18 clr_pri" aria-hidden="true"></span>
+					                <TMPL_VAR EMAIL>&nbsp;&nbsp;&nbsp;
+							
+						 </TMPL_IF>
+						 
+						 
+					     
 					    
-					  <div class="col-md-12">
-						 <TMPL_IF EMAIL><i class="fa fa-envelope-o"></i>&nbsp;<TMPL_VAR EMAIL></TMPL_IF>
-						 <TMPL_IF MOBILE><i class="fa fa-mobile"></i>&nbsp;<TMPL_VAR MOBILE></TMPL_IF> 
-						 <TMPL_IF PHONE><i class="fa fa-phone"></i>&nbsp;<TMPL_VAR PHONE></TMPL_IF>
-					  </div>
+					     </div>
+				  
+					
 				      
 					  <script>
 						 <TMPL_IF ORG_NAME>G.$('menu_org_name').innerHTML='<TMPL_VAR ORG_NAME>';</TMPL_IF>

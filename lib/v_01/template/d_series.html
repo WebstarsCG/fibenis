@@ -447,17 +447,18 @@
 								</TMPL_IF>
 						
 						
-						
-						<TMPL_IF cus_bulk_action>
-							<TMPL_LOOP cus_bulk_action>
-								<TMPL_IF is_bulk_button>
-									&nbsp;
-									<button type="button" class="btn btn-primary" onclick="<TMPL_VAR js_call>();"  ><TMPL_VAR button_name></button>									
+								<TMPL_IF DATA_INFO>
+									<TMPL_IF cus_bulk_action>
+										<TMPL_LOOP cus_bulk_action>
+											<TMPL_IF is_bulk_button>
+												&nbsp;
+												<button type="button" class="btn btn-primary" onclick="<TMPL_VAR js_call>();"  ><TMPL_VAR button_name></button>									
+											</TMPL_IF>
+										</TMPL_LOOP>	
+									</TMPL_IF>
 								</TMPL_IF>
-							</TMPL_LOOP>	
-						</TMPL_IF>
-						</div>
-					</td>
+							</div>
+						</td>
 					       
 					</tr>
 				</table>

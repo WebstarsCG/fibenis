@@ -437,7 +437,13 @@
 						    'manipulation'=>" WHERE id=$param[key_id]" 
 						    ]);
 		
-		$content_page = 'template/page_content/'.$lv['result'].".html";		     
+		$content_page = 'template/page_content/'.$lv['result'].".html";
+		
+		// delete template associated with page
+		$param['rdsql']->exec_query("DELETE FROM eav_addon_ecb_id WHERE parent_id=$param[key_id] AND ea_code='PGTM'","Error");
+		
+		// delete associated sections
+		$param['rdsql']->exec_query("DELETE FROM entity_child WHERE entity_code='SC' AND get_ec_parent_id_eav($param[key_id])","Error");	
  
 		if(is_file($content_page)){
 		   
