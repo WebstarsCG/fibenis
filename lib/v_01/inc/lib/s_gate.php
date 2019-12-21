@@ -49,7 +49,8 @@
 											is_active,
 											is_internal,
 											(SELECT sn FROM user_role WHERE id=user_role_id) as user_role,
-											get_eav_addon_varchar(is_internal,'COFN') as user_name
+											get_eav_addon_varchar(is_internal,'COFN') as user_name,
+											user_role_id
 											
 									 FROM 
 											$PV[table_name]											
@@ -66,6 +67,8 @@
 							$_SESSION['communication_id']= @$get_user_row->communication_id;
 							
 							$_SESSION['user_role']	     = @$get_user_row->user_role;
+							
+							$_SESSION['user_role_id']    = @$get_user_row->user_role_id;
 							
 							$_SESSION['user_id']	     = @$get_user_row->id;
 							

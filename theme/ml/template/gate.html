@@ -1,30 +1,26 @@
 
-		   <style>
-				      
-		          header{display: none;}
-			  footer{display: none;}
-			  .login_panel .close {display: none;}
-			  #content{ margin-top:0px; }
-		   </style>		      
+	      <style>
+		     header{display: none;}
+		     footer{display: none;}
+		    .login_panel .close, .hidden-header {display: none;}
+		    .login_panel_area{ margin-top:10%; position:relative;}
+	      </style>		      
 
-		   <div class="container" id="content">
+	      <div class="container" id="content ">
 
-				      <div class="col-md-4"></div>
-		   
-		   <div class="col-md-4">
+		     <div class="col-md-4"></div>		   
+		     <div class="col-md-4 col-xs-12 login_panel_area">
 				      
-				      <div class="modal-dialog login_panel" style="width:300px">
+				      <div class="modal-dialog login_panel modal-dialog modal-sm" >
 				      			 <div class="modal-content">
-		   					   <div class="modal-header align_CM">
-									     <img alt="" src="terminal/default/images/logo_1.png" >
+		   					   <div class="modal-header">
 							     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							     <!--<h4 class="modal-title" id="myModalLabel">Welcome</h4>-->
+							     <img src="terminal//default/images/logo_1.png" class="img-responsive">
 							   </div>
 				      			 <div class="modal-body">
 		   
 				      <form class="form-signin" id="form-sign-in" onsubmit="return  check_key();">
-	  
-	 <!-- <h5 class="modal-title" id="myModalLabel">Login</h5>-->
 	  
 			    <div class="form-group has-feedback" 
 				 id="inputEmail_area">
@@ -102,14 +98,14 @@
 			Sign Up</a>&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;
 			</TMPL_IF>
 			
-			      <a href="#" data-toggle="modal" class="clr_gray_9" data-target="#myModalForgetPassword">
+			      <a href="#" data-toggle="modal" data-target="#myModalForgetPassword">
 			<span class="glyphicon glyphicon-lock clr_gray_5" aria-hidden="true"></span>
 			Forgot Password</a>
 			      </div>
 	   
 			   
 		    </form>
-      </div></div></div>
+		      </div></div></div>
 				  
 				      
 		   </div>
@@ -121,7 +117,7 @@
 				      
 		   </div>
 
-		   </div>
+       </div>
 
      
       

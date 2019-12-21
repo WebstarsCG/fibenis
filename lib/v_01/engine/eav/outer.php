@@ -58,29 +58,36 @@
 		
 		$COACH['terminal_path'] =  $COACH['path'].$COACH['name'];
 		
+		$COACH['theme_route']   =  $THEME_ROUTE;
+		
 			
 	# Home & Key URL setup	
 	
 		@$PARAM	 		= array_keys($_GET);
 		
 		# for closed access
+	
 		
-		$SHOW_DOOR              = ( (get_config('access_key')==@$PARAM[0]) &&
-					    (!get_config('is_open')))?1:0;
+		$COACH['step_in']       = ((!get_config('is_open')) && (!get_config('avoid_gate')))?'gate':'home';
 		
-		$PAGE 	 		= (@$PARAM[0])?@$PARAM[0]:'home';
+		$PAGE 	 		= (@$PARAM[0])?@$PARAM[0]:$COACH['step_in'] ;
                 		
 		# id to page setup
 		
                 if($PAGE=="id"){                
-                    $PAGE               = ($PAGE=="id")?@$_GET['id']:'home';		
+                    $PAGE               = ($PAGE=="id")?@$_GET['id']:$COACH['step_in'] ;		
                 }
                 
 		# Closed Access		
 		
-		if($SHOW_DOOR)		{  $PAGE='home'; }
+		$IS_HOME 		= ((($PAGE==$COACH['step_in']) || ($PAGE==''))?1:'');
 		
-		$IS_HOME 		= ((($PAGE=='home') || ($PAGE==''))?1:'');
+		
+		#if(($SHOW_DOOR) && (!$IS_HOME)){  $PAGE=$COACH['step_in'] ; }
+		
+			
+		$SHOW_DOOR              = ( (get_config('access_key')==@$PARAM[0]) &&
+					    (get_config('avoid_gate')))?1:0;
 		
 		# PAGE used in content.php
 		
@@ -104,7 +111,7 @@
 						# page code
 						
 						$PAGE_CODE = $PAGE_NAME.'__'.$PAGE;
-				
+										
 						# process series content	
 						
 						include($LIB_PATH."/inc/".$PAGE.".php");	

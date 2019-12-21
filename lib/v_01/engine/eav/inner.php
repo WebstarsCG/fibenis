@@ -143,11 +143,16 @@
 		$page = $content['page'];
 		
 		
-		if(!is_file($content['lib_path']."/inc/$page.php")){		
+		if(!is_file($content['lib_path']."/inc/$page.php")){
 			
-			$page 			= (is_file("$COACH[path]$COACH[name]/content/$page.html"))?$page:'home';
+			$lv = ['home'=>"$COACH[path]$COACH[name]/content/$COACH[step_in].html",
+			       'gate'=>"$COACH[theme_route]/template/$COACH[step_in].html"
+			       ];
 			
-			$c 			= new Template(array("filename" => "$COACH[path]$COACH[name]/content/$page.html",
+			
+			$page 			= (is_file("$COACH[path]$COACH[name]/content/$page.html"))?$page:$COACH['step_in'];
+			
+			$c 			= new Template(array("filename" => $lv[$COACH['step_in']],
 							    "debug"    => 0));
 			
 			if($content['add_on']){ $c->AddParam($content['add_on']); } 

@@ -622,11 +622,23 @@
 		    <!--- Base User---> 
 		    <TMPL_IF USER_BAS>
 		      
-		      <li><a>|</a></li>
-		      <li><a href="?dx=demo_flat">
-			  <i class="fa fa-lightbulb-o txt_size_1_2em clr_pri" aria-hidden="true">&nbsp;</i>
-			  Sample</a>
-		      </li>		
+		      <li>
+			    
+			    <a href="#"
+			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
+			      >
+			        <i class="fa fa-clone"></i>
+			        &nbsp;Demo & Others&nbsp;<span class="caret"></span>
+			    </a>
+			    
+			    <ul class="dropdown-menu" role="menu">
+				   <li><a href="?d=contact_eav">Contact</a></li>
+				   <li><a href="?dx=demo__flat">Demo Flat</a></li>
+				   <li><a href="?dx=demo__eav">Demo EAV</a></li>
+				   <li> <a href="?d=issue">Issue</a></li>
+			    </ul>
+			    
+			</li>	
 		      <li>			    
 			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
 				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>

@@ -28,7 +28,9 @@
                         
                         "engine"        => 'eav',
                         
-                        "is_open"       => 1,
+                        "is_open"       => 0,
+                        #'avoid_gate'    => 1,
+                        
                         "access_key"    => "fortknox",
                         
                         "is_multiple"   => 0,

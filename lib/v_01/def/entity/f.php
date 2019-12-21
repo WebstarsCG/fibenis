@@ -23,7 +23,7 @@
                                                                 
                                                                 //'input_html'   => ' class="w_50" ',
                                                                
-                                                                'is_mandatory'=>1,
+                                                                'is_mandatory'=>0,
                                                                 
                                                                 'allow'     => 'w4[1234567890]',
                                                                 
@@ -31,7 +31,7 @@
                                                                 
                                                                 ),
                                                    
-                                                   '2' =>array( 'field_name'=> 'Name',
+                                                   '2' =>array( 'field_name'=> 'Short Name',
                                                                
                                                                'field_id' => 'sn',
                                                                
@@ -49,19 +49,19 @@
                                                                
                                                                ),
 				   
-						   '3' =>array('field_name'=>'Long Name',
-                                                               
-                                                               'field_id'=>'ln',
-                                                               
-                                                               'type'=>'textarea',
-                                                               
-                                                                'allow'     => 'x1000',
-                                                                
-                                                                'input_html'=>'class="w_300"',
-                                                               
-                                                               'is_mandatory'=>0
-                                                               
-                                                               ),
+//						   '3' =>array('field_name'=>'Long Name',
+//                                                               
+//                                                               'field_id'=>'ln',
+//                                                               
+//                                                               'type'=>'textarea',
+//                                                               
+//                                                                'allow'     => 'x1000',
+//                                                                
+//                                                                'input_html'=>'class="w_300"',
+//                                                               
+//                                                               'is_mandatory'=>0
+//                                                               
+//                                                               ),
                                 ),
                                     
 				#Table Name
