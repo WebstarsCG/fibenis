@@ -164,6 +164,10 @@
 								
 					
 				#export data
+				
+					'show_query'   =>0,
+					
+					
 				                            
                             );
 	

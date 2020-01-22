@@ -142,10 +142,9 @@
 		
 		$page = $content['page'];
 		
-		
 		if(!is_file($content['lib_path']."/inc/$page.php")){
 			
-			$lv = ['home'=>"$COACH[path]$COACH[name]/content/$COACH[step_in].html",
+			$lv = ['home'=>"$COACH[path]$COACH[name]/content/$page.html",
 			       'gate'=>"$COACH[theme_route]/template/$COACH[step_in].html"
 			       ];
 			

@@ -189,7 +189,7 @@
 											
 						$C 		= new Template(array("filename" => $THEME_ROUTE."/template/layout/".$PV['layout'].".html",
 										     "debug"   => 0));
-				
+				    				
 						$C->AddParam('PAGE_ID',$PAGE);
 			
 						$C->AddParam('PAGE_TITLE',$CONTENT[$PAGE]['title']);

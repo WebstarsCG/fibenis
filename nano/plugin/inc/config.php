@@ -150,9 +150,9 @@
 								   	     'Update your profile.  Get access to profile view <br> <br>'.
 									      'Thanks.<br>'
 									     .$secondary_mail,
-							  );
+								);
 					
-				return $MAIL_MESSAGE;	
+								return $MAIL_MESSAGE;	
 				}
 				
 				

@@ -11,24 +11,24 @@
                         "lib_path"      =>  "../lib/v_01/",
                         
                         "is_smtp_mail"  =>  1,                            
-                        "smpt_host"     =>  "webstarsdx.mail.pairserver.com",
+                        "smpt_host"     =>  "",
                         "smpt_port"     =>  "465",
                         "smpt_secure"   =>  "ssl",
-                        "smpt_mail"     =>  "step@icmseav.fibenis.org",
-                        "smpt_pswrd"    =>  "AbCdinfo**",
+                        "smpt_mail"     =>  "",
+                        "smpt_pswrd"    =>  "",
                         
                         "to_admin"      =>  "ratbew@gmail.com",
                         "cc_mail"       =>  "",
                         "bcc_mail"      =>  "ratbew@gmail.com",
                         
-                        "title"         =>  "Fibenis - A Web App Framework Based on Communiction Patterns & Natural Language ",
+                        "title"         =>  "Fibenis - An Adaptive Web Framework based on Communiction Patterns & Natural Language Principles",
                         "theme"         =>  "ml",
                         "theme_path"    =>  "../theme",
                         "theme_blend"   => "base",
                         
                         "engine"        => 'eav',
                         
-                        "is_open"       => 0,
+                        "is_open"       => 1,
                         #'avoid_gate'    => 1,
                         
                         "access_key"    => "fortknox",

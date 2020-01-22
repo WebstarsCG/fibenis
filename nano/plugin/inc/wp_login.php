@@ -269,7 +269,7 @@
 				
 				$PV['login_key_field'] = $PV['login_email'];
 				
-				$PV['login_name']      = "$PV[login_name] as login_name";
+				$PV['login_name']      = "$PV[login_name] as 'login_name'";
 				
 				$PV['user_key1'] = $rdsql->escape_string(stripslashes($user_email));
 				 
@@ -281,9 +281,7 @@
 								id,
 								$PV[login_key_field],
 								$PV[login_name],
-								is_active,
-								gender_code,
-								user_comm
+								is_active
 						FROM
 								$PV[login_table]
 						WHERE
@@ -300,16 +298,11 @@
 					# echo user_role
 					// page_redirect($user_role_code);
 					 $session = $SG->set_session();
-					 
-					 $_SESSION['USER_GENDER']=$get_row->gender_code;
-					 
-					 $_SESSION['COMM_KEY'] = $get_row->user_comm;					 
+					 					 
+					 $_SESSION['COMM_KEY'] = md5($get_row->id);
 					  
 					 $page_name =  $_SESSION['home_page_url'];
-					 
-					 
-				          echo '{"status":"1","redirect_page":"'.$page_name.'"}';
-					 
+		         					 
 					  $update_query="UPDATE user_info SET last_login= NOW() WHERE id =$get_row->id";
 					  
 					  $exe_up_query = $rdsql->exec_query($update_query,'Error! CK Update');
@@ -317,6 +310,8 @@
 					  $param=array('user_id'=>@$get_row->id,'page_code'=>$PV['GATE_CODE']['ACKY'],'action_type'=>'ACKY','action'=>'login');
 						         
 					  $G->set_system_log($param);
+					 
+				          echo '{"status":"1","redirect_page":"'.$page_name.'"}';
 					
 					}else{
 					

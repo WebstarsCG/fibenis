@@ -41,8 +41,7 @@
 						    $active =1;
 						   
 						         $sql_user_info="SELECT 
-											id,
-											login_name,
+											id,											
 											user_role_id,
 											(SELECT home_page_url FROM user_role WHERE user_role.id=user_role_id) as home_page_url,
 											get_eav_addon_varchar(is_internal,'COEM') as email,
