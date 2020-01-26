@@ -74,7 +74,7 @@
 							    
 								    'location'    		=> 'media/',         
 								       
-								    'is_mandatory'		=>0,
+								    'is_mandatory'		=>1,
 								       
 								    'input_html'		=>'class="w_200"',
 								    
@@ -148,6 +148,8 @@
 								    'type'              => 'fibenistable',
 								    
 								    'is_index'		=>1,
+								    
+								    'is_mandatory'	=>1,
 								    
 								    'colHeaders'=> array(array(
 											    'column'    => 'A',
@@ -269,7 +271,9 @@
                                 
 				'flat_message'	=> 'Successfully Added',
 				
-				'divider'	=> 'tab',	
+				'is_save_form'=>1,
+				
+				'divider'	=> 'accordion',	
 				
 				'show_query'  	=> 0 	#for debugging
 				
