@@ -117,7 +117,7 @@ $D_SERIES = array(
 
 	# Default Additional Column
 
-	'hidden_data'=>array('id','email'),
+	'hidden_data'=>array('id',"get_eav_addon_varchar(is_internal,'COEM')"),
 
 	# Communication
 

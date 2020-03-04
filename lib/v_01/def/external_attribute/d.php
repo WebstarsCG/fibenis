@@ -238,8 +238,8 @@
 							    
 							    $data_in=$data_in.':'.$PAGE_NAME;
 								
-							    return '<a class="pointer clr_gray_b tip_bottom" onclick="JavaScript:ex_edit('."'$data_in'".');">'.
-								    '<i class="fa fa-edit clr_green txt_size_15" aria-hidden="true"></i>&nbsp;'.
+							    return '<a class="ficon tip_bottom" onclick="JavaScript:ex_edit('."'$data_in'".');">'.
+								    '<i class="fa fa-edit  txt_size_15" aria-hidden="true"></i>&nbsp;'.
 								    'Edit</a><span class="tooltiptext">Edit</span>';
 						}
 								

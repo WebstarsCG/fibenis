@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2019 at 01:16 PM
+-- Generation Time: Feb 15, 2020 at 02:11 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -386,6 +386,28 @@ END
 $$
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view entity_count
+-- (See below for the actual view)
+--
+CREATE TABLE entity_count (
+entity_code varchar(4)
+,count bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view entity_ec_count
+-- (See below for the actual view)
+--
+CREATE TABLE entity_ec_count (
+code varchar(4)
+,sn varchar(64)
+,count bigint(21)
+);
 
 -- --------------------------------------------------------
 
@@ -555,6 +577,18 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view page_view_log_by_day
+-- (See below for the actual view)
+--
+CREATE TABLE page_view_log_by_day (
+date varchar(10)
+,page_code varchar(32)
+,total bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table status_info
 --
 
@@ -609,13 +643,8 @@ CREATE TABLE sys_log (
 
 CREATE TABLE user_info (
   id int(11) NOT NULL,
-  user_name varchar(255) DEFAULT NULL,
-  login_name char(32) DEFAULT NULL,
-  email varchar(75) DEFAULT NULL,
-  password varchar(32) DEFAULT NULL,
+  password varchar(32) NOT NULL,
   user_role_id int(11) DEFAULT NULL,
-  gender_code char(4) DEFAULT NULL,
-  user_comm varchar(32) DEFAULT NULL,
   is_mail_check tinyint(1) DEFAULT NULL,
   is_active tinyint(1) DEFAULT NULL,
   user_id int(11) DEFAULT NULL,
@@ -626,37 +655,6 @@ CREATE TABLE user_info (
   is_internal int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Triggers user_info
---
-DELIMITER $$
-CREATE TRIGGER trg_user_info_after_ins AFTER INSERT ON user_info FOR EACH ROW BEGIN
-                                                                                                                        INSERT INTO user_info_log
-                                                                                                                                  (email,gender_code,id,is_active,is_mail_check,is_send_mail,is_send_welcome_mail,last_login,login_name,password,timestamp_punch,user_comm,user_id,user_name,user_role_id,log_type_code)
-                                                                                                                        VALUES
-                                                                                                                                  (new.email,new.gender_code,new.id,new.is_active,new.is_mail_check,new.is_send_mail,new.is_send_welcome_mail,new.last_login,new.login_name,new.password,new.timestamp_punch,new.user_comm,new.user_id,new.user_name,new.user_role_id,'LTAD'); 
-                                                                                                            END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER trg_user_info_after_upd AFTER UPDATE ON user_info FOR EACH ROW BEGIN
-                                                                                                                                    INSERT INTO user_info_log
-                                                                                                                                              (email,gender_code,id,is_active,is_mail_check,is_send_mail,is_send_welcome_mail,last_login,login_name,password,timestamp_punch,user_comm,user_id,user_name,user_role_id,log_type_code)
-                                                                                                                                    VALUES
-                                                                                                                                              (new.email,new.gender_code,new.id,new.is_active,new.is_mail_check,new.is_send_mail,new.is_send_welcome_mail,new.last_login,new.login_name,new.password,new.timestamp_punch,new.user_comm,new.user_id,new.user_name,new.user_role_id,'LTUD'); 
-                                                                                                                        END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER trg_user_info_before_del BEFORE DELETE ON user_info FOR EACH ROW BEGIN
-                                                                                                                                    INSERT INTO user_info_log
-                                                                                                                                              (email,gender_code,id,is_active,is_mail_check,is_send_mail,is_send_welcome_mail,last_login,login_name,password,timestamp_punch,user_comm,user_id,user_name,user_role_id,log_type_code)
-                                                                                                                                    VALUES
-                                                                                                                                              (old.email,old.gender_code,old.id,old.is_active,old.is_mail_check,old.is_send_mail,old.is_send_welcome_mail,old.last_login,old.login_name,old.password,old.timestamp_punch,old.user_comm,old.user_id,old.user_name,old.user_role_id,'LTDL'); 
-                                                                                                                        END
-$$
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -666,13 +664,8 @@ DELIMITER ;
 CREATE TABLE user_info_log (
   log_id int(11) NOT NULL,
   id int(11) NOT NULL,
-  user_name varchar(255) DEFAULT NULL,
-  login_name char(32) DEFAULT NULL,
-  email varchar(75) DEFAULT NULL,
   password varchar(32) DEFAULT NULL,
   user_role_id int(11) DEFAULT NULL,
-  gender_code char(4) DEFAULT NULL,
-  user_comm varchar(32) DEFAULT NULL,
   is_mail_check tinyint(1) DEFAULT NULL,
   is_active tinyint(1) DEFAULT NULL,
   user_id int(11) DEFAULT NULL,
@@ -1185,7 +1178,7 @@ ALTER TABLE demo_page_info
 -- AUTO_INCREMENT for table eav_addon_bool
 --
 ALTER TABLE eav_addon_bool
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 
 --
 -- AUTO_INCREMENT for table eav_addon_date
@@ -1203,13 +1196,13 @@ ALTER TABLE eav_addon_decimal
 -- AUTO_INCREMENT for table eav_addon_ecb_id
 --
 ALTER TABLE eav_addon_ecb_id
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table eav_addon_ec_id
 --
 ALTER TABLE eav_addon_ec_id
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2880;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2894;
 
 --
 -- AUTO_INCREMENT for table eav_addon_exa_token
@@ -1227,19 +1220,19 @@ ALTER TABLE eav_addon_num
 -- AUTO_INCREMENT for table eav_addon_text
 --
 ALTER TABLE eav_addon_text
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=725;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=734;
 
 --
 -- AUTO_INCREMENT for table eav_addon_varchar
 --
 ALTER TABLE eav_addon_varchar
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13356;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13438;
 
 --
 -- AUTO_INCREMENT for table eav_addon_vc128uniq
 --
 ALTER TABLE eav_addon_vc128uniq
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=346;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
 
 --
 -- AUTO_INCREMENT for table ecb_av_addon_text
@@ -1251,19 +1244,19 @@ ALTER TABLE ecb_av_addon_text
 -- AUTO_INCREMENT for table ecb_av_addon_varchar
 --
 ALTER TABLE ecb_av_addon_varchar
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28557;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28573;
 
 --
 -- AUTO_INCREMENT for table ecb_parent_child_matrix
 --
 ALTER TABLE ecb_parent_child_matrix
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7759;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7888;
 
 --
 -- AUTO_INCREMENT for table entity
 --
 ALTER TABLE entity
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT for table entity_attribute
@@ -1275,13 +1268,13 @@ ALTER TABLE entity_attribute
 -- AUTO_INCREMENT for table entity_child
 --
 ALTER TABLE entity_child
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5139;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5145;
 
 --
 -- AUTO_INCREMENT for table entity_child_base
 --
 ALTER TABLE entity_child_base
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4733;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4800;
 
 --
 -- AUTO_INCREMENT for table entity_key_value
@@ -1323,13 +1316,13 @@ ALTER TABLE exav_addon_num
 -- AUTO_INCREMENT for table exav_addon_text
 --
 ALTER TABLE exav_addon_text
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1254;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1253;
 
 --
 -- AUTO_INCREMENT for table exav_addon_varchar
 --
 ALTER TABLE exav_addon_varchar
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=498;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=497;
 
 --
 -- AUTO_INCREMENT for table exav_addon_vc128uniq
@@ -1353,7 +1346,7 @@ ALTER TABLE status_map
 -- AUTO_INCREMENT for table sys_log
 --
 ALTER TABLE sys_log
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48515;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52857;
 
 --
 -- AUTO_INCREMENT for table user_info
@@ -1365,7 +1358,7 @@ ALTER TABLE user_info
 -- AUTO_INCREMENT for table user_info_log
 --
 ALTER TABLE user_info_log
-  MODIFY log_id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4165;
+  MODIFY log_id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4197;
 
 --
 -- AUTO_INCREMENT for table user_role
@@ -1395,7 +1388,7 @@ ALTER TABLE user_role_permission
 -- AUTO_INCREMENT for table user_role_permission_matrix
 --
 ALTER TABLE user_role_permission_matrix
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18353;
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18652;
 
 --
 -- Constraints for dumped tables

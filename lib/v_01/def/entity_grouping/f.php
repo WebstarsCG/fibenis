@@ -40,7 +40,7 @@
 						    'field_name'   => 'Entities',
 						    'field_id'     => 'note',
 						    'type'         => 'list_left_right',
-						    'option_data'  => $G->option_builder('entity','code,sn',' '), 
+						    'option_data'  => $G->option_builder('entity','code,sn',' WHERE is_lib=1 ORDER BY sn '), 
 						    'is_mandatory' =>  1,
 						   // 'option_is_quick_search'=>1,						    
 						    'input_html'   =>  ' class="w_400" rows="5"  style="height:200px !important"  '
@@ -90,17 +90,11 @@
 	
 	//before_update(@$_GET['key']);	
     
-    }else{
-	    
-	    $F_SERIES['data']['4']['option_data']		= $G->option_builder('entity','code,sn',' ');
-	   
-	    $F_SERIES['data']['4']['option_id_name']            = $G->get_id_name('entity','code,sn',' ');
-	    
-    }
-        $F_SERIES['data']['4']['option_data']		= $G->option_builder('entity','code,sn',' ');
+    } 
+ 
  
     
-    // after add update
+     // after add update
     
     function after_add_update($key_id){
       

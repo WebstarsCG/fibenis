@@ -91,9 +91,9 @@
                                                                
                                                                'type'=>'option',
                                                        
-                                                               'option_data'=>$G->option_builder('entity_attribute',
-                                                                                                 'code,sn',
-                                                                                                 " WHERE entity_code='EB' AND code IN ('EBUC','EBMS','EBAX') ORDER by sn ASC"
+                                                               'option_data'=>$G->option_builder('entity_child_base',
+                                                                                                 'token,sn',
+                                                                                                 " WHERE entity_code='EB' AND  dna_code='EBMS' AND token IN ('EBUC','EBMS','EBAX','EBFA') ORDER by sn ASC"
                                                                                             ),                                                               
                                                                
 							       'is_mandatory'=>0,

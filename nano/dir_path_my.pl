@@ -110,9 +110,9 @@
         # insert module fedinations
         
         $lv->{'insert_module'} = "INSERT INTO
-                                            entity_child_base(entity_code,sn,ln,created_by,user_id)
+                                            entity_child_base(entity_code,sn,ln,created_by,user_id,dna_code)
                                         VALUES
-                                            ('DF','$def_name','$lv->{temp_def_name}',$SUPER_USER_ID,$SUPER_USER_ID) ";
+                                            ('DF','$def_name','$lv->{temp_def_name}',$SUPER_USER_ID,$SUPER_USER_ID,'EBDF') ";
                                             
         $dbh->do($lv->{'insert_module'}) || die "Error";
         

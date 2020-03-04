@@ -17,20 +17,16 @@
     $F_SERIES['back_to']['back_link']    = '?d=def';
     
     $F_SERIES['show_query']=0;
+    
+    $F_SERIES['default_fields']=array('dna_code'=>'EBDF');
       
+    // unset  
     unset($F_SERIES['data'][4]);
     
     # customization
+    $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base',"id,sn","  WHERE entity_code='EG' ");
     
-    //if(@$_GET['key']){    
-    //    $F_SERIES['temp']['option_data']      = " WHERE  entity_code='EG' AND id NOT IN (SELECT ecb_child_id FROM ecb_parent_child_matrix WHERE ecb_parent_id=$_GET[key])";            
-    //    $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base','id,sn',$F_SERIES['temp']['option_data'].' ORDER BY sn ASC');                
-    //}else{
-        $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base',"id,sn","  WHERE entity_code='EG' ");
-    //}
-    
-     // after_add_update
-    
+    // after_add_update    
     $F_SERIES['after_add_update']=function ($key_id){
         
         global $G,$F_SERIES,$rdsql,$USER_ID;

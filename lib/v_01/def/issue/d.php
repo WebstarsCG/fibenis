@@ -53,7 +53,7 @@
 								
 								'td_attr' => ' class="align_LM" width="15%"',
 								
-								'is_sort' => 0,
+								'is_sort' => "(SELECT exa_value FROM exav_addon_date WHERE parent_id = entity_child.id AND exa_token = 'ISRO')",
 								
 								'filter_out' => function($data_in){
 									

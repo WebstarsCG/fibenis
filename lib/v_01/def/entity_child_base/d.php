@@ -10,7 +10,7 @@
 					                
 							1=>array('th'      => 'Entity',
 								 'field'   => '(SELECT sn FROM entity WHERE entity.code=entity_code)',
-								 'td_attr' => ' class="label_father align_LM" width="15%"',
+								 'td_attr' => ' class="clr_gray_8 align_LM" width="15%"',
 								 'is_sort' => 1),
 													
                                                         2=>array('th'		=> 'Token',									 
@@ -21,26 +21,27 @@
 							3=>array('th'		=> 'Short Name',								 
 								'field'		=> 'sn',								     															
 								'is_sort'	=> 1,								
-								'td_attr' 	=> ' width="20%" '), 
+								'td_attr' 	=> ' width="25%" '), 
 						
-							 
-							4=>array('th'=>'Long Name',
-									 
-								'field'=>'ln',
-								
-								'is_sort' => 1,
-									 
-								'td_attr' => ' class="label_child align_LM" width="25%"',
-									 
-								),
+							// 
+							//4=>array('th'=>'Long Name',
+							//		 
+							//	'field'=>'ln',
+							//	
+							//	'is_sort' => 1,
+							//		 
+							//	'td_attr' => ' class="label_child align_LM" width="25%"',
+							//		 
+							//	),
 							
 							5=>array('th'=>'DNA',
 									 
-								'field'=>'(SELECT sn FROM entity_attribute WHERE code=dna_code)',
+								#'field'=>'(SELECT ecb.sn FROM entity_child_base as ecb WHERE ecb.token=dna_code)',
+								'field'=>'dna_code',
 								
 								'is_sort' => 1,
 									 
-								'td_attr' => ' class="label_father" width="15%"',
+								'td_attr' => ' class="label_father" width="10%"',
 									 
 								),
 							
@@ -60,7 +61,7 @@
 							        									 
 								'td_attr' => 'width="10%"',
 								
-								'js_call'=> 'show_user_info',
+								'js_call'=> 'show_user_info_2l',
 								
 								'is_sort' => 'timestamp_punch'
 									 
@@ -79,6 +80,7 @@
                                     'table_name' =>'entity_child_base',
                                     
                                     'key_id'    =>'id',
+				    
                                     
                                     # Default Additional Column
                                 
@@ -94,7 +96,7 @@
 							array(  'data'  =>array('table_name' 	=> 'entity_child_base',
 										'field_id'	=> 'token',
 										'field_name' 	=> 'token',
-										'filter'	=> "AND dna_code IN ('EBUC','EBMS','EBAX')"
+										'filter'	=> "AND dna_code IN ('EBUC','EBMS','EBAX','EBFA')"
 										
 									 ),
 							      
@@ -130,7 +132,7 @@
 										
 										'filter_type' =>'option_list', 
 												    
-										'option_value'=> $G->option_builder('entity_attribute','code,sn',"WHERE entity_code='EB' AND code IN ('EBUC','EBMS','EBAX') ORDER BY sn ASC"),
+										'option_value'=> $G->option_builder('entity_child_base','token,sn',"WHERE entity_code='EB' AND dna_code='EBMS' ORDER BY sn ASC"),
 									  
 										'html'=>'  title="Select Client"   data-width="160px"  ',
 									   
@@ -145,7 +147,7 @@
                                 
                                   //'js'            => array('is_top'=>0, 'top_js' => 'js/d_series/entity_child_base'),
                                     
-				'key_filter'	=> " AND dna_code IN ('EBUC','EBMS','EBAX') ",
+				#'key_filter'	=> " AND dna_code IN ('EBUC','EBMS','EBAX','EBFA') ",
 				
 				#summary:
 				

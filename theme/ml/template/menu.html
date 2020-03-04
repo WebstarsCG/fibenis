@@ -98,28 +98,7 @@
 		  </TMPL_IF>
 			
 	      
-		  <TMPL_IF USER_SAD>
-			
-			<!--<li ><a  href="?dx=ps_connection"> <i class="fa fa-refresh"></i>&nbsp;
-			            PubSub
-			      </a>
-			</li>
-			
-			<li ><a  href="?d=entity_dash_board"> <i class="fa fa-th-list"></i>&nbsp;
-			            PublishedDataSet
-			      </a>
-			</li>
-			
-			
-			<li><a>|</a></li>
-			
-			
-			<li ><a  href="?d=entity_dash_board"> <i class="fa fa-download"></i>&nbsp;
-			            Download Client Certificate
-			      </a>
-			</li>
-			
-			<li><a>|</a></li>-->
+		  <TMPL_IF USER_SAD>			
 			
 			<li ><a  href="?d=entity_dash_board"> <i class="fa fa-pie-chart"></i>&nbsp;
 			Entity Dash&nbsp;</a></li>		    			
@@ -131,18 +110,35 @@
 			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
 			      >
 			        <i class="fa fa-clone"></i>
-			        &nbsp;Entity Setup&nbsp;<span class="caret"></span>
+			        &nbsp;Core Entity&nbsp;<span class="caret"></span>
 			    </a>			    
 			    <ul class="dropdown-menu" role="menu">
 				    <li> <a href="?d=entity">Entity</a></li>
-				    <li> <a href="?d=entity_attribute">Entity Attribute</a></li>
+				    <li> <a href="?d=entity_attribute">Entity Attribute</a></li>							
+				    <li> <a href="?d=entity_child">Entity Child</a></li>
+				    <li> <a href="?d=entity_child_base">Entity Child Base</a></li>
+				    <li> <a href="?d=entity_key_value">Entity Key Value</a></li>
+				    <li> <a href="?d=entity_grouping">Entity Grouping</a></li>
+				    <li> <a href="?d=master_panel">Master Panel</a></li>
+			    </ul>
+			</li>
+			
+			<li>
+			    
+			    <a href="#"
+			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
+			      >
+			        <i class="fa fa-clone"></i>
+			        &nbsp;Ext. Entity&nbsp;<span class="caret"></span>
+			    </a>			    
+			    <ul class="dropdown-menu" role="menu">			
 				    <li> <a href="?d=external_entity">External Entity</a></li>
 				    <li> <a href="?d=external_attribute">External Attribute</a></li>				
 				    <li> <a href="?d=entity_child">Entity Child</a></li>
 				    <li> <a href="?d=entity_child_base">Entity Child Base</a></li>
 				    <li> <a href="?d=entity_key_value">Entity Key Value</a></li>
 				    <li> <a href="?d=entity_grouping">Entity Grouping</a></li>
-				    <li> <a href="?d=master_panel">Master Panel</a></li>
+				  
 			    </ul>
 			</li>
 			

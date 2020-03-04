@@ -1,31 +1,21 @@
 <?PHP
-
-
               
         $D_SERIES       =   array(
 		
 		
 					'title'=>'Core Entity ',
-                                    
-					#query display depend on the user
-                                    
-					'is_user_base_query'=>0,
-					
+                                    					
+					#generation
 					'gx'=>1,
                                     
-					#table data
-                                    
+					#table data                                    
 					'data'=> [
 					
-							1=>array('th'=>'Code',									
-								
-								'field'   => 'code',								
-								
-								'td_attr' => ' width="5%" class="clr_dark_blue txt_size_12" ',								
-								
+							1=>array(
+								'th'      => 'Code',
+								'field'   => 'code',																
+								'td_attr' => ' width="5%" class="clr_dark_blue txt_size_12" ',
 								'is_sort' => 1,
-								
-								
 							),							  
 					
 							2=>array('th'=>'Name',
@@ -39,25 +29,7 @@
 								
                                                                             
 								),
-							
-							//11=>array('th'=>'Lib',
-							//	 
-							//	'field'=>'is_lib',
-							//		
-							//	'attr' =>  ['width' => "5%",
-							//		    'class' => "txt_size_15 b align_CM" ],
-							//	
-							//	'is_sort' => 0,
-							//	
-							//	'filter_out'    => function($data_in){
-							//		
-							//				$temp=[1=>'check clr_green',0=>'close clr_red'];
-							//				
-							//				return "<span><i class='fa fa-$temp[$data_in] txt_size_15' aria-hidden='true'>&nbsp;&nbsp;</i></span>";
-							//			}
-							//	
-							//                                                                     
-							//	),
+						
 							
 							
 							3=>array('th'	=> 'Attr.', 'th_attr'=>' colspan=2 ',
@@ -93,7 +65,7 @@
 								     
 								  'field'	=> "concat(id,':',is_lib)",
 								  
-								  'attr' =>  [ 'class'=>"brdr_right"],
+								  'attr' =>  [ 'class'=>"brdr_right align_CM"],
 									
 								  'filter_out'=>function($data_in){
 								  
@@ -427,5 +399,14 @@
 							),
                             
                             );
+	
+	# customization
+	if($PAGE_NAME=='entity'){
+		
+		unset($D_SERIES['data'][9]);
+		unset($D_SERIES['data'][10]);
+		unset($D_SERIES['data'][11]);
+		
+	}
     
 ?>

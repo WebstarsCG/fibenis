@@ -35,7 +35,8 @@
                                                                
 								'type' => 'option',
 								
-								'option_data'=>$G->option_builder("entity_child_base","id,sn","WHERE entity_code='SC' ORDER BY sn ASC"),
+								'option_data'=>$G->option_builder("entity_child_base","id,sn","WHERE entity_code='SC' ORDER BY sn ASC").
+								             '<option value="UNBIND">Unbind Template</option>',
                                                                
 								'avoid_default_option' => 0,
 								
@@ -67,6 +68,8 @@
 				'show_query'    =>0,
 				
 				'before_add_update'=>1,
+				
+				'avoid_trans_key_redirect'=>0
                                 
 			);
     
@@ -82,13 +85,18 @@
 	
 	    global $rdsql;
 	    
-	    $temp = [];
-	    $temp                    = json_decode(urldecode($_GET['default_addon']),true);
-    
-	    $rdsql->exec_query("DELETE FROM eav_addon_ecb_id WHERE parent_id=$temp[p] AND ea_code='PGTM'","Error");	
 	    
-	    return 1;
 		
+		$temp = [];
+		$temp                    = json_decode(urldecode($_GET['default_addon']),true);
+	
+		$rdsql->exec_query("DELETE FROM eav_addon_ecb_id WHERE parent_id=$temp[p] AND ea_code='PGTM'","Error");	
+		
+		if($_POST['X2']=='UNBIND'){
+		    header("Location:?".$_SERVER['QUERY_STRING']);		    
+		}		    
+		
+		return 1;
     }
     
     

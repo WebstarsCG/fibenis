@@ -31,20 +31,23 @@
 								     'td_attr' =>  ' class="label_child"  '
 								    
 								    ),
-                                                            
+                           
                                                             3=>array('th'=>'Entity',
                                                                      
-                                                                    'field'     => "concat_ws(':',substring_index(note,',',7),note)",
+                                                                   'field'	=> " (SELECT ".$DC->group_concat('(SELECT sn FROM entity WHERE code=ea_value)')." FROM ecb_av_addon_varchar WHERE parent_id = entity_child_base.id ) ",
+								   // 'field'     => "concat_ws(':',substring_index(note,',',7),note)",
 								
                                                                     'td_attr' =>  ' class="label_grand_father" ',
+								    
+								    'js_call' => 'tip_from_list'
                                                                      
-                                                                     'filter_out'=>function($data_in){
-									
-									$temp = explode(':',$data_in);
-									
-									return "<a class='tip clr_gray_5'>$temp[0]...</a><span class='tooltiptext'>$temp[1]</span>";
-										
-								}
+//                                                                     'filter_out'=>function($data_in){
+//									
+//									$temp = explode(':',$data_in);
+//									
+//									return "<a class='tip clr_gray_5'>$temp[0]...</a><span class='tooltiptext'>$temp[1]</span>";
+//										
+//								}
 								    
 							    ),
 							    
