@@ -147,7 +147,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE  FUNCTION get_ec_sn_eav(temp_ec_id INTEGER) RETURNS int(11)
 BEGIN
-    RETURN  IFNULL(get_eav_addon_varchar(id,'ECSN'),NULL);
+    RETURN  IFNULL(get_eav_addon_varchar(temp_ec_id,'ECSN'),NULL);
 END$$
 DELIMITER ;
 
