@@ -12,15 +12,27 @@
                                     #table data
                                     
                                     'data'=> array(
-                                                        1=>array('th'=>'Entity Code',
+                                                        4=>array('th'	=> 'Domain',
+									      
+								'field'	=> "(SELECT get_eav_addon_varchar(id,'ECSN') FROM entity_child WHERE entity_code='CH' AND md5(get_eav_addon_vc128uniq(id,'CHCD'))=domain_hash)",
+									
+								'is_sort' => 1,
+									      
+								'td_attr' => ' class="align_LM" ',
+								
+								'th_attr'=>'width="10%"',
+									      
+							),
+							
+							1=>array('th'=>'Entity Code',
 								 
 								'field'=>'(SELECT sn FROM entity WHERE code=entity_code)',
 								     
 								'is_sort' => 1,
 								
-								'th_attr'=>'width="15%"',
+								'th_attr'=>'width="10%"',
 								
-								'js_call'=>'label_grand_father'
+								'attr' => ['class'=>'label_grand_child'],
 								
                                                                             
 								), 
@@ -35,37 +47,40 @@
 									      
 								'td_attr' => ' class="align_LM" width="15%" ',
 								
-								'th_attr'=>'width="20%"',
+								#'th_attr'=>'width="20%"',
 									      
 								),
 							
-							4=>array('th'	=> 'Domain',
-									      
-								'field'	=> "(SELECT get_eav_addon_varchar(id,'ECSN') FROM entity_child WHERE entity_code='CH' AND md5(get_eav_addon_vc128uniq(id,'CHCD'))=domain_hash)",
-									
-								'is_sort' => 1,
-								
-								'js_call'=>'label_father ',
-									      
-								'td_attr' => ' class="align_LM" width="15%" ',
-								
-								'th_attr'=>'width="10%"',
-									      
-								),
+							
 							
 							3=>array('th'	=> 'Entity Value',
 									      
-								'field'     => "concat_ws('F:I:B:E:N:I:S',substring_index(entity_value,' ',7),entity_value)",
+								'field'     => "concat(id,'[C]',entity_value)",
 								
                                                                 'td_attr' =>  ' class="label_grand_father" ',
                                                                      
-									'filter_out'=>function($data_in){
+								'filter_out'	=> function($data_in){
+									
+										$temp     = explode('[C]',$data_in);
 										
-										$temp = explode('F:I:B:E:N:I:S',$data_in);
+										$temp[1]  = str_replace("\t",'',$temp[1]);
 										
-										return "<a class='tip clr_gray_5'>$temp[0]...</a><span class='tooltiptext'>$temp[0]</span>";
-											
-									}
+										$data_out = array(
+												  'data'=>array('id'   => $temp[0],															
+														'key'  => md5($temp[0]),															
+														'label'=> 'Entity Value',
+														'info' => htmlentities($temp[1]),
+														'type' => 'text',
+														'series'=>'a',
+														'action'=>'entity_key_value',
+														'token' =>'EKVU'
+														)
+												);
+										
+										return json_encode($data_out);
+									},
+									
+								'js_call'	=> 'd_series.set_inline_update'
 									      
 								),
 							

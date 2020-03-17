@@ -24,6 +24,7 @@
     unset($F_SERIES['data'][4]);
     
     # customization
+    $F_SERIES['data']['5']['field_name']  = 'Engines';
     $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base',"id,sn","  WHERE entity_code='EG' ");
     
     // after_add_update    
