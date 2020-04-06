@@ -217,8 +217,14 @@
 						
 						foreach($child_info['child_data'] as $child_key=>$child_value){						 
 								$filter_out 		   = @$child_value['filter_out'];						 
-								$temp[$child_value['key']] = (@$filter_out)?$filter_out($get_row[$child_value['field']]):$get_row[$child_value['field']]; // ;
-						}
+								
+								if(@$child_value['data']){
+									$temp[$child_value['key']] = get_data_addon(array('field'=>$get_row[$child_value['field']],'data'=>$child_value['data']));							   
+								}else{
+									$temp[$child_value['key']] = (@$filter_out)?$filter_out($get_row[$child_value['field']]):$get_row[$child_value['field']]; 
+								}
+								
+						} // each row
 					    
 						array_push($lv['temp_info'],$temp); 
 				      
@@ -227,9 +233,6 @@
 				return $lv['temp_info'];
 			
 		} // end of child info
-		
-		
-		
 		
 		
 		

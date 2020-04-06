@@ -417,15 +417,13 @@
                                                         $temp_grid_columns = [];
 							
 							$dd = [];
-							
-							$entity_code = explode('->',$value[6]);
-                                                        
-							$a_series_token = explode('->',$value[7]);
-                                                        
+							                                                        
 							        
 							foreach($temp_grid as $key=>$value){
 								
 								$temp_grid_prop    = [];
+								$entity_code = explode("->",$value[6]);
+								$a_series_token = explode('->',$value[7]);
 								
 								if(strlen(@$value[0])>0){
                                                                         
@@ -541,8 +539,7 @@
 										$temp_grid_prop['is_default_value']   = 0;
 										
 										$temp_grid_prop['input_html']  = ($value[10])?$value[10]:'';
-                                                                    
-										
+                                                                 
 										if(strlen(@$entity_code[0])>0){
 										
 											$temp_grid_prop['data'] = $G->ft_option_builder(''.$table.'',''.$option_id.','.$option_data.'',"WHERE 1=1 AND dna_code = 'EBMS' AND entity_code = '".$ec_code." ' ORDER BY line_order,".$option_id." ASC");

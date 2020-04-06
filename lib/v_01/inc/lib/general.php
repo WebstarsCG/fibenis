@@ -216,9 +216,9 @@
 				                    
 						   global $rdsql;
 				
-						   $sql="SELECT $field FROM $tbl_name $manipulate";
+						    $sql="SELECT $field FROM $tbl_name $manipulate";
 						   
-						   $exe_query = $rdsql->exec_query($sql,"ERROR in option_builder");
+						   $exe_query = $rdsql->exec_query($sql,"ERROR in option_builder<br>$sql");
 						
 							$option_box='';	
 							$select_count=1;
