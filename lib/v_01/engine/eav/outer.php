@@ -1,4 +1,5 @@
 <?PHP
+
 	# Var
 		$COACH=[];     // coach
 	
@@ -98,7 +99,7 @@
 		}
      			
 		# Content Stream
-		
+				
 		if($PAGE){
 			
 				# checking for series content
@@ -292,63 +293,84 @@
 						$F->AddParam('SIGNUP_EMAIL',base64_decode($_GET['e_mail_su']));                
 				}
 
-	
+		
+		# Template
+				
+				$TD =   new Template(array("filename"          => $LIB_PATH."/template/index.html",
+							     "debug"             => 0,
+							     "loop_context_vars" => 1)
+					);
 		// Menu Content
-               
+			    
 		
 				$MENU_OFF = (!$MENU_OFF)?(((@$_GET['menu']) || (@$_GET['menu_off']))?1:0):$MENU_OFF;
 				
 				if(!$MENU_OFF){
 				
-						$M 	= new Template(array("filename" => $THEME_ROUTE."/template/menu.html",
-									     "debug"    => 0));						
-						
-						
-						
-						$M->AddParam('PARENT_MENU',menu_create(array('manipulation'=>" WHERE 1=1 $COACH[filter] AND entity_code='PG' AND IFNULL(get_ec_parent_id_eav(id),0)=0  ",
-											     'is_home'     => $IS_HOME
-											     ))
-							    );
-																		
-						// User Role
-						
-						if($USER_ROLE){
-						    
-							$M->AddParam("USER_$USER_ROLE",1);
-							$M->AddParam('USER_NAME',@$USER_NAME);
-							$M->AddParam(array(
-										'addon_type'=>$G->get_id_name("entity_child_base","token as id, sn as name"," WHERE entity_code='AT'")
-									));
-							
-							if(is_file($THEME_ROUTE."/template/role_menu/$USER_ROLE.html")){
-							    
-							    $M_ROLE = new Template(array("filename" => $THEME_ROUTE."/template/role_menu/$USER_ROLE.html"));
-							    $M->AddParam('APP_MENU_TEXT', $M_ROLE->Output());
-							    
-							}else{
-							
-							    $M->AddParam('APP_MENU',app_menu_create(['user_role_id'=>2,
-												     'parent_id'   =>0
-												     ]));
-							}
-						}else{
-							$M->AddParam('NO_USER',1);
-						}
-						
-						// Special addons in menu
+						$PV['menu_text']    = 'menu_'.strtolower($USER_ROLE).'x'.$IS_HOME.'o'.$PV['is_open'];
+						$PV['menu_created'] =  $THEME_ROUTE."/template/role_menu/$PV[menu_text].html";
 				
-						$M->AddParam( array('is_blog'	     => $SG->get_session('is_blog'),
-								    'is_directory'   => $SG->get_session('is_directory'),								    
-								    'is_gallery'     => $SG->get_session('is_gallery'),
-								    'is_news_events' => $SG->get_session('is_news_events'),
-								    'is_open'        => $PV['is_open'],
-                                                                    'is_home'	     => $IS_HOME,
-								    'is_page'        => $PV['is_page'],
-								    'coach_name'     => $COACH['name'],
-								    'coach_path'     => $COACH['path'],
-								    'page_title'     => @$PV['page_title']
-							    )
-						);
+						if(is_file($PV['menu_created'])){
+				
+							$PV['menu_created_template'] = new Template(array("filename" =>$PV['menu_created']));
+							$TD->AddParam('MENU_DATA',$PV['menu_created_template']->Output());    
+						    
+						}else{
+						
+												    
+						    $M 	= new Template(array("filename" => $THEME_ROUTE."/template/menu.html",
+										 "debug"    => 0));						
+											    
+						    // User Role
+						    
+						    if($USER_ROLE){
+							
+							    $M->AddParam("USER_$USER_ROLE",1);
+							    $M->AddParam('USER_NAME',@$USER_NAME);
+							    $M->AddParam(array(
+										    'addon_type'=>$G->get_id_name("entity_child_base","token as id, sn as name"," WHERE entity_code='AT'")
+									    ));
+							    
+							    if(is_file($THEME_ROUTE."/template/role_menu/$USER_ROLE.html")){
+								
+								$M_ROLE = new Template(array("filename" => $THEME_ROUTE."/template/role_menu/$USER_ROLE.html"));
+								$M->AddParam('APP_MENU_TEXT', $M_ROLE->Output());
+								
+							    }else{
+							    
+								$M->AddParam('APP_MENU',app_menu_create(['user_role_id'=>2,
+													 'parent_id'   =>0
+													 ]));
+							    }
+						    }else{
+							    							    
+							    $M->AddParam('NO_USER',1);
+							    
+							    $M->AddParam('PARENT_MENU',menu_create(array('manipulation'=>" WHERE 1=1 $COACH[filter] AND entity_code='PG' AND IFNULL(get_ec_parent_id_eav(id),0)=0  ",
+												 'is_home'     => $IS_HOME
+												 ))
+							    );
+							    
+						    }
+						    
+						    // Special addons in menu
+				    
+						    $M->AddParam( array('is_blog'	 => $SG->get_session('is_blog'),
+									'is_directory'   => $SG->get_session('is_directory'),								    
+									'is_gallery'     => $SG->get_session('is_gallery'),
+									'is_news_events' => $SG->get_session('is_news_events'),
+									'is_open'        => $PV['is_open'],
+									'is_home'	 => $IS_HOME,
+									'is_page'        => $PV['is_page'],
+									'coach_name'     => $COACH['name'],
+									'coach_path'     => $COACH['path'],
+									'page_title'     => @$PV['page_title']
+								)
+						    );
+						    
+						    $G->set_html_file($M->Output(),$PV['menu_created']);
+						    $TD->AddParam('MENU_DATA',$M->Output());
+						}
 						
 				} // end
 		
@@ -360,23 +382,8 @@
 				
 				$LOGIN->AddParam('IS_OPEN',$PV['is_open']);
 	
-		# Template
-				
-				$TD     = new Template(array("filename"          => $LIB_PATH."/template/index.html",
-							     "debug"             => 0,
-							     "loop_context_vars" => 1)
-						);		
-		
 				
 		
-		
-		# Menu Data
-				
-		if(!$MENU_OFF){
-				
-			$TD->AddParam('MENU_DATA',$M->Output());
-			
-		} // menu off
 		
 		$TD->AddParam(array(
 				    'default_addon'=> urlencode($DEFAULT_ADDON),
@@ -414,6 +421,6 @@
 	
 		// close db connection
 		
-		$db_conn_close($db_conn_info);		
+		$db_conn_close($db_conn_info);
 		
 ?>
