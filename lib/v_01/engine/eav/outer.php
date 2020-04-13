@@ -1,4 +1,6 @@
 <?PHP
+    
+	$temp_start=microtime(true);
 
 	# Var
 		$COACH=[];     // coach
@@ -97,129 +99,144 @@
 		if(($IS_HOME) && (strcmp(get_config('access_key'),'never')==0)){
 		    $CONTENT[$PAGE]['title']='';
 		}
-     			
+		
+		$IS_APP = (@$_GET[$PAGE] && is_file($LIB_PATH."/inc/".$PAGE.".php"))?1:0;
+     				
 		# Content Stream
 				
-		if($PAGE){
-			
-				# checking for series content
-				if(is_file($LIB_PATH."/inc/".$PAGE.".php")){
-                                    
-                                                # flag
-						
-                                                $PV['is_page'] = 0;
+		# checking for series content
+		if($IS_APP){
+		    
+				# flag
 				
-						# page code
-						
-						$PAGE_CODE = $PAGE_NAME.'__'.$PAGE;
-										
-						# process series content	
-						
-						include($LIB_PATH."/inc/".$PAGE.".php");	
-						
-						# Check Layout
-						
-						$LAYOUT = (@$LAYOUT)?$LAYOUT:'layout_basic';
-						
-						if($USER_ID){							
-							
-							   // space for additional info	
-						}
-											    					    
-						# custom theme pages
-												
-						if(@get_config('custom_theme_pages')[$PAGE_ID.'_'.$PAGE_NAME]){
-												    
-						    $THEME_ROUTE = get_config('custom_theme_pages')[$PAGE_ID.'_'.$PAGE_NAME]; 
-						}
-				
-						# Layout Content	
-						
-						$L = new Template(array("filename" => $THEME_ROUTE."/template/layout/$LAYOUT.html",
-									"debug"    => 0));
-						
-						# Title
-						$PV['page_title'] = @$PAGE_TITLE;
-						$L->AddParam('PAGE_TITLE',@$PAGE_TITLE);						
-						
-						# contnet from series to sub-stream
-					
-						$L->AddParam('PAGE_INFO',$PAGE_INFO);
-				
-						# for additional info check layout
-					
-						if( ($LAYOUT!='layout_basic') && ($LAYOUT!='layout_full')) {
-								
-								// user info
-						
-								if($USER_ID && $session_off!=1 ){
-								
-										# params
-										# commented 20sep2018
-										//$L->AddParam(array(													
-										//		'USER_COMM_KEY'		=> $USER_COMM_KEY,
-										//		//'USER_ROLE_NAME'	=> $get_row->user_role_name,
-										//		'USER_NAME'		=> $USER_NAME,																									
-										//		'USER_ID'		=> $USER_ID,
-										//));
-								}
-												
-								// side menu
-						
-								if(@$CONTENT[$PAGE]['side_menu']){
-									
-									$L->AddParam('menu_name',@$CONTENT[$PAGE]['menu_name']);
-									
-									$L->AddParam('side_menu',@$CONTENT[$PAGE]['side_menu']);
-								}
-						}
-										
-						// processed content substream
-														
-						$PAGE_CONTENT = $L->Output();
-                                                
-                                                // is_page
-                                                
-                                                
-			
-				}else{ // open page
-						
-						$PV['is_page']  = 1;
-						                               
-						$PV['layout']   = (@$CONTENT[$PAGE]['layout'])?$CONTENT[$PAGE]['layout']:'layout_full';
-											
-						$C 		= new Template(array("filename" => $THEME_ROUTE."/template/layout/".$PV['layout'].".html",
-										     "debug"   => 0));
-				    				
-						$C->AddParam('PAGE_ID',$PAGE);
-			
-						$C->AddParam('PAGE_TITLE',$CONTENT[$PAGE]['title']);
-						
-						$C->AddParam('PAGE_INFO',$CONTENT[$PAGE]['page_content']);
-						
-						if(@$CONTENT[$PAGE]['side_menu']){
-						  
-							$C->AddParam('side_menu',@$CONTENT[$PAGE]['side_menu']);		
-						}
-						
-						$C->AddParam('PARENT_KEY_CODE',@$CONTENT[$PAGE]['parent_key_code']);
-						$C->AddParam('PARENT_NAME',@$CONTENT[$PAGE]['parent_name']);
-			
-						$C->AddParam('PARENT_RIGHT_IMAGE',@$CONTENT[$PAGE]['parent_right_image']);
-						$C->AddParam('PARENT_HEADER_IMAGE',@$CONTENT[$PAGE]['parent_header_image']);
-						
-						$C->AddParam('PAGE_RIGHT_IMAGE',@$CONTENT[$PAGE]['page_right_image']);
-						$C->AddParam('PAGE_HEADER_IMAGE',@$CONTENT[$PAGE]['page_header_image']);
-						
-						
-						$PAGE_CONTENT = $C->Output();
-				
-				} // end of content stream
-			
-		} # end of closed area
+				$PV['is_page'] = 0;
 		
+				# page code
+				
+				$PAGE_CODE = $PAGE_NAME.'__'.$PAGE;
+								
+				# process series content	
+				
+				include($LIB_PATH."/inc/".$PAGE.".php");	
+				
+				# Check Layout
+				
+				$LAYOUT = (@$LAYOUT)?$LAYOUT:'layout_basic';
+				
+				if($USER_ID){							
+					
+					   // space for additional info	
+				}
+														    
+				# custom theme pages
+										
+				if(@get_config('custom_theme_pages')[$PAGE_ID.'_'.$PAGE_NAME]){
+										    
+				    $THEME_ROUTE = get_config('custom_theme_pages')[$PAGE_ID.'_'.$PAGE_NAME]; 
+				}
+		
+				# Layout Content	
+				
+				$L = new Template(array("filename" => $THEME_ROUTE."/template/layout/$LAYOUT.html",
+							"debug"    => 0));
+				
+				# Title
+				$PV['page_title'] = @$PAGE_TITLE;
+				$L->AddParam('PAGE_TITLE',@$PAGE_TITLE);						
+				
+				# contnet from series to sub-stream
 			
-		// Header & footer		
+				$L->AddParam('PAGE_INFO',$PAGE_INFO);
+		
+				# for additional info check layout
+			
+				if( ($LAYOUT!='layout_basic') && ($LAYOUT!='layout_full')) {
+						
+						// user info
+				
+						if($USER_ID && $session_off!=1 ){
+						
+								# params
+								# commented 20sep2018
+								//$L->AddParam(array(													
+								//		'USER_COMM_KEY'		=> $USER_COMM_KEY,
+								//		//'USER_ROLE_NAME'	=> $get_row->user_role_name,
+								//		'USER_NAME'		=> $USER_NAME,																									
+								//		'USER_ID'		=> $USER_ID,
+								//));
+						}
+										
+						// side menu
+				
+						if(@$CONTENT[$PAGE]['side_menu']){
+							
+							$L->AddParam('menu_name',@$CONTENT[$PAGE]['menu_name']);
+							
+							$L->AddParam('side_menu',@$CONTENT[$PAGE]['side_menu']);
+						}
+				}
+								
+				// processed content substream
+												
+				$PAGE_CONTENT = $L->Output();
+				
+				outer_action();
+				
+	
+		}else{ // open page
+				
+				$PV['page_cached'] = $COACH['terminal_path']."/cache/$PAGE.html";
+				
+				if(is_file($PV['page_cached'])){
+				
+				    $PV['page_cached_template'] = new Template(array("filename" =>$PV['page_cached']));
+				    $PV['page_cached_template']->EchoOutput();    
+						    
+				}else{
+				    
+				    $PV['is_page']  = 1;
+								   
+				    $PV['layout']   = (@$CONTENT[$PAGE]['layout'])?$CONTENT[$PAGE]['layout']:'layout_full';
+									    
+				    $C 		= new Template(array("filename" => $THEME_ROUTE."/template/layout/".$PV['layout'].".html",
+									 "debug"   => 0));
+						    
+				    $C->AddParam('PAGE_ID',$PAGE);
+	    
+				    $C->AddParam('PAGE_TITLE',$CONTENT[$PAGE]['title']);
+				    
+				    $C->AddParam('PAGE_INFO',$CONTENT[$PAGE]['page_content']);
+				    
+				    if(@$CONTENT[$PAGE]['side_menu']){
+				      
+					$C->AddParam('side_menu',@$CONTENT[$PAGE]['side_menu']);		
+				    }
+				    
+				    $C->AddParam('PARENT_KEY_CODE',@$CONTENT[$PAGE]['parent_key_code']);
+				    $C->AddParam('PARENT_NAME',@$CONTENT[$PAGE]['parent_name']);
+	    
+				    $C->AddParam('PARENT_RIGHT_IMAGE',@$CONTENT[$PAGE]['parent_right_image']);
+				    $C->AddParam('PARENT_HEADER_IMAGE',@$CONTENT[$PAGE]['parent_header_image']);
+				    
+				    $C->AddParam('PAGE_RIGHT_IMAGE',@$CONTENT[$PAGE]['page_right_image']);
+				    $C->AddParam('PAGE_HEADER_IMAGE',@$CONTENT[$PAGE]['page_header_image']);				
+				    
+				    $PAGE_CONTENT = $C->Output();
+				    
+				    outer_action();
+				}
+		
+		} // end of content stream
+			
+		
+		function outer_action(){
+		    
+			global $PV,$THEME_ROUTE,$COACH,$IS_HOME,$LIB_PATH,
+			       $CONTENT,$MENU_OFF,$G,$PAGE,$PAGE_CONTENT,$SG,$PASS_ID,
+			       $DEFAULT_ADDON,$SHOW_DOOR,$USER_ROLE,$USER_ID,$USER_NAME;
+			
+
+			    // Header & footer		
 		
 				$PV['header_footer'] =  array(  'page_title'   => get_config('title'),                                                            
                                                                // 'lib_path'     => $LIB_PATH,
@@ -375,52 +392,55 @@
 				} // end
 		
 	
-		// Login Page Content
-		
-				$LOGIN 	= new Template(array("filename" => $LIB_PATH."/template/login.html",
-							     "debug"    => 0));
-				
-				$LOGIN->AddParam('IS_OPEN',$PV['is_open']);
+		    // Login Page Content
+		    
+				    $LOGIN 	= new Template(array("filename" => $LIB_PATH."/template/login.html",
+								 "debug"    => 0));
+				    
+				    $LOGIN->AddParam('IS_OPEN',$PV['is_open']);
+	    
+				    
+		    
+		    
+		    $TD->AddParam(array(
+					'default_addon'=> urlencode($DEFAULT_ADDON),
+					'footer'       => $F->Output(),
+					'header'       => $H->Output(),
+					'is_open'      => $PV['is_open'],				    
+					'login'        => $LOGIN->Output(),
+					'menu_off'	   => $MENU_OFF,
+					'pass_id'      => $PASS_ID,
+					'page_content' => @$PAGE_CONTENT,
+					'show_door'    => $SHOW_DOOR,
+		    ));
+						       
+		    if($USER_ID){
+				    
+			$TD->AddParam(array('USER_ID'   =>@$USER_ID,
+					    'USER_NAME' =>@$USER_NAME,
+					    'USER_EMAIL'=>@$USER_EMAIL,
+					    ));                        
+		    } // user id
+				    
+		    echo $temp_content = $TD->Output();
+				    
+		    $G->set_html_file($temp_content,$PV['page_cached']);
+						    
+		    # open log
+		    
+		    if($PV['is_page'] ){
+				    
+				    $access_key = (@$_GET[$PAGE])?$PAGE.'='.$_GET[$PAGE]:$PAGE ;
+				    
+				    $param      = array('user_id'=>$USER_ID,'page_code'=>'ed3e225dad017ddafa66fa8a44fda21c','action_type'=>'VIEW','action'=>'General Page Access','access_key'=>$access_key );
+								     
+				    $G->set_system_log($param);
+		    }			
 	
-				
-		
-		
-		$TD->AddParam(array(
-				    'default_addon'=> urlencode($DEFAULT_ADDON),
-				    'footer'       => $F->Output(),
-				    'header'       => $H->Output(),
-				    'is_open'      => $PV['is_open'],				    
-				    'login'        => $LOGIN->Output(),
-				    'menu_off'	   => $MENU_OFF,
-				    'pass_id'      => $PASS_ID,
-				    'page_content' => @$PAGE_CONTENT,
-				    'show_door'    => $SHOW_DOOR,
-		));
-						   
-		if($USER_ID){
-				
-		    $TD->AddParam(array('USER_ID'   =>@$USER_ID,
-					'USER_NAME' =>@$USER_NAME,
-					'USER_EMAIL'=>@$USER_EMAIL,
-					));                        
-		} // user id
-				
-		$TD->EchoOutput();
-				
-		# open log
-		
-		if($PV['is_page'] ){
-				
-				$access_key = (@$_GET[$PAGE])?$PAGE.'='.$_GET[$PAGE]:$PAGE ;
-				
-				$param      = array('user_id'=>$USER_ID,'page_code'=>'ed3e225dad017ddafa66fa8a44fda21c','action_type'=>'VIEW','action'=>'General Page Access','access_key'=>$access_key );
-								 
-				$G->set_system_log($param);
-		}			
-	
+		} // outer action
 	
 		// close db connection
 		
 		$db_conn_close($db_conn_info);
-		
+				
 ?>
