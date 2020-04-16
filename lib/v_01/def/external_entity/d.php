@@ -57,6 +57,25 @@
 						
 							return json_encode($data_out);
 													 
-						}
+						};
+						
+	// child base excluding attribute
+	
+	$D_SERIES['data'][7]['field'] = "concat(id,':',(SELECT COUNT(*) FROM entity_child_base WHERE entity_code=entity.code AND dna_code <> 'EBAT'))";
+	$D_SERIES['data'][7]['filter_out'] = function($data_in){
+							$temp = explode(':',$data_in);
+		
+			    
+							$data_out = array('id'   => $temp[0],
+							'link_title'=>'  '.$temp[1],
+							'is_fa'=>' fa-chevron-circle-right clr_red fa-lg ',
+							'is_fa_btn'=>' btn-default btn-sm ',
+							'title'=>'Entity Child Base',
+							'src'=>"?d=entity_child_base&menu_off=1&mode=EXT&default_addon=$temp[0]",
+							'style'=>"border:none;width:100%;height:600px;");
+							 return json_encode($data_out);
+							 
+						};
+                                                                        							
     
 ?>

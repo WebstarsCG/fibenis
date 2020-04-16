@@ -1,7 +1,7 @@
 <?PHP
 
     include("$LIB_PATH/def/ecb_parent_child/f.php");
-    
+          
     $F_SERIES['title'] = 'Definition';
     
     # option data
@@ -14,11 +14,28 @@
                                              
     $F_SERIES['data']['6']['field_name'] = 'Definition';
     
+    // Column 7
+    
+    $F_SERIES['data'][7] = ['type'      =>'heading',
+                            'field_name'=>'User Role Access'];
+    
+    $F_SERIES['data'][8] = ['type'         => 'list_left_right',
+                            'field_name'   => 'User Role Access',
+                            'field_id'     =>"'2,4'",								    
+                            
+                            'option_data'  => $G->option_builder("user_role","id,ln","WHERE sn <> 'ANY' ORDER BY ln ASC"),                            
+                            'input_html'   => ' class="w_200" rows="2"  style="height:200px !important"  ',
+                            'ro'        => 1
+                        ];
+    
+    
     $F_SERIES['back_to']['back_link']    = '?d=def';
     
     $F_SERIES['show_query']=0;
+    $F_SERIES['avoid_trans_key_direct']=1;
     
     $F_SERIES['default_fields']=array('dna_code'=>'EBDF');
+    $F_SERIES['divider']       = 'tab';
       
     // unset  
     unset($F_SERIES['data'][4]);
@@ -27,10 +44,22 @@
     $F_SERIES['data']['5']['field_name']  = 'Engines';
     $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base',"id,sn","  WHERE entity_code='EG' ");
     
+    // during edit
+    if(@$_GET['key']){
+        
+        $F_SERIES['temp']['key']=@$_GET['key'];
+        
+        $F_SERIES['data'][8]['field_id']="'".$G->get_one_column(['table'       =>'user_role_permission_matrix',
+                                                                 'field'       =>$DC->group_concat('DISTINCT user_role_id'),
+                                                                 'manipulation'=>" WHERE user_permission_id IN(SELECT ecb_matrix.id FROM ecb_parent_child_matrix as ecb_matrix WHERE ecb_parent_id=".$F_SERIES['temp']['key'].")"
+                                                                ])."'";
+        
+    } // end
+    
     // after_add_update    
     $F_SERIES['after_add_update']=function ($key_id){
         
-        global $G,$F_SERIES,$rdsql,$USER_ID;
+        global $DC,$G,$rdsql,$USER_ID;
         
         $lv;
         $lv['content']=[];
@@ -56,6 +85,8 @@
                                             md5(concat((SELECT sn FROM entity_child_base WHERE id=$key_id),'__',
                                             (SELECT token FROM entity_child_base WHERE id=$key))),
                                             $USER_ID)");
+                // 
+                
             }
             
         } // end
@@ -68,9 +99,63 @@
             
             $rdsql->exec_query($lv['matrix_query'],$lv['matrix_query']);
             
+            //def child id
+            
+            $lv['def_child_id_query'] = " SELECT".$DC->group_concat('id')." FROM ecb_parent_child_matrix WHERE ecb_parent_id=$key_id";
+            
+            $lv['def_child_id_text']       = $G->get_one_column(['field'        => $DC->group_concat('id'),
+                                                           'table'        => 'ecb_parent_child_matrix',
+                                                           'manipulation' => " WHERE ecb_parent_id=$key_id" ]);
+            
         } // end
         
-       # before_update($key_id);       
+        
+        // Role        
+        $lv['temp_user_role_access'] = $_POST['X8'];
+                
+        if($lv['temp_user_role_access'] && $lv['def_child_id_text']){
+            
+            $lv['def_child_ids'] = explode(',',$lv['def_child_id_text']);
+         
+            // each user
+            foreach(preg_split("/,/",$lv['temp_user_role_access']) as $user_role_id){
+                
+                $lv['user_role_perm_content'] = [];
+            
+                // def child ids
+                foreach($lv['def_child_ids'] as $def_child_id){
+                
+                    array_push($lv['user_role_perm_content'],"($user_role_id,
+                                                               $def_child_id,
+                                                               $USER_ID)");
+                } // def
+                
+                // user role permission insert
+                
+                 if(count($lv['user_role_perm_content'])>0){
+            
+                    $lv['user_role_perm_query_values'] = implode(',',$lv['user_role_perm_content']);
+                    
+                    $lv['user_role_perm_query']        = " INSERT INTO user_role_permission_matrix(user_role_id,
+                                                                                                   user_permission_id,
+                                                                                                   user_id)
+                                                                    VALUES
+                                                                         $lv[user_role_perm_query_values] ";
+                    
+                    // user role permission matrix
+                    $rdsql->exec_query($lv['user_role_perm_query'],"User Role Permission Matrix");
+                    
+                    // user role permission combine text
+                    $rdsql->exec_query("UPDATE
+                                                user_role_permission
+                                        SET
+                                                user_permission_ids=(SELECT ".$DC->group_concat('user_permission_id')." FROM user_role_permission_matrix WHERE user_role_id=$user_role_id)","User Role Permission Matrix Combine");
+                    
+                } // if user role permission                
+                
+            } // user role
+            
+        } // if role & def child        
         
     } # end
     

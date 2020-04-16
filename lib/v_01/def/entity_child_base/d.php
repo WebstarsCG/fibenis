@@ -195,5 +195,9 @@
 		$D_SERIES['filter_off'] = 1;
 	}
 	
+	if(@$_GET['mode']=='EXT'){
+		
+		$D_SERIES['key_filter'].= " AND dna_code <> 'EBAT' ";		
+	}
     
 ?>
