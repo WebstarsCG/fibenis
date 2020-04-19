@@ -253,12 +253,13 @@
 	if(@$_GET['default_addon']){
 		
 		$default_addon = @$_GET['default_addon'];
-        	$D_SERIES['key_filter'].=" AND  entity_code=(SELECT code FROM entity WHERE id = $default_addon)";
+        	$D_SERIES['key_filter'].=" AND  entity_code='$default_addon'";
 		//unset($D_SERIES['data'][1]);
 		//unset($D_SERIES['data'][5]);
 		unset($D_SERIES['export_csv']);
 		$LAYOUT	   			  = 'layout_full';
 		$D_SERIES['action']['is_edit']	  = 0;
+		$D_SERIES['action']['action_default_addon'] = $default_addon;
 		$D_SERIES['add_button']['is_add'] = 0;		
 		$D_SERIES['hide_show_all'] 	  = 1;
 		$D_SERIES['search_filter_off']	  = 1;

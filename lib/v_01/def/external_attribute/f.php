@@ -38,6 +38,8 @@
                                                                
                                                                'field_id'=>'token',
                                                                
+                                                               'field_token'=>'TEST',
+                                                               
                                                                'type'=>'text',
                                                                
                                                                'is_mandatory'=>1,
@@ -172,7 +174,7 @@
                                                                                             
                                                                     'child_attr_field_id' => 'ea_code',   // attribute code field
                                                                     'child_attr_code'     => 'APCL',           // attribute code
-                                                                    'hint'                => '(Class Attribute)',
+                                                                    //'hint'                => '(Class Attribute)',
                                                                      'input_html'         => 'class="w_75"'
 						   
                                                                ),
@@ -215,8 +217,10 @@
                                                     '14' =>array(   'field_name'            => 'Mandatory',                                                                
                                                                     'field_id'              => 'ea_value',				       
                                                                     'is_mandatory'          => 0,
-                                                                    'type'                  => 'option',
-                                                                    'option_data'           => '<option value=0>No</option><option value=1>Yes</option>',                                                               
+                                                                    'type'                => 'toggle',
+                                                                    'on_label'            => 'Yes',
+                                                                    'off_label'            => 'No',
+                                                                    'show_status_label'  => 1,
                                                                     'child_table'           => 'ecb_av_addon_varchar', // child table 
                                                                     'parent_field_id'       => 'parent_id',    // parent field
                                                                     'child_attr_field_id'   => 'ea_code',   // attribute code field
@@ -250,9 +254,10 @@
                                                     
                                                      '16' =>array(     'field_name'         => 'Hide',                                                                
                                                                     'field_id'            => 'ea_value',				       
-                                                                    'type'                => 'option',
-                                                                    'option_data'         => "<option value=''>No</option><option value=1>Yes</option>",                                                               
-                                                                    'is_mandatory'        => 0,
+                                                                    'type'                => 'toggle',
+                                                                    'on_label'            => 'Yes',
+                                                                    'off_label'            => 'No',
+                                                                     'show_status_label'  => 1,
                                                                                                                         
                                                                     //child table
                                                                             
@@ -267,11 +272,14 @@
                                                                ),
                                                      
                                                      
-                                                        '17' =>array(     'field_name'         => 'RO',                                                                
+                                                        '17' =>array(     'field_name'         => 'Read Only',                                                                
                                                                     'field_id'            => 'ea_value',				       
-                                                                    'type'                => 'option',
-                                                                    'option_data'         => "<option value=''>No</option><option value=1>Yes</option>",                                                               
-                                                                    'is_mandatory'        => 0,
+                                                                    'type'                => 'toggle',
+                                                                    'on_label'            => 'Yes',
+                                                                    'off_label'            => 'No',
+                                                                     'show_status_label'  => 1,
+                                                                   // 'option_data'         => "<option value=''>No</option><option value=1>Yes</option>",                                                               
+                                                                    //'is_mandatory'        => 0,
                                                                                                                         
                                                                     //child table
                                                                             
@@ -281,7 +289,7 @@
                                                                     'child_attr_field_id' => 'ea_code',   // attribute code field
                                                                     'child_attr_code'     => 'APRO',           // attribute code
                                                                     'input_html'         => 'class="w_30"',
-                                                                    'avoid_default_option' => 1
+                                                                    
 						   
                                                                ),
                                                         
@@ -792,7 +800,7 @@
                                     
                                 # form layout
                                 
-                                'form_layout' => 'form_100',
+                                'form_layout' => 'form_50__40-60',
                                     
 				#Table Name
 				
@@ -910,6 +918,17 @@
         };
         
         //end of ext_at_addon
+        if(@$_GET['default_addon']){            
+            $default_addon = $_GET['default_addon'];
+            $F_SERIES['back_to']['is_back_button']=0;             
+            
+        } // end
+        
+        // if not update
+        if(!@$_GET['key']){
+           $temp['line_order_value']=($G->get_count(['table'=>'entity_child_base','where'=>"WHERE entity_code='$default_addon'"])+1);             
+           $F_SERIES['data']['9']['input_html']=" class=w_50 value='$temp[line_order_value]'";            
+        } // end)
     
 ?>
 <style>
@@ -925,8 +944,8 @@
        
             display: block;
             float: left;
-            width:20% !important;
-            height: 80px;
+            width:50% !important;
+            
     }
     
     

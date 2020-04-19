@@ -23,7 +23,7 @@
 	
 	$D_SERIES['add_button'] = array( 'is_add' =>1,'page_link'=>'f=external_entity', 'b_name' => 'Add External Entity' );
 	
-	$D_SERIES['data'][3]['field']	= "concat(id,':',(SELECT COUNT(*) FROM entity_child_base WHERE entity_code=entity.code AND dna_code='EBAT'),':',is_lib)";
+	$D_SERIES['data'][3]['field']	= "concat(id,':',(SELECT COUNT(*) FROM entity_child_base WHERE entity_code=entity.code AND dna_code='EBAT'),':',is_lib,':',code)";
 	
 	$D_SERIES['data'][3]['filter_out'] = function($data_in){
 												
@@ -35,7 +35,7 @@
 										'title'		=> 'Attribute View',
 										'is_fa'		=> ' fa-chevron-circle-right clr_orange fa-lg ',
 										'is_fa_btn'	=> ' btn-default btn-sm w_50 ',
-										'src'		=> "?d=external_attribute&menu_off=1&mode=simple&default_addon=$temp[0]",
+										'src'		=> "?d=external_attribute&menu_off=1&mode=simple&default_addon=$temp[3]",
 										'style'		=> "border:none;width:100%;height:600px;");
 							
 							 return json_encode($data_out);		 

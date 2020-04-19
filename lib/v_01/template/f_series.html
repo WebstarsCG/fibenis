@@ -1718,7 +1718,8 @@
 						
 					</TMPL_IF>
 					
-					<TMPL_IF IS_DIVIDER_TAB>					
+					<TMPL_IF IS_DIVIDER_TAB>
+							<div class="row form_action_row align_CM" id="tab_action_area">Tab Action Area</div>
 							</div> <!--- end of tab item--->
 						</div> <!--- end of tab content--->
 					</TMPL_IF>
@@ -1736,66 +1737,72 @@
 				</TMPL_IF>
 			   
 			   
-			   <div class="row form_action_row">
+				<div class="row form_action_row" id="action_area">
 				
-				<div class="label">&nbsp;</div>
-			      
-				<div class=value>
-				       
-					<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY>" >
+					<div class="label">&nbsp;</div>
+				      
+					<div class=value>
+					       
+						<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY>" >
+						
+						
+						
+						<input
+						
+							<TMPL_IF is_function>
+								type="button" onclick=JavaScript:f_series_validate();
+							<TMPL_ELSE>
+								type="submit"
+							</TMPL_IF>
+							
+							id="ADD"    name="ADD"     class = "button_add" 
+						      
+							<TMPL_IF KEY>
+								 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Update <TMPL_VAR TITLE></TMPL_IF>"
+							<TMPL_ELSE>
+								 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Add <TMPL_VAR TITLE></TMPL_IF>"   
+							</TMPL_IF>
+						
+						>
+							
+						<TMPL_IF KEY>					
+							<TMPL_IF IS_SAVE_FORM>					
+								<input type="submit" id="SAVE" name="SAVE" class = "button" value="Save <TMPL_VAR TITLE>">
+							</TMPL_IF>
+						</TMPL_IF>
 					
-					
-					
-					<input
-					
-						<TMPL_IF is_function>
-							type="button" onclick=JavaScript:f_series_validate();
-						<TMPL_ELSE>
-							type="submit"
+					   
+						<TMPL_IF is_custom_button>
+							<script>G.$('ADD').value='<TMPL_VAR is_custom_button>';
+								G.$('SAVE').value='<TMPL_VAR is_custom_button>';
+							</script>							
 						</TMPL_IF>
 						
-						id="ADD"    name="ADD"     class = "button_add" 
-					      
-						<TMPL_IF KEY>
-							 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Update <TMPL_VAR TITLE></TMPL_IF>"
-						<TMPL_ELSE>
-							 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Add <TMPL_VAR TITLE></TMPL_IF>"   
-						</TMPL_IF>
-					
-					>
-						
-					<TMPL_IF KEY>					
-						<TMPL_IF IS_SAVE_FORM>					
-							<input type="submit" id="SAVE" name="SAVE" class = "button" value="Save <TMPL_VAR TITLE>">
-						</TMPL_IF>
-					</TMPL_IF>
+							
+							
+							
+						<TMPL_IF is_back_button>
+							<a  class="btn btn-default" type="button" href="<TMPL_VAR back_link><TMPL_IF BACK_MENU_OFF>&menu_off=1</TMPL_IF><TMPL_IF BACK_DEFAULT_ADDON>&default_addon=<TMPL_VAR BACK_DEFAULT_ADDON></TMPL_IF>">
+								<TMPL_IF back_name><TMPL_VAR back_name><TMPL_ELSE>Back</TMPL_IF>
+							</a>
+							
+						</TMPL_IF> 
+				      </div>
+				</div> <!--- end of row--->
+			 			 
+				<div class="row">
+				   <div class="label"></div>
+				   <div class=value></div>
+				</div>
 				
-				   
-					<TMPL_IF is_custom_button>
-						<script>G.$('ADD').value='<TMPL_VAR is_custom_button>';
-						        G.$('SAVE').value='<TMPL_VAR is_custom_button>';
-						</script>							
+				<TMPL_IF DIVIDER>
+					<TMPL_IF IS_DIVIDER_TAB>
+						<script>
+								G.$('tab_action_area').innerHTML=G.$('action_area').innerHTML;
+								G.$('action_area').style.display='none';
+						</script>
 					</TMPL_IF>
-					
-						
-					        
-						
-					<TMPL_IF is_back_button>
-						<a  class="btn btn-default" type="button" href="<TMPL_VAR back_link><TMPL_IF BACK_MENU_OFF>&menu_off=1</TMPL_IF><TMPL_IF BACK_DEFAULT_ADDON>&default_addon=<TMPL_VAR BACK_DEFAULT_ADDON></TMPL_IF>">
-							<TMPL_IF back_name><TMPL_VAR back_name><TMPL_ELSE>Back</TMPL_IF>
-						</a>
-						
-					</TMPL_IF> 
-			      </div>
-			   </div> <!--- end of row--->
-			 
-			 
-			 
-			 
-			   <div class="row">
-			      <div class="label"></div>
-			      <div class=value></div>
-			   </div>
+				</TMPL_IF>
 			   
 		 </fieldset>
 	    </div>
