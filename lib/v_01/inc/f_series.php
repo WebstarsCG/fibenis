@@ -9,6 +9,9 @@
 		
 		$PAGE_ID = $PAGE;
 		
+		$F_DEFAULT = ['user_id'   =>'user_id',
+			      'created_by'=>'created_by'];
+		
 		
 		# Check for app key
 		
@@ -148,6 +151,7 @@
 										  'table_name' 	  =>$F_SERIES['table_name'],
 										  'key_id'    	  =>$F_SERIES['key_id'],
 										  'is_user_id'    =>@$F_SERIES['is_user_id'],
+										  'is_created_by' =>@$F_SERIES['is_created_by'],
 										  'prime_index'   =>@$F_SERIES['prime_index']));
 					
 					
@@ -353,6 +357,8 @@
 		
 		$T->AddParam('gx',@$F_SERIES['gx']); // generation
 		
+		$T->AddParam('is_field_id_as_token',@$F_SERIES['is_field_id_as_token']); // generation
+		
 		# header & footer
 		
 		// back to
@@ -429,6 +435,13 @@
 				
 				$lv['counter']['divider'] = 0;
 				
+				// field_id_as_token -> fit
+				$lv['is_fit']             = (@$F_SERIES['is_field_id_as_token'])?'Y':'N';
+				$lv['action_fit']['Y']    = function($param){								
+								return  (@$param['child_attr_code'])?$param['child_attr_code']:((@$param['field_id'])?$param['field_id']:strtolower(str_replace(" ","_",$param['field_name'])));  
+						            };
+				$lv['action_fit']['N']    = function(){ return '';};  
+				
 		    
 				foreach($data_def as $key=>$value){
 						
@@ -436,13 +449,13 @@
 						
 						$temp['field_name']  	   	= $value['field_name'];
 						
+						$temp['field_token']       	= (@$value['field_token'])?@$value['field_token']:$lv['action_fit'][$lv['is_fit'] ]($value);
+						
 						$temp['field_id']   	   	= $key;
-	
-						$temp['field_token']       	= (@$value['field_token'])?@$value['field_token']:'';
 						
 						$temp['is_mandatory']      	= (@$value['is_mandatory'])?1:0;
 	
-						$lv['attr']='';
+						$lv['attr']			= '';
 	
 						
 						
@@ -508,15 +521,13 @@
 		
 						// toggle
 					
-						elseif(@$value['type']=='toggle'){
-								
-								$temp['field_type_toggle'] 	    	= 1;
+						elseif(@$value['type']=='toggle'){								
+								$temp['field_type_toggle'] 	    	= 	1;
 								$temp['is_round']                	=	(@$value['is_round'])?1:0;
 								$temp['show_status_label']       	=	(@$value['show_status_label'])?1:0;
-								$temp['on_label']       	    		=	(@$value['on_label'])?$value['on_label']:'On';
-								$temp['off_label']          	    =	(@$value['off_label'])?$value['off_label']:'Off';
-								$temp['is_default_on']            =	(@$value['is_default_on'])?1:0;
-								
+								$temp['on_label']       	    	=	(@$value['on_label'])?$value['on_label']:'On';
+								$temp['off_label']          	    	=	(@$value['off_label'])?$value['off_label']:'Off';
+								$temp['is_default_on']            	=	(@$value['is_default_on'])?1:0;								
 						}
 						
 						// code editor
@@ -586,7 +597,7 @@
 									$temp['default_label'] = @$value['default']['label'];
 								
 								};
-							}
+						}
 						
 						// Range
 		
@@ -1052,13 +1063,17 @@
 				
 				global $rdsql;
 				
+				global $F_DEFAULT;
+				
 				$data_def  	            = $param['data_def'];
 				
 				$table_name 		    = $param['table_name'];
 				
 				$key_id			    = $param['key_id'];
 				
-				$is_user_id		    = $param['is_user_id'];
+				$is_user_id		    = is_numeric($param['is_user_id'])?$F_DEFAULT['user_id']:$param['is_user_id'];
+				
+				$is_created_by		    = is_numeric($param['is_created_by'])?$F_DEFAULT['created_by']:$param['is_created_by'];
 				
 				$prime_index		    = $param['prime_index'];
 				
@@ -1187,6 +1202,12 @@
 						
 				if($is_user_id){
 						$key_csv.='user_id,';
+						$key_value.="'".$USER_ID."',";								
+				} # end
+				
+				# created_by
+				if($is_created_by){
+						$key_csv.='created_by,';
 						$key_value.="'".$USER_ID."',";								
 				} # end
 				
@@ -1760,6 +1781,8 @@
 				
 				global $rdsql;
 				
+				global $F_DEFAULT;
+				
 				# param
 				
 				$data_def  	= $param['data_def'];
@@ -1770,7 +1793,7 @@
 				
 				$key_value	= $param['key_value'];
 				
-				$is_user_id	= $param['is_user_id'];
+				$is_user_id	= is_numeric($param['is_user_id'])?$F_DEFAULT['user_id']:$param['is_user_id'];
 				
 				$prime_index	= $param['prime_index'];
 				

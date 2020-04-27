@@ -49,11 +49,18 @@
 				
 		// Generation
 		<TMPL_IF GX>
-			f_series.is_must['is_json']=1;		
-		
-			<TMPL_LOOP FIELD_INFO>
-				f_series.is_must['data']['X<TMPL_VAR field_id>']=new Object({'is_active':false});
-			</TMPL_LOOP>
+			f_series.is_must['is_json']=1;
+			
+			<TMPL_IF IS_FIELD_ID_AS_TOKEN>
+				<TMPL_LOOP FIELD_INFO>
+					f_series.is_must['data']['X<TMPL_VAR field_id>']=new Object({'is_active':false});
+					f_series.element['<TMPL_VAR FIELD_TOKEN>']='<TMPL_VAR FIELD_ID>';
+				</TMPL_LOOP>
+			<TMPL_ELSE>		
+				<TMPL_LOOP FIELD_INFO>
+					f_series.is_must['data']['X<TMPL_VAR field_id>']=new Object({'is_active':false});
+				</TMPL_LOOP>
+			</TMPL_IF>
 			 
 			<TMPL_LOOP VALIDATE_INFO>			
 				f_series.is_must['data']['<TMPL_VAR ID>']['is_active']=true;

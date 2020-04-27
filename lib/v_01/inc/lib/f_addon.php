@@ -24,7 +24,7 @@
 					    'ITIG'=>['table'=>'num'],
                                             'ITTA'=>['table'=>'text'],
 					    'ITCE'=>['table'=>'text'],
-					    'ITTG'=>['table'=>'num'],
+					    'ITTG'=>['table'=>'bool'],
                                             'ITTE'=>['table'=>'text'],
                                             'ITSL'=>['table'=>'varchar'],
 					    'ITFT'=>['table'=>'text'],
