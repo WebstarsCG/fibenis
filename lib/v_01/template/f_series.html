@@ -261,12 +261,12 @@
 								</div> <!--- end of section-->							
 							</TMPL_UNLESS>
 							
-							<div class="panel panel-default">
+							<div class="panel panel-default" id="X<TMPL_VAR field_id>_panel">
 								<!--- Heading--->
 								<div class="panel-heading">
 								  <h4 class="panel-title">
 								    <a data-toggle="collapse" data-parent="#accordion" href="#X<TMPL_VAR field_id>">
-									<TMPL_VAR field_name><span id="message_X<TMPL_VAR field_id>"></span>
+									<span id="X<TMPL_VAR field_id>_label"><TMPL_VAR field_name></span><span id="message_X<TMPL_VAR field_id>"></span>
 								    </a>
 								  </h4>
 								</div>
@@ -291,12 +291,12 @@
 								<div class="panel-group" id="accordion_<TMPL_VAR LAST_DIVIDER_ID>">
 							</TMPL_IF>
 							
-							<div class="panel panel-default">
+							<div class="panel panel-default" id="X<TMPL_VAR field_id>_panel">
 								<!--- Heading--->
 								<div class="panel-heading">
 									<h4 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordion_<TMPL_VAR LAST_DIVIDER_ID>" href="#X<TMPL_VAR field_id>">
-											<TMPL_VAR field_name>
+											<span id="X<TMPL_VAR field_id>_label"><TMPL_VAR field_name></span>
 										</a>
 									</h4>
 								</div>
@@ -473,7 +473,12 @@
 											 data-is-must=1
 											 onblur="JavaScript:checkIsMust(this);"									       
 										 <TMPL_ELSE>
-											 onblur="JavaScript:elementFocusOut(this);"
+											<TMPL_IF IS_FORMAT>
+												data-is-format=1
+												onblur="JavaScript:checkIsFormat(this);"	
+											<TMPL_ELSE>
+												onblur="JavaScript:elementFocusOut(this);"
+											</TMPL_IF> 
 										 </TMPL_IF>
 											 onfocus="JavaScript:elementFocus(this);"
 											 
@@ -485,6 +490,7 @@
 									 <span id="X<TMPL_VAR field_id>_v_msg">&nbsp;</span>	
 									 <TMPL_IF hint><div class="label_grand_child"><TMPL_VAR hint></div></TMPL_IF>								
 									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
+									 <TMPL_IF IS_FORMAT><script>f_series.is_must['data']['X<TMPL_VAR field_id>']['is_active']=true;</script></TMPL_IF>
 						</span>
 				        </div>					
 				</TMPL_IF>
@@ -536,6 +542,7 @@
 										 autocomplete="off"
 										 <TMPL_VAR input_html>
 										 type    = "password"
+										 <TMPL_IF IS_MANDATORY>data-is-must=1</TMPL_IF>
 									 >
 								     
 									 <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
@@ -953,6 +960,8 @@
 							 	data-file-max-size="10"
 							</TMPL_IF>
 							
+							<TMPL_IF IS_MANDATORY>data-is-must=1</TMPL_IF>
+							
 							<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
 							style="display:inline-block;"
 							onchange="check_file_in(this);"
@@ -983,7 +992,7 @@
 					  <span class="label"><TMPL_VAR field_name></span>
 					  <span class=value>
 							    <textarea id="X<TMPL_VAR field_id>" name="X<TMPL_VAR field_id>" <TMPL_VAR input_html>
-							    
+										onkeydown="fbn_add_enter_textarea(event,this);"
 									<TMPL_IF IS_INTEGER>
 										onkeypress  = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
 										onpaste     = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"

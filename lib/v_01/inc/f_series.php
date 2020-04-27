@@ -11,7 +11,7 @@
 		
 		$F_DEFAULT = ['user_id'   =>'user_id',
 			      'created_by'=>'created_by'];
-		
+		$F_MESSAGE = '';
 		
 		# Check for app key
 		
@@ -120,14 +120,15 @@
 			
 				if(@$_POST['UPDATE']){
 				
-						@$message	=  update_data(array('data_def'   	  =>$F_SERIES['data'],
+						@$update_info	=  update_data(array('data_def'   	  =>$F_SERIES['data'],
 											  'table_name' 	  =>$F_SERIES['table_name'],
 											  'key_id'    	  =>$F_SERIES['key_id'],
 											  'key_value'  	  =>$_POST['UPDATE'],
 											  'is_user_id'    =>$F_SERIES['is_user_id'],
 											  'prime_index'   =>@$F_SERIES['prime_index']));
-						
+												
 						@$row_id	= $_POST['UPDATE'];
+						$F_MESSAGE      =  $update_info; 
 						
 						$param = array('user_id'=>$USER_ID,
 							       
@@ -155,7 +156,8 @@
 										  'prime_index'   =>@$F_SERIES['prime_index']));
 					
 					
-						$message  	=  $insert_info[0];     
+						$message  	=  $insert_info[0];
+						$F_MESSAGE      = $message;
 					
 						$row_id 	=   $insert_info[1]; //$rdsql->last_insert_id($F_SERIES['table_name']);
 					
@@ -264,14 +266,19 @@
 				
 				$uniq_trans_key     = md5($row_id.$USER_ID.$PASS_ID.time().rand());
 				
-				setcookie($uniq_trans_key,$message,(time()+360));				
+				setcookie($uniq_trans_key,$F_MESSAGE,(time()+360));				
 				
 				$update_trans_query = (@$_POST['UPDATE'])?"&key=".@$_POST['UPDATE']:'';		  
 				
 				$temp_req_query     = $_SERVER['QUERY_STRING'];
 				
 				$temp_req_query_trim = preg_replace('/(\&trans_key\s*=\s*[0-9a-fA-F]{32})/i','',$temp_req_query);
-					
+				
+				if($update_trans_query){						
+				
+					$temp_req_query_trim = preg_replace('/(\&key\s*=\s*[0-9]{1,32})/i','',$temp_req_query_trim);
+				}
+				
 				if(!@$F_SERIES['avoid_trans_key_direct']){
 						header("Location:?$temp_req_query_trim&trans_key=$uniq_trans_key$update_trans_query");			
 				}
@@ -369,12 +376,15 @@
 		
 		} // end
 		
+		//echo "M->".$F_MESSAGE;
 		###TRANSKEY-R-17072018
 		if(@$_COOKIE[@$_GET['trans_key']]){
 								
 				$T->AddParam('message',@$_COOKIE[@$_GET['trans_key']]);								
 				setcookie($_GET['trans_key'],'',(time()-360));									      
-		} # end
+		}elseif($F_MESSAGE){
+				$T->AddParam('message',$F_MESSAGE);								
+		}
 		
 		// is session
 	
@@ -878,6 +888,8 @@
 												
 												$temp['max_length']   = $lv['allow_matches'][2];
 										}
+										
+										$temp['is_format'] = (!$temp['is_mandatory'])?1:0;
 								}
 								
 								#print_r($lv['allow_matches']);
