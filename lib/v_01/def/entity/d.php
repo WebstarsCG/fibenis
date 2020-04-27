@@ -48,7 +48,7 @@
 												 'title'=>'Attribute View',
 												 'is_fa'=>' fa-chevron-circle-right clr_orange fa-lg ',
 												 'is_fa_btn'=>' btn-default btn-sm w_50 ',
-												 'src'=>"?d=entity_attribute&menu_off=1&mode=simple&default_addon=$temp[0]",
+												 'src'=>"?d=entity_attribute&menu_off=1&mode=simple&default_addon=$temp[0]&show=1",
 												 'style'=>"border:none;width:100%;height:600px;");
 												 return json_encode($data_out);
 													 
@@ -63,7 +63,7 @@
 							
 							4=>array('th'	=> '',
 								     
-								  'field'	=> "concat(id,':',is_lib)",
+								  'field'	=> "concat(id,':',code)",
 								  
 								  'attr' =>  [ 'class'=>"brdr_right align_CM"],
 									
@@ -75,7 +75,7 @@
 													'link_title'	=> "Add Attribute",
 													'is_fa'		=> ' fa fa-plus-square-o clr_red fa-lg',
 													'title'		=> 'Add Attribute',
-													'src'		=> "?f=entity_attribute&menu_off=1&mode=simple&default_addon=$temp[0]",
+													'src'		=> "?f=entity_attribute&menu_off=1&mode=simple&default_addon=$temp[1]",
 													'style'		=> "border:none;width:100%;height:600px;"
 												);
 											
@@ -88,7 +88,9 @@
 							
 							5=>array(
 								 
-								'th'		=> 'Child', 'th_attr'=>' colspan=2 ',
+								'th'		=> 'Child',
+								
+								'th_attr'=>' colspan=2 ',
 								     
 								'field'		=> "concat(id,':',(SELECT COUNT(*) FROM entity_child WHERE entity_code=entity.code))",
 								
@@ -103,14 +105,14 @@
 													 'is_fa'=>' fa-chevron-circle-right clr_dark_blue fa-lg ',
 													 'is_fa_btn'=>' btn-default btn-sm ',
 													 'title'=>'Child View',
-												         'src'=>"?d=entity_child&menu_off=1&mode=simple&default_addon=$temp[0]",
+												         'src'=>"?d=entity_child&menu_off=1&mode=simple&default_addon=$temp[0]&show=1",
 												         'style'=>"border:none;width:100%;height:600px;");
 													 return json_encode($data_out);
 													 
 													 
 												 },
                                                                         
-                                                                        'js_call'=>'d_series.set_nd'
+                                                                'js_call'=>'d_series.set_nd'
 									
 									
                                                                         
@@ -118,32 +120,35 @@
 							
 							6=>array('th'	=> '',
 								     
-								  'field'	=> 'id',
+								  'field'	=> "concat(id,':',code)",
 								  
 								  'attr' =>  [ 'class'=>"brdr_right align_CM"],
 									
 								  'filter_out'=>function($data_in){
                                                                             
-													$data_out = array('id'   => $data_in,
-													'link_title'=>'Add Child',
-													'is_fa'=>' fa fa-plus-square-o clr_dark_blue fa-lg',
-													'title'=>'Add Child',
-													'src'=>"?f=entity_child&menu_off=1&mode=simple&default_addon=$data_in",
-													'style'=>"border:none;width:100%;height:600px;"
-												  );
+													$temp = explode(':',$data_in);
+													
+													$data_out = array('id'   => $temp[0],
+																'link_title'=>'Add Child',
+																'is_fa'=>' fa fa-plus-square-o clr_dark_blue fa-lg',
+																'title'=>'Add Child',
+																//'src'=>"?f=entity_child&menu_off=1&mode=simple&default_addon=$data_in",
+																'src'=>"?f=entity_child_addon&menu_off=1&mode=simple&default_addon=$temp[1]",
+																'style'=>"border:none;width:100%;height:600px;"
+															);
 														
 													return json_encode($data_out);
 													 
-												 },
+											},
                                                                         
                                                                         'js_call'=>'d_series.set_nd'
                                                                         
-								    ),
+								),
 							
 							
 							7=>array('th'	=> 'Child Base', 'th_attr'=>' colspan=2 ',
 								     
-								'field'	=> "concat(id,':',(SELECT COUNT(*) FROM entity_child_base WHERE entity_code=entity.code))",
+								'field'	=> "concat(id,':',(SELECT COUNT(*) FROM entity_child_base WHERE entity_code=entity.code),':',code)",
 								
 								'attr' =>  [ 'class'=>"", 'width' => "6%"],
 									
@@ -156,7 +161,7 @@
 													'is_fa'=>' fa-chevron-circle-right clr_red fa-lg ',
 													'is_fa_btn'=>' btn-default btn-sm ',
 													'title'=>'Entity Child Base',
-												        'src'=>"?d=entity_child_base&menu_off=1&mode=simple&default_addon=$temp[0]",
+												        'src'=>"?d=entity_child_base&menu_off=1&mode=simple&default_addon=$temp[2]&show=1",
 												        'style'=>"border:none;width:100%;height:600px;");
 													 return json_encode($data_out);
 													 
@@ -169,9 +174,9 @@
                                                                         
 								    ),
 							
-							8=>array('th'	=> '',
+								8=>array('th'	=> '',
 								     
-								  'field'	=> "concat(id,':',is_lib)",
+								  'field'	=> "concat(id,':',code)",
 								  
 								  'attr' =>  [ 'class'=>"brdr_right align_CM"],
 									
@@ -184,7 +189,7 @@
 													'link_title'=>'Add Entity Child Base',
 													'is_fa'=>' fa fa-plus-square-o txt_size_18 clr_red fa-lg',
 													'title'=>'Add Child Base',
-													'src'=>"?f=entity_child_base&menu_off=1&mode=simple&default_addon=$temp[0]",
+													'src'=>"?f=entity_child_base&menu_off=1&mode=simple&default_addon=$temp[1]",
 													'style'=>"border:none;width:100%;height:600px;");
 												//}else{
 												//	$data_out = array('id'   => $temp[3],
@@ -259,32 +264,32 @@
                                                                         
 								    ),
 							
-							11=>array('th'	=> 'Addon',
-								     
-								  'field'	=> "concat(id,':',code)",
-								  
-								  'attr' =>  [ 'class'=>"brdr_right align_CM" , 'width'=>"3%"],
-									
-								  'filter_out'=>function($data_in){
-										
-													$temp = explode(':',$data_in);
-									    
-													$data_out = array('id'   => $temp[0],
-													'link_title'=>'Addon',
-													'is_fa'=>' fa fa-files-o clr_green fa-lg',
-													'title'=>'Add Child Base',
-													'src'=>"?f=entity_child_addon&menu_off=1&mode=simple&default_addon=$temp[1]",
-													'style'=>"border:none;width:100%;height:600px;"
-												  );
-														
-													return json_encode($data_out);
-													 
-												 },
-                                                                        
-                                                                        'js_call'=>'d_series.set_nd'
-                                                                        
-								    ),
-							
+//							11=>array('th'	=> 'Addon',
+//								     
+//								  'field'	=> "concat(id,':',code)",
+//								  
+//								  'attr' =>  [ 'class'=>"brdr_right align_CM" , 'width'=>"3%"],
+//									
+//								  'filter_out'=>function($data_in){
+//										
+//													$temp = explode(':',$data_in);
+//									    
+//													$data_out = array('id'   => $temp[0],
+//													'link_title'=>'Addon',
+//													'is_fa'=>' fa fa-files-o clr_green fa-lg',
+//													'title'=>'Add Child Base',
+//													'src'=>"?f=entity_child_addon&menu_off=1&mode=simple&default_addon=$temp[1]",
+//													'style'=>"border:none;width:100%;height:600px;"
+//												  );
+//														
+//													return json_encode($data_out);
+//													 
+//												 },
+//                                                                        
+//                                                                        'js_call'=>'d_series.set_nd'
+//                                                                        
+//								    ),
+//							
 							12=>array('th'=>'Updation',
 									 
 								'field'=>"concat(get_user_internal_name(user_id),',',date_format(timestamp_punch,'%d-%b-%y %T'))",

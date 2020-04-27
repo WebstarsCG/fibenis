@@ -59,9 +59,9 @@
 									 
 								'field'=>"concat(get_user_internal_name(user_id),',',date_format(timestamp_punch,'%d-%b-%y %T'))",
 							        									 
-								'td_attr' => 'width="10%"',
+								'td_attr' => 'width="20%"',
 								
-								'js_call'=> 'show_user_info_2l',
+								'js_call'=> 'show_user_info',
 								
 								'is_sort' => 'timestamp_punch'
 									 
@@ -176,7 +176,7 @@
 	if(@$_GET['default_addon']){
 		
 		$default_addon = @$_GET['default_addon'];
-        	$D_SERIES['key_filter'] ="AND  entity_code=(SELECT code FROM entity WHERE id = $default_addon)";
+        	$D_SERIES['key_filter'] ="AND  entity_code='$default_addon' ";
 		unset($D_SERIES['data'][1]);
 		unset($D_SERIES['export_csv']);
 		$D_SERIES['action']['is_edit']=1;

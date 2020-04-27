@@ -13,7 +13,7 @@
 				#Table field
                     
 				'data'	=>   array('0'  => ['field_name'=>'Basic',
-								 'type'=>'heading'					 
+								 'type'=>'heading',					 
 								],
 						   
                                                     
@@ -96,9 +96,9 @@
 						   '6' =>array(     'field_name'          => 'Input Type',                                                                
                                                                     'field_id'            => 'ea_value',				       
                                                                     'type'                => 'option',
-                                                                    'option_data'         => $G->option_builder('entity_attribute','code,sn'," WHERE entity_code='IT' ORDER by sn ASC"),                                                               
+                                                                    'option_data'         => $G->option_builder('entity_child_base','token,ln'," WHERE entity_code='IT' ORDER by ln ASC"),                                                               
                                                                     'is_mandatory'        => 1,
-                                                                    'is_hide'             => 1,
+                                                                    //'is_hide'             => 1,
                                                                     'option_default'=> array('label'=>'Text','value'=>'ITTX'),
                                                                     //'input_html'          => ' onchange=input_type_action(this)',
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
@@ -129,14 +129,11 @@
 											           
                                                                                                    ),
 								     'colHeaders'=> array(
-                                                                                                    
-                                                                                                    
-                                                                                                    
                                                                                                     array('column'=>'Table','width'=>'200','type'=>'dropDown','data'=>"<option value=Entity_Child_Base>Entity_Child_Base</option><option value=Entity_Child>Entity_Child</option>"),
-                                                                                                    array('column'=>'Entity Code','width'=>'200','type'=>'dropDown','data'=> $G->ft_option_builder('entity','concat(code,\'->\',sn),sn'," ORDER BY sn ASC")),
-                                                                                                    array('column'=>'Option Id Field','width'=>'200','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
-                                                                                                    array('column'=>'Option Id Value','width'=>'200','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
-                                                                                                    array('column'=>'Filter','width'=>'100','type'=>'text'),
+                                                                                                    array('column'=>'Entity Code','width'=>'100','type'=>'dropDown','data'=> $G->ft_option_builder('entity','concat(code,\'->\',sn),sn'," ORDER BY sn ASC")),
+                                                                                                    array('column'=>'Option Id Field','width'=>'100','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
+                                                                                                    array('column'=>'Option Id Value','width'=>'100','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
+                                                                                                    array('column'=>'Filter','width'=>'300','type'=>'text'),
                                                                                                     
                                                                                          ),
                                                                      
@@ -154,7 +151,7 @@
 							       
 							       'is_mandatory'=>0,
                                                                
-                                                               'input_html'=>' class="w_50"'
+                                                               'input_html'=>' class="w_50 align_RM" '
 						   
                                                                ),  
                                                         
@@ -217,6 +214,7 @@
                                                     '14' =>array(   'field_name'            => 'Mandatory',                                                                
                                                                     'field_id'              => 'ea_value',				       
                                                                     'is_mandatory'          => 0,
+                                                                    
                                                                     'type'                => 'toggle',
                                                                     'on_label'            => 'Yes',
                                                                     'off_label'            => 'No',
@@ -502,7 +500,7 @@
                                                     
                                                     '31' =>array(     'field_name'          => 'Table Heading TMPL',                                                                
                                                                     'field_id'            => 'ea_value',				       
-                                                                    'type'                => 'textarea',
+                                                                    'type'                => 'code_editor',
                                                                     'is_mandatory'        => 0,
                                                                     'input_html'          => ' onchange=input_type_action(this)',
                                                                                                                         
@@ -513,6 +511,11 @@
                                                                     'child_attr_code'     => 'APFH',                 // attribute code
 						   
                                                                ),
+                                                    
+                                                    '46'  => ['field_name'=>'Fiben Table Columns',
+								 'type'=>'heading'					 
+								],
+                                                       
                                                          
                                                     '32' =>array(   'field_name'          => 'Grid Detail',                                                                
                                                                     'field_id'            => 'ea_value',				       
@@ -794,8 +797,102 @@
                                                                     'on_label'           =>'Yes',
                                                                     'off_label'           =>'No'
                                                             ),
-                                                   
-                                    
+                                                            
+                                                            
+                                                            '47'  => ['field_name'=>'Desk',
+                                                                      'type'      =>'heading'					 
+                                                                    ],
+                                                            
+                                                            '48' =>array(  'field_name'         => 'Add this to Desk?',                                                                
+                                                                           'field_id'            => 'ea_value',				       
+                                                                           'type' 	          => 'toggle',
+                                                                           'is_mandatory'        => 0,
+                                                                                   
+                                                                           'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                           'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                           'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                           'child_attr_code'     => 'ADXI',           // attribute code                                                                    
+                                                                           
+                                                                           'input_html'         => 'class="w_250"',
+                                                                           'show_status_label'  => 1,
+                                                                           'on_label'           =>'Yes',
+                                                                           'off_label'           =>'No'
+                                                            ),
+                                                            
+                                                                                                                      
+                                                            '49' =>array(     'field_name'        => 'Column Header Name',                                                                
+                                                                              'field_id'          => 'ea_value',				       
+                                                                              'type' 	          => 'text',
+                                                                              'is_mandatory'      => 0,                                                                            
+                                                                            'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                            'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                            'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                            'child_attr_code'     => 'ADXN',           // attribute code                                                                                                                                        
+                                                                            'input_html'          => 'class="x_300[=\']"',
+                                                                            'allow'               => 'x256'
+                                                            ),
+                                                            
+                                                            '50' =>array(     'field_name'        => 'Column Header Attr.',                                                                
+                                                                              'field_id'          => 'ea_value',				       
+                                                                              'type' 	          => 'text',
+                                                                              'is_mandatory'      => 0,                                                                            
+                                                                            'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                            'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                            'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                            'child_attr_code'     => 'ADXH',           // attribute code                                                                                                                                        
+                                                                            'input_html'          => 'class="w_300[=\']"',
+                                                                            'allow'               => "x256[=']"
+                                                            ),
+                                                            
+                                                            '51' =>array(     'field_name'        => 'Column Attr.',                                                                
+                                                                              'field_id'          => 'ea_value',				       
+                                                                              'type' 	          => 'text',
+                                                                              'is_mandatory'      => 0,                                                                            
+                                                                            'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                            'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                            'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                            'child_attr_code'     => 'ADXC',           // attribute code                                                                                                                                        
+                                                                            'input_html'          => 'class="w_300[=\']"',
+                                                                            'allow'               => "x256[=']"
+                                                            ),
+                                                            
+                                                            '52' =>array(     'field_name'        => 'Filter Out.',                                                                
+                                                                              'field_id'          => 'ea_value',				       
+                                                                              'type' 	          => 'textarea',
+                                                                              'is_mandatory'      => 0,                                                                            
+                                                                            'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                            'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                            'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                            'child_attr_code'     => 'ADXF',           // attribute code                                                                                                                                        
+                                                                            'input_html'          => 'class="w_300"',
+                                                                            'allow'               => "x256[=']"
+                                                            ),
+                                                            
+                                                            '53' =>array(     'field_name'        => 'JS Call',                                                                
+                                                                              'field_id'          => 'ea_value',				       
+                                                                              'type' 	          => 'textarea',
+                                                                              'is_mandatory'      => 0,                                                                            
+                                                                            'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                            'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                            'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                            'child_attr_code'     => 'ADXJ',           // attribute code                                                                                                                                        
+                                                                            'input_html'          => 'class="w_300"',
+                                                                            'allow'               => "x256[=']"
+                                                            ),
+                                                            
+                                                            
+                                                            '54' =>array(   'field_name'          => 'Sort',                                                                
+                                                                            'field_id'            => 'ea_value',				       
+                                                                            'type' 	          => 'text',
+                                                                            'is_mandatory'        => 0,                                                                            
+                                                                            'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                            'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                            'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                            'child_attr_code'     => 'ADXS',           // attribute code                                                                                                                                        
+                                                                            'input_html'          => 'class="w_300"',
+                                                                            'allow'               => "x64"
+                                                            ),
+                                                            
                                 ),
                                     
                                 # form layout
@@ -832,6 +929,8 @@
                                 'show_query' => 0,
                                 
                                 'default_fields'=>array("dna_code"=>"'EBAT'"),
+                                
+                                'is_field_id_as_token'=>1
 				
 			);
     
@@ -868,10 +967,12 @@
         
         $temp = [];
         
-        $temp ['input_type'] = ['EX'    => [0,1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45],
+        $temp ['input_type'] = ['EX'    => [0,1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,
+                                            21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,
+                                            41,42,43,44,45,46],
                                 'GN'    => [0,1,2,3,4,5,6,9,10,11,12,14,15,16,17],
                                 'ITTX'  => [13],
-                                'ITFT'  => [26,27,28,29,30,31,32],
+                                'ITFT'  => [26,27,28,29,30,31,32,46],
                                 'ITSL'  => [8],
                                 'ITTA'  => [13],
                                 'ITIG'  => [],
@@ -890,7 +991,7 @@
                 
                 if (array_key_exists($_GET['i_t'],$temp['input_type'])){
                 
-                        $F_SERIES['data'][6]['option_data']=$G->option_builder('entity_attribute','code,sn'," WHERE entity_code='IT' AND code= '$_GET[i_t]' ORDER by sn ASC");
+                        $F_SERIES['data'][6]['option_data']=$G->option_builder('entity_child_base','token,ln'," WHERE entity_code='IT' AND token= '$_GET[i_t]' ORDER by ln ASC");
                         
                         $F_SERIES['data'][6]['avoid_default_option']= 1;
                         
@@ -920,18 +1021,36 @@
         //end of ext_at_addon
         if(@$_GET['default_addon']){            
             $default_addon = $_GET['default_addon'];
-            $F_SERIES['back_to']['is_back_button']=0;             
+            $F_SERIES['back_to']['is_back_button']=0;
+            
             
         } // end
         
         // if not update
         if(!@$_GET['key']){
-           $temp['line_order_value']=($G->get_count(['table'=>'entity_child_base','where'=>"WHERE entity_code='$default_addon'"])+1);             
-           $F_SERIES['data']['9']['input_html']=" class=w_50 value='$temp[line_order_value]'";            
+           
+           $temp['where']=(@$default_addon)?"WHERE entity_code='$default_addon'":''; 
+           $temp['line_order_value']=($G->get_count(['table'=>'entity_child_base','where'=>$temp['where']])+1);             
+           $F_SERIES['data']['9']['input_html']=" value='$temp[line_order_value]'";            
         } // end)
     
 ?>
 <style>
+    
+    .lo_external_attribute ul li{        
+        display: inline-block;
+        float  : left;
+        height:33px;
+        width  : 48%;
+        margin:1%;
+    }
+    
+    .lo_external_attribute ul li a{        
+        border:1px solid #aaa;
+        display:block;
+        padding:5px;
+        width:100%;
+    }
     
     #X11_panel,
     #X12_panel,
@@ -948,5 +1067,38 @@
             
     }
     
+    
+    #X8_panel,
+    #X31_panel,
+    #X32_panel{   
+        display:block;
+        height:auto !important;
+        padding-top:10px;
+        width  :100% !important;
+    }
+    
+    #X8_panel .label,
+    #X31_panel .label{
+        width:20% !important;
+    }
+    
+    #X8_panel .value,
+    #X31_panel .value{        
+        width:80% !important;        
+    }
+    
+    #X9_panel .value input{
+        width:50px !important;
+        
+    }
+    
+    
+    #X32_panel .label{
+        display:none;    
+    }
+    
+    #X32_panel .value{
+        width:100% !important;
+    }
     
 </style>

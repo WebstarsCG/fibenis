@@ -10,22 +10,22 @@
 				#Table field
                     
 				'data'	=>   array(
-						   
-						    '1' =>array( 'field_name'=> 'Basic',
-                                                               
-                                                               'field_id' => 'basic',
-                                                               
-                                                               'type' => 'heading',
-                                                               
-                                                               //'option_data'=>$G->option_builder('entity','code,sn'," ORDER by sn ASC "),
-                                                               
-                                                               'is_mandatory'=>1,
-                                                               
-                                                               'input_html'=>'class="w_100"',
-                                                               
-                                                               'avoid_default_option' => 0
-                                                               
-                                                               ),
+//						   
+//						    '1' =>array( 'field_name'=> 'Basic',
+//                                                               
+//                                                               'field_id' => 'basic',
+//                                                               
+//                                                               'type' => 'heading',
+//                                                               
+//                                                               //'option_data'=>$G->option_builder('entity','code,sn'," ORDER by sn ASC "),
+//                                                               
+//                                                               'is_mandatory'=>1,
+//                                                               
+//                                                               'input_html'=>'class="w_100"',
+//                                                               
+//                                                               'avoid_default_option' => 0
+//                                                               
+//                                                               ),
 						    
 						   
 						   '2' =>array( 'field_name'=> 'Entity',
@@ -40,7 +40,9 @@
                                                                
                                                                'input_html'=>'class="w_100"',
                                                                
-                                                               'avoid_default_option' => 0
+                                                               'avoid_default_option' => 0,
+							       
+							       
                                                                
                                                                )
 						
@@ -94,12 +96,17 @@
 				]);
 		    
 	    $F_SERIES['data']=$F_SERIES['temp']['data'];
-
 	    
-	   
+	    $F_SERIES['data'][2]['is_hide']=1;
+	    
+	    array_push($F_SERIES['data'],$F_SERIES['data'][2]);
+	    
+	    unset($F_SERIES['data'][2]);
+	    
 	    
 	} // end
 	
     } # end
+    
      
 ?>

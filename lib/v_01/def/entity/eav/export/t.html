@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TMPL_LOOP DATA_INFO>
+	<entity>
+		<code><TMPL_VAR CODE></code>		
+		<name><TMPL_VAR NAME></name>
+		<attributes>
+		<TMPL_LOOP ATTRIBUTES>
+			<attribute token="<TMPL_VAR TOKEN>" type="<TMPL_VAR INPUT_TYPE>">
+				<name><TMPL_VAR NAME></name>
+				<description><TMPL_VAR DESCRIPTION></description>
+				<class><TMPL_VAR CLASS></class>
+				<html><TMPL_VAR HTML></html>
+				<mandantory><TMPL_VAR MANDATORY></mandantory>
+				<hint><TMPL_VAR HINT></hint>
+				<hide><TMPL_VAR HIDE></hide>
+				<readonly><TMPL_VAR READ_ONLY></readonly>
+			</attribute>
+		</TMPL_LOOP>
+		</attributes>
+	</entity>
+</TMPL_LOOP>

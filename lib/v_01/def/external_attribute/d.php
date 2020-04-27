@@ -29,7 +29,7 @@
                                                                     'is_sort'=>1,
 								    
 								    ),
-                                                            3=>array('th'=>'Input Type', 'field'=>"(SELECT sn FROM entity_attribute WHERE code=(SELECT ea_value FROM ecb_av_addon_varchar WHERE parent_id=entity_child_base.id AND ea_code='APIT'))",
+                                                            3=>array('th'=>'Input Type', 'field'=>"get_ecb_ln_by_token(get_ecb_av_addon_varchar(id,'APIT'))",
                                                                     
 								    'td_attr' =>  ' class="txt_size_12" width="15%"',
                                                                     
@@ -119,6 +119,8 @@
                                 
                                     'is_user_id'       => 'user_id',
                                 
+				    'is_narrow_down'   => 1,	
+				
                                     # Communication
                                 
                                     'prime_index'   => 1,
@@ -166,7 +168,7 @@
 										
 										'filter_type' =>'option_list', 
 												    
-										'option_value'=> $G->option_builder('entity_attribute','code,sn'," WHERE entity_code='IT' ORDER by sn ASC"),
+										'option_value'=> $G->option_builder('entity_child_base','token,ln'," WHERE entity_code='IT' ORDER by ln ASC"),
 							    
 										'html'=>'  title="Select Client"   data-width="160px"  ',
 								    
@@ -228,20 +230,29 @@
 	    
 	    $D_SERIES['data'][7] = array(	'th'=>'Edit ',
 								
-						'field' =>"concat(id,':',get_ecb_addon_varchar(entity_child_base.id,'APIT'))",
+						'field' =>"concat(id,':',get_ecb_addon_varchar(entity_child_base.id,'APIT'),':',entity_code)",
 						
 						'td_attr' => ' class=" align_RM" width="10%"',
 						
 						'filter_out'=>function($data_in){
-							    
+							    	    
 							    global $PAGE_NAME;
 							    
-							    $data_in=$data_in.':'.$PAGE_NAME;
-								
-							    return '<a class="ficon tip_bottom" onclick="JavaScript:ex_edit('."'$data_in'".');">'.
-								    '<i class="fa fa-edit  txt_size_15" aria-hidden="true"></i>&nbsp;'.
-								    'Edit</a><span class="tooltiptext">Edit</span>';
-						}
+							    $lv=[];
+							    
+							    $temp = explode(':',$data_in);
+        
+							    $data_out	 = array('id'        => $temp[0],
+									         'link_title'=> 'Edit',
+									         'is_fa'     => ' fa fa-edit',
+									         'title'     => 'Manage External Attribute',
+									         'src'       => "?f=$PAGE_NAME&i_t=$temp[1]&key=$temp[0]$lv[addon_param]&default_addon=$temp[2]&menu_off=1",
+									         'style'     => "border:none;width:100%;height:450px;");
+										    
+							    return json_encode($data_out);													 
+						},
+                                                                        
+                                                'js_call'=>'d_series.set_nd'
 								
 					);
                                         

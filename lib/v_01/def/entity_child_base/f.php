@@ -143,7 +143,9 @@
                                 
 				# Default Additional Column
                                 
-				'is_user_id'       => 'user_id',
+				'is_user_id'       => 1,
+                                
+                                'is_created_by'    => 1,
 								
 				# Communication
 				
@@ -151,22 +153,27 @@
 								
 				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?d=entity_child_base', 'BACK_NAME'=>'Back'),
                                 
-				'prime_index'   => 1,
+				'prime_index'   => 2,
                                 
 				# File Include
                                 'after_add_update'	=>0,
                                 
                                 'js'=> ['is_top'=>1,'top_js'=>$LIB_PATH.'def/entity_child_base/f'],
+                                
+                                'show_query'=>1,
+                                'avoid_trans_key_direct'=>1,
 				
 				
                                 
 			);
     
+    // disable parent
+    unset($F_SERIES['data'][8]);
     
     if(isset($_GET['default_addon'])){  
 	
 		$default_addon = $_GET['default_addon'];
-		$F_SERIES['data'][1]['option_data'] = $G->option_builder('entity','code,sn',"WHERE code = (SELECT code FROM entity WHERE id = $default_addon)");
+		$F_SERIES['data'][1]['option_data'] = $G->option_builder('entity','code,sn',"WHERE code ='$default_addon'");
                 $F_SERIES['data'][1]['avoid_default_option'] = 1;
                 $F_SERIES['back_to']['is_back_button'] = 1;
                 $F_SERIES['back_to']['back_menu_off']=@$_GET['menu_off'];
@@ -174,6 +181,13 @@
 		
                 $F_SERIES['add_button']['is_add'] = 0;
                 $LAYOUT	    = 'layout_full';
+                
+                // line order & not update
+		if(!@$_GET['key']){		   
+		   $temp['where']=(@$default_addon)?"WHERE entity_code='$default_addon' AND dna_code <> 'EBAT' ":''; 
+		   $temp['line_order_value']=($G->get_count(['table'=>'entity_child_base','where'=>$temp['where']])+1);
+		   $F_SERIES['data']['9']['input_html']=" class='w_50' value='$temp[line_order_value]'";  
+		}
     }
     
      

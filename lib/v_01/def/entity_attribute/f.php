@@ -2,7 +2,7 @@
     
     $F_SERIES =array('title'=>'Entity Attribute',
                      
-                     'data'=>array('1'=>array('field_name'=>'Entity Name',
+                     'data'=>array('1'=>array('field_name'=>'Entity',
                                               
                                               'field_id'=>'entity_code',
                                               
@@ -14,7 +14,7 @@
                                               
                                               'avoid_default_option'=>0,
                                               
-                                              'input_html' => 'class=w_60',
+                                              'input_html' => 'class=w_200 onchange="JavaScript:get_line_order(this)"',
                                               
                                               ),
                                    
@@ -34,7 +34,7 @@
                                               
                                               ),
                                    
-                                   '2'=>array('field_name'=>'Short Name',
+                                   '2'=>array('field_name'=>'Name',
                                               
                                               'field_id'=>'sn',
                                               
@@ -48,15 +48,15 @@
                                               
                                               ),
                                    
-                                   '3'=>array('field_name'=>'Long Name',
+                                   '3'=>array('field_name'=>'Description',
                                               
                                               'field_id'=>'ln',
                                               
-                                              'type'=>'text',
+                                              'type'=>'textarea',
                                               
 					      'allow'     => 'x1000',
                                                                 
-                                            'input_html'=>'class="w_200"',
+                                              'input_html'=>'class="w_400" ',
 					      
                                               'is_mandatory'=>0
                                               
@@ -94,7 +94,6 @@
                      
                      'message'=> " concat((SELECT sn FROM entity WHERE code=entity_code),' - ',sn) ",
                      
-                     'page_code'=>'FETA'
                                    
                     );
     
@@ -102,12 +101,20 @@
     if(isset($_GET['default_addon'])){  
 	
 		$default_addon = $_GET['default_addon'];
-		$F_SERIES['data'][1]['option_data'] = $G->option_builder('entity','code,sn',"WHERE code = (SELECT code FROM entity WHERE id = $default_addon)");
+		$F_SERIES['data'][1]['option_data'] = $G->option_builder('entity','code,sn',"WHERE code='$default_addon'");
                 $F_SERIES['data'][1]['avoid_default_option'] = 1;
                 $F_SERIES['back_to']['is_back_button'] = 0;
                 $F_SERIES['add_button']['is_add'] = 0;
 		
 		$LAYOUT	    = 'layout_full';
-	}
+		
+		// line order & not update
+		if(!@$_GET['key']){
+		   
+		   $temp['where']=(@$default_addon)?"WHERE entity_code='$default_addon'":''; 
+		   $temp['line_order_value']=($G->get_count(['table'=>'entity_attribute','where'=>$temp['where']])+1);
+		   $F_SERIES['data']['4']['input_html']=" class='w_50' value='$temp[line_order_value]'";  
+		}
+    } // end
      
 ?>
