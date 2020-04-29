@@ -59,13 +59,27 @@
 													 
 						};
 						
+	$D_SERIES['data'][5]['field']="concat(id,':',(SELECT COUNT(*) FROM entity_child WHERE entity_code=entity.code),':',code)";
+	
+	$D_SERIES['data'][5]['filter_out'] =function($data_in){
+							$temp = explode(':',$data_in);
+		
+							$data_out = array('id'   => $temp[0],
+							 
+							'link_title'=>'  '.$temp[1],
+							'is_fa'=>' fa-chevron-circle-right clr_dark_blue fa-lg ',
+							'is_fa_btn'=>' btn-default btn-sm ',
+							'title'=>'Child View',
+							'src'=>"?d=entity_child_addon&menu_off=1&mode=simple&default_addon=$temp[2]&show=1",
+							'style'=>"border:none;width:100%;height:600px;");
+							 return json_encode($data_out);		 
+						};
+	
 	// child base excluding attribute
 	
 	$D_SERIES['data'][7]['field'] = "concat(id,':',(SELECT COUNT(*) FROM entity_child_base WHERE entity_code=entity.code AND dna_code <> 'EBAT'),':',code)";
 	$D_SERIES['data'][7]['filter_out'] = function($data_in){
 							$temp = explode(':',$data_in);
-		
-			    
 							$data_out = array('id'   => $temp[0],
 							'link_title'=>'  '.$temp[1],
 							'is_fa'=>' fa-chevron-circle-right clr_red fa-lg ',
@@ -74,7 +88,6 @@
 							'src'=>"?d=entity_child_base&menu_off=1&mode=EXT&default_addon=$temp[2]",
 							'style'=>"border:none;width:100%;height:600px;");
 							 return json_encode($data_out);
-							 
 						};
                                                                         							
     

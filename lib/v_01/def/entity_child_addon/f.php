@@ -59,7 +59,7 @@
                                 
 				# Default Additional Column
                                 
-				'is_user_id'       => 'created_by',
+				'is_user_id'       => 1,
 								
 				# Communication
 								

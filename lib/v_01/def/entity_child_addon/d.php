@@ -59,8 +59,6 @@
 	
 	if(@$_GET['default_addon']){
 		
-		
-		
 		$D_SERIES['temp']=d_addon(['default_addon'=>$_GET['default_addon'],
 			    		   'd_series'     => ['data'=>$D_SERIES['data']]]);
 					
@@ -70,7 +68,17 @@
 			$D_SERIES[$akey]=$aval;
 		}
 		
+		$D_SERIES['action']['action_default_addon'] = @$_GET['default_addon'];
 	} // end
+	
+	if(@$_GET['menu_off']==1){
+		
+		$LAYOUT                 = 'layout_full';
+		$D_SERIES['filter_off'] = 1;		
+		$D_SERIES['is_narrow_down']            = 1;
+		$D_SERIES['action']['action_menu_off']       = @$_GET['menu_off'];
+		$D_SERIES['action']['action_narrow_down'] = 1;
+	}
 	
 	// desk addon
 	function d_addon($param){
@@ -154,6 +162,7 @@
 			'key_filter'=>$lv['key_filter']];
 		
 	} // end
+	
 	
 	
 ?>
