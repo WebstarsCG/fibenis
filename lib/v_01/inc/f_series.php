@@ -9,8 +9,10 @@
 		
 		$PAGE_ID = $PAGE;
 		
-		$F_DEFAULT = ['user_id'   =>'user_id',
-			      'created_by'=>'created_by'];
+		$F_DEFAULT = ['user_id'   => 'user_id',
+			             'created_by'=> 'created_by',
+															 'f_series'  => array('f_series'=>'d_series','f'=>'d','fx'=>'dx') ];
+              		
 		$F_MESSAGE = '';
 		
 		# Check for app key
@@ -46,7 +48,8 @@
 								if(!$USER_ID && !$F_SERIES['session_off']){					
 									 $SG->s_destroy('index.php');		
 								}else if($USER_ID){										
-										$SG->check_entry($SG->get_permission($F_SERIES['page_code']));	
+										//$SG->check_entry($SG->get_permission($F_SERIES['page_code']));
+										$SG->check_entry($SG->get_permission_direct($F_SERIES['page_code']));	
 								}
 						}
 						 
@@ -353,6 +356,7 @@
 		}
 		
 		$T->AddParam('f_series',$PAGE_ID);
+		$T->AddParam('d_series',$F_DEFAULT['f_series'][$PAGE_ID]);
 		
 		$T->AddParam('key',@$_GET['key']);
 		

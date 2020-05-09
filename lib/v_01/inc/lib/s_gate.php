@@ -63,7 +63,7 @@
 							
 							session_start();
 							
-							$_SESSION['communication_id']= @$get_user_row->communication_id;
+							//$_SESSION['communication_id']= @$get_user_row->communication_id;
 							
 							$_SESSION['user_role']	     = @$get_user_row->user_role;
 							
@@ -79,7 +79,7 @@
 							
 							$_SESSION['home_page_url']   = @$get_user_row->home_page_url;
 							
-							$_SESSION['USER_PERMISSION'] = $this->user_role_permission(@$get_user_row->user_role_id);
+							$this->user_role_permission(@$get_user_row->user_role_id);
 							
 							// domain
 							
@@ -89,29 +89,14 @@
 									$_SESSION['parent_id'] = @$get_user_row->parent_id;
 							}
 							
-							# super admin
-							
-							$_SESSION['is_super_admin'] = (@$get_user_row->id==1)?1:0;
-							
-							if(@$get_user_row->id==1){
-							
-						             $_SESSION['USER_PERMISSION'] = $this->user_role_permission(1);
-							     
-							     $_SESSION['user_id']	     = 1;
-							     
-							     $_SESSION['user_name'] 	     = "Super Admin";
-							}
-							
 							# master cookie
 							
 							$this->set_get_master_session($COACH['name_hash']);
 							
 						         return array($_SESSION['user_id'],
 								      $_SESSION['user_name'],
-								      $_SESSION['is_super_admin'],
-								      $_SESSION['PASS_ID'],
-								      $_SESSION['USER_PERMISSION'],
-								      $_SESSION['communication_id'],
+								      $_SESSION['user_email'],
+								      $_SESSION['PASS_ID'],								      
 								      $_SESSION['user_role']);
 				
 			} //end of set the session variable 
@@ -126,11 +111,8 @@
 						
 						return array($_SESSION['user_id'],
 							     $_SESSION['user_name'],
-							     $_SESSION['user_email'],
-							     $_SESSION['is_super_admin'],
-							     $_SESSION['PASS_ID'],
-							     $_SESSION['USER_PERMISSION'],
-							     $_SESSION['communication_id'],
+							     $_SESSION['user_email'],							     
+							     $_SESSION['PASS_ID'],							     
 							     $_SESSION['user_role']);  
 			}           
               
@@ -190,20 +172,48 @@
 			//check the session for the permission page
 			//and permission page set 1 as flag
 			//return the permission page flag
-				function get_permission($perm){
-				     
-					     if(@($_SESSION[$perm])){
-						     
-						     return $perm=1;
-					     }
+			function get_permission($perm){
+			     
+				     if(@($_SESSION[$perm])){
 					     
-					     else{
-						     
-						     return $perm=0;
-						}
-				    
-				      return $perm;
-			       }//end of get_permission
+					     return $perm=1;
+				     }else{
+					     
+					     return $perm=0;
+			             }
+			    
+			      return $perm;
+		        }//end of get_permission
+
+
+			//getpermissiondirect
+			function get_permission_direct($page_code){
+						
+				 $lv = [];		
+						
+				 $lv['permission_query'] = "SELECT
+									id
+						            FROM
+									user_role_permission_matrix
+						            WHERE
+									user_role_id=$_SESSION[user_role_id] AND
+									user_permission_id=(SELECT
+												      id
+									                    FROM
+												       ecb_parent_child_matrix
+									                    WHERE
+												        parent_child_hash='$page_code')";		
+			
+			          		$lv['exec_query'] = $this->rdsql->exec_query($lv['permission_query'],'permission check');
+									
+						$lv['permission'] = $this->rdsql->data_fetch_assoc($lv['exec_query']);
+									  							
+						return ($lv['permission']['id'])?1:0;
+						
+			} // code
+
+			
+
 			       
 			       function check_entry($perm){
 						

@@ -26,7 +26,8 @@
 						}else if($USER_ID){										
 								
 								$PAGE_CODE_HASH = md5($PAGE_CODE);
-								$SG->check_entry($SG->get_permission($PAGE_CODE_HASH));	
+								//$SG->check_entry($SG->get_permission($PAGE_CODE_HASH));
+								$SG->check_entry($SG->get_permission_direct($PAGE_CODE_HASH));	
 						}
 						
 						include($router['action']);

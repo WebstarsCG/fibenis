@@ -1,0 +1,65 @@
+	
+	#content{
+		padding-top:0px !important;	
+	}
+	
+	fieldset{
+		background-color: none !important;
+		border		: none !important;
+		box-shadow	: none !important;
+		display		: table;		
+		width		: 100%;
+		
+	}
+	
+	
+	fieldset .row{
+		/*border-bottom: 1px solid #343434;*/
+		display		:block;
+		float: left;
+		width: 50% !important;
+		height:auto;
+		height:50px !important;
+	}
+	
+	
+	fieldset .label{				
+		display		: block;
+		float		: left;		
+		padding-right   : 5px;
+		width		: 40% !important;
+		
+	}
+	
+	
+	fieldset .value{		
+		display		: block;
+		float		: left;
+		width		: 60% !important;		
+	}
+	
+	fieldset .value input,
+	fieldset .value select,
+	fieldset .value textarea{
+		width:75% !important;
+	}
+	
+	fieldset .value input[type="submit"]{
+		width:auto !important;
+	}
+	
+	#tab_action_area{
+		width:100% !important;
+		text-align:center;
+	}
+	
+	.form_action_row div.label{
+		display:none;
+	}
+	
+	#tab_action_area .value {
+		display		: block !important;		
+		text-align	: right !important;
+		width		: 100% !important;
+	}
+	

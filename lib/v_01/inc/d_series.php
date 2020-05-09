@@ -69,9 +69,9 @@
 						# set code
 						
 						$D_SERIES['page_code'] = md5($PAGE_CODE);
-		
+						
 						$session_off = @$D_SERIES['session_off'];
-					
+											
 						// commented for session implementaion by R		
 						if(@$_GET['session']=='off'){
 								
@@ -84,7 +84,8 @@
 								if(!$USER_ID && !$D_SERIES['session_off']){					
 										$SG->s_destroy('index.php');		
 								}else if($USER_ID){										
-										$SG->check_entry($SG->get_permission($D_SERIES['page_code']));	
+										//$SG->check_entry($SG->get_permission($D_SERIES['page_code']));
+										$SG->check_entry($SG->get_permission_direct($D_SERIES['page_code']));	
 								}
 						}
 							

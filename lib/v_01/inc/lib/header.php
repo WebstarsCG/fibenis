@@ -28,7 +28,7 @@
 		
 		include($LIB_PATH."/inc/lib/filter.php");
 		
-		list($USER_ID,$USER_NAME,$USER_EMAIL,$IS_SUPER_ADMIN,$PASS_ID,$USER_PERMISSION,$COMM_ID,$USER_ROLE ) = $SG->get_user_detail();
+		list($USER_ID,$USER_NAME,$USER_EMAIL,$PASS_ID,$USER_ROLE ) = $SG->get_user_detail();
 		
 		#
 		
