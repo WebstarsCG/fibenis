@@ -191,7 +191,7 @@
 						
 				 $lv = [];		
 						
-				 $lv['permission_query'] = "SELECT
+				$lv['permission_query'] = "SELECT
 									id
 						            FROM
 									user_role_permission_matrix

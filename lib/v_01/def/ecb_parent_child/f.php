@@ -107,7 +107,7 @@
 								
 				# Communication
 								
-				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?d=page_addon', 'BACK_NAME'=>'Back'),
+				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'', 'BACK_NAME'=>'Back'),
                                 
 				'prime_index'   => 1,
                                 

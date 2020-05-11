@@ -45,7 +45,7 @@
                                     
                                     'key_id'    =>'id',
 				    
-				    'key_filter'=>" AND entity_code='DF' ",
+																																				'key_filter'=>" AND entity_code='DF' AND get_ecb_av_addon_varchar(id,'DFTY')='INT'",
 				    
 				 
                                     
@@ -56,6 +56,9 @@
                                     # Communication
                                 
                                     'prime_index'   => 1,
+																																				
+																																				
+																																				'show_query'    =>0,
                                 
                                     # File Include
                                 

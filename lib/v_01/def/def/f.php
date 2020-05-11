@@ -1,8 +1,11 @@
 <?PHP
 
     include("$LIB_PATH/def/ecb_parent_child/f.php");
-          
-    $F_SERIES['title'] = 'Definition';
+    
+    //defaults
+    $F_SERIES['title']        = 'Definition';
+    
+    $F_SERIES['temp']['DFTY'] =  'INT'; // Internal
     
     # option data
     
@@ -29,7 +32,7 @@
                         ];
     
     
-    $F_SERIES['back_to']['back_link']    = '?d=def';
+    //$F_SERIES['back_to']['back_link']    = '?d=def';
     
     $F_SERIES['show_query']=0;
     $F_SERIES['avoid_trans_key_direct']=1;
@@ -41,8 +44,12 @@
     unset($F_SERIES['data'][4]);
     
     # customization
+    $F_SERIES['temp']['engines']          = array("'d'","'f'","'t'","'a'");
     $F_SERIES['data']['5']['field_name']  = 'Engines';
-    $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base',"id,sn","  WHERE entity_code='EG' ");
+    $F_SERIES['data']['5']['option_data'] = $G->option_builder('entity_child_base',
+                                                               'id,sn',
+                                                               "  WHERE entity_code='EG' AND token IN(".implode(',',$F_SERIES['temp']['engines']).")");
+    
     
     // during edit
     if(@$_GET['key']){
@@ -56,20 +63,29 @@
         
     } // end
     
+    use GuzzleHttp\Client;
+    use GuzzleHttp\Query;
+    
     // after_add_update    
     $F_SERIES['after_add_update']=function ($key_id){
         
-        global $DC,$G,$rdsql,$USER_ID;
+        global $DC,$G,$rdsql,$USER_ID,$F_SERIES,$LIB_PATH;
         
         $lv;
-        $lv['content']=[];
+        $lv['content'] =[];
+        $lv['def_type']=$F_SERIES['temp']['DFTY'];
                 
-        # update def
-        
+        # update def        
         $rdsql->exec_query("UPDATE entity_child_base SET token=md5(sn) WHERE id=$key_id","0");
-                
-        # empty matrix
         
+        # def type
+            # delete old
+            $rdsql->exec_query("DELETE FROM ecb_av_addon_varchar WHERE parent_id=$key_id AND ea_code='DFTY'","DEL FAILED");
+            
+            #insert type
+            $rdsql->exec_query("INSERT INTO ecb_av_addon_varchar(parent_id,ea_code,ea_value,user_id) VALUES($key_id,'DFTY','$lv[def_type]',$USER_ID)","INSERT");
+                
+        # empty matrix        
         $rdsql->exec_query("DELETE FROM ecb_parent_child_matrix WHERE ecb_parent_id=$key_id","0");
         
         # insert data
@@ -155,8 +171,81 @@
                 
             } // user role
             
-        } // if role & def child        
+        } // if role & def child
         
-    } # end
+        // def creation
+        if(($F_SERIES['temp']['DFTY']=='YOU') &&
+           ($_POST['X9'])){
+            
+            // create dir
+            $lv['def_path']    = 'def/'.$_POST['X2'];
+            $lv['entity_code'] = $_POST['X9'];
+            
+            echo 'DIR'.var_dump(is_dir($lv['def_path']));
+            
+            echo $lib = $LIB_PATH.'/comp/guzzle_rest/vendor/autoload.php';				
+
+            require_once $lib ;
+		  
+            $client = new Client(['timeout'  => 2.0,]);
+                        
+            if(!is_dir($lv['def_path'])){
+                mkdir($lv['def_path']);
+                   
+                    // def
+                    auto_def_creation(['def_name'    => $_POST['X2'],
+                                       'def_path'    => $lv['def_path'],
+                                       'entity_code' => $lv['entity_code'],
+                                       'client'      => $client,
+                                       'g'           => $G   
+                                       ]);
+                                                     
+            }
+            
+        } // end
+        
+        
+    }; # end
+    
+    
+    // auto def creation
+    // param -(path,entity_code,client)
+    function auto_def_creation($param){
+        
+            $lv = [];
+        
+            $lv['client']       = $param['client'];
+            $lv['g']            = $param['g'];
+            unset($param['client']);
+            unset($param['g']);
+        
+            $lv['req']         	= json_encode($param);
+		    
+            $lv['trans_key']    = time().rand().$PASS_ID;
+		    
+            $lv['temp_req']     = $lv['g']->encrypt($lv['req'],$lv['trans_key']);
+		   
+            $node_res_form      = $lv['client']->GET($_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["HTTP_HOST"].$_SERVER["SCRIPT_NAME"],
+                 
+                                                        [   'query'     => ['t' => 'def__entity_auto__form',
+                                                                            'req'       => $lv['temp_req'],
+                                                                            'trans_key' => $lv['trans_key']]
+                                                        ]
+                                                    );
+            
+            // desk
+            
+            $node_res_desk      = $lv['client']->GET($_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["HTTP_HOST"].$_SERVER["SCRIPT_NAME"],
+                 
+                                                        [   'query'     => ['t' => 'def__entity_auto__desk',
+                                                                            'req'       => $lv['temp_req'],
+                                                                            'trans_key' => $lv['trans_key']]
+                                                        ]
+                                                    );
+            
+            //print_r($lv);
+            //echo $node_res->response();
+            
+    } // ends
     
 ?>

@@ -199,26 +199,25 @@
 									   class="button" 
 									   name="go_date" 
 									   id="go_date" 
-									   value="<TMPL_VAR show_all_label>"  onclick="JavaScript:show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR app_key>');"/>
+									   value="<TMPL_VAR show_all_label>"  onclick="JavaScript:show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR APP_KEY>');"/>
 									   
 								<font class="spliter">|</font>
 								
 							</TMPL_UNLESS>
 				
-							<TMPL_IF is_add>
-							   <!-- <TMPL_VAR title> -->   
-							   <a class="ficon" href="?<TMPL_VAR page_link><TMPL_IF DEFAULT_ADDON>&default_addon=<TMPL_VAR DEFAULT_ADDON></TMPL_IF>"><i class="fa fa-file-o clr_green"></i><TMPL_IF b_name><TMPL_VAR b_name><TMPL_ELSE><span>Add <TMPL_VAR TITLE></span></TMPL_IF></a>
-							</TMPL_IF>
+								<TMPL_IF is_add>							   
+											<a class="ficon" href="<TMPL_IF PAGE_LINK>?<TMPL_VAR PAGE_LINK><TMPL_ELSE>?<TMPL_VAR F_SERIES>=<TMPL_VAR APP_KEY></TMPL_IF><TMPL_IF DEFAULT_ADDON>&default_addon=<TMPL_VAR DEFAULT_ADDON></TMPL_IF>"><i class="fa fa-file-o clr_green"></i><TMPL_IF b_name><TMPL_VAR b_name><TMPL_ELSE><span>Add <TMPL_VAR TITLE></span></TMPL_IF></a>
+								</TMPL_IF>
 							
-							<TMPL_IF TOP_ACTION>
-							   <TMPL_LOOP TOP_ACTION>
-								<a class="<TMPL_VAR STYLE>" href="<TMPL_VAR ACTION>"><TMPL_VAR LABEL></a>
-							   </TMPL_LOOP> 	
-							</TMPL_IF>
+								<TMPL_IF TOP_ACTION>
+																<TMPL_LOOP TOP_ACTION>
+																					<a class="<TMPL_VAR STYLE>" href="<TMPL_VAR ACTION>"><TMPL_VAR LABEL></a>
+																</TMPL_LOOP> 	
+								</TMPL_IF>
 							
-							<TMPL_IF is_export_file>
-								<a  id="export_id" name="export_id" class="ficon"  href="JavaScript:export_csv_file();"><i class="fa fa-file-excel-o clr_green"></i><TMPL_VAR button_name></a>								
-							</TMPL_IF>				
+								<TMPL_IF is_export_file>
+									<a  id="export_id" name="export_id" class="ficon"  href="JavaScript:export_csv_file();"><i class="fa fa-file-excel-o clr_green"></i><TMPL_VAR button_name></a>								
+								</TMPL_IF>				
 							
 			
 		</div>
@@ -373,13 +372,16 @@
 									</TMPL_LOOP>
 							</TMPL_IF> 
 						
-							<TMPL_IF is_edit><a  class="ficon"
-									     <TMPL_IF ACTION_NARROW_DOWN>
-										href=JavaScript:d_series.call_nd({"id":"<TMPL_VAR key_id>","title":"Edit","src":"?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"})
-									     <TMPL_ELSE>
-										href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"
-									     </TMPL_IF>
-									     ><i class="fa fa-edit"></i>Edit</a></TMPL_IF>
+								<TMPL_IF IS_ACTION>
+																<TMPL_IF is_edit><a  class="ficon"
+																						<TMPL_IF ACTION_NARROW_DOWN>
+																		href=JavaScript:d_series.call_nd({"id":"<TMPL_VAR key_id>","title":"Edit","src":"?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"})
+																						<TMPL_ELSE>
+																		href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"
+																						</TMPL_IF>
+																						><i class="fa fa-edit"></i>Edit</a>
+																</TMPL_IF>
+								</TMPL_IF>
 								
 							<TMPL_IF is_view><a class="icon pdf" href="JavaScript:d_series_view(<TMPL_VAR __counter__>);"> View</a></TMPL_IF>
 							    
@@ -538,6 +540,8 @@
 	<input type="hidden" name="PAGE_ID" id="PAGE_ID" value="<TMPL_VAR PAGE_ID>"/>
 	
 	<input type="hidden" name="PASS_ID" id="PASS_ID" value="<TMPL_VAR PASS_ID>"/>
+	
+	<input type="hidden" name="f_series" id="f_series" value="<TMPL_VAR F_SERIES>"/>
 	
 	<form id="PUB_EXP" name="PUB_EXP" method="POST">
 				

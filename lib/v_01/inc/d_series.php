@@ -3,15 +3,14 @@
 		error_reporting(E_ALL);
 		
 		ini_set("display_errors", 1);
-		
-		$P_V['page_name'] 	= @$_GET['d_series'];		
-		$P_V['user_id'] 	= $USER_ID;
+	
 		
 		$P_V['f_series']['d_series'] = 'f_series';
-		$P_V['f_series']['d']	     = 'f';
-		$P_V['f_series']['dx']	     = 'fx';
+		$P_V['f_series']['d']	       = 'f';
+		$P_V['f_series']['dx']	      = 'fx';
 		
 		$PAGE_ID = $PAGE;
+		
 		
 		// Generation oriented balancer functions
 		
@@ -744,9 +743,11 @@
 		
 		$T->AddParam('NO_DATA',@$D_SERIES['no_data_message']);
 		
+		$T->AddParam('F_SERIES',$P_V['f_series'][$PAGE_ID]);
 		
 		
 		
+		// bulk action
 		function get_custome_bulk_action(){
 			
 			global $D_SERIES;
@@ -1564,7 +1565,7 @@
 					}					 
 					  
 					 # action merge
-					 if(@$D_SERIES['action']){ 					  
+					 if(@$D_SERIES['prime_index']){ 					  
 						$temp_data=array_merge($temp_data,@$D_SERIES['action']);
 					 }
 					 
@@ -1686,7 +1687,7 @@
 				}
 				
 				else{
-					$WHERE.=' AND user_id = '.$P_V['user_id'];
+					$WHERE.=' AND user_id = '.$USER_ID;
 					
 					
 					//set_system_log
