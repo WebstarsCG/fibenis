@@ -152,7 +152,7 @@
 		$PAGE_TITLE = @$D_SERIES['title'];
 		
 		@$D_SERIES['del_permission'] = (@$D_SERIES['del_permission'])?@$D_SERIES['del_permission']:['able_del'=>0];
-		@$D_SERIES['prime_index']    = (@$D_SERIES['prime_index'])?@$D_SERIES['prime_index']:1; 
+		@$D_SERIES['prime_index']    = (@$D_SERIES['prime_index'])?@$D_SERIES['prime_index']:array_keys($D_SERIES['data'])[0]; 
 	 
 		if(@$D_SERIES['mode']){
 				
@@ -1565,8 +1565,8 @@
 					}					 
 					  
 					 # action merge
-					 if(@$D_SERIES['prime_index']){ 					  
-						$temp_data=array_merge($temp_data,@$D_SERIES['action']);
+					 if(@$D_SERIES['action']){ 					  
+																		$temp_data=array_merge($temp_data,@$D_SERIES['action']);
 					 }
 					 
 					 $temp_data['page_f_series']  =  $P_V['f_series'][$PAGE_ID];
