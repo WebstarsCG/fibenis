@@ -1,21 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<entities>
 <TMPL_LOOP DATA_INFO>
 	<entity>
+		<attributemap>
+       <input_type>APIT</input_type>
+							<class>APCL</class>
+							<html>APIH</html>
+							<mandatory>APMA</mandatory> 
+							<hint>APHT</hint>
+							<hide>APHD</hide>
+							<read_only>APRO</read_only>
+							
+							<allow>APAL</allow>
+							
+							<list_option_data>APSL</list_option_data>
+							<list_avoid_default>APAD</list_avoid_default>
+							
+							<min_date>APMD</min_date>
+							<max_date>APXD</max_date>																							
+							<min_year>APMY</min_year>
+							<max_year>APXY</max_year>
+							<default_date>APDD</default_date>
+							
+							<fg_start_rows>APFR</fg_start_rows>
+							<fg_max_rows>APMR</fg_max_rows>																							
+							<fg_rows_to_fill>APGR</fg_rows_to_fill>
+							<fg_content_template>APTM</fg_content_template>
+							<fg_heading_template>APFH</fg_heading_template>
+							<fg_detail>APFO</fg_detail>
+							
+							<file_name>APFN</file_name>
+							<file_name_prefix>APFP</file_name_prefix>																							
+							<file_name_suffix>APFS</file_name_suffix>
+							<file_location>APLO</file_location>
+							<file_allow_type>APFX</file_allow_type>
+							<file_max_size>APFM</file_max_size>
+							<file_img_size>APIS</file_img_size>
+																																
+							<tg_show_status_label>APTS</tg_show_status_label>																							
+							<tg_on_label>APTN</tg_on_label>
+							<tg_off_label>APTF</tg_off_label>
+							<tg_is_default_on>APTD</tg_is_default_on>
+							
+							<label_content>APLC</label_content>
+		</attributemap>
+		
 		<code><TMPL_VAR CODE></code>		
 		<name><TMPL_VAR NAME></name>
 		<attributes>
 		<TMPL_LOOP ATTRIBUTES>
-			<attribute token="<TMPL_VAR TOKEN>" type="<TMPL_VAR INPUT_TYPE>">
+			<attribute token="<TMPL_VAR TOKEN>" >
 				<name><TMPL_VAR NAME></name>
 				<description><TMPL_VAR DESCRIPTION></description>
-				<class><TMPL_VAR CLASS></class>
-				<html><TMPL_VAR HTML></html>
-				<mandantory><TMPL_VAR MANDATORY></mandantory>
-				<hint><TMPL_VAR HINT></hint>
-				<hide><TMPL_VAR HIDE></hide>
-				<readonly><TMPL_VAR READ_ONLY></readonly>
+								<TMPL_IF input_type><input_type><TMPL_VAR input_type></input_type></TMPL_IF>
+								<TMPL_IF class><class><TMPL_VAR class></class></TMPL_IF>
+								<TMPL_IF html><html><TMPL_VAR html></html></TMPL_IF>
+								<TMPL_IF mandatory><mandatory><TMPL_VAR mandatory></mandatory></TMPL_IF> 
+								<TMPL_IF hint><hint><TMPL_VAR hint></hint></TMPL_IF>
+								<TMPL_IF hide><hide><TMPL_VAR hide></hide></TMPL_IF>
+								<TMPL_IF read_only><read_only><TMPL_VAR read_only></read_only></TMPL_IF>
+								
+								<TMPL_IF allow><allow><TMPL_VAR allow></allow></TMPL_IF>
+								
+								<TMPL_IF list_option_data><list_option_data><TMPL_VAR list_option_data></list_option_data></TMPL_IF>
+								<TMPL_IF list_avoid_default><list_avoid_default><TMPL_VAR list_avoid_default></list_avoid_default></TMPL_IF>
+								
+								<TMPL_IF min_date><min_date><TMPL_VAR min_date></min_date></TMPL_IF>
+								<TMPL_IF max_date><max_date><TMPL_VAR max_date></max_date></TMPL_IF>																							
+								<TMPL_IF min_year><min_year><TMPL_VAR min_year></min_year></TMPL_IF>
+								<TMPL_IF max_year><max_year><TMPL_VAR max_year></max_year></TMPL_IF>
+								<TMPL_IF default_date><default_date><TMPL_VAR default_date></default_date></TMPL_IF>
+								
+								<TMPL_IF fg_start_rows><fg_start_rows><TMPL_VAR fg_start_rows></fg_start_rows></TMPL_IF>
+								<TMPL_IF fg_max_rows><fg_max_rows><TMPL_VAR fg_max_rows></fg_max_rows></TMPL_IF>																							
+								<TMPL_IF fg_rows_to_fill><fg_rows_to_fill><TMPL_VAR fg_rows_to_fill></fg_rows_to_fill></TMPL_IF>
+								<TMPL_IF fg_content_template><fg_content_template><TMPL_VAR fg_content_template></fg_content_template></TMPL_IF>
+								<TMPL_IF fg_heading_template><fg_heading_template><TMPL_VAR fg_heading_template></fg_heading_template></TMPL_IF>
+								<TMPL_IF fg_detail><fg_detail><TMPL_VAR fg_detail></fg_detail></TMPL_IF>
+								
+								<TMPL_IF file_name><file_name><TMPL_VAR file_name></file_name></TMPL_IF>
+								<TMPL_IF file_name_prefix><file_name_prefix><TMPL_VAR file_name_prefix></file_name_prefix></TMPL_IF>																							
+								<TMPL_IF file_name_suffix><file_name_suffix><TMPL_VAR file_name_suffix></file_name_suffix></TMPL_IF>
+								<TMPL_IF file_location><file_location><TMPL_VAR file_location></file_location></TMPL_IF>
+								<TMPL_IF file_allow_type><file_allow_type><TMPL_VAR file_allow_type></file_allow_type></TMPL_IF>
+								<TMPL_IF file_max_size><file_max_size><TMPL_VAR file_max_size></file_max_size></TMPL_IF>
+								<TMPL_IF file_img_size><file_img_size><TMPL_VAR file_img_size></file_img_size></TMPL_IF>
+																																	
+								<TMPL_IF tg_show_status_label><tg_show_status_label><TMPL_VAR tg_show_status_label></tg_show_status_label></TMPL_IF>																							
+								<TMPL_IF tg_on_label><tg_on_label><TMPL_VAR tg_on_label></tg_on_label></TMPL_IF>
+								<TMPL_IF tg_off_label><tg_off_label><TMPL_VAR tg_off_label></tg_off_label></TMPL_IF>
+								<TMPL_IF tg_is_default_on><tg_is_default_on><TMPL_VAR tg_is_default_on></tg_is_default_on></TMPL_IF>
+								
+								<TMPL_IF label_content><label_content><TMPL_VAR label_content></label_content></TMPL_IF>
 			</attribute>
 		</TMPL_LOOP>
 		</attributes>
 	</entity>
 </TMPL_LOOP>
+</entities>

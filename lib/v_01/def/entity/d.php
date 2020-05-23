@@ -307,7 +307,7 @@
                                       
                                        
                                         
-                                       'action' => array('is_action'=>0, 'is_edit' =>1, 'is_view' =>0 ),
+                                       'action' => array('is_action'=>1, 'is_edit' =>1, 'is_view' =>0 ),
                                        
                                        'order_by'   =>'ORDER BY sn ASC ' ,
 				       		
