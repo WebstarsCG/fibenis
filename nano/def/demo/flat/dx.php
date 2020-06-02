@@ -2,11 +2,7 @@
 			
         $D_SERIES       =   array(
                                    'title'=>'Demo Flat',
-                                    
-                                    #query display depend on the user
-                                    
-                                    'is_user_base_query'=>0,
-				    
+                                   
 				    'gx' => 1,
 				    
                                     #table data
@@ -18,7 +14,9 @@
 								
 								'field' =>"text_flat",
 								
-								'td_attr' => ' class="label_father align_LM" width="10%"',
+								'th_attr' =>  ' width="15%"',
+								
+								'attr' =>  ['class'=>'label_father align_LM'],
 								
 								'is_sort' => 0,	
 								
@@ -108,56 +106,15 @@
                                     'table_name' =>'demo',
                                     
                                     'key_id'    =>'id',
+																																				
+																																				'action'=> array('is_action' =>1,
+																																																					'is_edit'   => 1),
+																																				
+																																				'del_permission' => array('able_del'=>1),
+																																				
+																																			
                                     
-                                    # Default Additional Column
-                                
-                                    'is_user_id'       => 'user_id',
-				    
-				    # Communication
-                                
-                                    'prime_index'   => 2,
-				    
-				    'custom_filter' => array(  			     						   
-							      
-									array(  'field_name' => 'Status:',
-									      
-										'field_id' => 'cf1', // 
-										
-										'filter_type' =>'option_list', 
-												    
-										'option_value'=> $G->option_builder('demo','text_flat,text_flat'," ORDER by text_flat ASC"),
-							    
-										'html'=>'  title="Select Type"   data-width="100px"  ',
-								    
-										'cus_default_label'=>'Show All',
-							    
-										'filter_by'  => "text_flat" // main table value
-									)
-									
-								),
-                                
-				
-				#check_field
-				
-                                        'action'        => array('is_action' => 0, 'is_edit' => 1, 'is_view' => 0),
-								
-					'check_field'   =>  array('user_id' => @$_GET['user_id'],'page_code' => @$_GET['page_code']),								
-								
-					'add_button'    => array( 'is_add' =>1,'page_link'=>'fx=demo__flat', 'b_name' => 'Add' ),
-								
-					'del_permission'=> array('able_del'=>1,'user_flage'=>0), 
-								
-					'date_filter'   => array( 'is_date_filter' =>1,'date_field' =>  'timestamp_punch'),	
-								
-				#export data
-				
-				'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
-								
-				'page_code'    => 'REVI',
-				
-				'show_query'=>0,
-				
-				'search_filter_off'	=>1,
+                                   
                             
                             );
     		    

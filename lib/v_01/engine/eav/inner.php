@@ -1,37 +1,4 @@
 <?PHP
-
-	# In present case, we are parellely calling all the page content functions,
-	# We have to load the called content instead of loading all
-	# In present, we can consider BL (Blog), PG (Page) are two type of displays.
-	# Where both need different lrigayouts and dynamic side contents
-	# But now the ?page_id will be the essential one to communication
-	# When we loading a page by page_id, we have no way to get the information
-	# Now we have to take it from page_info only.
-	# The present content array based implementation is fine.
-	# now it only need two cases
-	# BL->
-	# PG->
-	# 	Cases Like about us (Sub Pages) implemented through parent/child way
-	# 	1. During Page Creation, We can show the parent
-	#                                list box-> contains the entity_child WHERE code=PG
-	#	By that way
-	#		1. About Us Added parent_id= 0 (root)
-	#		2. History added -> with parent as ( About Us )
-	#	When we load the page ?history-> We will check any parent is there.
-	#       Such a case, we will select the parent's child entry and passed to child menu
-	#	2.If it's a plain ?contactus page, there will be no parent_id.
-	#         It will fill the content,layout as by config in table
-	#	3.In present case, Menu is semi dynamic. The childs can grow, but the top level is controled in this case
-	# BL
-	#	In case of blog page, ?wedding_tradation_present <page_code>
-	#	We will pick the child_info as like PL
-	#	If we have the entity_code as BL
-	#	We will load it with different layout
-	# In that way, we can restrict to only two functions ->dynamic_page_content,
-	#              and get_side_menu ( based on case for child pages/blog)
-	# $PAGE from the index will solve the purpose to pick the information
-	#  
-	# Also, we will have only one $CONTENT[$PAGE] defination, ( unnecssary content loading avoided)
 		
 	$CONTENT      = array();
 	
@@ -67,7 +34,9 @@
 		
 	} // end of content retrieve
 	
-	// set layout & content	
+	// set layout & content
+	
+	#print_r($page_info);
 	
 	$LAYOUT 		= $page_info['layout'];
 		
@@ -92,6 +61,7 @@
 							'page_right_image'  => @$page_info['page_right_image'],
 							'page_header_image' => @$page_info['page_header_image'],
 							
+							'id'  	        => @$page_info['id'],							
 							'page'          => $PAGE,							
 							'title'  	=> $page_info['title'],							
 							'side_menu'     => $page_info['side_menu']														
@@ -138,25 +108,26 @@
 	
 	function page_content($content){
 		
-		global $COACH;
-		
+		global $COACH,$LIB_PATH;
+				
 		$page = $content['page'];
 		
 		if(!is_file($content['lib_path']."/inc/$page.php")){
+				
+					
+					$page		= (is_file("$COACH[path]$COACH[name]/content/$page.html"))?$page:$COACH['step_in'];
+					
+					$lv 		= ['home'=>"$COACH[path]$COACH[name]/content/$page.html",
+									   'gate'=>"$COACH[theme_route]/template/$COACH[step_in].html"
+									    ];
+					
+					$c 		= new Template(array("filename" => $lv[$COACH['step_in']],
+									    "debug"    => 0));
+					
+					if($content['add_on']){ $c->AddParam($content['add_on']); } 
+					
+					return $c->Output();
 			
-			$lv = ['home'=>"$COACH[path]$COACH[name]/content/$page.html",
-			       'gate'=>"$COACH[theme_route]/template/$COACH[step_in].html"
-			       ];
-			
-			
-			$page 			= (is_file("$COACH[path]$COACH[name]/content/$page.html"))?$page:$COACH['step_in'];
-			
-			$c 			= new Template(array("filename" => $lv[$COACH['step_in']],
-							    "debug"    => 0));
-			
-			if($content['add_on']){ $c->AddParam($content['add_on']); } 
-			
-			return $c->Output();
 		}
 		
 	} // end
@@ -182,7 +153,8 @@
 						get_eav_addon_varchar(entity_child.id,'PGPT') as page_title,
 						get_eav_addon_varchar(entity_child.id,'PGIB') as page_header_image,
 						get_eav_addon_varchar(entity_child.id,'PGIC') as page_right_image,
-						entity_code
+						entity_code,
+						id
 					FROM
 						entity_child
 					WHERE
@@ -197,6 +169,7 @@
 			$temp_parent     = (@$get_row->parent_name)?(explode('[C]',@$get_row->parent_name)):['home','Home','','','','',''];
 			
 			return array(
+				     'id' 	        => @$get_row->id,
 				     'title' 	        => @$get_row->ln,
 				     
 				     'parent_id'        => @$get_row->parent_id,

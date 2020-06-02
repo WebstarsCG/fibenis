@@ -86,11 +86,13 @@
 		$IS_HOME 		= ((($PAGE==$COACH['step_in']) || ($PAGE==''))?1:'');
 		
 		
-		#if(($SHOW_DOOR) && (!$IS_HOME)){  $PAGE=$COACH['step_in'] ; }
+		
 		
 			
 		$SHOW_DOOR              = ( (get_config('access_key')==@$PARAM[0]) &&
 					    (get_config('avoid_gate')))?1:0;
+		
+		if(($SHOW_DOOR) && (!$IS_HOME)){  $PAGE=$COACH['step_in'] ; }
 		
 		# PAGE used in content.php
 		
@@ -185,15 +187,7 @@
 	
 		}else{ // open page
 				
-				$PV['page_cached'] = $COACH['terminal_path']."/cache/$PAGE.html";
-				
-				if(is_file($PV['page_cached'])){
-				
-				    $PV['page_cached_template'] = new Template(array("filename" =>$PV['page_cached']));
-				    $PV['page_cached_template']->EchoOutput();    
-						    
-				}else{
-				    
+				        
 				    $PV['is_page']  = 1;
 								   
 				    $PV['layout']   = (@$CONTENT[$PAGE]['layout'])?$CONTENT[$PAGE]['layout']:'layout_full';
@@ -224,7 +218,7 @@
 				    $PAGE_CONTENT = $C->Output();
 				    
 				    outer_action();
-				}
+				
 		
 		} // end of content stream
 			
@@ -298,7 +292,7 @@
 				
 				$F->AddParam(array('PAGE_ID'        => $PAGE,
                                                    'default_footer' => @$PV['MASTER']['default_footer'],
-						   'IS_USER'       => (($USER_ID)?1:0)					         
+						   'IS_USER'       => (($USER_ID)?1:0),					         
 					    ));				
 				// email:
 				
@@ -324,15 +318,15 @@
 				
 				if(!$MENU_OFF){
 				
-						$PV['menu_text']    = 'menu_'.strtolower($USER_ROLE).'x'.$IS_HOME.'o'.$PV['is_open'];
-						$PV['menu_created'] =  $THEME_ROUTE."/template/role_menu/$PV[menu_text].html";
-				
-						if(is_file($PV['menu_created'])){
-				
-							$PV['menu_created_template'] = new Template(array("filename" =>$PV['menu_created']));
-							$TD->AddParam('MENU_DATA',$PV['menu_created_template']->Output());    
-						    
-						}else{
+						//$PV['menu_text']    = 'menu_'.strtolower($USER_ROLE).'x'.$IS_HOME.'o'.$PV['is_open'];
+						//$PV['menu_created'] =  $THEME_ROUTE."/template/role_menu/$PV[menu_text].html";
+						//
+						//if(is_file($PV['menu_created'])){
+						//
+						//	$PV['menu_created_template'] = new Template(array("filename" =>$PV['menu_created']));
+						//	$TD->AddParam('MENU_DATA',$PV['menu_created_template']->Output());    
+						//    
+						//}else{
 						
 												    
 						    $M 	= new Template(array("filename" => $THEME_ROUTE."/template/menu.html",
@@ -385,9 +379,9 @@
 								)
 						    );
 						    
-						    $G->set_html_file($M->Output(),$PV['menu_created']);
+						  //  $G->set_html_file($M->Output(),$PV['menu_created']);
 						    $TD->AddParam('MENU_DATA',$M->Output());
-						}
+						//}
 						
 				} // end
 		
@@ -422,10 +416,9 @@
 					    ));                        
 		    } // user id
 				    
-		    echo $temp_content = $TD->Output();
-				    
-		    $G->set_html_file($temp_content,$PV['page_cached']);
-						    
+		    $TD->EchoOutput();
+		    
+		  					    
 		    # open log
 		    
 		    if($PV['is_page'] ){

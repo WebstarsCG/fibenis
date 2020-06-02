@@ -9,9 +9,16 @@
 				
 				'key_id'        => 'id',
 				
+				'gx'=>1,
+				
 				'default_fields'    => array('entity_code' => "'DE'"),
 				
-                                'data'	=>   array(	'1' =>array( 'field_name'	=> 'Text',
+                                'data'	=>   array(
+							'20'=>array('field_name'=>'Basic',
+								  'type'      => 'heading'
+								  ),
+							
+							'1' =>array( 'field_name'	=> 'Text',
                                                                
 								    'field_id' 		=> 'exa_value',
 								    
@@ -24,8 +31,10 @@
 								    'child_attr_field_id' => 'exa_token',   		// attribute code field
 							       
 								    'child_attr_code'     => 'DETX',           		// attribute code
+								    
+								    'allow' => 'd10=',
 							       
-								    'is_mandatory'	=>1,
+								    'is_mandatory'	=>0,
 								    
 							       ),
 						   
@@ -44,6 +53,10 @@
 								    'child_attr_code'     => 'DETA',           		
 								    
 								    'input_html'	=>'class="w_200"',
+								    
+								    'allow' => 'w100',
+								    
+								     'is_mandatory'	=>1,
                                                                
 							       ),
 							
@@ -71,6 +84,10 @@
 							       ),
 							
 							
+							'16'=>array('field_name'=>'File',
+								  'type'      => 'heading'
+								  ),
+							
 							'4' =>array( 'field_name'		=> 'Image',
 							                                                        
 								    'field_id' 			=> 'exa_value',
@@ -87,7 +104,7 @@
 								    
 								    'max_size'    		=> 1024,
 							    
-								    'location'    		=> 'doc/image/',
+								    'location'    		=> 'media/',
 								    
 								    'child_table'         	=> 'exav_addon_varchar', 	
 							       
@@ -97,11 +114,13 @@
 							       
 								    'child_attr_code'     	=> 'DEIM',
 								       
-								    'is_mandatory'		=>0,
+								    'is_mandatory'		=>1,
 								       
 								    'input_html'		=>'class="w_200"',
 							                                                        
 							       ),
+							
+							
 							
 							'5' =>array( 'field_name'=> 'Documents',
 							                                                        
@@ -119,7 +138,7 @@
 								    
 								    'max_size'    => 1024,
 							    
-								    'location'    => 'doc/doc/',
+								    'location'    => 'media/',
 								    
 								    'child_table'         	=> 'exav_addon_varchar', 	
 							       
@@ -137,31 +156,35 @@
 							                                                        
 							       ),
 							
+							'17'=>array('field_name'=>'Single',
+								  'type'      => 'heading'
+								  ),
+							
 						        '6' =>array( 'field_name'	=> 'Option single',
                                                                
 								    'field_id' 		=> 'exa_value_token',
 								    
 								    'type' 		=> 'option',
 								    
-								    'option_default'=> array('label'=>'Select Employment','value'=>'NANA'),
+								    'option_default'	=> array('label'=>'Select Employment','value'=>'NANA'),
 								    
-								    'option_data'	=>$G->option_builder('entity_child_base','token,sn',
+								    'option_data'	=> $G->option_builder('entity_child_base','token,sn',
 													     'WHERE entity_code IN (SELECT code FROM entity WHERE is_lib = 0)
 													      ORDER by sn ASC'),
 								    
-								    'is_mandatory'	=>0,
+								    'is_mandatory'	=> 0,
 								    
-								    'input_html'	=>'class="w_100"',
+								    'input_html'	=>"class='w_200' onchange=element_show_by_token(['DEOM'],this,'FTTX');",
 								    
-								    'child_table'         	=> 'exav_addon_exa_token', 	
+								    'child_table'       => 'exav_addon_exa_token', 	
 							       
-								    'parent_field_id'     	=> 'parent_id',    		
+								    'parent_field_id'   => 'parent_id',    		
 										       
 								    'child_attr_field_id' 	=> 'exa_token',   		
 							       
-								    'child_attr_code'     	=> 'DEOS',
+								    'child_attr_code'   => 'DEOS',
 								       
-								    'is_mandatory'		=>0,
+								    'is_mandatory'      =>1,
 								    
 								    'avoid_default_option' => 0,
                                                             
@@ -173,7 +196,7 @@
 								    
 								    'type' 		=> 'option',
 								    
-								    'is_list' 		=> 1,
+								    'is_list' 		=> 0,
 								    
 								    'option_data'  => $G->option_builder("entity","code,sn","WHERE is_lib = 0 order by sn ASC"),
                                                                     
@@ -191,9 +214,15 @@
 								    
 								    'is_mandatory'	=>0,
 								    
-								    'input_html'   =>  ' class="w_100"  style="height:200px !important"  ',
+								    //'input_html'   =>  ' class="w_100"  style="height:200px !important"  ',
+								    
+								    'is_hide'=>1,
                 
 							    ),
+							
+							'18'=>array('field_name'=>'Others',
+								  'type'      => 'heading'
+								  ),
 							
 							'8' =>array( 'field_name'	=> 'Fiben Table',
                                                                
@@ -203,7 +232,13 @@
 									
 								    'type'              => 'fibenistable',
 								    
+								    'max_rows'          => 3,
+								    
 								    'is_index'		=> 1,
+								    
+								    'input_html'   =>  ' class="hide"',
+								    
+								    'is_hide'=>0,
 								    
 								    'colHeaders'=> array(array(
 											    'column'    => 'A',
@@ -224,6 +259,8 @@
 								    'child_attr_field_id' 	=> 'exa_token',   		
 							       
 								    'child_attr_code'     	=> 'DEFT',
+								    
+								    'is_mandatory'              =>0,
                                                             
                                                                ),
 							
@@ -240,6 +277,8 @@
 								    'child_attr_field_id' 	=> 'exa_token',   		
 							       
 								    'child_attr_code'     	=> 'DEDT',
+								    
+								    'is_mandatory'	=>1,
 							       
 							       ),
 							
@@ -275,7 +314,7 @@
 						      
 								    'is_default_on' 	=> 1,
 								    
-								    'child_table'         	=> 'exav_addon_num', 	
+								    'child_table'         	=> 'exav_addon_bool', 	
 							       
 								    'parent_field_id'     	=> 'parent_id',    		
 										       
@@ -326,6 +365,10 @@
 
 							    ),
 							
+							'19'=>array('field_name'=>'Editor',
+								    'type'      => 'heading'
+								  ),
+							
 							'14' =>array( 'field_name'	=> 'Text Editor', 
                                                                
 								    'field_id' 		=> 'exa_value',
@@ -367,15 +410,23 @@
 				
 				'is_user_id'       => 'user_id',
 				
+				'is_field_id_as_token'=>1,
+				
 				# Communication
 				
 				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?dx=demo__eav', 'BACK_NAME'=>'Back'),
                                 
-				'flat_message'	=> 'Successfully Added',
+				//'flat_message'	=> 'Successfully Added',
 				
-				'show_query'  => 0
+				'prime_index'=>2,
 				
-                                
+				'show_query'  => 0,
+				
+				'avoid_trans_key_direct'=>0,
+				
+				//'is_save_form' => 1,
+				
+				'divider'     => 'accordion'
 			);
 	
 ?>

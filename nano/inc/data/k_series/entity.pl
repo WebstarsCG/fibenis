@@ -130,7 +130,7 @@
                                                                                           'where' => qq/ entity_code='MP' AND entity_key='title' / 
                                                                        });
         
-        print Dumper($K_SERIES->{'data'}->{0}->{'data'});
+        #print Dumper($K_SERIES->{'data'}->{0}->{'data'});
         
         # set row      
         $K_SERIES->{'header'}->{0}->{'data'}->[0]->[0]=$PV->{'master'}->{'title'};

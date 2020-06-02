@@ -1,7 +1,7 @@
 #! /usr/bin/perl -w
 
     BEGIN{        
-	use lib 'perl';
+	use lib './perl';
 	use lib '../../lib_v7/perl';
     }
 
@@ -49,7 +49,7 @@
 	#		'excel_path' => 'csv/'
 	#		};
 	
-	my $global  =  {'db_name' => 'icms_2018',
+	my $global  =  {'db_name' => 'fibenis_nano',
 			'host'    => 'localhost',
 			'user'	  => 'root',
 			'pass'    => '',
@@ -69,7 +69,7 @@
 							       unq       => { f_file   => "unq.csv" },
 							       len       => { f_file   => "len.csv" },
 							       log       => { f_file   => "log.csv" },
-							       parent    => { f_file   => "parent.csv" },
+							       poarent    => { f_file   => "parent.csv" },
 							       default   => { f_file   => "default.csv" },
 							       setval     => { f_file   => "setval.csv" },
 							       del_cols     => { f_file   => "del.csv" },

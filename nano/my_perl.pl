@@ -2,8 +2,8 @@
 
     BEGIN{
         
-        use lib '../lib_v7/perl';
-        use lib 'perl';
+        use lib '../lib/v_01/perl';
+        use lib './perl';
     }
 
     # System Modules
@@ -51,10 +51,10 @@
         
         #my $global  =  $J->decode(&get_file_content('global.txt'));
 	
-	my $global  =  {'db_name'=>'webstarsdx_icmseavtest',
-			'host'   =>'db119c.pair.com',
-			'user'   => '1030551_13',
-			'pass'   => 'i49P6McE'
+	my $global  =  {'db_name'=>'fibenis_nano',
+			'host'   =>'localhost',
+			'user'   => 'root',
+			'pass'   => ''
 		    };
        
     # db connect
@@ -167,7 +167,7 @@
         
         my $lv;
 	
-	use KG_abc;	
+	use KG;	
         
         $lv->{'d'}     = shift @_;
         
@@ -183,7 +183,7 @@
 	
         do "inc/data/k_series/".$lv->{'key'}.".pl";
 	        
-	&KG_abc::create($K_SERIES->{'page'},
+	&KG::create($K_SERIES->{'page'},
 		        $K_SERIES->{'header'},
 		        $K_SERIES->{'data'});
 	
