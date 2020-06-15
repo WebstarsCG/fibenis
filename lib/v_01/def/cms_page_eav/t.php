@@ -9,7 +9,7 @@
                                 'table'		=> 'entity_child',
 				 
 				'data'		=>  array(						
-								'TEXT'=>array('field' => "get_exav_addon_varchar(id,'TEXT')")
+								
 								
 								
 							),	
@@ -19,7 +19,7 @@
 				
 				'key_filter'	=> '',
 				
-				'show_query'	=> 0,
+				'show_query'	=> 1,
 				  
                                # 'template'      => dirname(__FILE__).'/t.html',
                                
@@ -38,12 +38,12 @@
 
                         );
 	
+	
 		
 		list($T_SERIES['data'],$T_SERIES['template_content'])=get_page_addon_template_content(['page_addon_hash'=>$page_addon,
 									'rdsql'=>$rdsql,
 									'G'=>$G]);
-		#print_r($T_SERIES['data']);
-	
+		
 	function get_page_addon_template_content($param){
 		
 		
@@ -53,10 +53,10 @@
 		
 		$lv['content']= '';
 		
-		$lv['t_data'] = [];
 		
-		$lv['IT']=['ITTX'=>function($data_in){ return ['field'=>"get_exav_addon_varchar(id,'$data_in')"]; }
-			   
+		
+		$lv['IT']=['ITTX'=>function($data_in){ return ['field'=>"get_exav_addon_varchar(id,'$data_in')"]; },
+			      'ITTA'=>function($data_in){ return ['field'=>"get_exav_addon_text(id,'$data_in')"]; }
 			   
 			   
 			]; 
@@ -64,6 +64,8 @@
 		$lv['page_addon_id']=$param['G']->get_one_column(['table'=>'ecb_av_addon_varchar',
 							      'field'=>'parent_id',
 							      'manipulation'=>"WHERE ea_code='ATKH' AND ea_value='$param[page_addon_hash]'"]);
+		
+		
 		
 		$lv['template']  =  $param['G']->get_one_column(['table'=>'ecb_av_addon_text',
 							         'field'=>"ea_value",
@@ -83,6 +85,10 @@
 				$lv['t_data'][$lv['element']['token']]=$lv['IT'][$lv['element']['input_type']]($lv['element']['token']);
 			}
 		} 		
+		
+		if(count($lv['t_data'])==0){
+				$lv['t_data']['DETAIL']=array('field' => "get_eav_addon_text(id,'ECDT')");
+		}
 		
 		return [$lv['t_data'],$lv['template']];
 		
