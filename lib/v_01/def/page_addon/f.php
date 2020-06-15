@@ -35,7 +35,7 @@
                                     
                                     );
     
-        $F_SERIES['data']['3']['input_html'] = " class='w_150'  onchange='(function(element){ G.$(\"X7\").value=(G.$(\"X2\").value+\"[S]\"+G.$(\"X3\").value);  })(this);' ";
+        //$F_SERIES['data']['3']['input_html'] = " class='w_150'  onchange='(function(element){ G.$(\"X7\").value=(G.$(\"X2\").value+\"[S]\"+G.$(\"X3\").value);  })(this);' ";
     
     	
 	# from X2+X3	
