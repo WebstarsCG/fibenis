@@ -52,7 +52,7 @@
 			
 			$type_ext  = explode(".", $_FILES[$param['image_name']]["name"]);
 			
-			$save_ext = $type_ext[1];
+			$save_ext = end($type_ext);
 			
 			$save_ex_flage=0;
 			
