@@ -52,46 +52,47 @@
 			<attribute token="<TMPL_VAR TOKEN>" >
 				<name><TMPL_VAR NAME></name>
 				<description><TMPL_VAR DESCRIPTION></description>
-								<TMPL_IF input_type><input_type><TMPL_VAR input_type></input_type></TMPL_IF>
-								<TMPL_IF class><class><TMPL_VAR class></class></TMPL_IF>
-								<TMPL_IF html><html><TMPL_VAR html></html></TMPL_IF>
-								<TMPL_IF mandatory><mandatory><TMPL_VAR mandatory></mandatory></TMPL_IF> 
-								<TMPL_IF hint><hint><TMPL_VAR hint></hint></TMPL_IF>
-								<TMPL_IF hide><hide><TMPL_VAR hide></hide></TMPL_IF>
-								<TMPL_IF read_only><read_only><TMPL_VAR read_only></read_only></TMPL_IF>
-								
-								<TMPL_IF allow><allow><TMPL_VAR allow></allow></TMPL_IF>
-								
-								<TMPL_IF list_option_data><list_option_data><TMPL_VAR list_option_data></list_option_data></TMPL_IF>
-								<TMPL_IF list_avoid_default><list_avoid_default><TMPL_VAR list_avoid_default></list_avoid_default></TMPL_IF>
-								
-								<TMPL_IF min_date><min_date><TMPL_VAR min_date></min_date></TMPL_IF>
-								<TMPL_IF max_date><max_date><TMPL_VAR max_date></max_date></TMPL_IF>																							
-								<TMPL_IF min_year><min_year><TMPL_VAR min_year></min_year></TMPL_IF>
-								<TMPL_IF max_year><max_year><TMPL_VAR max_year></max_year></TMPL_IF>
-								<TMPL_IF default_date><default_date><TMPL_VAR default_date></default_date></TMPL_IF>
-								
-								<TMPL_IF fg_start_rows><fg_start_rows><TMPL_VAR fg_start_rows></fg_start_rows></TMPL_IF>
-								<TMPL_IF fg_max_rows><fg_max_rows><TMPL_VAR fg_max_rows></fg_max_rows></TMPL_IF>																							
-								<TMPL_IF fg_rows_to_fill><fg_rows_to_fill><TMPL_VAR fg_rows_to_fill></fg_rows_to_fill></TMPL_IF>
-								<TMPL_IF fg_content_template><fg_content_template><TMPL_VAR fg_content_template></fg_content_template></TMPL_IF>
-								<TMPL_IF fg_heading_template><fg_heading_template><TMPL_VAR fg_heading_template></fg_heading_template></TMPL_IF>
-								<TMPL_IF fg_detail><fg_detail><TMPL_VAR fg_detail></fg_detail></TMPL_IF>
-								
-								<TMPL_IF file_name><file_name><TMPL_VAR file_name></file_name></TMPL_IF>
-								<TMPL_IF file_name_prefix><file_name_prefix><TMPL_VAR file_name_prefix></file_name_prefix></TMPL_IF>																							
-								<TMPL_IF file_name_suffix><file_name_suffix><TMPL_VAR file_name_suffix></file_name_suffix></TMPL_IF>
-								<TMPL_IF file_location><file_location><TMPL_VAR file_location></file_location></TMPL_IF>
-								<TMPL_IF file_allow_type><file_allow_type><TMPL_VAR file_allow_type></file_allow_type></TMPL_IF>
-								<TMPL_IF file_max_size><file_max_size><TMPL_VAR file_max_size></file_max_size></TMPL_IF>
-								<TMPL_IF file_img_size><file_img_size><TMPL_VAR file_img_size></file_img_size></TMPL_IF>
-																																	
-								<TMPL_IF tg_show_status_label><tg_show_status_label><TMPL_VAR tg_show_status_label></tg_show_status_label></TMPL_IF>																							
-								<TMPL_IF tg_on_label><tg_on_label><TMPL_VAR tg_on_label></tg_on_label></TMPL_IF>
-								<TMPL_IF tg_off_label><tg_off_label><TMPL_VAR tg_off_label></tg_off_label></TMPL_IF>
-								<TMPL_IF tg_is_default_on><tg_is_default_on><TMPL_VAR tg_is_default_on></tg_is_default_on></TMPL_IF>
-								
-								<TMPL_IF label_content><label_content><TMPL_VAR label_content></label_content></TMPL_IF>
+				<line_order><TMPL_VAR LINE_ORDER></line_order>
+				<TMPL_IF input_type><input_type><TMPL_VAR input_type></input_type></TMPL_IF>
+				<TMPL_IF class><class><TMPL_VAR class></class></TMPL_IF>
+				<TMPL_IF html><html><TMPL_VAR html></html></TMPL_IF>
+				<TMPL_IF mandatory><mandatory><TMPL_VAR mandatory></mandatory></TMPL_IF> 
+				<TMPL_IF hint><hint><TMPL_VAR hint></hint></TMPL_IF>
+				<TMPL_IF hide><hide><TMPL_VAR hide></hide></TMPL_IF>
+				<TMPL_IF read_only><read_only><TMPL_VAR read_only></read_only></TMPL_IF>
+				
+				<TMPL_IF allow><allow><TMPL_VAR allow></allow></TMPL_IF>
+				
+				<TMPL_IF list_option_data><list_option_data><TMPL_VAR list_option_data></list_option_data></TMPL_IF>
+				<TMPL_IF list_avoid_default><list_avoid_default><TMPL_VAR list_avoid_default></list_avoid_default></TMPL_IF>
+				
+				<TMPL_IF min_date><min_date><TMPL_VAR min_date></min_date></TMPL_IF>
+				<TMPL_IF max_date><max_date><TMPL_VAR max_date></max_date></TMPL_IF>																							
+				<TMPL_IF min_year><min_year><TMPL_VAR min_year></min_year></TMPL_IF>
+				<TMPL_IF max_year><max_year><TMPL_VAR max_year></max_year></TMPL_IF>
+				<TMPL_IF default_date><default_date><TMPL_VAR default_date></default_date></TMPL_IF>
+				
+				<TMPL_IF fg_start_rows><fg_start_rows><TMPL_VAR fg_start_rows></fg_start_rows></TMPL_IF>
+				<TMPL_IF fg_max_rows><fg_max_rows><TMPL_VAR fg_max_rows></fg_max_rows></TMPL_IF>																							
+				<TMPL_IF fg_rows_to_fill><fg_rows_to_fill><TMPL_VAR fg_rows_to_fill></fg_rows_to_fill></TMPL_IF>
+				<TMPL_IF fg_content_template><fg_content_template><TMPL_VAR fg_content_template></fg_content_template></TMPL_IF>
+				<TMPL_IF fg_heading_template><fg_heading_template><TMPL_VAR fg_heading_template></fg_heading_template></TMPL_IF>
+				<TMPL_IF fg_detail><fg_detail><TMPL_VAR fg_detail></fg_detail></TMPL_IF>
+				
+				<TMPL_IF file_name><file_name><TMPL_VAR file_name></file_name></TMPL_IF>
+				<TMPL_IF file_name_prefix><file_name_prefix><TMPL_VAR file_name_prefix></file_name_prefix></TMPL_IF>																							
+				<TMPL_IF file_name_suffix><file_name_suffix><TMPL_VAR file_name_suffix></file_name_suffix></TMPL_IF>
+				<TMPL_IF file_location><file_location><TMPL_VAR file_location></file_location></TMPL_IF>
+				<TMPL_IF file_allow_type><file_allow_type><TMPL_VAR file_allow_type></file_allow_type></TMPL_IF>
+				<TMPL_IF file_max_size><file_max_size><TMPL_VAR file_max_size></file_max_size></TMPL_IF>
+				<TMPL_IF file_img_size><file_img_size><TMPL_VAR file_img_size></file_img_size></TMPL_IF>
+																													
+				<TMPL_IF tg_show_status_label><tg_show_status_label><TMPL_VAR tg_show_status_label></tg_show_status_label></TMPL_IF>																							
+				<TMPL_IF tg_on_label><tg_on_label><TMPL_VAR tg_on_label></tg_on_label></TMPL_IF>
+				<TMPL_IF tg_off_label><tg_off_label><TMPL_VAR tg_off_label></tg_off_label></TMPL_IF>
+				<TMPL_IF tg_is_default_on><tg_is_default_on><TMPL_VAR tg_is_default_on></tg_is_default_on></TMPL_IF>
+				
+				<TMPL_IF label_content><label_content><TMPL_VAR label_content></label_content></TMPL_IF>
 			</attribute>
 		</TMPL_LOOP>
 		</attributes>

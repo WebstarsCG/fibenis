@@ -129,8 +129,12 @@
 																												$lv['ecb']=[];
 																												
 																												// attr query
-																												$lv['attr_query'] = "INSERT INTO entity_child_base(entity_code,token,sn,ln,dna_code,user_id)
-																																																VALUES('".$entity->code."','".$lv['attr']['token']."','".$lv['attr']['name']."','".$lv['attr']['description']."','EBAT',$USER_ID)";
+																												$lv['attr_query'] = "INSERT INTO entity_child_base(entity_code,token,sn,ln,line_order,dna_code,user_id)
+																																																VALUES('".$entity->code."','".
+																																																          $lv['attr']['token']."','".
+																																																		  $lv['attr']['name']."','".
+																																																		  $lv['attr']['description']."','".
+																																																		  $lv['attr']['line_order']."','EBAT',$USER_ID)";
 																												
 																												$rdsql->exec_query($lv['attr_query'],'ecb');
 																																																								
@@ -139,8 +143,9 @@
 																												unset($lv['attr']['token']);
 																												unset($lv['attr']['name']);
 																												unset($lv['attr']['description']);
+																												unset($lv['attr']['line_order']);
 																													
-																												print_r($lv['attr']);	
+																												#print_r($lv['attr']);	
 																													
 																												foreach($lv['attr'] as $akey => $aval){																		
 																																$lv['addon_query_text'].="($lv[ecb_id],'".$lv['attrmap'][$akey]."','".$aval."',$USER_ID),";

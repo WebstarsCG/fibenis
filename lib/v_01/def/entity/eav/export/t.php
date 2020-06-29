@@ -54,12 +54,15 @@
 																							'30'=>array( 'key'=>'file_max_size',      	'field'=>"get_ecb_av_addon_varchar(id,'APFM')" ),
 																							'31'=>array( 'key'=>'file_img_size',      	'field'=>"get_ecb_av_addon_varchar(id,'APIS')" ),
 																																																
-																       '32'=>array( 'key'=>'tg_show_status_label','field'=>"get_ecb_av_addon_varchar(id,'APTS')" ),																							
+																							'32'=>array( 'key'=>'tg_show_status_label','field'=>"get_ecb_av_addon_varchar(id,'APTS')" ),																							
 																							'33'=>array( 'key'=>'tg_on_label',         'field'=>"get_ecb_av_addon_varchar(id,'APTN')" ),
-																				   '34'=>array( 'key'=>'tg_off_label',	       'field'=>"get_ecb_av_addon_varchar(id,'APTF')" ),
+																							'34'=>array( 'key'=>'tg_off_label',	       'field'=>"get_ecb_av_addon_varchar(id,'APTF')" ),
 																							'35'=>array( 'key'=>'tg_is_default_on',   	'field'=>"get_ecb_av_addon_varchar(id,'APTD')" ),
 																							
 																							'36'=>array( 'key'=>'label_content',      	'field'=>"get_ecb_av_addon_varchar(id,'APLC')" ),
+																							
+																					//
+																							'37'=>array('key'=>'line_order','field'=>'line_order'),
 																							
 																					),
 									
