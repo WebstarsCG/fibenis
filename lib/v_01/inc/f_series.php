@@ -10,10 +10,11 @@
 		$PAGE_ID = $PAGE;
 		
 		$F_DEFAULT = ['user_id'   => 'user_id',
-			             'created_by'=> 'created_by',
-															 'f_series'  => array('f_series'=>'d_series','f'=>'d','fx'=>'dx') ];
+			          'created_by'=> 'created_by',
+					  'f_series'  => array('f_series'=>'d_series','f'=>'d','fx'=>'dx') ];
               		
-		$F_MESSAGE = '';
+		$F_MESSAGE 		  					= '';
+		$F_SERIES['temp']['last_insert'] 	= '';
 		
 		# Check for app key
 		
@@ -196,7 +197,7 @@
 							
 						}else if(@$F_SERIES['after_add_update']==1){						
 								
-								after_add_update($row_id);
+							after_add_update($row_id);
 								
 						} // end
 						
@@ -268,17 +269,29 @@
 		if(isset($_POST['ADD']) || isset($_POST['SAVE'])){				
 				
 				$uniq_trans_key     = md5($row_id.$USER_ID.$PASS_ID.time().rand());
-				
 				setcookie($uniq_trans_key,$F_MESSAGE,(time()+360));				
 				
-				$update_trans_query = (@$_POST['UPDATE'])?"&key=".@$_POST['UPDATE']:'';		  
+				if(@$F_SERIES['get_last_insert']){
+					
+					// last insert data
 				
-				$temp_req_query     = $_SERVER['QUERY_STRING'];
+					if(is_int($F_SERIES['get_last_insert'])){						
+						$F_SERIES['temp']['last_insert'] =  json_encode(array_merge($_POST,['id'=>$row_id]));
+						
+					}
+					
+					setcookie($uniq_trans_key."_last_insert",$F_SERIES['temp']['last_insert'],(time()+360));
 				
+				} // last insert
+				
+				
+				
+				
+				$update_trans_query  = (@$_POST['UPDATE'])?"&key=".@$_POST['UPDATE']:'';
+				$temp_req_query      = $_SERVER['QUERY_STRING'];
 				$temp_req_query_trim = preg_replace('/(\&trans_key\s*=\s*[0-9a-fA-F]{32})/i','',$temp_req_query);
 				
-				if($update_trans_query){						
-				
+				if($update_trans_query){										
 					$temp_req_query_trim = preg_replace('/(\&key\s*=\s*[0-9]{1,32})/i','',$temp_req_query_trim);
 				}
 				
@@ -286,8 +299,7 @@
 						header("Location:?$temp_req_query_trim&trans_key=$uniq_trans_key$update_trans_query");			
 				}
 				
-		} # end
-		
+		} # end		
 		 		
 			
 		$options 	= array("filename"=>$LIB_PATH."/template/f_series.html", "debug"=>0,"loop_context_vars"=>1);
@@ -318,18 +330,16 @@
 		
 			$T->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['key']));
 			
-				#set_system_log:
-						$param = array('user_id'=>$USER_ID,
-							       
-							       'page_code'=>$F_SERIES['page_code'],
-							       
-							       'action_type'=>'PSDT',
-							       
-							       'action'=>'View the information by using '.$_GET['key'].'');
-						
-						$G->set_system_log($param);
+			#set_system_log:
+			$param = array('user_id'=>$USER_ID,
+					   
+					   'page_code'=>$F_SERIES['page_code'],
+					   
+					   'action_type'=>'PSDT',
+					   
+					   'action'=>'View the information by using '.$_GET['key'].'');
 			
-			
+			$G->set_system_log($param);
 						
 		} # app key
 		
@@ -382,12 +392,21 @@
 		
 		//echo "M->".$F_MESSAGE;
 		###TRANSKEY-R-17072018
-		if(@$_COOKIE[@$_GET['trans_key']]){
+		if(@$_COOKIE[@$_GET['trans_key']]){			
 								
-				$T->AddParam('message',@$_COOKIE[@$_GET['trans_key']]);								
-				setcookie($_GET['trans_key'],'',(time()-360));									      
+				$T->AddParam('message',@$_COOKIE[@$_GET['trans_key']]);	
+				setcookie($_GET['trans_key'],'',(time()-360));			
+	
+				$F_SERIES['temp']['last_insert'] = @$_COOKIE[@$_GET['trans_key'].'_last_insert'];	
+				setcookie($_GET['trans_key'].'_last_insert','',(time()-360));			
+				
 		}elseif($F_MESSAGE){
-				$T->AddParam('message',$F_MESSAGE);								
+				$T->AddParam('message',$F_MESSAGE);
+		}
+		
+		// last_insert
+		if(@$F_SERIES['get_last_insert']){
+				$T->AddParam('last_insert',@$F_SERIES['temp']['last_insert']);
 		}
 		
 		// is session

@@ -2624,7 +2624,12 @@
 				 
 				fade_in_out('#inpage_message',5000,message_info[1]);
 				
-			</TMPL_IF>			   
+			</TMPL_IF>	
+
+			<TMPL_IF last_insert>					
+				    last_insert_action('<TMPL_VAR last_insert>');			
+			</TMPL_IF>
+			
 				
 			$(window).keydown(function(event){
 			    if(event.keyCode == 13) {
