@@ -84,8 +84,8 @@
 								
 				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?d=entity', 'BACK_NAME'=>'Back'),
                                 
-				'prime_index'   => 1,
-                                
+				'prime_index'   => 1			
+				               
                                 
 			);
     
