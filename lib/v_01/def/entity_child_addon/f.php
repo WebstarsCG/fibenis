@@ -56,6 +56,7 @@
 				#Primary Key
                                 
 			        'key_id'        => 'id',
+					
                                 
 				# Default Additional Column
                                 
@@ -65,7 +66,7 @@
 								
 				'add_button' => array( 'is_add' =>1,'page_link'=>'f=entity_child', 'b_name' => 'Add Entity child' ),
                      
-    'back_to'  => array( 'is_back_button' =>1, 'back_link'=>''),
+				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>''),
                                 
 				'prime_index'   => 2,
                                 
@@ -79,42 +80,41 @@
                                 
 			);
     
-    if(isset($_GET['default_addon'])){
-	
-								$default_addon = @$_GET['default_addon'];
-								
-								if($default_addon){
-																	
-												$F_SERIES['data'][2]['option_data']          = $G->option_builder('entity','code,sn'," WHERE code='$default_addon' ORDER by sn ASC "); 
-												
-												$F_SERIES['data'][2]['avoid_default_option'] = 1;
-												
-												@$F_SERIES['temp']=f_addon(['g'		   => $G,
-												'rdsql'		   => $rdsql,
-												'f_series'     	   => ['data'=>$F_SERIES['data']],
-												'default_addon'	   => json_encode(['en'=>$default_addon])	
-											]);
-													
-												$F_SERIES['data']=$F_SERIES['temp']['data'];
-												
-												$F_SERIES['data'][2]['is_hide']=1;
-												
-												array_push($F_SERIES['data'],$F_SERIES['data'][2]);
-												
-												unset($F_SERIES['data'][2]);
-												
-												$F_SERIES['back_to']['back_default_addon']=$default_addon;
-								
-								} // end
-	
-    } # end
+			if(isset($_GET['default_addon'])){
+			
+				$default_addon = @$_GET['default_addon'];
+				
+				if($default_addon){													
+									
+					// faddon array										
+					@$F_SERIES['temp']=f_addon(['g'		        => $G,
+												'rdsql'		    => $rdsql,
+												'f_series'     	=> ['data'=>$F_SERIES['data']],
+												'default_addon' => json_encode(['en'=>$default_addon]),
+												'coach'			=> $COACH,
+												'is_cache'		=> 1,
+												'page_code'		=> $default_addon.'_'.$PAGE_CODE
+										]);
+					
+					$F_SERIES['data']=$F_SERIES['temp']['data'];
+														
+					$F_SERIES['data'][2]['is_hide']=1;														
+					array_push($F_SERIES['data'],$F_SERIES['data'][2]);														
+					unset($F_SERIES['data'][2]);
+					
+					$F_SERIES['back_to']['back_default_addon']=$default_addon;										
+					
+				} // end
+			
+			} # end
     
-				if(isset($_GET['menu_off'])){
 
-												$menu_off = @$_GET['menu_off'];
-												$F_SERIES['back_to']['back_menu_off']=$menu_off;
-												
-												$F_SERIES['back_to']['is_back_button']=0;
+			if(isset($_GET['menu_off'])){
 
-				}     
+											$menu_off = @$_GET['menu_off'];
+											$F_SERIES['back_to']['back_menu_off']=$menu_off;
+											
+											$F_SERIES['back_to']['is_back_button']=0;
+
+			}     
 ?>
