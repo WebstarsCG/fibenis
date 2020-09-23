@@ -114,7 +114,7 @@
                                                                      'field_id'           => 'ea_value',
                                                                     'is_fibenistable'   => 1,
                                                                     'is_index'          => 1,
-								    'type'              => 'fibenistable',
+																	'type'              => 'fibenistable',
                                                                     //'is_ro'               =>1,
                                                                     'is_mandatory'        => 0,
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
@@ -128,18 +128,28 @@
 											           'max_rows'=>'1',
 											           
                                                                                                    ),
-								     'colHeaders'=> array(
+														'colHeaders'=> array(
                                                                                                     array('column'=>'Table','width'=>'200','type'=>'dropDown','data'=>"<option value=Entity_Child_Base>Entity_Child_Base</option><option value=Entity_Child>Entity_Child</option>"),
                                                                                                     array('column'=>'Entity Code','width'=>'100','type'=>'dropDown','data'=> $G->ft_option_builder('entity','concat(code,\'->\',sn),sn'," ORDER BY sn ASC")),
                                                                                                     array('column'=>'Option Id Field','width'=>'100','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
                                                                                                     array('column'=>'Option Id Value','width'=>'100','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
-                                                                                                    array('column'=>'Filter','width'=>'300','type'=>'text'),
-                                                                                                    
-                                                                                         ),
+                                                                                                    array('column'=>'Filter','width'=>'300','type'=>'text')
+																	 ),
                                                                      
                                                                      'is_hide' => 0, 
                                                                      
                                                                ),
+															   
+												    '55' =>array(     'field_name'         => 'Avoid Default Option',                                                                
+                                                                     'field_id'            => 'ea_value',				       
+                                                                    'type' 	          	   => 'toggle',
+                                                                    'is_mandatory'         => 0,
+                                                                            
+                                                                    'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                    'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                    'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                    'child_attr_code'     => 'APAD'           // attribute code                                                                    
+                                                            ),
                                                         
                                                       '9' =>array('field_name'=>'Line order',
                                                                
@@ -149,7 +159,7 @@
                                                                
                                                                'allow'=>'d10[.]',
 							       
-							       'is_mandatory'=>0,
+																'is_mandatory'=>0,
                                                                
                                                                'input_html'=>' class="w_50 align_RM" '
 						   
@@ -883,7 +893,7 @@
                                                             
                                                             '54' =>array(   'field_name'          => 'Sort',                                                                
                                                                             'field_id'            => 'ea_value',				       
-                                                                            'type' 	          => 'text',
+                                                                            'type' 	          	  => 'text',
                                                                             'is_mandatory'        => 0,                                                                            
                                                                             'child_table'         => 'ecb_av_addon_varchar', // child table 
                                                                             'parent_field_id'     => 'parent_id',    // parent field                                                                                            
@@ -974,6 +984,7 @@
                                 'ITTX'  => [13],
                                 'ITFT'  => [26,27,28,29,30,31,32,46],
                                 'ITSL'  => [8],
+								'ITML'  => [8],
                                 'ITTA'  => [13],
                                 'ITIG'  => [],
                                 'ITCE'  => [],

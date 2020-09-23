@@ -92,7 +92,7 @@
 												'f_series'     	=> ['data'=>$F_SERIES['data']],
 												'default_addon' => json_encode(['en'=>$default_addon]),
 												'coach'			=> $COACH,
-												'is_cache'		=> 1,
+												'is_cache'		=> 0,
 												'page_code'		=> $default_addon.'_'.$PAGE_CODE
 										]);
 					
@@ -102,7 +102,9 @@
 					array_push($F_SERIES['data'],$F_SERIES['data'][2]);														
 					unset($F_SERIES['data'][2]);
 					
-					$F_SERIES['back_to']['back_default_addon']=$default_addon;										
+					$F_SERIES['back_to']['back_default_addon']=$default_addon;		
+
+						
 					
 				} // end
 			

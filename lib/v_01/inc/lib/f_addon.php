@@ -47,6 +47,9 @@
 									'ITTG'=>['table'=>'bool'],
 														'ITTE'=>['table'=>'text'],
 														'ITSL'=>['table'=>'varchar'],
+														'ITML'=>['table'=>'varchar',
+														'action'=>function($data_in){  $data_in['is_list']=1; 
+																				       $data_in['input_html']=" class='w_300' style='height:100px' ";  return $data_in; }],
 									'ITFT'=>['table'=>'text'],
 									'ITFD'=>['table'=>'varchar'],
 									'ITFI'=>['table'=>'varchar'],
@@ -117,10 +120,10 @@
 																				token,
 												ln,
 												note,
-																				".(($param['field_label'])?$param['field_label']:'sn')." as title,                                                                    
-																				get_ecb_addon_varchar(entity_child_base.id,'APIT') as exa_type,
-																				get_ecb_addon_varchar(entity_child_base.id,'APSL') as simple_list,
-																				get_ecb_addon_varchar(entity_child_base.id,'APGO') as grid_option,
+												".(($param['field_label'])?$param['field_label']:'sn')." as title,                                                                    
+												get_ecb_addon_varchar(entity_child_base.id,'APIT') as exa_type,
+												get_ecb_addon_varchar(entity_child_base.id,'APSL') as simple_list,
+												get_ecb_addon_varchar(entity_child_base.id,'APGO') as grid_option,
 												get_ecb_addon_varchar(entity_child_base.id,'APFO') as fiben_option,
 												get_ecb_addon_varchar(entity_child_base.id,'APMD') as min_date_attr,
 												get_ecb_addon_varchar(entity_child_base.id,'APXD') as max_date_attr,
@@ -175,6 +178,7 @@
 											
 											while($get_row = $rdsql->data_fetch_object($temp['addon']->result)){
 													
+														
 															
 													 
 															if($get_row->exa_type=="ITHD"){
@@ -628,15 +632,15 @@
 											
 											$dd_val = NULL;
 															
-															}elseif($get_row->exa_type=="ITSL"){
+															}elseif(($get_row->exa_type=="ITSL") || ($get_row->exa_type=="ITML")){
 																			
-																			$temp_grid = json_decode(stripslashes($get_row->simple_list));
+																			$temp_grid 			= json_decode(stripslashes($get_row->simple_list));
 											 
-																			$option_data = $temp_grid[0];
+																		
+											 
+																			$option_data 		= $temp_grid[0];
 																			
-																			
-																			
-																			$temp_entity_token = explode('->',$option_data[1]);
+																			$temp_entity_token 	= explode('->',$option_data[1]);
 																			
 																			$temp_input =   [
 																								   'field_name'=>$get_row->title,
@@ -657,20 +661,16 @@
 																								   
 																								   'is_mandatory'	     => 0,
 																								   
-																								   //'data_prefix'    => '[',
-																								   //
-																								   //'data_suffix'    => ']',
-																								   
-																								   'allow' => 'x1024',
+																								   'allow' 				 => 'x1024',
 																									
-																									'attr'           => [ 'class' => "w_200",
-																
-																   ]
+																								   'attr'           	 => [ 'class' => "w_200"]
 																								   
 																							];
 															
-															
-																			#$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
+																			if(isset($temp_input_to_table[$get_row->exa_type]['action'])){
+																				$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
+																			}
+																			
 															
 															}elseif($get_row->exa_type=="ITFD"){
 																			
