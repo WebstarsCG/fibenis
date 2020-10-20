@@ -74,14 +74,14 @@
 								$lv['field_map']['primary']    = ['token'	  => 2,
 														    'sn'	 	  => 1,
 														    'ln'		  => 1,
-														    'line_order' => 9];
+														    'line_order' => 8];
 							
 									
-								$lv['field_map']['addon'] = ['APIT'		=> 4,
-														'APAL'		=> 5,
-														'APCL'		=> 6,
-														'APMA'		=> 7,
-														'APHT'		=> 8];
+								$lv['field_map']['addon'] = ['APIT'		=> 3,
+														'APAL'		=> 4,
+														'APCL'		=> 5,
+														'APMA'		=> 6,
+														'APHT'		=> 7];
 								
 								$lv['field_map']['net']		= array_merge($lv['field_map']['primary'],
 																	$lv['field_map']['addon']);
