@@ -10,41 +10,11 @@
 				#Table field
                     
 				'data'	=>   array(
-//						   
-//						    '1' =>array( 'field_name'=> 'Basic',
-//                                                               
-//                                                               'field_id' => 'basic',
-//                                                               
-//                                                               'type' => 'heading',
-//                                                               
-//                                                               //'option_data'=>$G->option_builder('entity','code,sn'," ORDER by sn ASC "),
-//                                                               
-//                                                               'is_mandatory'=>1,
-//                                                               
-//                                                               'input_html'=>'class="w_100"',
-//                                                               
-//                                                               'avoid_default_option' => 0
-//                                                               
-//                                                               ),
-						    
-						   
-						   '2' =>array( 'field_name'=> 'Entity',
-                                                               
-                                                               'field_id' => 'entity_code',
-                                                               
-                                                               'type' => 'option',
-                                                               
-                                                               //'option_data'=>$G->option_builder('entity','code,sn'," ORDER by sn ASC "),
-                                                               
-                                                               'is_mandatory'=>1,
-                                                               
-                                                               'input_html'=>'class="w_100"',
-                                                               
-                                                               'avoid_default_option' => 0,
-							       
-							       
-                                                               
-                                                               )
+						   '2' =>array(
+							       'field_name'=>'Entity Code',
+							       'field_id' => 'entity_code',                                                               
+                                                               'type' => 'hidden',                                                                                                                              
+                                                               'is_mandatory'=>1)
 						
 				    
                                 ),
@@ -75,7 +45,7 @@
 				
 				'divider' => 'tab', 
 				
-				'page_code'	=> 'FECA',                                
+				'gx'=>1
 				
                                 
 			);
@@ -98,7 +68,7 @@
 					
 					$F_SERIES['data']=$F_SERIES['temp']['data'];
 														
-					$F_SERIES['data'][2]['is_hide']=1;														
+					$F_SERIES['data'][2]['attr']['value']=$default_addon;																		
 					array_push($F_SERIES['data'],$F_SERIES['data'][2]);														
 					unset($F_SERIES['data'][2]);
 					
@@ -113,10 +83,10 @@
 
 			if(isset($_GET['menu_off'])){
 
-											$menu_off = @$_GET['menu_off'];
-											$F_SERIES['back_to']['back_menu_off']=$menu_off;
-											
-											$F_SERIES['back_to']['is_back_button']=0;
+			    $menu_off = @$_GET['menu_off'];
+			    $F_SERIES['back_to']['back_menu_off']=$menu_off;
+			    
+			    $F_SERIES['back_to']['is_back_button']=0;
 
 			}     
 ?>
