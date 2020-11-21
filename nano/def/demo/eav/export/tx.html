@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+<TMPL_LOOP DATA_INFO>
+	<entity>
+		<name><TMPL_VAR CODE></code>code
+		<name><TMPL_VAR NAME></name>
+		<attributes>
+		<TMPL_LOOP ATTRIBUTES>
+			<attribute token="<TMPL_VAR TOKEN>" >
+				<name><TMPL_VAR NAME></name>
+				<description><TMPL_VAR DESCRIPTION></description>
+				<line_order><TMPL_VAR LINE_ORDER></line_order>
+				<TMPL_IF input_type><input_type><TMPL_VAR input_type></input_type></TMPL_IF>
+			</attribute>
+		</TMPL_LOOP>
+		</attributes>
+	</entity>
+</TMPL_LOOP>
+</entities>

@@ -13,9 +13,8 @@
 										    // counter match to the index 
 										    // 1 will fetch the name from index 0       
 						     
-										   'data'  => array( '1'=>array('key'=>'Col_A'),
-												     '2'=>array('key'=>'Col_B'),
-												     '3'=>array('key'=>'OPT_A'))
+										   'data'  => array( '1'=>array('key'=>'Name'),
+														 '2'=>array('key'=>'DoB'))
 									     )
 						),	
 			

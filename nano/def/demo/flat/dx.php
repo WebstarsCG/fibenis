@@ -107,7 +107,7 @@
                                     
                                     'key_id'    =>'id',
 																																				
-																																				'action'=> array('is_action' =>1,
+								'add_button'    => array( 'is_add' =>1,'page_link'=>'fx=demo__flat'),																						'action'=> array('is_action' =>1,
 																																																					'is_edit'   => 1),
 																																				
 																																				'del_permission' => array('able_del'=>1),

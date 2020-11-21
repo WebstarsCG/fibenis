@@ -114,7 +114,7 @@
 							       
 								    'child_attr_code'     	=> 'DEIM',
 								       
-								    'is_mandatory'		=>1,
+								    'is_mandatory'		=>0,
 								       
 								    'input_html'		=>'class="w_200"',
 							                                                        

@@ -74,7 +74,7 @@
 							    
 								    'location'    		=> 'media/',         
 								       
-								    'is_mandatory'		=>1,
+								    'is_mandatory'		=>0,
 								       
 								    'input_html'		=>'class="w_200"',
 								    
@@ -152,17 +152,17 @@
 								    'is_mandatory'	=>1,
 								    
 								    'colHeaders'=> array(array(
-											    'column'    => 'A',
-											    'width'     => '50',
-											    'type'      => 'text',
-                                                                                    ),
-										    array(
-											    'column'    => 'B',
-											    'width'     => '50',
-											    'type'      => 'text',
-                                                                                    ),
-										)
-                                                            
+															'column'    => 'Name',
+															'width'     => '50',
+															'type'      => 'text',
+																				),
+															array(
+																'column'    => 'DoB',
+																'width'     => '50',
+																'type'      => 'date',
+																					),
+														 )
+																 
                                                                ),
 							
 							'10' =>array( 'field_name'	=> 'Date',

@@ -1,7 +1,15 @@
 <TMPL_LOOP DATA_INFO>
    Text:<TMPL_VAR TEXT><hr>
    Text Area:<TMPL_VAR TEXT_AREA><hr>
+   Grid Info:
+   <table border=1 class="table">
    <TMPL_LOOP GRID_INFO>
-      <TMPL_VAR COL_A>|<TMPL_VAR COL_B>|<TMPL_VAR OPT_A><hr>
+      <tr>
+            <td><TMPL_VAR NAME></td>
+            <td><TMPL_VAR DOB></td>   
+      </tr>           
    </TMPL_LOOP>
+   </table>
+   
+   <hr>
 </TMPL_LOOP>
