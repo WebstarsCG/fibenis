@@ -644,6 +644,7 @@
 	
 		@$F_SERIES['temp']=f_addon([	'g'		   => $G,
 						'rdsql'		   => $rdsql,
+						'is_cache'		  =>0,
 						'f_series'     	   => ['data'=>$F_SERIES['data']],
 						'default_addon'	   => json_encode(['at'=>$temp['addon']])
 					]);

@@ -911,10 +911,14 @@
 														 'data'=>$f_series['data']
 														 );
 					
-								// fseries to temp
-								$fh = fopen($lv['lock_file'],'w') or "Error";
-								fputs($fh,serialize($lv['result']));
-								fclose($fh);
+					
+								  if($param['is_cache']){
+									    
+									    // fseries to temp
+									    $fh = fopen($lv['lock_file'],'w') or "Error";
+									    fputs($fh,serialize($lv['result']));
+									    fclose($fh);
+								  }
 								
 								return $lv['result'];
 					}
