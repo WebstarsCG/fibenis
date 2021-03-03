@@ -31,7 +31,7 @@
                                                                 
                                                                 ),
                                                    
-                                                   '2' =>array( 'field_name'=> 'Short Name',
+                                                   '2' =>array( 'field_name'=> 'Short Name Please',
                                                                
                                                                'field_id' => 'sn',
                                                                

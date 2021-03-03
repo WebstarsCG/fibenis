@@ -396,7 +396,7 @@
 								
 				#export data
 				
-				'export_csv'   => array('is_active' => 1,																				
+				'export_csv'   => array('is_active' => 0,																				
 							'export_csv_data'=>  array(
 											array('th'   =>'Code','field'=>'code' ),
 											array('th'   =>'Name','field'=>'sn' )

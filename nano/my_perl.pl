@@ -147,14 +147,14 @@
         
         $lv->{'global'}  = shift @_;
 	
-	$lv->{'key'}     = $param->{'p_series'};
+		$lv->{'key'}     = $param->{'p_series'};
         
-	$lv->{time}      = &General::get_date_time({'time'=>time(),
+		$lv->{time}      = &General::get_date_time({'time'=>time(),
 						    'style'=>'file'});
 	
         do "inc/data/p_series/".$lv->{'param'}->{'p_series'}.".pl";
 	        
-	return play($lv);
+		return play($lv);
         
     } # e_series
         
@@ -167,30 +167,30 @@
         
         my $lv;
 	
-	use KG;	
+		use KG;	
         
-        $lv->{'d'}     = shift @_;
-        
-        $lv->{'param'}   = shift @_;
-        
-        $lv->{'global'}  = shift @_;
-	
-	$lv->{'key'}     = $param->{'k_series'};
-        
-	$lv->{time}      = &General::get_date_time({'time'=>time(),'style'=>'file'});
-	
-	$K_SERIES->{'req'} = $lv;
-	
-        do "inc/data/k_series/".$lv->{'key'}.".pl";
-	        
-	&KG::create($K_SERIES->{'page'},
-		        $K_SERIES->{'header'},
-		        $K_SERIES->{'data'});
-	
-	return{'success'	=> 1,
-	       'file_path'	=> $K_SERIES->{'page'}->{'file_name'},
-	       'report_name'	=> $lv->{'key'}
-	}
+		$lv->{'d'}     = shift @_;
+			
+		$lv->{'param'}   = shift @_;
+			
+		$lv->{'global'}  = shift @_;
+		
+		$lv->{'key'}     = $param->{'k_series'};
+			
+		$lv->{time}      = &General::get_date_time({'time'=>time(),'style'=>'file'});
+		
+		$K_SERIES->{'req'} = $lv;
+		
+			do "inc/data/k_series/".$lv->{'key'}.".pl";
+				
+		&KG::create($K_SERIES->{'page'},
+					$K_SERIES->{'header'},
+					$K_SERIES->{'data'});
+		
+		return{'success'	=> 1,
+			   'file_path'	=> $K_SERIES->{'page'}->{'file_name'},
+			   'report_name'	=> $lv->{'key'}
+		}
 	
         
     } # k_series

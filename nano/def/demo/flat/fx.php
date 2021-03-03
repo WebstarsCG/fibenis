@@ -3,13 +3,14 @@
     $LAYOUT	    = 'layout_basic';
     
     $F_SERIES	=	array(
-				'title'	=>'Flat DB',
+	
+							'title'	=>'Flat DB',
 				
-                                'table_name'    => 'demo',
+							'table_name'    => 'demo',
 				
-				'key_id'        => 'id',
+							'key_id'        => 'id',
                                 
-                                'data'	=>   array(
+							'data'	=>   array(
 						   
 						    	'1' =>array( 'field_name'	=> 'Basic', 
 								      'type' 		=> 'heading'
@@ -28,17 +29,12 @@
 								    
 							       ),
 						   
-							'3' =>array( 'field_name'	=> 'Text area',
-                                                               
-								    'field_id' 		=> 'text_area',
-								    
-								    'type' 		=> 'textarea',
-		    
-								    'input_html'	=>'class="w_200"',
-								    
-								    'allow'		=> 'x250',
-                                                               
-							       ),
+							'3' =>array( 'field_name'	=> 'Text area',                                                               
+										'field_id' 		=> 'text_area',								    
+										'type' 		=> 'textarea',		    
+										'input_html'	=>'class="w_200"',								    
+										'allow'		=> 'x250'
+									),
 							
 							
 							'4' =>array( 'field_name'	=> 'Decimal',

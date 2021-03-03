@@ -36,7 +36,7 @@
  
     # list interface
     
-    my @DIR=('../lib');
+    my @DIR=('../lib/v_01/def');
         
  
     # traverse each dir
