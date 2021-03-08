@@ -3,9 +3,9 @@
 
         function d_addon($param){
             
-																$lv = [ 'data' 								=> [],
-																							 'dkeys'								=> ['th','th_attr','td_attr','filter_out','js_call','is_sort'],
-																							 'input_type'   => [					'ITTX'=>['table'=>'varchar'],
+			$lv = [ 'data' 								=> [],
+										 'dkeys'								=> ['th','th_attr','td_attr','filter_out','js_call','is_sort'],
+										 'input_type'   => [					'ITTX'=>['table'=>'varchar'],
 																																																'ITNM'=>['table'=>'decimal'],
 																																																'ITHD'=>['table'=>''],
 																																																'ITLA'=>['table'=>''],
@@ -40,7 +40,7 @@
 																																								entity_child_base
 																																WHERE
 																																								entity_code='$param[default_addon]' AND
-																																								get_ecb_av_addon_varchar(id,'ADXI') = 1";
+																																								get_ecb_av_addon_varchar(id,'ADXI') = 1 ORDER BY get_ecb_av_addon_varchar(id,'ADLO')";
 																			
 																			
 																$lv['d_query_result']      = $param['rdsql']->exec_query("$lv[d_query]","Error d_addon child");

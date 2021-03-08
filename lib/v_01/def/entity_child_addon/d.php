@@ -1,6 +1,6 @@
 <?PHP
 	       
-								include("$LIB_PATH/inc/lib/d_addon.php");
+		include("$LIB_PATH/inc/lib/d_addon.php");
 								
         $D_SERIES       =   array(
 		
@@ -29,13 +29,12 @@
 	
 	
 	
-																								if(@$_GET['default_addon']){
-																									
-																																$D_SERIES['temp']=d_addon(['default_addon'=>$_GET['default_addon'],
-																																																											'd_series'     => ['data'=>$D_SERIES['data']],
-																																																											'rdsql'        => $rdsql
-																																																											]);
-																																		
+if(@$_GET['default_addon']){
+$D_SERIES['temp']=d_addon(['default_addon'=>$_GET['default_addon'],
+							'd_series'     => ['data'=>$D_SERIES['data']],
+							'rdsql'        => $rdsql
+							]);
+
 																															
 																																foreach($D_SERIES['temp'] as $akey => $aval){																																																
 																																								$D_SERIES[$akey]=$aval;
@@ -45,13 +44,13 @@
 																																
 																								} // end
 																								
-																								if(@$_GET['menu_off']==1){
-																									
-																																$LAYOUT                 																		= 'layout_full';
-																																$D_SERIES['filter_off'] 																		= 1;		
-																																$D_SERIES['is_narrow_down']            		 = 1;
-																																$D_SERIES['action']['action_menu_off']    = 1;
-																																$D_SERIES['action']['action_narrow_down'] = 1;
-																								}
+	if(@$_GET['menu_off']==1){
+		
+						$LAYOUT            							= 'layout_full';
+						$D_SERIES['filter_off'] 					= 1;		
+						$D_SERIES['is_narrow_down']            		= 1;
+						$D_SERIES['action']['action_menu_off']    	= 1;
+						$D_SERIES['action']['action_narrow_down'] 	= 1;
+	}
 	
 ?>

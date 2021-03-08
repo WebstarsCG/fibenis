@@ -903,6 +903,17 @@
                                                                             'allow'               => "x64"
                                                             ),
                                                             
+														   '56' =>array(   'field_name'          => 'Line Order',                                                                
+                                                                            'field_id'            => 'ea_value',				       
+                                                                            'type' 	          	  => 'text',
+                                                                            'is_mandatory'        => 0,                                                                            
+                                                                            'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                            'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                            'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                            'child_attr_code'     => 'ADLO',           // attribute code                                                                                                                                        
+                                                                            'input_html'          => 'class="w_300"',
+                                                                            'allow'               => "x64"
+                                                            ),
                                 ),
                                     
                                 # form layout
@@ -986,7 +997,7 @@
                                 'ITSL'  => [8],
 								'ITML'  => [8],
                                 'ITTA'  => [13],
-                                'ITIG'  => [],
+                                'ITIG'  => [13],
                                 'ITCE'  => [],
                                 'ITTE'  => [],
                                 'ITSH'  => [],
@@ -1042,7 +1053,9 @@
            
            $temp['where']=(@$default_addon)?"WHERE entity_code='$default_addon'":''; 
            $temp['line_order_value']=($G->get_count(['table'=>'entity_child_base','where'=>$temp['where']])+1);             
-           $F_SERIES['data']['9']['input_html']=" value='$temp[line_order_value]'";            
+           $F_SERIES['data']['9']['input_html']=" value='$temp[line_order_value]'"; 
+           $F_SERIES['data']['56']['input_html']=" value='$temp[line_order_value]'"; 
+		   
         } // end)
     
 ?>
