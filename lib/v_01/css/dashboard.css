@@ -46,7 +46,12 @@
     .c3-tooltip td{
 	float: right;
     }
-    table.div_of_div{
+	
+	.c3 svg{
+		font-size:11px !important;
+	}
+    
+	table.div_of_div{
 	  
 	    width	  : 100% !important;
     }
@@ -64,6 +69,7 @@
     table.div_of_div td{		
 	    border		: 1px solid #cacaca; 
 	    display:inline-block !important;
+		float		: left;
 	    
     }
 	  
@@ -83,3 +89,5 @@
 	    margin-bottom  	: 25px;
 	    text-align     	: center;
     }
+	
+	

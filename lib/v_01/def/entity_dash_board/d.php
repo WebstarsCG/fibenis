@@ -10,59 +10,93 @@
 													   
 													   'field_composite'=> [  
 																
-																'fields'=>[ 'x'	   => ' (SELECT sn FROM entity WHERE code=entity_code)',
-																			'Total'=> 'count' ],
+																'fields'=>[ 'Entity Code'	   => 'entity',
+																			'Total'=> 'total_count' ],
 														
-																'table' =>'entity_count' 
+																'table' =>'entity_internal_external' 
 														],
 													   
 													   'js_call'	=> 'c3001.graphDonut',
 													   
-													   'attr' 		=> [	'class'	   	=> 'col-md-12 pad_lr mar_top_25',
+													   'attr' 		=> [	'class'	   	=> 'col-md-5 pad_lr mar_top_25',
 																			'data-title'=> 'Entity Count',
 																		
 																		]
 												),
 						
 												2=> array(
+													   
+													   'field_composite'=> [  
+																
+																'fields'=>[ 'Entity Code'	   => 'entity',
+																			'Total'=> 'total_count' ],
+														
+																'table' =>'internal_entity_count' 
+														],
+													   
+													   'js_call'	=> 'c3001.graphDonut',
+													   
+													   'attr' 		=> [	'class'	   	=> 'col-md-7 pad_lr mar_top_25',
+																			'data-title'=> 'Internal Entity Count',
+																		
+																		]
+												),
+						
+												3=> array(
 													  
-													   'field_composite'=>  ['fields'=>['Users'		=> 'page_action',
+													   'field_composite'=>  ['fields'=>['Users'		=> 'user_name',
 																						'Sessions'	=> 'total_count'],
-																			 'table' => 'page_access_count'],													   
+																			 'table' => 'user_session_30_days'],													   
 													   'js_call'		=> 'c3001.graphBase',													   
 													   'attr' 			=> ['class'      	=> "col-md-12 pad_lr mar_top_25",
-																			'data-title' 	=> "Page Access Count",
-																			'data-type'  	=> 'area',
+																			'data-title' 	=> "User Sessions",
+																			'data-type'  	=> 'bar',
 																			#'data-bar-width'=> 50,
 																			'data-grid-x'	=> true,
 																			'data-grid-y'	=> true]
 													   ),	
+													   
+											    4=> array(
+													  
+													   'field_composite'=>  ['fields'=>['Users'		=> 'user_name',
+																						'Desk Engine'	=> 'desk',
+																						'Form Engine'	=> 'form'
+																						],
+																			 'table' => 'user_engine_sessions'],													   
+													   'js_call'		=> 'c3001.graphBase',													   
+													   'attr' 			=> ['class'      	=> "col-md-12 pad_lr mar_top_25",
+																			'data-title' 	=> "User Sessions",
+																			'data-type'  	=> 'spline',
+																			#'data-bar-width'=> 50,
+																			'data-grid-x'	=> true,
+																			'data-grid-y'	=> true]
+													   ),
 						
 						
-					    3=> array(
+					    5=> array(
 						      
 						       'field_composite'=>  [
 									      
 									      'fields'=>['x'=>'date',
-													'Total'=>'total'
+													'Total Sessions'=>'total_count'
 											],
 									      
-									      'table' => 'page_view_log_by_day',
-									      'filter'=> " page_code='7f84cf049cd1ca1ec04c0150d4d0c356' ORDER BY DATE ASC "
+									      'table' => 'session_by_date',
+									      //'filter'=> " page_code='7f84cf049cd1ca1ec04c0150d4d0c356' ORDER BY DATE ASC "
 									    ],
 						       
 						       'js_call'	=> 'c3001.timeSeries',
 						       
-						       'attr' 		=> [
-								  
-										'class'      	=> "col-md-12 pad_lr mar_top_25",
-										'data-title' 	=> "Login Count by Day",
-										'data-type'  	=> 'area',
-										#'data-bar-width'=> 50,
-										'data-grid-x'	=> true,
-										'data-grid-y'	=> true
-									    ]
-						       ),						
+						       'attr' 		=> [								  
+												'class'      	=> "col-md-12 pad_lr mar_top_25",
+												'data-title' 	=> "Session By Date",
+												'data-type'  	=> 'area',
+												'data-bar-width'=> 3,
+												'data-grid-x'	=> true,
+												'data-grid-y'	=> true,
+												'data-format'	=> '%d-%b-%Y'
+											]
+						       ),					
 						
 					), # columns
 			    			    
