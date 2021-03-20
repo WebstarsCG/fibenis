@@ -337,10 +337,7 @@
 						    if($USER_ROLE){
 							
 							    $M->AddParam("USER_$USER_ROLE",1);
-							    $M->AddParam('USER_NAME',@$USER_NAME);
-							    $M->AddParam(array(
-										    'addon_type'=>$G->get_id_name("entity_child_base","token as id, sn as name"," WHERE entity_code='AT'")
-									    ));
+							    $M->AddParam('USER_NAME',@$USER_NAME);							    
 							    
 							    if(is_file($THEME_ROUTE."/template/role_menu/$USER_ROLE.html")){
 								
@@ -349,7 +346,7 @@
 								
 							    }else{
 							    
-								$M->AddParam('APP_MENU',app_menu_create(['user_role_id'=>2,
+								$M->AddParam('APP_MENU',app_menu_create(['user_role_id'=>"(SELECT id FROM user_role WHERE sn='$USER_ROLE')",
 													 'parent_id'   =>0
 													 ]));
 							    }

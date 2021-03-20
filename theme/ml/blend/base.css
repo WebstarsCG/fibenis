@@ -852,6 +852,7 @@ ul.post-meta li a:hover {
    
    /* Nav bar custom Control Css Start*/
    /*===== ====== ===== ======*/
+    
    
     .navbar-default .navbar-nav > li > a {
 	color		: #636363 !important;
@@ -873,7 +874,7 @@ ul.post-meta li a:hover {
    /*=== === ==== ========== ===*/
     .navbar-brand img{
 	/*border-left	: 1px solid #fff;*/
-	margin-top	: -14px !important;
+	margin-top	: -12px !important;
 	width		: 240px !important;
 	
 	
@@ -1090,3 +1091,14 @@ ul.post-meta li a:hover {
 			
 	/* Bullet Control Css End*/
 	/*===== ====== ===== ======*/
+	
+	@media only screen and (max-width: 600px){
+		
+		.navbar-brand img{			
+			margin-top		: -24px !important;	
+		}
+		
+		.slicknav_btn{
+			background-color : #aaa;
+		}
+	}
