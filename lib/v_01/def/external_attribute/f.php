@@ -996,16 +996,7 @@
         
         } // default addon
         
-        
-        // if(@$_GET['key']){
-        //    
-        //    $F_SERIES['data'][1]['option_data']=$G->option_builder('entity','code,sn'," WHERE code=(SELECT entity_code FROM entity_child_base WHERE id = $_GET[key])");
-        //}
-         
-		 
-		print_r(array_keys($F_SERIES['data'])); 
-        
-        
+                
         //ext_at_addon
         
         $LAYOUT = 'external_attribute';
