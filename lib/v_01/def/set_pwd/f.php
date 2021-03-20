@@ -79,10 +79,13 @@
 				
 				'default_fields'    => array('status_code' => "'COPW'",
 							    'entity_code' => "'CO'",),
+				
+				'button_name' => 'Set Password',
+				
                                 
 				'show_query' => 1,
                                				
-				'flat_message' => 'Sucesssfully Updated',
+				'flat_message' => 'Password Updated Succesfully',
 				
 				'show_query'    =>0,
 				
