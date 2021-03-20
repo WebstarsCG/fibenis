@@ -300,6 +300,28 @@
                                                                     
 						   
                                                                ),
+															   
+															   
+														'57' =>array(     'field_name'         => 'Avoid Empty/Zero',                                                                
+                                                                    'field_id'            => 'ea_value',				       
+                                                                    'type'                => 'toggle',
+                                                                    'on_label'            => 'Yes',
+                                                                    'off_label'            => 'No',
+                                                                     'show_status_label'  => 1,
+                                                                   // 'option_data'         => "<option value=''>No</option><option value=1>Yes</option>",                                                               
+                                                                    //'is_mandatory'        => 0,
+                                                                                                                        
+                                                                    //child table
+                                                                            
+                                                                    'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                    'parent_field_id'     => 'parent_id',    // parent field
+                                                                                            
+                                                                    'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                    'child_attr_code'     => 'APEZ',           // attribute code
+                                                                    'input_html'         => 'class="w_30"',
+                                                                    
+						   
+                                                               ),	   
                                                         
                                                     
                                                     
@@ -980,6 +1002,8 @@
         //    $F_SERIES['data'][1]['option_data']=$G->option_builder('entity','code,sn'," WHERE code=(SELECT entity_code FROM entity_child_base WHERE id = $_GET[key])");
         //}
          
+		 
+		print_r(array_keys($F_SERIES['data'])); 
         
         
         //ext_at_addon

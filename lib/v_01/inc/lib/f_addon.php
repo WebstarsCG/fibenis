@@ -108,7 +108,8 @@
 												get_ecb_addon_varchar(ecb_child_id,'APTS') as toggle_show_status_label,
 												get_ecb_addon_varchar(ecb_child_id,'APTN') as toggle_on_label,
 												get_ecb_addon_varchar(ecb_child_id,'APTF') as toggle_off_label,
-												get_ecb_addon_varchar(ecb_child_id,'APTD') as toggle_default_on										
+												get_ecb_addon_varchar(ecb_child_id,'APTD') as toggle_default_on,
+												get_ecb_addon_varchar(ecb_child_id,'APEZ') as avoid_empty_zero
 																	  FROM
 																			  ecb_parent_child_matrix WHERE ecb_parent_id=(SELECT id FROM entity_child_base WHERE entity_code='AT' AND get_ecb_av_addon_varchar(id,'ATKH')='".$temp['addon']->at."')  $view_query ORDER BY id";
 											
@@ -152,7 +153,8 @@
 												get_ecb_addon_varchar(entity_child_base.id,'APTS') as toggle_show_status_label,
 												get_ecb_addon_varchar(entity_child_base.id,'APTN') as toggle_on_label,
 												get_ecb_addon_varchar(entity_child_base.id,'APTF') as toggle_off_label,
-												get_ecb_addon_varchar(entity_child_base.id,'APTD') as toggle_default_on
+												get_ecb_addon_varchar(entity_child_base.id,'APTD') as toggle_default_on,
+												get_ecb_addon_varchar(entity_child_base.id,'APEZ') as avoid_empty_zero
 											FROM
 												entity_child_base WHERE entity_code='".$temp['addon']->en."' AND dna_code='EBAT' AND is_active=TRUE ORDER BY line_order ";	
 												//entity_child_base WHERE entity_code='".$temp['addon']->en."' AND dna_code='EBAT' AND is_active=1 ORDER BY line_order ";
@@ -895,6 +897,10 @@
 									
 									if($get_row->is_hide!=null){
 										$temp_input['is_hide']=$get_row->is_hide;							
+									}
+									
+									if($get_row->avoid_empty_zero!=null){
+										$temp_input['avoid_empty_zero']=$get_row->avoid_empty_zero;							
 									}
 									
 									$temp_input['field_token'] = $get_row->token;
