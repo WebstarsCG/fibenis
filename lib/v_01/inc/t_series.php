@@ -2,7 +2,7 @@
 		
 		error_reporting(E_ALL);
 		
-		ini_set("display_errors", 1);
+		ini_set("display_errors",1);
 
 		#include($LIB_PATH."/inc/lib/filter.php");
 		
@@ -47,28 +47,52 @@
 		
 		# template
 		
+		
+		
 		if((@$T_SERIES['template']) || (@$T_SERIES['template_content'])){
 					
+				// lockfile
+				$T_SERIES['temp']['key']  = @$_GET['key'];
+				$T_SERIES['temp']['file'] = $COACH['terminal_path']."/cache/$PAGE_CODE"."_".$T_SERIES['temp']['key'].".html";	
+				
+				if(is_file($T_SERIES['temp']['file']) && (@$_GET['clear_cache']!=1)){					
+				
+					$fh  							= fopen($T_SERIES['temp']['file'],'r') or "Error";
+					$T_SERIES['temp']['content']    = fread($fh, filesize($T_SERIES['temp']['file']));
+					fclose($fh);
+					
+					$PAGE_INFO	= $T_SERIES['temp']['content'];
+					
+				}else{				
+				
+					if(is_file($T_SERIES['temp']['file'])){				
+						unlink($T_SERIES['temp']['file']);
+					}
 		
-				$options 	= array("debug"=>0,"loop_context_vars"=>1);
-				
-				if(@$T_SERIES['template']){						
-					$options['filename']=$T_SERIES['template'];
+					$options 	= array("debug"=>0,"loop_context_vars"=>1);					
+					
+					if(@$T_SERIES['template']){						
+						$options['filename']=$T_SERIES['template'];
+					}
+					
+					if(@$T_SERIES['template_content']){						
+						$options['template_content']=$T_SERIES['template_content'];
+					}
+					
+								
+					$T 	 	= new Template($options);
+					
+					$T->AddParam('DATA_INFO',build_template());
+					
+					# output to global var
+					
+					$PAGE_INFO	= $T->Output();
+					
+					// fseries to temp
+					$fh = fopen($T_SERIES['temp']['file'],'w') or "Error";
+					fputs($fh,$PAGE_INFO);
+					fclose($fh);
 				}
-				
-				if(@$T_SERIES['template_content']){						
-					$options['template_content']=$T_SERIES['template_content'];
-				}
-				
-							
-				$T 	 	= new Template($options);
-				
-				$T->AddParam('DATA_INFO',build_template());
-				
-				# output to global var
-				
-				$PAGE_INFO	= $T->Output();
-				
 				
 				
 		}

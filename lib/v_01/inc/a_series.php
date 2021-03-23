@@ -38,6 +38,7 @@
 										'sv' 	  => @$_GET['sv'],
 										'rdsql'   => $rdsql,
 										'G'	  => $G,
+										'lwp'	  => $lwp,
 										'user_id' => @$USER_ID,
 										'pass_id' => @$PASS_ID
 										

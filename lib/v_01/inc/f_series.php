@@ -276,11 +276,11 @@
 					// last insert data
 				
 					if(is_int($F_SERIES['get_last_insert'])){						
-						$F_SERIES['temp']['last_insert'] =  json_encode(array_merge($_POST,['id'=>$row_id]));
-						
+						$F_SERIES['temp']['last_insert'] =  json_encode(array_merge($_POST,['id'=>$row_id,
+																							'default_addon'=>json_decode(@$_GET['default_addon'],true)]));						
 					}
 					
-					setcookie($uniq_trans_key."_last_insert",$F_SERIES['temp']['last_insert'],(time()+360));
+					//setcookie($uniq_trans_key."_last_insert",$F_SERIES['temp']['last_insert'],(time()+360));
 				
 				} // last insert
 				
@@ -295,7 +295,7 @@
 					$temp_req_query_trim = preg_replace('/(\&key\s*=\s*[0-9]{1,32})/i','',$temp_req_query_trim);
 				}
 				
-				if(!@$F_SERIES['avoid_trans_key_direct']){
+				if(!@$F_SERIES['avoid_trans_key_direct']){					
 						header("Location:?$temp_req_query_trim&trans_key=$uniq_trans_key$update_trans_query");			
 				}
 				
@@ -397,8 +397,10 @@
 				$T->AddParam('message',@$_COOKIE[@$_GET['trans_key']]);	
 				setcookie($_GET['trans_key'],'',(time()-360));			
 	
-				$F_SERIES['temp']['last_insert'] = @$_COOKIE[@$_GET['trans_key'].'_last_insert'];	
-				setcookie($_GET['trans_key'].'_last_insert','',(time()-360));			
+				//$F_SERIES['temp']['last_insert'] = @$_COOKIE[@$_GET['trans_key'].'_last_insert'];	
+				//setcookie($_GET['trans_key'].'_last_insert','',(time()-360));
+
+				//unset($_COOKIE[$_GET['trans_key'].'_last_insert']); 				
 				
 		}elseif($F_MESSAGE){
 				$T->AddParam('message',$F_MESSAGE);
