@@ -14,7 +14,7 @@
 				}	
 				
 				//set the session variable for user_info & user_permission
-				function set_session(){
+				function set_session($param){
 							
 						   global $rdsql;	
 						   
@@ -38,23 +38,21 @@
 						//			
 			                           #$communication.= (@$parent==1)?',(SELECT parent_id FROM communication WHERE id=communication_id) as parent_id ':'';
 						   
-						    $active =1;
+						    
 						   
 						         $sql_user_info="SELECT 
 											id,											
-											user_role_id,
-											(SELECT home_page_url FROM user_role WHERE user_role.id=user_role_id) as home_page_url,
 											get_eav_addon_varchar(is_internal,'COEM') as email,
-											is_active,
-											is_internal,
-											(SELECT sn FROM user_role WHERE id=user_role_id) as user_role,
 											get_eav_addon_varchar(is_internal,'COFN') as user_name,
-											user_role_id
-											
+											is_active,
+											(SELECT sn FROM user_role WHERE id=user_role_id) as user_role,
+											user_role_id,											
+											is_internal,
+											(SELECT home_page_url FROM user_role WHERE user_role.id=user_role_id) as home_page_url
 									 FROM 
-											$PV[table_name]											
+											$param[table]											
 									 WHERE 1=1 
-											AND is_active ='".$active."' AND $PV[login_key_field]='$PV[user_key1]' AND password='$PV[user_key2]'";
+											AND is_active =1 AND id=$param[id]";
 											
 									
 							$exe_query = $rdsql->exec_query($sql_user_info,'user detail-->');

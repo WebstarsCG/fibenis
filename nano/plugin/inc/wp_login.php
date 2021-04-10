@@ -1,6 +1,6 @@
 <?PHP
 						
-		ini_set('display_errors', 1);		
+		ini_set('display_errors',0);		
 		
 		error_reporting(E_ALL);
 		
@@ -10,13 +10,13 @@
 		
 		# gateaction - md5(GATE_<code>)
 		$PV['GATE_CODE'] = ['AAKY' => 'e89a83384d48a4ac572bc84fc468ed9d', # add key
-				    'AAKV' => '226d370c039d2ab26f7d6c776dc09952', # key verification
-				    'ACKY' => '7f84cf049cd1ca1ec04c0150d4d0c356', # Check Password/User
-				    'ACHP' => 'f68a5834818e3b481d2108e3fb0ea5a3', # change password
-				    'AFGK' => 'db3aeab2d92092e5586b7375fd885ba0', # forget password
-				    'AGTO' => '2d4a92e779d30cc823a3feffafa56c8c', # logout
-				    'ACUE' => 'e9eb891ad083d2470230f6a4b61528ae'
-				];
+							'AAKV' => '226d370c039d2ab26f7d6c776dc09952', # key verification
+							'ACKY' => '7f84cf049cd1ca1ec04c0150d4d0c356', # Check Password/User
+							'ACHP' => 'f68a5834818e3b481d2108e3fb0ea5a3', # change password
+							'AFGK' => 'db3aeab2d92092e5586b7375fd885ba0', # forget password
+							'AGTO' => '2d4a92e779d30cc823a3feffafa56c8c', # logout
+							'ACUE' => 'e9eb891ad083d2470230f6a4b61528ae'
+						];
 		
 		if(@$_POST['request'] OR @$_GET['request']){
 				
@@ -53,19 +53,19 @@
 		    
 				list($COACH['id'],
 				     $COACH['name']) =    explode('[C]',$G->get_one_cell(['table'        => 'entity_child',
-								      'field'        => "concat(id,'[C]',get_eav_addon_vc128uniq(id,'CHCD'))",
-								      'manipulation' => " WHERE get_eav_addon_varchar(id,'CHDN') ='$COACH[domain_name]' ",
+																		  'field'        => "concat(id,'[C]',get_eav_addon_vc128uniq(id,'CHCD'))",
+																		  'manipulation' => " WHERE get_eav_addon_varchar(id,'CHDN') ='$COACH[domain_name]' ",
 						    ]));
 						
 					
 							    
 				$COACH['name_hash']     =   md5($COACH['name']);
 								
-				$PV['login_table'] 	= 'user_info';
+				$PV['login_table'] 		= 'user_info';
 				
-				$PV['login_email'] 	=  "get_eav_addon_varchar(is_internal,'COEM')";
+				$PV['login_email'] 		=  "get_eav_addon_varchar(is_internal,'COEM')";
 				
-				$PV['login_name']  	=  "get_eav_addon_varchar(is_internal,'COFN')";
+				$PV['login_name']  		=  "get_eav_addon_varchar(is_internal,'COFN')";
 				
 				$SG->set_get_master_session($COACH['id']);
 				
@@ -131,9 +131,9 @@
 						
 						$last_id      = $rdsql->last_insert_id('user_info');
 						
-						$param	      = array('user_id'=>$last_id,'page_code'=>$PV['GATE_CODE']['AAKY'],'action_type'=>'AAKY','action'=>'Sign Up by  '.$user_email);
+						$in	      = array('user_id'=>$last_id,'page_code'=>$PV['GATE_CODE']['AAKY'],'action_type'=>'AAKY','action'=>'Sign Up by  '.$user_email);
 								 
-						$G->set_system_log($param);
+						$G->set_system_log($in);
 					
 					
 					$def = array('user_id' =>$last_id);
@@ -238,16 +238,16 @@
 				
 				$exe_update = $rdsql->exec_query($update,'Error! KV');
 				
-				$param=array('user_id'=>$no_row[1],'page_code'=>$PV['GATE_CODE']['AAKV'],'action_type'=>'AAKV','action'=>'Active login user '.$user_email);
+				$in=array('user_id'=>$no_row[1],'page_code'=>$PV['GATE_CODE']['AAKV'],'action_type'=>'AAKV','action'=>'Active login user '.$user_email);
 						         
-				$G->set_system_log($param);
+				$G->set_system_log($in);
 					
 				
 				//base64_encode
 				header('Location:'.$PV['domain_name'].'?e_mail='.$mail_crypt);
 			}
 			
-		}		
+		} // kv
 		
 		
 		// sign in
@@ -255,7 +255,7 @@
 				
 				
 				
-				$user_email  	= strtolower($_POST['user_email']);
+				$user_email  	= $_POST['user_email'];
 				
 				@$password   	= md5($_POST['password']);				
 				
@@ -263,33 +263,41 @@
 								'user_email' => $user_email,
 								'password'   => @$password ,
 								'user_type'  => 0
-						);
+							);
 				
-				$PV['table_name']      = $PV['login_table'];
+	
 				
-				$PV['login_key_field'] = $PV['login_email'];
+				$auth_key  	= [	'table'   		=> $PV['login_table'],
+								'key_field'		=> $PV['login_email'],
+								'login_name'	=> $PV['login_name'],
+								'user_key_pub'	=> $rdsql->escape_string(stripslashes($user_email)),
+								'user_key_pvt'	=> $rdsql->escape_string(stripslashes($_POST['password']))
+								];
+							
+												
+				$auth_type 	= get_config('auth_type');
 				
-				$PV['login_name']      = "$PV[login_name] as 'login_name'";
+				$auth_type  = in_array($auth_type,['base','ldap'])?$auth_type:'NONE';
 				
-				$PV['user_key1'] = $rdsql->escape_string(stripslashes($user_email));
-				 
-				$PV['user_key2'] = $rdsql->escape_string(stripslashes(md5($_POST['password'])));
+				// auth 
+				if( ($auth_type) && ($auth_type!='base')){
 				
-				#print_r($PV);
+						$auth_option 	= get_config($auth_type);					
+						
+						if(in_array($auth_key['user_key_pub'],$auth_option['exclude_users'])){
+							$auth_type 	= 'BASE';
+						}							
+						
+				} // end
 				
-				$select_data = "SELECT
-								id,
-								$PV[login_key_field],
-								$PV[login_name],
-								is_active
-						FROM
-								$PV[login_table]
-						WHERE
-								$PV[login_key_field]='$PV[user_key1]' AND password='$PV[user_key2]'";
+				$auth_key['auth_type'] =  $auth_type;
 				
-				$exe_select_data = $rdsql->exec_query($select_data,'Error! CK');
+				// auth type
+				$PV['check_auth_query']	= check_auth($auth_key);			
 				
-				$get_row =  $rdsql->data_fetch_object($exe_select_data);
+				$PV['check_auth_query_result'] = $rdsql->exec_query($PV['check_auth_query'],'Error! CK');
+				
+				$get_row =  $rdsql->data_fetch_object($PV['check_auth_query_result']);
 				
 				if(@$get_row->id){
 					
@@ -297,7 +305,9 @@
 						
 					# echo user_role
 					// page_redirect($user_role_code);
-					 $session = $SG->set_session();
+					 $session = $SG->set_session(['table'   => $PV['login_table'],
+												  'id'		=> $get_row->id]);
+												
 					 					 
 					 $_SESSION['COMM_KEY'] = md5($get_row->id);
 					  
@@ -307,9 +317,9 @@
 					  
 					  $exe_up_query = $rdsql->exec_query($update_query,'Error! CK Update');
 
-					  $param=array('user_id'=>@$get_row->id,'page_code'=>$PV['GATE_CODE']['ACKY'],'action_type'=>'ACKY','action'=>'login');
+					  $in=array('user_id'=>@$get_row->id,'page_code'=>$PV['GATE_CODE']['ACKY'],'action_type'=>'ACKY','action'=>'login');
 						         
-					  $G->set_system_log($param);
+					  $G->set_system_log($in);
 					 
 				          echo '{"status":"1","redirect_page":"'.$page_name.'"}';
 					
@@ -317,22 +327,98 @@
 					
 					  echo '{"status":"-2"}';
 					  
-					   $param=array('user_id'=>@$get_row->id,'page_code'=>$PV['GATE_CODE']['ACKY'],'action_type'=>'ACKY','action'=>'Login failed for In-active user '.$user_email);
+					   $in=array('user_id'=>@$get_row->id,'page_code'=>$PV['GATE_CODE']['ACKY'],'action_type'=>'ACKY','action'=>'Login failed for In-active user '.$user_email);
 						         
-					   $G->set_system_log($param);
+					   $G->set_system_log($in);
 					
 					}
 				
 				}else{
-				      echo '{"status":"-1"}';
+				    
+					echo '{"status":"-1"}';
 				      
-				      $param=array('user_id'=>@$get_row->id,'page_code'=>$PV['GATE_CODE']['ACKY'],'action_type'=>'ACKY','action'=>'Login fail for invalid user '.$user_email);
-						         
-				      $G->set_system_log($param);
-				}				 
-		}
+				    $in=array('user_id'=>@$get_row->id,'page_code'=>$PV['GATE_CODE']['ACKY'],'action_type'=>'ACKY','action'=>'Login fail for invalid user '.$user_email);
+					  
+				     $G->set_system_log($in);
+					  
+				} 				 
+				
+		} // end
 		
-	
+		// auth type
+		function check_auth($param){
+			
+			$lv = ['auth'=>[]];
+			
+			$lv['auth_type'] = $param['auth_type'] ?? 'BASE';			
+			
+			$lv['auth']['BASE'] = function($in){
+				
+									return 	"SELECT
+												id,
+												$in[key_field],
+												$in[login_name],
+												is_active
+										FROM
+												$in[table]
+										WHERE
+												LOWER($in[key_field])=LOWER('$in[user_key_pub]') AND password=md5('$in[user_key_pvt]')";
+								
+			};
+			
+			
+			$lv['auth']['LDAP'] = function($in){
+				
+				
+									return 	"SELECT
+												id,
+												$in[key_field],
+												$in[login_name],
+												is_active
+										FROM
+												$in[table]
+										WHERE
+												$in[login_name]='$in[user_key_pub]' AND 1=".check_ldap_auth($in);
+								
+			};
+			
+			$lv['auth']['NONE'] = function($in){
+				
+				
+									return 	"SELECT
+												id
+										FROM
+												$in[table]
+										WHERE
+												1=0";
+								
+			};
+			
+			return  $lv['auth'][strtoupper($lv['auth_type'])]($param);
+			
+			
+		} //  end
+		
+		// ldap auth
+		function check_ldap_auth($param){
+			
+			$lv = [];
+
+			$ldap 			= 	get_config('ldap');	
+			
+			$lv['conn']		= 	ldap_connect($ldap['host']); 
+			
+			// option
+			ldap_set_option($lv['conn'],LDAP_OPT_PROTOCOL_VERSION,3);
+			
+			//domain name
+			$lv['dn'] 		=	"cn=$param[user_key_pub],$ldap[usersdn],$ldap[basedn]";
+			
+			// bind ldap			
+			return (ldap_bind($lv['conn'],$lv['dn'],$param['user_key_pvt']))?1:0;
+			
+							
+		} // end
 		
 		
 		// change password

@@ -118,11 +118,15 @@
 					$page		= (is_file("$COACH[path]$COACH[name]/content/$page.html"))?$page:$COACH['step_in'];
 					
 					$lv 		= ['home'=>"$COACH[path]$COACH[name]/content/$page.html",
-									   'gate'=>"$COACH[theme_route]/template/$COACH[step_in].html"
-									    ];
-					
+								   'gate'=>"$COACH[theme_route]/template/$COACH[step_in].html"
+								  ];
+								
 					$c 		= new Template(array("filename" => $lv[$COACH['step_in']],
 									    "debug"    => 0));
+										
+					if($COACH['step_in']=='gate'){
+						$c->AddParam('IS_LDAP',( (get_config('auth_type') && (get_config('auth_type')=='ldap'))?1:0));
+					}
 					
 					if($content['add_on']){ $c->AddParam($content['add_on']); } 
 					
