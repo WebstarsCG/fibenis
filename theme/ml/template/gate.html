@@ -27,19 +27,44 @@
 				<label class="txt_size_12 clr_red" id="inputEmail_warn"></label>
                              
 				<div class="input-group">				
-				    <span class="input-group-addon" id="basic-addon9">
-				      <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+				    
+					
+					<TMPL_IF IS_LDAP>
+					
+					<span class="input-group-addon" id="basic-addon9">
+				      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				    </span>
-				     <input type="text" placeholder="Enter your email address"
+					
+				     <input type="text" placeholder="Your LDAP user name"
 					    class="form-control"
 					    tabindex="1"
 					    id="inputEmail"
 					    maxlength="75"
 					    onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});"
-					    onkeypress  = "return PR_All_Alpha_Numeric(event,'@-_.');"
-					    onblur="return check_mail(this);"    
+						onkeypress  = "return PR_All_Alpha_Numeric(event,' ');"
+					    onblur="return has_length(this);"
+					   
+					     aria-describedby="inputEmailStatus">
+						 
+					<TMPL_ELSE>
+					
+					<span class="input-group-addon" id="basic-addon9">
+				      <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+				    </span>
+					
+						<input type="text" placeholder="Your email address"
+					    class="form-control"
+					    tabindex="1"
+					    id="inputEmail"
+					    maxlength="75"
+					    onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});"
+						 onkeypress  = "return PR_All_Alpha_Numeric(event,'@-_.');"
+					    onblur="return check_mail(this);"
 					    
 					     aria-describedby="inputEmailStatus">
+
+					</TMPL_IF>
+						 
 				      <span id="inputEmail_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 				    
 				 </div>
@@ -54,7 +79,7 @@
 				    <span class="input-group-addon" >
 				      <span class="glyphicon  glyphicon-lock" aria-hidden="true"></span>
 				    </span>
-                                   <input type="password" placeholder="Enter your password"
+                                   <input type="password" placeholder="Your password"
                                           class="form-control"
                                           tabindex="2"
                                           id="inputPassword"                                          
@@ -98,10 +123,14 @@
 			Sign Up</a>&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;
 			</TMPL_IF>
 			
+			<TMPL_UNLESS IS_LDAP>			
 			      <a href="#" data-toggle="modal" data-target="#myModalForgetPassword">
 			<span class="glyphicon glyphicon-lock clr_gray_5" aria-hidden="true"></span>
 			Forgot Password</a>
-			      </div>
+			
+			</TMPL_UNLESS>
+			
+			</div>
 	   
 			   
 		    </form>

@@ -2,7 +2,7 @@
 
         $temp_config=[
                         "host"          =>   "localhost",
-                        "db_name"       =>   "fibenis_nano",
+                        "db_name"       =>   "fibenis_live",
                         "user"          =>   "root",
                         "pass"          =>   "",
                         "db_engine"     =>  "rdsql_mysqli",
@@ -26,6 +26,7 @@
                         "smpt_pswrd"    =>  "",
 						
 						"auth_type"		=> 'base',
+
                         
                         "to_admin"      =>  "ratbew@gmail.com",
                         "cc_mail"       =>  "",
