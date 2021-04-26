@@ -38,7 +38,7 @@
 	
 	#print_r($page_info);
 	
-	$LAYOUT 		= $page_info['layout'];
+	$LAYOUT 		= @$page_info['layout'];
 		
 	
 	$CONTENT[@$PAGE]   	= 	array(
@@ -63,8 +63,8 @@
 							
 							'id'  	        => @$page_info['id'],							
 							'page'          => $PAGE,							
-							'title'  	=> $page_info['title'],							
-							'side_menu'     => $page_info['side_menu']														
+							'title'  		=> @$page_info['title'],							
+							'side_menu'     => @$page_info['side_menu']														
 					);
 	
 	
