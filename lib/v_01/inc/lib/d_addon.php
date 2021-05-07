@@ -31,7 +31,7 @@
 																																								token,
 																																								get_ecb_av_addon_varchar(id,'APIT') as input_type,
 																																								get_ecb_av_addon_varchar(id,'ADXN') as th,
-																																								get_ecb_av_addon_varchar(id,'ADXA') as th_attr,
+																																								get_ecb_av_addon_varchar(id,'ADXH') as th_attr,
 																																								get_ecb_av_addon_varchar(id,'ADXC') as td_attr,
 																																								get_ecb_av_addon_varchar(id,'ADXF') as filter_out,
 																																								get_ecb_av_addon_varchar(id,'ADXJ') as js_call,

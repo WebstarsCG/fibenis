@@ -68,13 +68,41 @@
 							
 							6=>array('th'	=> 'Order',
 									      
-								'field'	=> 'line_order',
+								'field'	=> "concat(id,'[C]',line_order)",
 									
-								'is_sort' => 1,
-								
-								'td_attr' => ' class="line_order" ',
+								'is_sort' => 'line_order',
+							
 									      
-								'td_attr' => ' class="align_RM" width="5%" '
+								'td_attr' => ' class="align_RM" width="5%" ',
+								
+																'field'     => "concat(id,'[C]',line_order)",
+								
+                                                                'td_attr' =>  ' class="label_grand_father" ',
+                                                                     
+								'filter_out'	=> function($data_in){
+									
+										$temp     = explode('[C]',$data_in);
+										
+										$temp[1]  = str_replace("\t",'',$temp[1]);
+										
+										$data_out = array(
+												  'data'=>array('id'   => $temp[0],															
+														'key'  => md5($temp[0]),															
+														'label'=> 'Update Entity Attribute Line Order',
+														'info' => htmlentities($temp[1]),
+														'type' => 'text',
+														'series'=>'a',
+														'action'=>'entity_attribute',
+														'token' =>'LOU'
+														)
+												);
+										
+										return json_encode($data_out);
+									},
+									
+								'js_call'	=> 'd_series.set_inline_update'
+								
+								
 								
 									      
 								),

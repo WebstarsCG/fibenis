@@ -42,7 +42,19 @@
 							<tg_off_label>APTF</tg_off_label>
 							<tg_is_default_on>APTD</tg_is_default_on>
 							
+							
 							<label_content>APLC</label_content>
+							
+							<is_desk_exists>ADXI</is_desk_exists>
+							<desk_col_header_name>ADXN</desk_col_header_name>
+							<desk_col_header_attr>ADXH</desk_col_header_attr>
+							<desk_col_attr>ADXH</desk_col_attr>
+							<desk_col_filter_out>ADXF</desk_col_filter_out>
+							<desk_col_js_call>ADXJ</desk_col_js_call>							
+							<desk_col_sort>ADXS</desk_col_sort>	
+							<desk_col_line_order>ADLO</desk_col_line_order>	
+							
+							<avoid_empty_zero>APEZ</avoid_empty_zero>
 		</attributemap>
 		
 		<code><TMPL_VAR CODE></code>		
@@ -93,6 +105,18 @@
 				<TMPL_IF tg_is_default_on><tg_is_default_on><TMPL_VAR tg_is_default_on></tg_is_default_on></TMPL_IF>
 				
 				<TMPL_IF label_content><label_content><TMPL_VAR label_content></label_content></TMPL_IF>
+				
+				
+				<TMPL_IF is_desk_exists><is_desk_exists><TMPL_VAR is_desk_exists></is_desk_exists></TMPL_IF>
+				<TMPL_IF desk_col_header_name><desk_col_header_name><TMPL_VAR desk_col_header_name></desk_col_header_name></TMPL_IF>
+				<TMPL_IF desk_col_header_attr><desk_col_header_attr><TMPL_VAR desk_col_header_attr></desk_col_header_attr></TMPL_IF>
+				<TMPL_IF desk_col_attr><desk_col_attr><TMPL_VAR desk_col_attr></desk_col_attr></TMPL_IF>
+				<TMPL_IF desk_col_filter_out><desk_col_filter_out><TMPL_VAR desk_col_filter_out></desk_col_filter_out></TMPL_IF>
+				<TMPL_IF desk_col_js_call><desk_col_js_call><TMPL_VAR desk_col_js_call></desk_col_js_call></TMPL_IF>							
+				<TMPL_IF desk_col_sort><desk_col_sort><TMPL_VAR desk_col_sort></desk_col_sort></TMPL_IF>	
+				<TMPL_IF desk_col_line_order><desk_col_line_order><TMPL_VAR desk_col_line_order></desk_col_line_order></TMPL_IF>	
+				
+				<TMPL_IF avoid_empty_zero><avoid_empty_zero><TMPL_VAR avoid_empty_zero></avoid_empty_zero></TMPL_IF>
 			</attribute>
 		</TMPL_LOOP>
 		</attributes>

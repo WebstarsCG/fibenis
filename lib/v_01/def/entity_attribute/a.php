@@ -30,5 +30,33 @@
                                                 
 					},
 					
-                                )
+					
+					'LOU'=>function($param){
+						
+								
+							if($param['user_id']){ 
+						
+									$inline_param     = json_decode($param['data']);
+									
+									$inline_value     = $param['sv'];									
+													
+									$param['rdsql']->exec_query("UPDATE
+																	entity_attribute
+																   SET
+																	line_order='$inline_value'
+																   WHERE
+																	id=$inline_param->id",'0');
+								
+									
+									return 1;
+									
+								}else{
+									
+									return 0;			
+								}
+						
+						
+					}, // end
+					
+		)
 ?>
