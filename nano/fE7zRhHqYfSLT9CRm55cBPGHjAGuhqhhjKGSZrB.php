@@ -10,14 +10,6 @@
                         "domain_name"   =>  "http://localhost/wa_dev/fibenis/nano",
                         "lib_path"      =>  "../lib/v_01/",
 						
-						//ldap
-						"ldap"			=> ['host'			=> 'ldap://172.17.2.201',
-											'port'			=>	389,
-											'basedn'		=> 'dc=kalycito,dc=com',
-											'usersdn'		=> 'ou=users',
-											'exclude_users'	=> ['sa@webstarscg.com']											
-										   ],						
-                        
                         "is_smtp_mail"  =>  1,                            
                         "smpt_host"     =>  "",
                         "smpt_port"     =>  "465",
@@ -26,6 +18,13 @@
                         "smpt_pswrd"    =>  "",
 						
 						"auth_type"		=> 'ldap',
+						
+						"ldap"			=> ['host'			=> 'ldap://172.17.2.201',
+											'port'			=>	389,
+											'basedn'		=> 'dc=kalycito,dc=com',
+											'usersdn'		=> 'ou=users',
+											'exclude_users'	=> ['sa@webstarscg.com']											
+										   ],	
                         
                         "to_admin"      =>  "ratbew@gmail.com",
                         "cc_mail"       =>  "",
