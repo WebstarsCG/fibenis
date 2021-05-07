@@ -7,7 +7,7 @@
                         "pass"          =>   "",
                         "db_engine"     =>  "rdsql_mysqli",
                         
-                        "domain_name"   =>  "http://localhost/wa_dev/fibenis/nano",
+                        "domain_name"   =>  "http://localhost/fibenis/nano/",
                         "lib_path"      =>  "../lib/v_01/",
 						
                         "is_smtp_mail"  =>  1,                            
@@ -17,7 +17,8 @@
                         "smpt_mail"     =>  "",
                         "smpt_pswrd"    =>  "",
 						
-						"auth_type"		=> 'ldap',
+
+						
 						
 						"ldap"			=> ['host'			=> 'ldap://172.17.2.201',
 											'port'			=>	389,
@@ -25,6 +26,8 @@
 											'usersdn'		=> 'ou=users',
 											'exclude_users'	=> ['sa@webstarscg.com']											
 										   ],	
+						"auth_type"		=> 'ldap',
+
                         
                         "to_admin"      =>  "ratbew@gmail.com",
                         "cc_mail"       =>  "",
