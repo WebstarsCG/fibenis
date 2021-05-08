@@ -5,13 +5,13 @@
                      'data'=>array(
 					 				  '1' => array( 
 									  		
-											    'field_name'=> 'First Name',  'field_id' => 'sn', 'type' => 'text','is_mandatory'=>1, 'allow' => 'w3',
+											    'field_name'=> 'Code',  'field_id' => 'sn', 'type' => 'text','is_mandatory'=>1, 'allow' => 'w3',
 											 
-											    'validate' => 'data_validate(\'user_role\',this)'
+											    'validate' => 'data_validate(\'user_role\',this)', 'hint' => 'Give three letters'
 											    
 										       ),
 											
-				 					  '2' => array( 'field_name'=> 'Last Name',
+				 					  '2' => array( 'field_name'=> 'Role Name',
 										        'field_id' => 'ln',
 											'type' => 'text',
 											'is_mandatory'=>1,
