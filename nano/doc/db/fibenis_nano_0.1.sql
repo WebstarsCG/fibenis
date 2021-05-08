@@ -8,6 +8,4 @@ CREATE OR REPLACE VIEW session_by_date as SELECT date_format(timestamp_punch,'%Y
 
 CREATE OR REPLACE VIEW user_session_30_days as  SELECT get_user_internal_name(user_id) as user_name, count(*) as total_count FROM `sys_log` WHERE timestamp_punch > now() - INTERVAL 30 day GROUP BY user_id;
 
-CREATE OR REPLACE VIEW user_session_30_days as  SELECT  get_user_internal_name(id), (SELECT count(*) FROM sys_log WHERE user_id=user_info.id) FROM user_info;
-
 CREATE OR REPLACE VIEW user_engine_sessions as SELECT  get_user_internal_name(id) as user_name, (SELECT count(*) FROM sys_log WHERE action_type='DVEW' AND user_id=user_info.id ) as desk, (SELECT count(*) FROM sys_log WHERE action_type='FVEW' AND user_id=user_info.id ) as form FROM user_info;
