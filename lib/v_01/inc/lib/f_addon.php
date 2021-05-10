@@ -635,39 +635,50 @@
 											$dd_val = NULL;
 															
 															}elseif(($get_row->exa_type=="ITSL") || ($get_row->exa_type=="ITML")){
-																			
-																			$temp_grid 			= json_decode(stripslashes($get_row->simple_list));
-											 
-																		
-											 
-																			$option_data 		= $temp_grid[0];
-																			
-																			$temp_entity_token 	= explode('->',$option_data[1]);
-																			
-																			$temp_input =   [
-																								   'field_name'=>$get_row->title,
-																								   
-																								   'field_id'=>'exa_value',
-																								   
-																								   'type'=>'option',
-																								   
-																								   'option_data'=>$g->option_builder(strtolower($option_data[0]),"$option_data[2],$option_data[3]"," WHERE entity_code='$temp_entity_token[0]' ORDER BY line_order,id"  ),
-																								   
-																								   'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],      // child table 
-																								   
-																								   'parent_field_id'     => 'parent_id',              // parent field
-																														   
-																								   'child_attr_field_id' => 'exa_token',                // attribute code field
-																								   
-																								   'child_attr_code'     => $get_row->token,           // attribute code
-																								   
-																								   'is_mandatory'	     => 0,
-																								   
-																								   'allow' 				 => 'x1024',
-																									
-																								   'attr'           	 => [ 'class' => "w_200"]
-																								   
-																							];
+																
+																$lv['option'] 		= [];
+																
+																$temp_grid 			= json_decode(stripslashes($get_row->simple_list));
+																
+																$option_data 		= $temp_grid[0];
+																
+																$temp_entity_token 	= explode('->',$option_data[1]);
+																
+																$lv['option_where'] = ($option_data[4])? " AND ".$option_data[4]:'';
+																
+																if($option_data[0]=='user_info'){
+																	$temp_where         = $lv['option_where'];
+																}else{
+																	$temp_where         = " AND entity_code='$temp_entity_token[0]' $lv[option_where] ORDER BY line_order,id";
+																}																	
+															
+																
+															
+																	$temp_input =   [
+																						   'field_name'=>$get_row->title,
+																						   
+																						   'field_id'=>'exa_value',
+																						   
+																						   'type'=>'option',
+																						   
+																						   'option_data'=>$g->option_builder(strtolower($option_data[0]),"$option_data[2],$option_data[3]",
+																						   "WHERE 1=1 $temp_where "  ),
+																						   
+																						   'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],      // child table 
+																						   
+																						   'parent_field_id'     => 'parent_id',              // parent field
+																												   
+																						   'child_attr_field_id' => 'exa_token',                // attribute code field
+																						   
+																						   'child_attr_code'     => $get_row->token,           // attribute code
+																						   
+																						   'is_mandatory'	     => 0,
+																						   
+																						   'allow' 				 => 'x1024',
+																							
+																						   'attr'           	 => [ 'class' => "w_200"]
+																						   
+																					];
 															
 																			if(isset($temp_input_to_table[$get_row->exa_type]['action'])){
 																				$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
