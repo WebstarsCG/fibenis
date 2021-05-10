@@ -927,7 +927,7 @@
                                                                             'input_html'          => 'class="w_300"',
                                                                             'allow'               => "x256[=']"
                                                             ),
-                                                            
+															
                                                             '53' =>array(     'field_name'        => 'JS Call',                                                                
                                                                               'field_id'          => 'ea_value',				       
                                                                               'type' 	          => 'textarea',
@@ -938,6 +938,19 @@
                                                                             'child_attr_code'     => 'ADXJ',           // attribute code                                                                                                                                        
                                                                             'input_html'          => 'class="w_300"',
                                                                             'allow'               => "x256[=']"
+                                                            ),
+                                                            
+															
+															'58' =>array(     'field_name'        => 'Col. Function',                                                                
+                                                                              'field_id'          => 'ea_value',				       
+                                                                              'type' 	          => 'text',
+                                                                              'is_mandatory'      => 0,                                                                            
+                                                                            'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                            'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                            'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                            'child_attr_code'     => 'ADXQ',           // attribute code                                                                                                                                        
+                                                                            'input_html'          => 'class="w_300"',
+                                                                            'allow'               => "w128[_]"
                                                             ),
                                                             
                                                             
