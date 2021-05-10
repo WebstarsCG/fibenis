@@ -63,7 +63,7 @@
                                                                
        'input_html'=>'class="w_150"  onkeyup="(function(){G.$(\'X49\').value=G.$(\'X4\').value=G.$(\'X3\').value})();"',
 	   
-																'allow'=>'x10'
+																'allow'=>'x50'
                                                                
                                                                ),
 					
@@ -117,6 +117,7 @@
                                                                     'is_fibenistable'   => 1,
                                                                     'is_index'          => 1,
 																	'type'              => 'fibenistable',
+																  
                                                                     //'is_ro'               =>1,
                                                                     'is_mandatory'        => 0,
                                                                     'child_table'         => 'ecb_av_addon_varchar', // child table 
@@ -126,19 +127,44 @@
                                                                     'child_attr_code'     => 'APSL',                // attribute code
                                                                                                                         
                                                                         'default_rows_prop'=>array('start_rows'=>'1',
-											           'min_spare_rows'=>'0',
-											           'max_rows'=>'1',
-											           
-                                                                                                   ),
+																								   'min_spare_rows'=>'1',
+																								   'max_row'=>'1',
+																					   
+																	    ),
+																		
+																		
 														'colHeaders'=> array(
-                                                                                                    array('column'=>'Table','width'=>'200','type'=>'dropDown','data'=>"<option value=Entity_Child_Base>Entity_Child_Base</option><option value=Entity_Child>Entity_Child</option>"),
-                                                                                                    array('column'=>'Entity Code','width'=>'100','type'=>'dropDown','data'=> $G->ft_option_builder('entity','concat(code,\'->\',sn),sn'," ORDER BY sn ASC")),
-                                                                                                    array('column'=>'Option Id Field','width'=>'100','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
-                                                                                                    array('column'=>'Option Id Value','width'=>'100','type'=>'dropDown','data'=>"<option value=token>Token</option><option value=sn>SN</option><option value=ln>LN</option><option value=id>ID</option>"),
-                                                                                                    array('column'=>'Filter','width'=>'300','type'=>'text')
+																				array('column'=>'Table','width'=>'200','type'=>'dropDown',
+																				'data'=>"<option value=Entity_Child_Base>Entity Child Base</option>".
+																				        "<option value=Entity_Child>Entity Child</option>".
+																						"<option value=user_info>User</option>"),
+																									
+																									
+																				array('column'=>'Entity Code','width'=>'100','type'=>'dropDown',
+																				'data'=> $G->ft_option_builder('entity','concat(code,\'->\',sn),sn'," WHERE is_lib=0 ORDER BY sn ASC")),
+																									
+																									
+																				array('column'	=>'Option Value',	'width'=>'100',	'type'=>'dropDown',
+																				
+																						'data'	=>	"<option value=token>Token</option>".
+																									"<option value=sn>SN</option>".
+																									"<option value=ln>LN</option>".
+																									"<option value=id>ID</option>"),
+																						
+																				array('column'=>'Option Label','width'=>'100','type'=>'dropDown',
+																				
+																					'data'=>"<option value=token>Token</option>".
+																					        "<option value=sn>SN</option>".
+																							"<option value=ln>LN</option>".
+																							"<option value=id>ID</option>".
+																							"<option value=get_user_internal_name(id)>User Name</option>"),
+																							
+																				array('column'=>'Filter','width'=>'300','type'=>'text')
 																	 ),
                                                                      
                                                                      'is_hide' => 0, 
+																	 
+																	 'hint'=>"Mostly Use, If Entity Child Base -> Option Value(token) : Option Label(SN/LN)<br>If Entity Child  -> Option Value(id) : Option Label(SN)<br>If User Info  -> Option Value(id) : Option Label(User Name)<br>"
                                                                      
                                                                ),
 															   
@@ -1011,7 +1037,7 @@
                                 'GN'    => [0,1,2,3,4,5,6,9,10,11,12,14,15,16,17],
                                 'ITTX'  => [13],
                                 'ITFT'  => [26,27,28,29,30,31,32,46],
-                                'ITSL'  => [8],
+                                'ITSL'  => [8,55],
 								'ITML'  => [8],
                                 'ITTA'  => [13],
                                 'ITIG'  => [13],
