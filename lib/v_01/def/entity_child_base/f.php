@@ -160,8 +160,8 @@
                                 
                                 'js'=> ['is_top'=>1,'top_js'=>$LIB_PATH.'def/entity_child_base/f'],
                                 
-                                'show_query'=>1,
-                                'avoid_trans_key_direct'=>1,
+                                'show_query'=>0,
+                                'avoid_trans_key_direct'=>0,
 				
 				
                                 
