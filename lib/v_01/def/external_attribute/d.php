@@ -45,11 +45,37 @@
 //								    
 //								    ),
 							    
-							    5=>array('th'=>'Line order', 'field'=>"line_order",
+							    5=>array('th'=>'Line order', 'field'=>"concat(id,'[C]',line_order)",
                                                                     
-								    'td_attr' =>  ' class="txt_size_12" width="8%"',
+								    'td_attr' =>  ' class="txt_size_12" width="12%"',
+									
+									
+									                                        
+								'filter_out'	=> function($data_in){
+									
+										$temp     = explode('[C]',$data_in);
+										
+										$temp[1]  = str_replace("\t",'',$temp[1]);
+										
+										$data_out = array(
+												  'data'=>array('id'   => $temp[0],															
+														'key'  => md5($temp[0]),															
+														'label'=> 'Line Order Update',
+														'info' => htmlentities($temp[1]),
+														'type' => 'text',
+														'series'=>'a',
+														'action'=>'external_attribute',
+														'token' =>'ELOU'
+														)
+												);
+										
+										return json_encode($data_out);
+									},
+									
+								'js_call'	=> 'd_series.set_inline_update',
+								
                                                                     
-                                                                    'is_sort'=>1,
+                                        'is_sort'=>'line_order',
 								    
 								    ),
 							    

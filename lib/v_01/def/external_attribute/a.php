@@ -39,9 +39,32 @@
 							    }
 				    }, // end
 					
+					
+					'ELOU'=>function($param){
+					    
+							    if($param['user_id']){ 
+					    
+								    $inline_param     = json_decode($param['data']);
+																				    
+								   $param['rdsql']->exec_query("UPDATE
+														 entity_child_base
+													 SET
+														 line_order=$param[sv]
+													 WHERE
+														 id=$inline_param->id 
+													   ",'0');
+								     
+								    # one column
+									return 1;
+						
+							    }else{
+								    
+								    return 0;			
+							    }
+				    }, // end
          
 
-                            );
+		);
 	
 	
 	
