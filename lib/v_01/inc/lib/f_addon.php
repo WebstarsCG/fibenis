@@ -109,7 +109,10 @@
 												get_ecb_addon_varchar(ecb_child_id,'APTN') as toggle_on_label,
 												get_ecb_addon_varchar(ecb_child_id,'APTF') as toggle_off_label,
 												get_ecb_addon_varchar(ecb_child_id,'APTD') as toggle_default_on,
-												get_ecb_addon_varchar(ecb_child_id,'APEZ') as avoid_empty_zero
+												get_ecb_addon_varchar(ecb_child_id,'APEZ') as avoid_empty_zero,
+												get_ecb_addon_varchar(ecb_child_id,'APLL') as list_label,
+												get_ecb_addon_varchar(ecb_child_id,'APOL') as list_label_query
+												
 																	  FROM
 																			  ecb_parent_child_matrix WHERE ecb_parent_id=(SELECT id FROM entity_child_base WHERE entity_code='AT' AND get_ecb_av_addon_varchar(id,'ATKH')='".$temp['addon']->at."')  $view_query ORDER BY id";
 											
@@ -136,7 +139,7 @@
 												get_ecb_addon_varchar(entity_child_base.id,'APAL') as allow_attr,
 												get_ecb_addon_varchar(entity_child_base.id,'APMA') as mandatory_attr,
 												get_ecb_addon_varchar(entity_child_base.id,'APDD') as default_date_attr,
-																				get_ecb_addon_varchar(entity_child_base.id,'APAD') as avoid_default_option_attr,
+												get_ecb_addon_varchar(entity_child_base.id,'APAD') as avoid_default_option_attr,
 												get_ecb_addon_varchar(entity_child_base.id,'APFR') as fiben_table_row,
 												get_ecb_addon_varchar(entity_child_base.id,'APMR') as fiben_table_row_max,
 												get_ecb_addon_varchar(entity_child_base.id,'APGR') as fiben_table_min_rows_to_fill,
@@ -154,7 +157,9 @@
 												get_ecb_addon_varchar(entity_child_base.id,'APTN') as toggle_on_label,
 												get_ecb_addon_varchar(entity_child_base.id,'APTF') as toggle_off_label,
 												get_ecb_addon_varchar(entity_child_base.id,'APTD') as toggle_default_on,
-												get_ecb_addon_varchar(entity_child_base.id,'APEZ') as avoid_empty_zero
+												get_ecb_addon_varchar(entity_child_base.id,'APEZ') as avoid_empty_zero,
+												get_ecb_addon_varchar(entity_child_base.id,'APLL') as list_default_option_label,
+												get_ecb_addon_varchar(entity_child_base.id,'APOL') as list_option_label_query
 											FROM
 												entity_child_base WHERE entity_code='".$temp['addon']->en."' AND dna_code='EBAT' AND is_active=TRUE ORDER BY line_order ";	
 												//entity_child_base WHERE entity_code='".$temp['addon']->en."' AND dna_code='EBAT' AND is_active=1 ORDER BY line_order ";
@@ -634,7 +639,7 @@
 											
 											$dd_val = NULL;
 															
-															}elseif(($get_row->exa_type=="ITSL") || ($get_row->exa_type=="ITML")){
+											}elseif(($get_row->exa_type=="ITSL") || ($get_row->exa_type=="ITML")){
 																
 																$lv['option'] 		= [];
 																
@@ -647,15 +652,15 @@
 																$lv['option_where'] = ($option_data[4])? " AND ".$option_data[4]:'';
 																						
 											
-														if($option_data[0]=='user_info'){
-															$temp_where = " $lv[option_where]";
-														}else{
-												$lv['order']	=(preg_match("/(ORDER)(\s+)(BY)/i",$lv['option_where'])==0)?" ORDER BY line_order,id":'';
-												$temp_where 	= " AND entity_code='$temp_entity_token[0]' $lv[option_where] $lv[order]";
-														} // end																	
+												if($option_data[0]=='user_info'){
+													$temp_where = " $lv[option_where]";
+												}else{
+													$lv['order']	=(preg_match("/(ORDER)(\s+)(BY)/i",$lv['option_where'])==0)?" ORDER BY line_order,id":'';
+													$temp_where 	= " AND entity_code='$temp_entity_token[0]' $lv[option_where] $lv[order]";
+												} // end																	
 															
-																
 															
+						$lv['label_column_query'] = (strlen($get_row->list_option_label_query) > 0)?$get_row->list_option_label_query:$option_data[3];					
 																	$temp_input =   [
 																						   'field_name'=>$get_row->title,
 																						   
@@ -663,7 +668,7 @@
 																						   
 																						   'type'=>'option',
 																						   
-																						   'option_data'=>$g->option_builder(strtolower($option_data[0]),"$option_data[2],$option_data[3]",
+																						   'option_data'=>$g->option_builder(strtolower($option_data[0]),"$option_data[2],$lv[label_column_query]",
 																						   "WHERE 1=1 $temp_where "  ),
 																						   
 																						   'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],      // child table 
@@ -682,9 +687,14 @@
 																						   
 																					];
 															
-																			if(isset($temp_input_to_table[$get_row->exa_type]['action'])){
-																				$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
-																			}
+													if($get_row->list_default_option_label){													
+														$temp_input['option_default']	=   array('label'=>'Select '.$get_row->list_default_option_label,
+																								  'value'=>'');
+													} // end
+															
+																if(isset($temp_input_to_table[$get_row->exa_type]['action'])){
+																	$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
+																}
 																			
 															
 															}elseif($get_row->exa_type=="ITFD"){

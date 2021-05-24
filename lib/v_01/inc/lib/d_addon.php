@@ -66,8 +66,14 @@
 																										"(id,'".$lv['d_query_info']['token']."')";
 																										
 																						if(@$desk_col['col_func']){
-
-																							$temp['field']=$desk_col['col_func'].'('.$temp['field'].')';
+																							if(preg_match('/(this)/',$desk_col['col_func'])==0){
+																							
+																								$temp['field']=$desk_col['col_func'].'('.$temp['field'].')';
+																							
+																							}else{				
+																				$temp['field']=str_replace('[[this]]',$temp['field'],$desk_col['col_func']);
+																								//$temp['field']=$desk_col['col_func'].'('.$temp['field'].')';
+																							}
 																						}																										
 										
 																			$lv['data'][$lv['counter']['row']]=$temp;
