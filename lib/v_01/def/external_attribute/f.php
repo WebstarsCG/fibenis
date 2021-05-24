@@ -178,6 +178,30 @@
                                                                     'child_attr_field_id' => 'ea_code',   // attribute code field
                                                                     'child_attr_code'     => 'APAD'           // attribute code                                                                    
                                                             ),
+															
+															
+														'59' =>array(     'field_name'         => 'Option Default Label',                                                                
+                                                                     'field_id'            => 'ea_value',				       
+                                                                    'type' 	          	   => 'text',
+                                                                    'is_mandatory'         => 0,
+                                                                            
+                                                                    'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                    'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                    'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                    'child_attr_code'     => 'APLL'           // attribute code                                                                    
+                                                            ),
+															
+														'60' =>array(     'field_name'         => 'Opt. Lbl. Col. Query',                                                                
+                                                                     'field_id'            => 'ea_value',				       
+                                                                    'type' 	          	   => 'text',
+                                                                    'is_mandatory'         => 0,
+                                                                            
+                                                                    'child_table'         => 'ecb_av_addon_varchar', // child table 
+                                                                    'parent_field_id'     => 'parent_id',    // parent field                                                                                            
+                                                                    'child_attr_field_id' => 'ea_code',   // attribute code field
+                                                                    'child_attr_code'     => 'APOL'          // attribute code                                                                    
+                                                            ),	
+                                                        
                                                         
                                                       '9' =>array('field_name'=>'Line order',
                                                                
@@ -944,12 +968,14 @@
 															'58' =>array(     'field_name'        => 'Col. Function',                                                                
                                                                               'field_id'          => 'ea_value',				       
                                                                               'type' 	          => 'text',
-                                                                              'is_mandatory'      => 0,                                                                            
+                                                                              'is_mandatory'      => 0,
+																			'hint'				  =>"Default:get_ecb_sn_by_token<br>". "Custom:get_exav_addon_varchar([[this]],'DAV')",	
+																			  
                                                                             'child_table'         => 'ecb_av_addon_varchar', // child table 
                                                                             'parent_field_id'     => 'parent_id',    // parent field                                                                                            
                                                                             'child_attr_field_id' => 'ea_code',   // attribute code field
                                                                             'child_attr_code'     => 'ADXQ',           // attribute code                                                                                                                                        
-                                                                            'input_html'          => 'class="w_300"',
+                                                                            'input_html'          => 'class="w_300" ',
                                                                             'allow'               => "w128[_]"
                                                             ),
                                                             
@@ -1046,11 +1072,11 @@
         
         $temp ['input_type'] = ['EX'    => [0,1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,
                                             21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,
-                                            41,42,43,44,45,46,55],
+                                            41,42,43,44,45,46,55,59,60],
                                 'GN'    => [0,1,2,3,4,5,6,9,10,11,12,14,15,16,17],
                                 'ITTX'  => [13],
                                 'ITFT'  => [26,27,28,29,30,31,32,46],
-                                'ITSL'  => [8,55],
+                                'ITSL'  => [8,55,59,60],
 								'ITML'  => [8],
                                 'ITTA'  => [13],
                                 'ITIG'  => [13],
@@ -1180,5 +1206,9 @@
     #X32_panel .value{
         width:100% !important;
     }
+	
+	 #X58_panel{
+		height:75px !important;	
+	}
     
 </style>
