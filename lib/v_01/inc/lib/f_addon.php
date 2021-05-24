@@ -645,12 +645,14 @@
 																$temp_entity_token 	= explode('->',$option_data[1]);
 																
 																$lv['option_where'] = ($option_data[4])? " AND ".$option_data[4]:'';
-																
-																if($option_data[0]=='user_info'){
-																	$temp_where         = $lv['option_where'];
-																}else{
-																	$temp_where         = " AND entity_code='$temp_entity_token[0]' $lv[option_where] ORDER BY line_order,id";
-																}																	
+																						
+											
+														if($option_data[0]=='user_info'){
+															$temp_where = " $lv[option_where]";
+														}else{
+												$lv['order']	=(preg_match("/(ORDER)(\s+)(BY)/i",$lv['option_where'])==0)?" ORDER BY line_order,id":'';
+												$temp_where 	= " AND entity_code='$temp_entity_token[0]' $lv[option_where] $lv[order]";
+														} // end																	
 															
 																
 															
