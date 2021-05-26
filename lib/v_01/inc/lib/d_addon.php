@@ -15,6 +15,8 @@
 																																																'ITTG'=>['table'=>'bool'],
 																																																'ITTE'=>['table'=>'text'],
 																																																'ITSL'=>['table'=>'varchar'],
+									
+									'ITML'=>['table'=>'varchar'],
 																																																'ITFT'=>['table'=>'text'],
 																																																'ITFD'=>['table'=>'varchar'],
 																																																'ITFI'=>['table'=>'varchar'],
