@@ -35,6 +35,7 @@
 	fieldset .value{		
 		display		: block;
 		float		: left;
+		overflow	: inherit !important;
 		width		: 60% !important;		
 	}
 	

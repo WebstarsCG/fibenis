@@ -545,12 +545,11 @@
 	}
 		
 	
-	fieldset .value{
-		
+	fieldset .value{		
 		display		: inline-block;
-		font-family	: 'Roboto', sans-serif;*/
+		/*font-family	: 'Roboto', sans-serif;*/
 		float		: left;		
-		overflow	: hidden;
+		overflow	: inherit;
 		text-align	: left !important; 
 		width		: 65%;			
 		vertical-align	: top;
