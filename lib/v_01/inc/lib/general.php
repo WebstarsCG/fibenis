@@ -214,19 +214,18 @@
 				
 				      function option_builder($tbl_name,$field,$manipulate){
 				                    
-						   global $rdsql;
+							global $rdsql;
 				
 						    $sql="SELECT $field FROM $tbl_name $manipulate";
 						   
-						   $exe_query = $rdsql->exec_query($sql,"ERROR in option_builder<br>$sql");
+							$exe_query = $rdsql->exec_query($sql,"ERROR in option_builder<br>$sql");
 						
 							$option_box='';	
 							$select_count=1;
-							while($option=$rdsql->data_fetch_array($exe_query)){
-								
-									$option_box.="<option id='$option[0]' value='$option[0]'>$option[1]</option>";
+							while($option=$rdsql->data_fetch_array($exe_query)){								    
+									$option_box.="<option id='$option[0]' value='$option[0]'  data-ax='".@$option[2]."'>$option[1]</option>";
 									$select_count++;
-							 }	
+							}	
 							
 							 return $option_box;
 				      
