@@ -1049,7 +1049,7 @@
 								
 						}
 						
-						if($fibenistable_temp['is_text']){
+						if(($fibenistable_temp['is_text']) || $fibenistable_temp['is_dropdown']){
 								
 								$fibenistable_temp['key_up_addon'] = (@$colvalue['key_up_addon'])?@$colvalue['key_up_addon']:'';
 						

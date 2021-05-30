@@ -680,7 +680,7 @@
                                                                                                           'width'=>'60',
                                                                                                           'type'=>'text'),
                                                                                                     
-                                                                                                     array('column'=>'Key Up Addon',
+                                                                                                     array('column'=>'Key Up Addon/Change',
                                                                                                           'width'=>'100',
                                                                                                           'type'=>'text'), 
                                                                                                     

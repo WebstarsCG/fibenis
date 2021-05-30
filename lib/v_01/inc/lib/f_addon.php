@@ -569,6 +569,9 @@
 													
 													$temp_grid_prop['input_html']  = ($value[10])?$value[10]:'';
 																			 
+																			 
+													$temp_grid_prop['key_up_addon']  = ($value[11])?$value[11]:'';						 
+																			 
 													if(strlen(@$entity_code[0])>0){
 													
 														$temp_grid_prop['data'] = $G->ft_option_builder(''.$table.'',''.$option_id.','.$option_data.'',"WHERE 1=1 AND dna_code = 'EBMS' AND entity_code = '".$ec_code." ' ORDER BY line_order,".$option_id." ASC");
@@ -985,5 +988,6 @@
                 return $param; 
                 
         } // end
+
 
 ?>

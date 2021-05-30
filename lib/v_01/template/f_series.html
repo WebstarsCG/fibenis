@@ -1299,7 +1299,7 @@
 												<TMPL_IF is_dropdown>
 													<td id="ftdropdown" width="<TMPL_VAR WIDTH>">
 													
-													 <select   onchange="JavaScript:getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" class="selectpicker"   data-width="100%" data-container="body" <TMPL_VAR input_html> >
+													 <select   onchange="JavaScript:<TMPL_IF KEY_UP_ADDON><TMPL_VAR KEY_UP_ADDON>;</TMPL_IF>getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" class="selectpicker"   data-width="100%" data-container="body" <TMPL_VAR input_html> >
 													 		<TMPL_IF is_default_value> <option value="0"> Select</option></TMPL_IF>
 															<TMPL_VAR select_data>
 													</select> 
