@@ -622,10 +622,10 @@
 														   
 														   'default_data'  => $dd_val,
 														   
-														   'update_route_point' =>	[ 	'is_update_route_point' => 1,
+														/*   'update_route_point' =>	[ 	'is_update_route_point' => 1,
 																		'method' => 'post',
 																		'url'    => 'router.php?series=ax&action=fiben_a_test&token=FT_UPDATE&attr='.$get_row->token.'',	
-																	],
+																	],*/
 														   
 														   'default_rows_prop'=>array('start_rows'=> $min_row ,'max_row'=>$max_row),
 														   
