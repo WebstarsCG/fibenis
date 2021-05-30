@@ -634,11 +634,11 @@
                                                                                                           'data'=>"<option value=Text>Text</option><option value=Dropdown>Dropdown</option><option value=Autocomplete>Autocomplete</option><option value=Date>Date</option>"
                                                                                                      ),
                                                                                                     
-                                                                                                    array('column'=>'Table',
-                                                                                                          'width'=>'100',
-                                                                                                          'type'=>'dropDown',
-                                                                                                          'data'=>"<option value=Entity_Child>Entity Child</option><option value=Entity_Child_Base>Entity_Child_Base</option><option value=Entity_Child>Entity_Child</option>"
-                                                                                                    ),
+									array('column'=>'Table',
+										  'width'=>'100',
+										  'type'=>'dropDown',
+										  'data'=>"<option value='entity_child_base'>entity_child_base</option><option value='entity_child'>entity_child</option>"
+									),
                                                                                                     
                                                                                                      array('column'=>'Op Id',
                                                                                                           'width'=>'50',
