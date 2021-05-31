@@ -362,6 +362,7 @@
 						$( "#X<TMPL_VAR field_id>_SHOW" ).datepicker({
 												altField: "#X<TMPL_VAR field_id>",
 												altFormat: "yy-mm-dd",
+												dateFormat:'dd-mm-yy',
 												changeMonth: true,
 												changeYear: true,
 												
@@ -379,7 +380,7 @@
 												 </TMPL_IF>
 												
 												// change,month & year 
-												onChangeMonthYear: function(year, month, datepicker) {
+											/*	onChangeMonthYear: function(year, month, datepicker) {
 												
 													if (datepicker.id == "X<TMPL_VAR field_id>_SHOW") {
 													    var newDate = new Date();
@@ -387,23 +388,24 @@
 													    newDate.setYear(year);
 													    $('#X<TMPL_VAR field_id>_SHOW').datepicker("setDate", newDate);
 													}                    
-												}
+												}*/
 
 												
 										});
 						
 						// format
 						
-						$("#X<TMPL_VAR field_id>_SHOW" ).datepicker( "option", "dateFormat",'dd-mm-yy');
+						//$("#X<TMPL_VAR field_id>_SHOW" ).datepicker( "option", "dateFormat",'dd-mm-yy');
 						
 						<TMPL_IF default_date>
 							$("#X<TMPL_VAR field_id>_SHOW").datepicker("setDate",'<TMPL_VAR default_date>');
 							E_V_PASS("X<TMPL_VAR field_id>_SHOW","<TMPL_VAR default_date>");
 						</TMPL_IF>
 						
-						input_temp.date['X<TMPL_VAR field_id>']=1;
-						input_temp.date['X<TMPL_VAR field_id>_SHOW']=1;
 						
+						input_temp.date['X<TMPL_VAR field_id>_SHOW']=1;
+						input_temp.date['X<TMPL_VAR field_id>']=1;
+					
 					</script>
 					
 				</TMPL_IF>				
