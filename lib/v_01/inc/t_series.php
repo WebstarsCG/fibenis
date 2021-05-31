@@ -88,10 +88,14 @@
 					
 					$PAGE_INFO	= $T->Output();
 					
-					// fseries to temp
-					$fh = fopen($T_SERIES['temp']['file'],'w') or "Error";
-					fputs($fh,$PAGE_INFO);
-					fclose($fh);
+					if(@$T_SERIES['cache_off']!=1){
+							// fseries to temp
+							$fh = fopen($T_SERIES['temp']['file'],'w') or "Error";
+							fputs($fh,$PAGE_INFO);
+							fclose($fh);						
+					} // 
+					
+					
 				}
 				
 				
@@ -102,7 +106,7 @@
 			        'page_code'  => $T_SERIES['page_code'],
 				'action'     => 'Template Process with '.$PAGE_NAME);
 		
-		if(@$T_SERIES['save_as']){
+		if(array_key_exists('save_as',$T_SERIES['save_as'])){
 				
 				save_content(['t_series'=>$T_SERIES,
 					      'lib_path'=>$LIB_PATH,
