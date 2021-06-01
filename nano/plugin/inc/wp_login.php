@@ -36,6 +36,8 @@
 				
 				$PV['lib_path']    	=  get_lib_path();
 				
+				$PV['is_smtp_mail'] = get_config('is_smtp_mail');
+				
 				include("../../".$PV['lib_path']."inc/lib/".get_config('db_engine').".php");
 				
 				include("../../".$PV['lib_path']."inc/lib/general.php");
@@ -544,8 +546,9 @@
 						$G->set_system_log($mail_param);
 					}
 					else{
-						$send = $G->mail_send($MAIL_FK);
 						
+						$send = $G->mail_send($MAIL_FK);
+												
 						$mail_param=array('user_id'=>$no_row[1],'page_code'=>'GATE','action_type'=>'FMAL','action'=>'Forgot password <br>'.$msg['FK_MSG']);
 						         
 						$G->set_system_log($mail_param);
