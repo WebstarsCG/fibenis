@@ -1,5 +1,15 @@
 <?PHP
         $key        	= @$_GET['key'];
+		
+		$t_series      = ['filter'=>'','wm'=>''];		
+    																														
+		if(isset($_GET['tokens'])){			
+			$t_series['filter'] =  set_filter($_GET['tokens']);			
+		}
+		
+		$t_series['wm'] = @$_GET['wm'] ?? '';
+		
+		
         $T_SERIES       = array(
 		
 								'table'	=>	'entity',
@@ -7,6 +17,7 @@
 								'data'=>	array(
 													'code'=>array('field' => 'code'),
 													'name'=>array('field' => 'sn'),
+													'wm'=>array('field' => "'$t_series[wm]'"), //write_mode
 													'attributes'=>array(
 'is_child_addon' =>1,
 
@@ -88,9 +99,9 @@
 									
 																			'table'=> ' entity_child_base',
 												
-																			'key_filter'=>" AND entity_code='$key'",
+																			'key_filter'=>" AND entity_code='$key' $t_series[filter]",
 									
-																			'show_query'=>1
+																			'show_query'=>0
 			
 																		),
 										
@@ -107,6 +118,7 @@
 													'template'       => dirname(__FILE__).'/t.html',
 																																
 																																// save data 
+																																
 		'save_as'=> array(
 																																		
 						array('type'	 => 'xml',
@@ -118,6 +130,23 @@
 
 	);
 		
+
+
+
+	//  set token
+	function set_filter($in){	
+				
+		$lv = ['neutral'=>[]];
+
+		$lv['tokens']=explode(',',$in);
 		
-        	    
+		foreach($lv['tokens'] as $k => $v){
+			array_push($lv['neutral'],"'".$v."'");
+		}
+		
+		return " AND token IN (".implode(',',$lv['neutral']).")";
+		
+		
+	}
+		    	    
 ?>
