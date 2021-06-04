@@ -95,11 +95,14 @@
 																				$entity->name=$entity->name.'';
 																													
 																				// remove existing
-																				
-																				$rdsql->exec_query("DELETE from entity_child WHERE entity_code='".$entity->code."'",'Remove entity_child');
-																				$rdsql->exec_query("DELETE from entity_child_base WHERE entity_code='".$entity->code."'",'Remove entity_child_bae');
-																				$rdsql->exec_query("DELETE from entity WHERE code='".$entity->code."'",'Remove entity');
-																					
+																
+									if($entity->write_mode=!'A'){		
+									
+									$rdsql->exec_query("DELETE from entity_child WHERE entity_code='".$entity->code."'",'Remove entity_child');
+									$rdsql->exec_query("DELETE from entity_child_base WHERE entity_code='".$entity->code."'",'Remove entity_child_bae');
+									$rdsql->exec_query("DELETE from entity WHERE code='".$entity->code."'",'Remove entity');
+														
+									
 																				// insert entity
 																				$lv['entity']=[];
 																				array_push($lv['entity'],"'$entity->code'");
@@ -107,7 +110,10 @@
 																				array_push($lv['entity'],0);
 																				array_push($lv['entity'],$USER_ID);
 																				
-																				$rdsql->exec_query("INSERT INTO entity(code,sn,is_lib,user_id) VALUES(".implode($lv['entity'],',').")",'insert entity');
+																				$rdsql->exec_query("INSERT INTO entity(code,sn,is_lib,user_id)
+																				VALUES(".implode($lv['entity'],',').")",'insert entity');
+																				
+									}
 																				
 																				// each atrribute
 																				if(is_object($entity->attributes->attribute)){
@@ -122,14 +128,14 @@
 																										
 																												unset($lv['attr']['@attributes']);
 																																		
-																												foreach($field_obj->attributes() as $def_key => $def_val){ 
-																																$lv['attr'][$def_key]=$def_val.'';
-																												}
+																			foreach($field_obj->attributes() as $def_key => $def_val){ 
+																							$lv['attr'][$def_key]=$def_val.'';
+																			}
 																												
 																												$lv['ecb']=[];
-																												
-																												// attr query
-																												$lv['attr_query'] = "INSERT INTO entity_child_base(entity_code,token,sn,ln,line_order,dna_code,user_id)
+							
+							// attr query
+							$lv['attr_query'] = "INSERT INTO entity_child_base(entity_code,token,sn,ln,line_order,dna_code,user_id)
 																																																VALUES('".$entity->code."','".
 																																																          $lv['attr']['token']."','".
 																																																		  $lv['attr']['name']."','".
@@ -147,8 +153,8 @@
 																													
 																												#print_r($lv['attr']);	
 																													
-																												foreach($lv['attr'] as $akey => $aval){																		
-																																$lv['addon_query_text'].="($lv[ecb_id],'".$lv['attrmap'][$akey]."','".$aval."',$USER_ID),";
+																												foreach($lv['attr'] as $akey => $aval){												$aval = preg_replace('/\'/','\\\'',$aval);						
+														$lv['addon_query_text'].="($lv[ecb_id],'".$lv['attrmap'][$akey]."','".$aval."',$USER_ID),";
 																												}						       
 																																
 																									
@@ -157,12 +163,14 @@
 																								
 																								if($lv['addon_query_text']){
 																												
-																												$lv['addon_query_text_neutral']=substr($lv['addon_query_text'],0,-1);
-																												
-																												$lv['addon_query'] = "INSERT INTO ecb_av_addon_varchar(parent_id,ea_code,ea_value,user_id)
+														$lv['addon_query_text_neutral']=substr($lv['addon_query_text'],0,-1);
+																						
+														
+																						
+														$lv['addon_query'] = "INSERT INTO ecb_av_addon_varchar(parent_id,ea_code,ea_value,user_id)
 																																																				VALUES $lv[addon_query_text_neutral]";
 																												
-																											 $rdsql->exec_query($lv['addon_query'],"ecb varchar");
+														 $rdsql->exec_query($lv['addon_query'],"ecb varchar".$lv['addon_query']);
 																												
 																								} // addon attribute query
 																								
