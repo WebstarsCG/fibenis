@@ -106,7 +106,7 @@
 			        'page_code'  => $T_SERIES['page_code'],
 				'action'     => 'Template Process with '.$PAGE_NAME);
 		
-		if(array_key_exists('save_as',$T_SERIES['save_as'])){
+		if(isset($T_SERIES['save_as'])){
 				
 				save_content(['t_series'=>$T_SERIES,
 					      'lib_path'=>$LIB_PATH,
