@@ -124,15 +124,15 @@
 			
 				if(@$_POST['UPDATE']){
 				
-						@$update_info	=  update_data(array('data_def'   	  =>$F_SERIES['data'],
+						$has_fields		=  update_data(array('data_def'   	  =>$F_SERIES['data'],
 											  'table_name' 	  =>$F_SERIES['table_name'],
 											  'key_id'    	  =>$F_SERIES['key_id'],
 											  'key_value'  	  =>$_POST['UPDATE'],
 											  'is_user_id'    =>$F_SERIES['is_user_id'],
 											  'prime_index'   =>@$F_SERIES['prime_index']));
 												
-						@$row_id	= $_POST['UPDATE'];
-						$F_MESSAGE      =  $update_info; 
+						@$row_id		= $_POST['UPDATE'];
+						
 						
 						$param = array('user_id'=>$USER_ID,
 							       
@@ -152,19 +152,15 @@
 				
 				}else{ 			 
 						
-						$insert_info	=	insert_data(array('data_def'   	  =>$F_SERIES['data'],
+						$row_id  =	insert_data(array('data_def'   	  =>$F_SERIES['data'],
 										  'table_name' 	  =>$F_SERIES['table_name'],
 										  'key_id'    	  =>$F_SERIES['key_id'],
 										  'is_user_id'    =>@$F_SERIES['is_user_id'],
 										  'is_created_by' =>@$F_SERIES['is_created_by'],
 										  'prime_index'   =>@$F_SERIES['prime_index']));
-					
-					
-						$message  	=  $insert_info[0];
-						$F_MESSAGE      = $message;
-					
-						$row_id 	=   $insert_info[1]; //$rdsql->last_insert_id($F_SERIES['table_name']);
-					
+							
+						$has_fields = $row_id;	
+						
 					
 					//set_system_log
 					
@@ -201,6 +197,32 @@
 								
 						} // end
 						
+						
+						// message part
+						if($has_fields==0){			
+							echo $F_MESSAGE = 'block_fail:<b>Give atleast one mandatory field or one default column</b>';								
+						}else{
+							if(@$F_SERIES['flat_message']){										
+									$F_MESSAGE = 'block_pass:'.$F_SERIES['flat_message'];
+							}else{
+									
+									$custom_message  = @$F_SERIES['message'];  	
+												
+									if(strlen(@$custom_message)>0 && $row_id){
+										
+										$select_message = " SELECT $custom_message as message FROM $F_SERIES[table_name] WHERE $F_SERIES[key_id]=$row_id";										
+										$exe_message 	= $rdsql->exec_query($select_message,' ADD message Error!');										
+										$message_row  	= $rdsql->data_fetch_object($exe_message);										
+										$dip_message 	= $message_row ->message;										
+										$F_MESSAGE 		= 'block_pass:<b>'.$dip_message.'</b> Successfully Added.';
+									}
+									else if(isset($F_SERIES['prime_index'])){
+										$F_MESSAGE 		=  'block_pass:<b>'.@$_POST['X'.$F_SERIES['prime_index']].'</b> Successfully Added';
+									}								
+							} //end
+						} // end
+							
+				
 						if(@$F_SERIES['alert']['is_after_add']){
 							
 							$alert_mail_data = @$F_SERIES['alert']['mail']['data'];
@@ -229,6 +251,7 @@
 								
 								foreach($alert_mail_data as $key=>$value){
 									
+									$mail_msg.='<tr><td width="30%" style="font-weight:bold;">'.$alert_mail_data[$key].'</td><td  width="45%">'.$mail_row->$key.'</td></tr>';
 									$mail_msg.='<tr><td width="30%" style="font-weight:bold;">'.$alert_mail_data[$key].'</td><td  width="45%">'.$mail_row->$key.'</td></tr>';
 								}			
 							
@@ -1390,40 +1413,12 @@
 												
 								} // each				
 					
-				
-								// message part
-								
-								if(@$F_SERIES['flat_message']){
-										
-										return array('block_pass:'.$F_SERIES['flat_message'],$last_insert_id);	
-								
-										
-								}else{
-										
-										$custom_message  = @$F_SERIES['message'];  	
-													
-										if(strlen(@$custom_message)>0 && $last_insert_id){
-											
-											$select_message = " SELECT $custom_message as message FROM $table_name WHERE $key_id=$last_insert_id";
-											
-											$exe_message = $rdsql->exec_query($select_message,' ADD message Error!');
-											
-											$message_row  = $rdsql->data_fetch_object($exe_message);
-											
-											$dip_message = $message_row ->message;
-											 
-											return array('block_pass:<b>'.$dip_message.'</b> Successfully Added', $last_insert_id);	
-										}
-										else{
-											return array('block_pass:<b>'.@$_POST['X'.$prime_index].'</b> Successfully Added',$last_insert_id);
-										}
-								
-								} //end
-							
+								return $last_insert_id;
+						
 						} # end req alue
 				}else{
-						
-						return array('block_fail:<b>Give atleast one mandatory field or one default column.',0);	
+								return 0;
+						//return array('block_fail:<b>Give atleast one mandatory field or one default column.',0);	
 						
 				} # end req flag
 				
@@ -1834,7 +1829,7 @@
 				
 				$prime_index	= $param['prime_index'];
 				
-				$hidden_field	= $param['hidden_field'];
+				$hidden_field	= @$param['hidden_field'];
 				
 				$temp           = [];
 				$temp['is_required_flag_value'] =0;
@@ -1858,7 +1853,7 @@
 							
 						$temp['field_name']  	   = $value['field_name'];
 						
-						$temp['hidden_field']	   = $value['hidden_field'];
+						$temp['hidden_field']	   = @$value['hidden_field'];
 						
 						@$value['ro']              = ((@$value['type']=='heading') || (@$value['type']=='sub_heading') || (@$value['type']=='label'))?1:$_POST["X".$key."_RO"];
 						
@@ -1867,12 +1862,12 @@
 						if(@$value['ro']!=1){
 								
 								
-								if($value['no_edit']==1){
+								if(@$value['no_edit']==1){
 								
 										$key_query.=$value['hidden_field'].'='."'".$_POST["X".$key]."',";
 								}
 								
-								if($value['is_mandatory']==1){
+								if(@$value['is_mandatory']==1){
 								
 										$is_required_flag=1;								
 										$is_required_value.=($value['type']!='file')?$_POST["X".$key]:$_FILES["X".$key]['name'];
@@ -1885,7 +1880,7 @@
 																	
 								}
 								
-								if(($value['type']!='file') && (!@$value['child_table'])){
+								if((@$value['type']!='file') && (!@$value['child_table'])){
 									
 										if($value['filter_in']){
 										
@@ -1900,12 +1895,12 @@
 										}
 								}
 								
-								if($value['is_plugin']==1){
+								if(@$value['is_plugin']==1){
 										array_push($matrix_file_fields,$key);
 								}
 								
 								
-								if($value['type']=='file'){
+								if(@$value['type']=='file'){
 										
 										array_push($file_fields,$key);								
 								} #if
@@ -2092,40 +2087,13 @@
 										
 								} # file								
 								
-					
-				
-								if(@$F_SERIES['flat_message']){
-										
-										return array('block_pass:'.$F_SERIES['flat_message'],$last_insert_id);	
-								
-										
-								}else{
-										$message = @$F_SERIES['message'];
-								
-										if(strlen($message)>0){
-												
-												 $select_message ="SELECT  $message  as message FROM $table_name WHERE $key_id='$key_value'";
-												
-												  $exec_query	=	$rdsql->exec_query($select_message,"select message Error");	
-												
-												 $message_row   = 	$rdsql->data_fetch_object($exec_query);	
-												 
-												 $disp_message =  $message_row->message;
-												 
-												 return 'block_pass:<b>'.$disp_message.'</b> successfully updated.';
-										}
-										else{
-											
-											return 'block_pass:<b>'.$_POST['X'.$prime_index].'</b> successfully updated.';
-										}
-								} // end
-								
 						} // end value
 						
+						return 1;
 						
 				}else{
 						
-						return 'block_fail:<b>Give atleast one mandatory field or one default column';	
+						return 0;
 						
 				} # end req flag
 				
