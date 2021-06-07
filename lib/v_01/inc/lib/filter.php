@@ -64,10 +64,9 @@
 		};
 		
 		$FILTER['avoid_empty_zero'] = function($data_in){
-									
-				#return ((intval($data_in)>0)?1:0);
-				return 1;
-		
+				
+				$data_in = preg_replace('/\s/','',$data_in);       				
+				return ((strlen($data_in)>0)?1:0);
 		};
 		
 		$FILTER['code_editor_neutral'] = function($data_in){				
