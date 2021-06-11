@@ -1763,8 +1763,10 @@
 					<div class=value>
 					       
 						<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY>" >
-						
-						
+												
+						<TMPL_LOOP ADDON_ACTIONS>							
+							<input type="button" onclick="JavaScript:<TMPL_VAR ACTION>(<TMPL_IF PARAM><TMPL_VAR PARAM></TMPL_IF>)" value="<TMPL_VAR LABEL>"       class="<TMPL_IF CLASS><TMPL_VAR CLASS><TMPL_ELSE>button</TMPL_IF>">
+						</TMPL_LOOP>
 						
 						<input
 						
@@ -1797,8 +1799,6 @@
 							</script>							
 						</TMPL_IF>
 						
-							
-							
 							
 						<TMPL_IF is_back_button>
 							<a  class="btn btn-default" type="button" href="<TMPL_IF BACK_LINK><TMPL_VAR back_link><TMPL_ELSE>?<TMPL_VAR D_SERIES>=<TMPL_VAR APP_KEY></TMPL_IF><TMPL_IF BACK_MENU_OFF>&menu_off=1</TMPL_IF><TMPL_IF BACK_DEFAULT_ADDON>&default_addon=<TMPL_VAR BACK_DEFAULT_ADDON></TMPL_IF>">

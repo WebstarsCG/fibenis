@@ -434,21 +434,17 @@
 				$T->AddParam('last_insert',@$F_SERIES['temp']['last_insert']);
 		}
 		
-		// is session
-	
+		$T->AddParam('addon_actions',@$F_SERIES['addon_actions']);
+		
+		
+		// is session	
 		if($IS_SESSION){			
 			$PAGE_INFO= $T->Output();
-		}else{
-		
+		}else{		
 			$PAGE_INFO = $T->Output();
 		}
 		
-	      
-	       
-				
-		
-		# build form data
-		
+		# build form data		
 		function build_form_data($data_def){
 				
 				global $F_SERIES,$G;
