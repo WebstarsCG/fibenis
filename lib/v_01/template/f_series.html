@@ -1763,10 +1763,16 @@
 					<div class=value>
 					       
 						<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY>" >
-												
-						<TMPL_LOOP ADDON_ACTIONS>							
+					
+						<TMPL_LOOP ADDON_ACTIONS>
+							<TMPL_UNLESS IS_RIGHT>
+								<TMPL_LOOP ACTIONS>	
 							<input type="button" onclick="JavaScript:<TMPL_VAR ACTION>(<TMPL_IF PARAM><TMPL_VAR PARAM></TMPL_IF>)" value="<TMPL_VAR LABEL>"       class="<TMPL_IF CLASS><TMPL_VAR CLASS><TMPL_ELSE>button</TMPL_IF>">
-						</TMPL_LOOP>
+								</TMPL_LOOP>
+							</TMPL_UNLESS>
+						</TMPL_LOOP>	
+
+						
 						
 						<input
 						
@@ -1799,7 +1805,15 @@
 							</script>							
 						</TMPL_IF>
 						
-							
+						<TMPL_LOOP ADDON_ACTIONS>
+							<TMPL_IF IS_RIGHT>
+								<TMPL_LOOP ACTIONS>	
+							<input type="button" onclick="JavaScript:<TMPL_VAR ACTION>(<TMPL_IF PARAM><TMPL_VAR PARAM></TMPL_IF>)" value="<TMPL_VAR LABEL>"       class="<TMPL_IF CLASS><TMPL_VAR CLASS><TMPL_ELSE>button</TMPL_IF>">
+								</TMPL_LOOP>
+							</TMPL_IF>
+						</TMPL_LOOP>	
+
+						
 						<TMPL_IF is_back_button>
 							<a  class="btn btn-default" type="button" href="<TMPL_IF BACK_LINK><TMPL_VAR back_link><TMPL_ELSE>?<TMPL_VAR D_SERIES>=<TMPL_VAR APP_KEY></TMPL_IF><TMPL_IF BACK_MENU_OFF>&menu_off=1</TMPL_IF><TMPL_IF BACK_DEFAULT_ADDON>&default_addon=<TMPL_VAR BACK_DEFAULT_ADDON></TMPL_IF>">
 								<TMPL_IF back_name><TMPL_VAR back_name><TMPL_ELSE>Back</TMPL_IF>
@@ -1835,6 +1849,7 @@
 		<input type="hidden" id="key" name="key" value="<TMPL_VAR key>">		
 		<input type="hidden" id="primary_id" name="primary_id" value="<TMPL_VAR last_id>">
 		<input type="hidden" id="app_key" name="app_key" value="<TMPL_VAR APP_KEY>">
+		<input type="hidden" id="user_role" name="user_role" value="<TMPL_VAR USER_ROLE>">
 	       
 	</form>
 	 

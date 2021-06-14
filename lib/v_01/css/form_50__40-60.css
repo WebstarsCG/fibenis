@@ -39,7 +39,7 @@
 		width		: 60% !important;		
 	}
 	
-	fieldset .value input,
+	fieldset .value input[type="text"],
 	fieldset .value select,
 	fieldset .value textarea{
 		width:75% !important;

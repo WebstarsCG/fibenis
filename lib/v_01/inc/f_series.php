@@ -395,6 +395,8 @@
 		
 		$T->AddParam('app_key',$PAGE_NAME);
 		
+		$T->AddParam('user_role',@$USER_ROLE);
+		
 		$T->AddParam('is_custom_button',@$F_SERIES['is_custom_button']);
 		
 		$T->AddParam('is_title',@$F_SERIES['is_title']);
