@@ -141,6 +141,15 @@
 				
 				'search_filter_off'	=>1,
 				
+				
+				'summary_data'=>array(
+								   array(  'name'=>'No. of Contacts:',  
+										   'field'=>'count(id)',  // summary of field to be displayed
+										   'html'=>'class=summary '
+										)
+										
+				),
+				
 				//'filter_off'	=> 0
 				
 			);
