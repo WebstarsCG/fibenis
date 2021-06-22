@@ -436,7 +436,8 @@
 				$T->AddParam('last_insert',@$F_SERIES['temp']['last_insert']);
 		}
 		
-		$T->AddParam('addon_actions',@$F_SERIES['addon_actions']);
+		$T->AddParam('addon_actions',@$F_SERIES['addon_actions']);		
+		$T->AddParam('after_prefill_action',@$F_SERIES['after_prefill_action']);
 		
 		
 		// is session	

@@ -2616,6 +2616,14 @@
 				</TMPL_IF>
 				
 			</TMPL_LOOP>
+			
+			//after prefill action
+			
+			<TMPL_IF KEY>	
+				<TMPL_IF AFTER_PREFILL_ACTION>
+					after_prefill_action('<TMPL_VAR KEY>');
+				</TMPL_IF>
+			</TMPL_IF>
 						
 			// focusing
 						
