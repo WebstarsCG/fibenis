@@ -22,7 +22,9 @@ $D_SERIES = array(
                                 
                                 'attr' =>['class'=>'label_grand_father align_LM',
                                                     'width'=> '18%'
-                                        ] 
+                                        ],
+
+								'is_sort'=>1
 		),
                 
 		2 => array(
@@ -33,6 +35,8 @@ $D_SERIES = array(
                                 'attr' =>['class'=>'clr_gray_7 txt_size_11 align_LM',
                                                     'width'=> '10%'
                                         ] 
+										
+								
                        
 		),
                 
@@ -43,7 +47,9 @@ $D_SERIES = array(
                                 
                                 'attr' =>['class'=>'b"',
                                                     'width'=> '10%'
-                                  ] 
+										],
+
+								'is_sort'=>1							
 		), 
 		
 		4 => array(
@@ -115,6 +121,30 @@ $D_SERIES = array(
         
         'is_narrow_down' => 1,
 
+	
+	'summary_data'=>array(
+                       array(  'name'=>'No. of Users:',  
+                               'field'=>'count(id)',  // summary of field to be displayed
+                               'html'=>'class=summary '
+                            )
+							
+	),
+	
+	'search'=> array(
+							  
+					array(  'data'  =>	array('table_name' 	=> 'user_info',
+											  'field_id'		=> 'id',
+											  'field_name' 	=> " get_eav_addon_varchar(is_internal,'COEM')",
+											  'filter'		=> " AND is_active=1 "
+										),
+							      
+							'title' 			=> 'User Email',										
+							'search_key' 		=> 'id',													       
+							'is_search_by_text' => 0,
+						)
+	),
+	
+
 	# Default Additional Column
 
 	'hidden_data'=>array('id',"get_eav_addon_varchar(is_internal,'COEM')"),
@@ -123,7 +153,7 @@ $D_SERIES = array(
 
 	'prime_index' => 1,
 
-	'search_filter_off' => 1,
+	'search_filter_off' => 0,
 				 
 	# File Include
 
