@@ -136,7 +136,7 @@
 				$field_name 	   = '';
 				$parent_field_name = '';
 				
-				$lv['key_id']      = ($T_SERIES['key_id'])?$T_SERIES['key_id']:'';			    
+				$lv['key_id']      = (@$T_SERIES['key_id'])?@$T_SERIES['key_id']:'';			    
 				$lv['key']         =  @$_GET['key'];
 				
 				$lv['key_filter_content']  = ($lv['key_id'])?" AND $lv[key_id]='$lv[key]'":'';			    
@@ -181,7 +181,8 @@
 								
 								if($is_child_addon){									   
 								
-								$temp[$key] = get_child_info(array('value' =>$value));									   
+								$temp[$key] = get_child_info(array('value' => $value,
+								                                   'row'   => json_decode(json_encode($get_row), true)));									   
 								
 								}elseif(@$value['data'] && !$is_child_addon){
 										
@@ -215,8 +216,9 @@
 				global $rdsql;				
 				
 				$lv = [];
-				$lv['temp_info'] = [];
-				$child_info      = $param['value'];
+				$lv['temp_info'] 	= [];
+				$child_info      	= $param['value'];
+				$parent				= $param['row'];
 				
 				// prepare column
 				
@@ -231,7 +233,18 @@
 				// query
 				
 				$table	     = $child_info['table'];
-				$filter      = $child_info['key_filter'];
+				//$filter      = $child_info['key_filter'];
+				
+				$filter_parse  = function($m) use ($parent){
+						return $parent[$m[4]];
+				};
+      
+					// parent var replacement
+				$filter     = preg_replace_callback('/(\[\[)(\w+)(\.)(\w+)(\]\])/i',
+								     $filter_parse,
+								     $child_info['key_filter']);
+				
+				// select
 				$select_data = "SELECT $field  FROM $table WHERE 1=1 $filter";
 				
 				if(@$child_info['show_query']){						
@@ -249,7 +262,9 @@
 								$filter_out 		   = @$child_value['filter_out'];						 
 								
 								if(@$child_value['data']){
-									$temp[$child_value['key']] = get_data_addon(array('field'=>$get_row[$child_value['key']],'data'=>$child_value['data']));							   
+									$temp[$child_value['key']] = get_data_addon(array('field'=> $get_row[$child_value['key']],
+																					  'data' => $child_value['data'])
+																			);							   
 								}else{
 									$temp[$child_value['key']] = (@$filter_out)?$filter_out($get_row[$child_value['key']]):$get_row[$child_value['key']]; 
 								}
