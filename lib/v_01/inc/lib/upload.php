@@ -100,6 +100,7 @@
 					
 					$default_sizes = array(500=>500);
 					
+					$save_image_name = '';
 					
 					
 					#print_r($image_size);

@@ -1376,7 +1376,7 @@
 												
 												//$save_img_name  = ($define_image_name)?$define_image_name:$upload_image;
 												
-												if($temp_file_column['child_table'] && $temp_file_column['child_attr_code']){
+												if(@$temp_file_column['child_table'] && @$temp_file_column['child_attr_code']){
 														
 														$image_update_query = "UPDATE
 																		$temp_file_column[child_table]
@@ -1881,7 +1881,7 @@
 								
 								if((@$value['type']!='file') && (!@$value['child_table'])){
 									
-										if($value['filter_in']){
+										if(@$value['filter_in']){
 										
 												$key_query.=$value['field_id'].'='."'".$F_SERIES['data'][$key]['filter_in'](@$_POST["X".$key])."',";
 										
@@ -1931,7 +1931,7 @@
 														
 							$default_key.=$key.',';							
 							$value_neutraled = preg_replace('/(\'|\")/','',$value);
-							$default_value.="'".$value_neutraled."',";
+							@$default_value.="'".$value_neutraled."',";
 							
 							$temp['is_required_flag_value']=(($key) && ($value))?1:0;
 							
@@ -1949,7 +1949,7 @@
 
 				# remove last character
 				
-				$key_query_trimmed   = $default_key_value.substr($key_query,0,-1);
+				$key_query_trimmed   = @$default_key_value.substr($key_query,0,-1);
 				
 				if($is_required_flag==1){
 						
@@ -1992,15 +1992,15 @@
 								
 								foreach($file_fields as $data_idx){
 										
-										$temp_file_column = $data_def[$data_idx];
+										$temp_file_column =@$data_def[$data_idx];
 										
-										$location	  = $data_def[$data_idx]['location'];
+										$location	  = @$data_def[$data_idx]['location'];
 										
-										$save_ext_type    = $data_def[$data_idx]['save_ext_type'];
+										$save_ext_type    = @$data_def[$data_idx]['save_ext_type'];
 										
 										$field_id	  = $data_def[$data_idx]['field_id'];
 										
-										$image_size       = $data_def[$data_idx]['image_size'];
+										$image_size       =@$data_def[$data_idx]['image_size'];
 										
 										$img_id  	  = $key_value;
 										
@@ -2048,7 +2048,7 @@
 												
 												
 												#$save_img_name  = ($define_image_name)?$define_image_name:$upload_image;
-												if($temp_file_column['child_table'] && $temp_file_column['child_attr_code']){
+												if(@$temp_file_column['child_table'] && @$temp_file_column['child_attr_code']){
 														
 														$image_update_query = "UPDATE
 																		$temp_file_column[child_table]
