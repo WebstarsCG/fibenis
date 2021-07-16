@@ -1447,10 +1447,8 @@
 				 
 				if(@$D_SERIES['hidden_data']){				 
 						
-						foreach(@$D_SERIES['hidden_data'] as $key=>$value){
-								
-								array_push($lv['query_fields'],$value);		
-								
+						foreach(@$D_SERIES['hidden_data'] as $key=>$value){								
+								array_push($lv['query_fields'],$value);										
 								$h_counter++;
 						} // for
 				} // if	
@@ -1459,9 +1457,12 @@
 					array_push($lv['query_fields'],$D_SERIES['del_permission']['avoid_del_field'].' as avoid_del_field');		
 				}
 				  
-				array_push($lv['query_fields'],$field_name);		 
+				if($field_name){
+					array_push($lv['query_fields'],$field_name);	
+				}
+
 				
-				$SELECT = "SELECT ".implode(',',$lv['query_fields'])." ";
+				$SELECT = " SELECT ".implode(',',$lv['query_fields'])." ";
 					
 			    if(@$D_SERIES['table_name']){
 							$SELECT.=" FROM $D_SERIES[table_name]  WHERE 1=1 $WHERE_FILTER   $P_V[BUILD_ORDER] $P_V[PAGER]";							
