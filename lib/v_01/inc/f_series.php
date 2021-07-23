@@ -1818,13 +1818,15 @@
 				
 				$data_def  	= $param['data_def'];
 				
+				$default_key	= '';
+				
 				$table_name 	= $param['table_name'];
 				
-				$key_id		= $param['key_id'];
+				$key_id			= $param['key_id'];
 				
-				$key_value	= $param['key_value'];
+				$key_value		= $param['key_value'];
 				
-				$is_user_id	= is_numeric($param['is_user_id'])?$F_DEFAULT['user_id']:$param['is_user_id'];
+				$is_user_id		= is_numeric($param['is_user_id'])?$F_DEFAULT['user_id']:$param['is_user_id'];
 				
 				$prime_index	= $param['prime_index'];
 				
