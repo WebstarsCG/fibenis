@@ -75,7 +75,7 @@
 													'link_title'	=> "Add Attribute",
 													'is_fa'		=> ' fa fa-plus-square-o clr_red fa-lg',
 													'title'		=> 'Add Attribute',
-													'src'		=> "?f=entity_attribute&menu_off=1&mode=simple&default_addon=$temp[1]",
+													'src'		=> "?f=entity_attribute&menu_off=1&mode=simple&default_addon=$temp[1]&i_t=ITTX",
 													'style'		=> "border:none;width:100%;height:600px;"
 												);
 											
