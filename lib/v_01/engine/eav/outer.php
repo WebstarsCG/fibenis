@@ -42,7 +42,7 @@
 		    list($COACH['id'],
 			 $COACH['name']) =    explode('[C]',$G->get_one_cell(['table'        => 'entity_child',
 							  'field'        => "concat(id,'[C]',get_eav_addon_vc128uniq(id,'CHCD'))",
-							  'manipulation' => " WHERE get_eav_addon_varchar(id,'CHDN') ='$COACH[domain_name]' ",
+							  'manipulation' => " WHERE entity_code='CH' AND get_eav_addon_varchar(id,'CHDN') ='$COACH[domain_name]' ",
 		 		        ]));
 		    
 		    $_SESSION['COACH_ID_'.$COACH['domain_name']]       = $COACH['id'];
