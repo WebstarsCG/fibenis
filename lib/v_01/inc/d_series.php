@@ -28,15 +28,11 @@
 						
 						1=>array(
 				
-								'get_sort_field'=>function($sort_field,$d_series_data,$sort_key_id){
+							'get_sort_field'=>function($sort_field,$d_series_data,$sort_key_id){
+								
+								return ($d_series_data[$sort_key_id]['is_sort']==1 || $d_series_data[$sort_key_id]['is_sort']=='true')?$d_series_data[$sort_key_id]['field']:$d_series_data[$sort_key_id]['is_sort'];
 										
-										//print_r($d_series_data);
-											
-										return (is_int($d_series_data[$sort_key_id]['is_sort']))?$d_series_data[$sort_key_id]['field']:$d_series_data[$sort_key_id]['is_sort'];
-											
-										//return $d_series_data[$sort_key_id]['field'];
-										
-								}
+							}
 				
 				
 						) // version 1
@@ -1429,50 +1425,53 @@
 				 global $PAGE_ID;
 				 
 				 global $DEFAULT_ADDON;
-				 
-				 $lv = ['query_fields'=>[]];
 				  
 				  
-				$WHERE_FILTER = ($P_V['WHERE_FILTER'])?$P_V['WHERE_FILTER']:'';
+				 $WHERE_FILTER = ($P_V['WHERE_FILTER'])?$P_V['WHERE_FILTER']:'';
 				
-				 
+				 $hidden_value ='';	
 				 
 				 $h_counter = 1;
 				 
+				$key_id = '';
+				 
 				 				 
 				if(@$D_SERIES['key_id']){				  
-				   
-				   array_push($lv['query_fields'],"$D_SERIES[key_id] as key_id");	
+				   $key_id="$D_SERIES[key_id] as key_id,"; 
 				}
 				 
 				if(@$D_SERIES['hidden_data']){				 
 						
-						foreach(@$D_SERIES['hidden_data'] as $key=>$value){								
-								array_push($lv['query_fields'],$value);										
+						foreach(@$D_SERIES['hidden_data'] as $key=>$value){
+									       
+								$hidden_value.=$value.',';									
 								$h_counter++;
-						} // for
-				} // if	
+						}
+						
+				}	
 				
-				if(@$D_SERIES['del_permission']['avoid_del_field']){					
-					array_push($lv['query_fields'],$D_SERIES['del_permission']['avoid_del_field'].' as avoid_del_field');		
-				}
+				
+				 $del_field = '';
+				  if(@$D_SERIES['del_permission']['avoid_del_field']){	
+				      $del_field = $D_SERIES['del_permission']['avoid_del_field'].' as avoid_del_field,';
+				  }
 				  
-				if($field_name){
-					array_push($lv['query_fields'],$field_name);	
-				}
-
-				
-				$SELECT = " SELECT ".implode(',',$lv['query_fields'])." ";
+				  
+							 
+				# echo $hidden_value;
+				// select data
+			 	
+				  $SELECT = "SELECT $key_id $hidden_value  $del_field $field_name  ";
 					
-			    if(@$D_SERIES['table_name']){
-							$SELECT.=" FROM $D_SERIES[table_name]  WHERE 1=1 $WHERE_FILTER   $P_V[BUILD_ORDER] $P_V[PAGER]";							
-				} // end
-				
-				
+			           if(@$D_SERIES['table_name']){
+					$SELECT.=" FROM $D_SERIES[table_name]  WHERE 1=1 $WHERE_FILTER   $P_V[BUILD_ORDER] $P_V[PAGER]";							
+				   } // end
+				 
 				  if(@$D_SERIES['show_query']){
 						
 					echo $SELECT;
 				  }	
+				  
 				
 				  $ex_query = $rdsql->exec_query($SELECT,"Field does not matching!");
 				  
@@ -1563,7 +1562,7 @@
 					  
 					 # action merge
 					 if(@$D_SERIES['action']){ 					  
-						$temp_data=array_merge($temp_data,@$D_SERIES['action']);
+																		$temp_data=array_merge($temp_data,@$D_SERIES['action']);
 					 }
 					 
 					 $temp_data['page_f_series']  =  $P_V['f_series'][$PAGE_ID];
@@ -2159,7 +2158,9 @@
 						
 						$lv['value_fields'] = implode(',\',\',',array_values($param['field_composite']['fields']));	
 						
-						$lv['query_field'] = " concat('{','[','".'"'."$lv[header]".'"'."','],',GROUP_CONCAT('[\"',$lv[first_field],'\",',$lv[value_fields],']'),'}')";
+						$lv['order_by'] = (@$param['field_composite']['sort_by'])? 'ORDER BY '.@$param['field_composite']['sort_by']:'';
+						
+						$lv['query_field'] = " concat('{','[','".'"'."$lv[header]".'"'."','],',GROUP_CONCAT('[\"',$lv[first_field],'\",',$lv[value_fields],']' $lv[order_by]  ),'}')";
 						
 						$lv['filter'] = (@$param['field_composite']['filter'])? " AND ".$param['field_composite']['filter']:'';
 						
