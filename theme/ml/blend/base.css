@@ -1094,6 +1094,23 @@ ul.post-meta li a:hover {
 	
 	@media only screen and (max-width: 600px){
 		
+		fieldset .row {
+			margin-left: 10px !important;
+			margin-right: 0px;
+		}
+				
+		fieldset .label{
+			padding-left: 0px !important;
+			padding-bottom: 2px !important;
+			text-align: left;
+			width: 100%;
+		}
+		
+		fieldset .value {
+			vertical-align: top;
+			width: 100%;
+		}
+		
 		.navbar-brand img{			
 			margin-top		: -24px !important;	
 		}

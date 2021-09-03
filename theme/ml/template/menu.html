@@ -247,6 +247,13 @@
 		    <!--- Base User---> 
 		    <TMPL_IF USER_BAS></TMPL_IF> 
 		     
+			
+			<!--- Kal User---> 			
+			<TMPL_IF USER_KUR></TMPL_IF> 
+			
+			<!--- Kal Admin---> 			
+			<TMPL_IF USER_KAD></TMPL_IF>		    
+			 
 			 
 			 
 			 
@@ -353,7 +360,43 @@
 
        
         <!-- Mobile Menu Start -->
-        <ul class="wpb-mobile-menu">	 
+        <ul class="wpb-mobile-menu">
+
+		 
+		  <TMPL_IF APP_MENU_TEXT>
+			      <TMPL_VAR APP_MENU_TEXT>
+		  <TMPL_ELSE>			
+			      <TMPL_LOOP APP_MENU>
+					  <TMPL_IF CHILD_MENU> 
+						    
+						 <li>
+						     
+						     <a  href="#" title="<TMPL_VAR MENU_TITLE>"
+							 class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">			       
+							 <TMPL_VAR MENU_TITLE>&nbsp;<span class="caret"></span>
+						     </a>
+						     
+						     <ul class="dropdown-menu" role="menu">
+							 
+							 <TMPL_LOOP CHILD_MENU>
+							     <li>
+								 <a href="<TMPL_VAR MENU_HREF>">
+								     <span class="<TMPL_VAR css_class>" aria-hidden="true"></span>
+								     &nbsp;&nbsp;<TMPL_VAR MENU_TITLE> 
+								    
+								 </a>
+							     </li>
+							 </TMPL_LOOP>
+								      
+						     </ul> 
+						 </li>
+						     
+					     <TMPL_ELSE>
+						 <li ><a href="<TMPL_VAR menu_href>"><TMPL_VAR menu_title>&nbsp;</a></li>
+					     </TMPL_IF>
+				    
+			      </TMPL_LOOP>
+		  </TMPL_IF>	
 	  
 	   <TMPL_IF USER_SAD>		      
 		      
@@ -487,9 +530,6 @@
 		    <TMPL_IF USER_ADM></TMPL_IF> <!--- End of Member A --->
 		    <!--- Base User---> 
 		    <TMPL_IF USER_BAS></TMPL_IF> <!--- End of Member A --->	
-			<!--- Agent---> 
-		    <TMPL_IF USER_AGN></TMPL_IF> <!--- End of Agent--->	
-			<TMPL_IF USER_DTR></TMPL_IF> <!--- End of Doctor--->	
 		     
 		    
 		    <TMPL_UNLESS NO_USER>
