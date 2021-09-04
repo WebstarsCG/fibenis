@@ -156,7 +156,7 @@
    
 	    $temp = explode(':',$default_addon);
 	    
-	    $status_code = $temp[1]; //ASBK
+	    $status_code = @$temp[1]; //ASBK
 	    
 	    $entity_child_id=$temp[0]; //17
 	    
