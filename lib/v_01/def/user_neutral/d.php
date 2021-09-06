@@ -222,7 +222,8 @@ $D_SERIES = array(
 
 	#export data
 	
-	'export_csv' => array('is_export_file' => 0, 'button_name' => 'Create CSV', 'csv_file_name' => 'csv/log_'.time().'.csv'),
+	 'export_csv'   => array('is_active'      => 1
+							),
 
 	'page_code' => 'DUSI'
 
