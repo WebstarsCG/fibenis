@@ -693,6 +693,12 @@ ul.post-meta li a:hover {
 }
 
 	/*Custom Styles*/
+	
+	body{
+			background-color:#f1f1f1 !important;
+	}
+	
+	
 
 	.a_block a{
 	    border-color  	 : #285BBA !important; 
@@ -853,6 +859,9 @@ ul.post-meta li a:hover {
    /* Nav bar custom Control Css Start*/
    /*===== ====== ===== ======*/
     
+   .navbar{
+		border:0px;
+   }
    
     .navbar-default .navbar-nav > li > a {
 	color		: #636363 !important;
@@ -861,7 +870,7 @@ ul.post-meta li a:hover {
     }
     
     
-    .navbar-default .navbar-nav > li > a:hover{
+    .navbar-default .navbar-nav > li > a:hover{;
 	color	     : #242424 !important;
         border-bottom: none!important;   
     }
@@ -1044,6 +1053,26 @@ ul.post-meta li a:hover {
 	table.basic ul{
 		padding-left: 10px;
 		list-style: none;
+	}
+	
+	dl.fn-qtip{
+		width:180px;
+	}
+	
+	dl.fn-qtip dt{
+			color	: #aaaaaa !important;
+			display:block;
+			font-size:11px;
+			font-weight:100 !important;
+	}
+	
+	dl.fn-qtip dd{
+			border-bottom:1px dashed #f1f1f1;
+			color	: #444;
+			display:block;
+			font-size:13px;
+			padding-top:5x;
+			margin-bottom:5px;
 	}
       
        /*Table Control Css End*/
