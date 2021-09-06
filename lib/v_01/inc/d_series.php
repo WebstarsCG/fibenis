@@ -4,6 +4,7 @@
 		
 		ini_set("display_errors", 1);
 	
+		$D_DEFAULT = ['show_default_rows'   => 5];
 		
 		$P_V['f_series']['d_series'] = 'f_series';
 		$P_V['f_series']['d']	       = 'f';
@@ -124,25 +125,10 @@
 		
 		// show default
 		
-		global $rdsql;
-		
-		$default = "SELECT
-		                   entity_value
-		              FROM
-			           entity_key_value
-		             WHERE
-			           entity_code='MP'
-		               AND
-			            entity_key='show_default_rows'";
-			
-		 $exe_default = $rdsql->exec_query($default,"deafult===> ");
+		$default_row = @$_SESSION['show_default_rows'];
 		 
-		 $default_row = $rdsql->data_fetch_object($exe_default);
-		 
-		 $show_default_rows =  ($default_row)?$default_row->entity_value:5;
-		 
-		 
-           
+		$show_default_rows =  ($default_row)?$default_row:$D_DEFAULT['show_default_rows'];
+		   
 		/*******************************************************************************************************************************************/
 
 		$PAGE_TITLE = @$D_SERIES['title'];
