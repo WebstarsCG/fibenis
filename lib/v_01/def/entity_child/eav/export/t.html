@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity_childs>
+
+<TMPL_LOOP DATA_INFO>
+<codes id="<TMPL_VAR CODE>"><code><TMPL_VAR CODE></code></codes>	
+	<ec>
+		<id><TMPL_VAR ID></id>
+		<code><TMPL_VAR CODE></code>
+		<line_order><TMPL_VAR LINE_ORDER></line_order>
+		
+		<varchar>
+		
+				<TMPL_LOOP VARCHAR>
+					<vc>
+						<token><TMPL_VAR TOKEN></token>
+						<value><TMPL_VAR VALUE></value>
+						<!--<email><TMPL_VAR EMAIL></email>-->
+						<user_id><TMPL_VAR USER_ID></user_id>
+
+						
+					</vc>
+				</TMPL_LOOP>
+		</varchar>
+	</ec>
+
+
+</TMPL_LOOP>
+</entity_childs>

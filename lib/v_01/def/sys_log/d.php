@@ -145,7 +145,42 @@
 				
 				'search_id' 	=> array('id'),
 				
-				 'custom_filter' => array(
+				 'custom_filter' => array( 			     						   
+													
+									
+										array(  'field_name' 		=> 'User',
+												  
+												'field_id' 			=> 'cf1', 
+												
+												'filter_type' 		=> 'option_list', 
+															
+												'option_value'		=> $G->option_builder('user_info','id,get_user_internal_name(id)'," "),
+											
+										
+												'html' => ' class="w_100"',
+											
+												'cus_default_label'	=> 'Show All',
+										
+												'filter_by'  		=> 'sys_log.user_id' 
+											),
+										
+										array(  'field_name' 		=> 'Action type',
+												  
+												'field_id' 			=> 'cf2', 
+												
+												'filter_type' 		=> 'option_list', 
+												'option_value'		=> $G->option_builder('entity_child_base','token,sn',
+																		"WHERE entity_code='LX'
+																		order by sn ASC"),
+											
+										
+												'html' => ' class="w_100"',
+											
+												'cus_default_label'	=> 'Show All',
+										
+												'filter_by'  		=> 'action_type' 
+											),
+
 							
 							//    array(  'field_name' => ' Page:',
 							//	    'field_id' => 'pg', 'filter_type' =>'option_list', 
@@ -173,7 +208,8 @@
 					'date_filter'  => array( 'is_date_filter' =>1,'date_field' =>  'timestamp_punch'),	
 								
 				    #export data
-				'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
+			//	'export_csv'   => array('is_export_file' => 1, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
+			'export_csv'   => array('is_active' => 1, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
 								
 				'page_code'    => 'DSYL',
                                 
