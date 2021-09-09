@@ -125,8 +125,8 @@
 		
 		// show default
 		
-		$default_rows = @$_SESSION['show_default_rows'];
-		 
+		
+		$default_rows 	   = @$D_SERIES['show_default_rows']?@$D_SERIES['show_default_rows']:@$_SESSION['show_default_rows'];		 
 		$show_default_rows =  ($default_rows)?$default_rows:$D_DEFAULT['show_default_rows'];
 		   
 		/*******************************************************************************************************************************************/
@@ -443,10 +443,7 @@
 		 
 		 		
 	}
-	
-	
 		
-	
 		
 		$pager_info = $G->table_no_rows(
 								array(
@@ -465,9 +462,7 @@
 	 
 	// setcookie("per_page",@$_GET['page']);
 	 
-	 $get_per_page =  $G->get_cookies($P_V['cokies_id'].'get_per_page',@$_GET['page'],@$_GET['page'],@$P_V['is_cokies_expire']);
-	 
-	
+		$get_per_page =  $G->get_cookies($P_V['cokies_id'].'get_per_page',@$_GET['page'],@$_GET['page'],@$P_V['is_cokies_expire']);
 	 
 		 $per_page =  (@$get_per_page)?@$get_per_page:$show_default_rows;
 	  
