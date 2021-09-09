@@ -125,9 +125,9 @@
 		
 		// show default
 		
-		$default_row = @$_SESSION['show_default_rows'];
+		$default_rows = @$_SESSION['show_default_rows'];
 		 
-		$show_default_rows =  ($default_row)?$default_row:$D_DEFAULT['show_default_rows'];
+		$show_default_rows =  ($default_rows)?$default_rows:$D_DEFAULT['show_default_rows'];
 		   
 		/*******************************************************************************************************************************************/
 
