@@ -53,7 +53,7 @@
                                 
 				'flat_message'	=> 'Successfully Added',
 				
-				'show_query'  => 1,
+				'show_query'  => 0,
 				
 				'after_add_update' =>1,
 				
@@ -61,8 +61,65 @@
 								
                                 
 			);
-    
-	
+			
+			 // id of entity_code
+			function xml_attribute_value($object, $attribute){
+				if(isset($object[$attribute]))
+					return (string) $object[$attribute];
+			}// end of id of entity_code
+			
+			// entity child addon
+			function entity_child_addon($addon_type,$addon,$ec_id){	
+			    global $rdsql;
+				print_r($addon_type);
+				$lv = [];	
+				$lv['varchar'] = [];	
+				$lv['query_rows']=[];
+				$lv['addon'] = (array)$addon;
+				$lv['addon_temp']=array_shift($lv['addon']);
+				if($addon_type == 'DT'){
+				$lv['addon_map']=['DT'=>['value_fields'=>['parent_id','token','value','user_id'],
+										 'table_name'  =>'exav_addon_date',
+										 'table_fields'=>['parent_id','exa_token','exa_value','user_id']									 
+										] // DT end
+								 ]; // addon_map end
+				}
+				$lv['addon_map']=['vc'=>['value_fields'=>['parent_id','token','value','user_id'],
+				                         'table_name'  =>'exav_addon_varchar',
+										 'table_fields'=>['parent_id','exa_token','exa_value','user_id']									 
+										] // vc end
+								 ]; // addon_map end
+				$lv['addon_map_info']=$lv['addon_map'][$addon_type];
+				print_r($lv['addon_map_info']);
+				//array of object to get values
+				foreach($lv['addon'] as $key => $rows){
+					//array of array to array
+					foreach($rows as $rows_idx=>$rows_value){
+					   // get values of array 
+					   $lv['rows_cols']=(array)$rows_value;
+                       $lv['rows_cols']['parent_id']=$ec_id;		
+					   $lv['cols']=[];
+					   foreach($lv['addon_map_info']['value_fields'] as $val_fields_key => $val_fields_value){
+							// print_r($value_fields);
+							 //array_push($lv['cols'],$val_fields_value);
+							 array_push($lv['cols'],sprintf("'%s'", $lv['rows_cols'][$val_fields_value]));							
+						}		 						
+						$lv['rows_values_text']= "(".implode(",",$lv['cols']).')';
+						array_push($lv['query_rows'],$lv['rows_values_text']);	
+					}
+				}// end of foreach				
+				// check varchar to insert query
+			if($lv['query_rows']){
+					$lv['query_row_values']=implode(",",$lv['query_rows']);
+					$lv['query_row_field_values']="(".implode(",",$lv['addon_map_info']['table_fields']).")";
+					$lv['insert_query'] = "INSERT INTO ".$lv['addon_map_info']['table_name']." $lv[query_row_field_values]
+													VALUES $lv[query_row_values]";	
+				//	print_r($lv['insert_query']);
+					$lv['insert_query_result']=$rdsql->exec_query($lv['insert_query'],"ec query");
+				}// end of varchar 			
+					return $lv['insert_query_result'];
+			}// end of entity child addon function	
+				 
 				$F_SERIES['after_add_update'] =function($key_id){
 		    
 							global $G,$rdsql,$USER_ID;
@@ -79,13 +136,6 @@
 							
 								 // Check of codes id
 								 if(is_object($xml->codes)){
-									 
-									// id of entity_code
-									function xml_attribute_value($object, $attribute)
-									{
-										if(isset($object[$attribute]))
-											return (string) $object[$attribute];
-									}
 									
 								    $lv['codes_attibute_value']= xml_attribute_value($xml->codes, 'id');
 								
@@ -112,53 +162,23 @@
 											
 											//inert into entity_child
 											$rdsql->exec_query("INSERT INTO entity_child(entity_code,line_order,user_id) VALUES(".implode($lv['entity_child'],',').")",'insert entity_child'); 
-											
-											//get last_insert_id											
-									        $lv['ec_id']    = $rdsql->last_insert_id('entity_child');
-											
-											$lv['varchar']=[];
-										
+											$lv['varachar']=[];
+											//get last_insert_id		
+									        $lv['ec_id']    = $rdsql->last_insert_id('entity_child');			
 										// each atrribute
-										if(is_object($ec->varchar->vc)){
-										
-											foreach($ec->varchar->vc as $vc_idx => $vc){
-											    $lv['ec_key_value']=(array)$vc;
-                                                $lv['ec_values']=array_values($lv['ec_key_value']);
-												array_unshift($lv['ec_values'],$lv['ec_id']);
-												//array_with_string
-												$lv['array_with_string']=array_map(function($val){return sprintf("'%s'", $val);}, $lv['ec_values']);
-												$lv['ec_values_text']= "(".implode(",",$lv['array_with_string']).')';
-												// passing entity_child values
-												array_push($lv['varchar'],$lv['ec_values_text']);	
-                                                 												
-											}
-												
-											//check varchar
-											if($lv['varchar']){
-												
-												$lv['varchar_query_values']=implode(",",$lv['varchar']);
-																								
-												$lv['varchar_insert_query'] = "INSERT INTO exav_addon_varchar(parent_id,exa_token,exa_value,user_id)
-																		        VALUES $lv[varchar_query_values]";
-																												
-												$rdsql->exec_query($lv['varchar_insert_query'],"ec query");
-													
-													
-													
-											} // end of varchar
-																							
-										} // each attribute
-																						
+										if(is_object($ec->varchar)){
+											entity_child_addon('vc',$ec->varchar,$lv['ec_id']);																					
+										} // each attribute 
+										if(is_object($ec->date)){
+											entity_child_addon('DT',$ec->date,$lv['ec_id']);																					
+										} // each attribute																					
 									} // has attribute
 																												
-								} // each entity_child
-								
-								
+								} // each entity_child							
 											
 						}//end
-						
-						
-					
+		
+			
 	?>
 	
 	
