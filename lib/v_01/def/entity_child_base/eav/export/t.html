@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity_child_base>
+
+<TMPL_LOOP DATA_INFO>
+
+<TMPL_IF __first__>
+<mode>
+	<ecb><TMPL_VAR MODE></ecb>
+</mode>
+<entities>
+</TMPL_IF>
+	<entity>
+		<code><TMPL_VAR CODE></code>		
+		<name><TMPL_VAR NAME></name>
+		<ecb_info>
+			<TMPL_LOOP ECB_INFO>
+			<ecb>
+				<token><TMPL_VAR TOKEN></token>
+				<sn><TMPL_VAR SN></sn>
+				<ln><TMPL_VAR LN></ln>
+				<note><TMPL_VAR NOTE></note>
+				<dna_code><TMPL_VAR DNA_CODE></dna_code>
+				<line_order><TMPL_VAR LINE_ORDER></line_order>
+				<TMPL_IF input_type><input_type><TMPL_VAR input_type></input_type></TMPL_IF>			
+			</ecb>
+			</TMPL_LOOP>
+		</ecb_info>
+	</entity>
+
+<TMPL_IF __last__>
+</entities>
+
+</TMPL_IF>
+
+</TMPL_LOOP>
+</entity_child_base>
