@@ -9,127 +9,74 @@
 				
 				#Table field
                     
-				'data'	=>   array('1' =>array( 'field_name'=> 'Entity',
-                                                               
-                                                               'field_id' => 'entity_code',
-                                                               
-                                                               'type' => 'option',
-                                                               
-                                                               'option_data'=>$G->option_builder('entity','code,sn',' ORDER by sn ASC'),
-                                                               
-                                                               'is_mandatory'=>1,
-                                                               
-                                                               'input_html'=>'class="w_100"',
-                                                               
-                                                               'avoid_default_option' => 0,
-                                                            
-                                                               ),
+				'data'	=>   array('1' =>array( 'field_name'	=> 'Entity',
+                                               'field_id' 		=> 'entity_code',
+                                               'type' 			=> 'option',
+                                               'option_data'	=>$G->option_builder('entity','code,sn',' ORDER by sn ASC'),
+											   'is_mandatory'	=>1,
+											   'input_html'		=>'class="w_100"',
+											   'avoid_default_option' => 0,
+											   ),
                                                    
-                                                    '8' =>array('field_name'=>'Parent',
-                                                               
-                                                               'field_id'=>'parent_id',
-                                                               
-                                                               'type'=>'option',
-                                                               
-                                                               'option_data'=>$G->option_builder('entity_child_base','id,sn',' ORDER by sn ASC'),
-                                                                                                                        
-                                                               'option_default'=> array('label'=>'Select Parent','value'=>0),
-                                                               
-                                                               'input_html'=>'class="w_200"'                                                               
-                                                               ),
-                                                  
-						   '2' =>array('field_name'=>'Token',
-                                                               
-                                                               'field_id'=>'token',
-                                                               
-                                                               'type'=>'text',
-                                                               
-                                                               'is_mandatory'=>1,
-                                                               
-                                                               'allow'     => 'x30',
-                                                               
-                                                               'input_html'=>'class="w_200"',
-                                                               
-                                                               'input_html'=>'onchange="check_token(this);"',
-                                                               
-                                                               ),
+									'8' =>array('field_name'	=>'Parent',
+											   'field_id'		=>'parent_id',
+											   'type'			=>'option',
+											   'option_data'	=>$G->option_builder('entity_child_base','id,sn',' ORDER by sn ASC'),
+											   'option_default'	=> array('label'=>'Select Parent','value'=>0),
+											   'input_html'		=>'class="w_200"'                                                               
+											   ),
+								  
+									'2' =>array('field_name'	=>'Token',
+											   'field_id'		=>'token',
+											   'type'			=>'text',
+											   'is_mandatory'	=>1,
+											   'allow'     		=> 'x30',
+											   'input_html'		=>'class="w_200"',
+											   'input_html'		=>'onchange="check_token(this);"',
+											   ),
                                                    
-						   '3' =>array('field_name'=>'Short Name',
-                                                               
-                                                               'field_id'=>'sn',
-                                                               
-                                                               'type'=>'text',
-                                                               
-                                                               'is_mandatory'=>1,
-                                                               
-                                                               'allow'     => 'x50',
-                                                               
-                                                               'input_html'=>'class="w_200"'
-                                                               
-                                                               ),
-						   
 
+									'3' =>array('field_name'	=>'Name',
+											   'field_id'		=>'ln',
+											   'type'			=>'textarea',
+											   'is_mandatory'	=>0,
+											   'allow'     		=> 'x1000',
+											   'input_html'		=>'class="w_200"'
+											   ),
+											   
+									'4' =>array('field_name'	=>'Exav addon suffix',
+											   'field_id'		=>'sn',
+											   'type'			=>'text',
+											   'is_mandatory'	=>1,
+											   'allow'     		=> 'x50',
+											   'input_html'		=>'class="w_200"'
+											   ),
+		   
 						   
-						   
-						   '4' =>array('field_name'=>'Long Name',
-                                                               
-                                                               'field_id'=>'ln',
-                                                               
-                                                               'type'=>'textarea',
-                                                               
-                                                               'is_mandatory'=>0,
-                                                               
-                                                               'allow'     => 'x1000',
-                                                               
-                                                               'input_html'=>'class="w_200"'
-                                                               
-                                                               ),
-						   
-						    '5' =>array('field_name'=>'DNA',
-                                                               
-                                                               'field_id'=>'dna_code',
-                                                               
-                                                               'type'=>'option',
-                                                       
-                                                               'option_data'=>$G->option_builder('entity_child_base',
-                                                                                                 'token,sn',
-                                                                                                 " WHERE entity_code='EB' AND  dna_code='EBMS' AND token IN ('EBUC','EBMS','EBAX','EBFA') ORDER by sn ASC"
-                                                                                            ),                                                               
-                                                               
-							       'is_mandatory'=>0,
-                                                               
-                                                               'input_html'=>' class="w_350"'
-						   
-                                                               ),
+									'5' =>array('field_name'	=>'DNA',
+											   'field_id'		=>'dna_code',
+											   'type'			=>'option',
+											   'option_data'	=>$G->option_builder('entity_child_base',
+																				 'token,sn',
+																				 " WHERE entity_code='EB' AND  dna_code='EBMS' AND token IN ('EBUC','EBMS','EBAX','EBFA') ORDER by sn ASC"
+																			),                                                               
+												'is_mandatory'	=>0,
+                                                'input_html'	=>' class="w_350"'
+                                                ),
                                                      
-                                                     
-						   '6' =>array('field_name'=>'Note',
-                                                               
-                                                               'field_id'=>'note',
-                                                               
-                                                               'type'=>'textarea',
-							       
-							       'is_mandatory'=>0,
-                                                               
-                                                               'input_html'=>' class="w_300"'
-						   
-                                                               ),
+									'6' =>array('field_name'	=>'Note',
+											   'field_id'		=>'note',
+											   'type'			=>'textarea',
+											   'is_mandatory'	=>0,
+                                               'input_html'		=>' class="w_300"'
+                                                ),
                                                    
-                                                   
-                                                   '9' =>array('field_name'=>'Line order',
-                                                               
-                                                               'field_id'=>'line_order',
-                                                               
-                                                               'type'=>'text',
-							       
-							       'allow'=>'d5[.]',
-                                                               
-                                                               'input_html'=>' class="w_50"'
-						   
-                                                               ),
-                                                   
-                                                   
-                                                   
+                                    '9' =>array('field_name'	=>'Line order',
+                                                'field_id'		=>'line_order',
+                                                'type'			=>'text',
+												'allow'			=>'d5[.]',
+                                                'input_html'	=>' class="w_50"'
+                                                ),
                                     
                                 ),
                                     
@@ -139,32 +86,29 @@
 				
 				#Primary Key
                                 
-			        'key_id'        => 'id',
+			    'key_id'        => 'id',
                                 
 				# Default Additional Column
                                 
 				'is_user_id'       => 1,
                                 
-                                'is_created_by'    => 1,
+                'is_created_by'    => 1,
 								
 				# Communication
 				
-                                'add_button' => array( 'is_add' =>1,'page_link'=>'f=entity_child_base', 'b_name' => 'Add Entity child' ),
+                'add_button' => array( 'is_add' =>1,'page_link'=>'f=entity_child_base', 'b_name' => 'Add Entity child' ),
 								
 				'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?d=entity_child_base', 'BACK_NAME'=>'Back'),
                                 
 				'prime_index'   => 2,
                                 
 				# File Include
-                                'after_add_update'	=>0,
-                                
-                                'js'=> ['is_top'=>1,'top_js'=>$LIB_PATH.'def/entity_child_base/f'],
-                                
-                                'show_query'=>0,
-                                'avoid_trans_key_direct'=>0,
+				'after_add_update'	=>0,
 				
+				'js'=> ['is_top'=>1,'top_js'=>$LIB_PATH.'def/entity_child_base/f'],
 				
-                                
+				'show_query'=>0,
+				'avoid_trans_key_direct'=>0,
 			);
     
     // disable parent
