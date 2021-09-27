@@ -3,7 +3,10 @@
         $LAYOUT	    	= 'layout_basic';
                
         $D_SERIES       =   array(
-                                   'title'=>'Text Types',
+                                   'title'=>'<a href="?dx=test__text">Text</a>&nbsp/&nbsp
+									<a href="?dx=test__option">Select</a>&nbsp/&nbsp
+									<a href="?dx=test__toggle">Toggle</a>&nbsp/&nbsp
+									<a href="?dx=test__date">Date</a>',
                                    'gx' => 1,
 				    
                                     #table data
@@ -15,7 +18,7 @@
 															'is_sort' 	=> 1,	
 															),
 														
-													3=>array('th'		=>'Number',
+													3=>array('th'		=>'Numberic',
 															'field' 	=>"get_exav_addon_varchar(entity_child.id,'TTTXNM')",
 															'td_attr' 	=> ' class="align_LM" width="7%"',
 															'is_sort' 	=> 1,	
@@ -27,7 +30,7 @@
 															'is_sort' 	=> 1,	
 															),
 													
-													5=>array('th'		=>'Alphabet and externals',
+													5=>array('th'		=>'Alphabet and exception',
 															'field' 	=>"get_exav_addon_text(entity_child.id,'TTTXAE')",
 															'td_attr' 	=> ' class="align_LM" width="7%"',
 															'is_sort' 	=> 1,	
@@ -62,6 +65,12 @@
 															 'td_attr' => ' class="no_wrap clr_gray_a align_LM txt_size_11" width="7%"',
 															 'is_sort' => 1,
 															),
+													11=>array('th'		=>'Input type',
+															'field' 	=>"get_exav_addon_varchar(entity_child.id,'TTIT')",
+															'td_attr' 	=> ' class="align_LM" width="10%"',
+															'is_sort' 	=> 1,	
+															
+															),
 												),
 								
 					'table_name' =>'entity_child',
@@ -69,7 +78,7 @@
 					
 					# Default Additional Column
 					'is_user_id'    => 'user_id',
-				    'key_filter'	=> "AND entity_code = 'TT'",
+				   'key_filter'	=> "AND entity_code = 'TT' AND get_exav_addon_varchar(entity_child.id,'TTIT') = 'ITTX' ",
 					#check_field
                     'action'        => array('is_action' => 0, 'is_edit' => 1, 'is_view' => 0),								
 					'add_button'    => array( 'is_add' =>1,'page_link'=>'fx=test__text', 'b_name' => 'Add' ),
