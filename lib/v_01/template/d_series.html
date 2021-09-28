@@ -297,7 +297,7 @@
 					</TMPL_LOOP>
 			
 					<TMPL_IF is_action>
-						<th <TMPL_VAR action_th_attr>>Action</th>
+						<th <TMPL_VAR action_th_attr>  data-others="<TMPL_VAR AVOID_EDIT_FIELD><TMPL_VAR AVOID_EDIT_VALUE>">Action</th>
 					</TMPL_IF>
 			
 				</tr>
@@ -372,17 +372,17 @@
 									</TMPL_LOOP>
 							</TMPL_IF> 
 						
-								
-								<!---For Action Check<TMPL_IF IS_ACTION></TMPL_IF>--->
-								<TMPL_IF is_edit><a  class="ficon"
-																																<TMPL_IF ACTION_NARROW_DOWN>
-																												href=JavaScript:d_series.call_nd({"id":"<TMPL_VAR key_id>","title":"Edit","src":"?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"})
-																																<TMPL_ELSE>
-																												href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"
-																																</TMPL_IF>
-																																><i class="fa fa-edit"></i>Edit</a>
+								<TMPL_IF IS_ROW_EDIT>
+									<!---For Action Check<TMPL_IF IS_ACTION></TMPL_IF>--->
+									<TMPL_IF is_edit><a  class="ficon"
+																																	<TMPL_IF ACTION_NARROW_DOWN>
+																													href=JavaScript:d_series.call_nd({"id":"<TMPL_VAR key_id>","title":"Edit","src":"?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"})
+																																	<TMPL_ELSE>
+																													href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"
+																																	</TMPL_IF>
+																																	><i class="fa fa-edit"></i>Edit</a>
+									</TMPL_IF>
 								</TMPL_IF>
-								
 								
 							<TMPL_IF is_view><a class="icon pdf" href="JavaScript:d_series_view(<TMPL_VAR __counter__>);"> View</a></TMPL_IF>
 							    
