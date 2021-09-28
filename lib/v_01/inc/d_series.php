@@ -1574,8 +1574,8 @@
 						$temp_data['is_row_able_del'] = ($get_row->avoid_del_field == "$del_value")?1:0;
 					 }
 					 
-					 if(@$D_SERIES['action']['avoid_edit_field']){
-						
+					 $temp_data['is_row_edit'] = @$D_SERIES['action']['is_edit'];
+					 if(@$D_SERIES['action']['avoid_edit_field']){						
 						$edit_value = @$D_SERIES['action']['avoid_edit_value'];					
 						$temp_data['is_row_edit'] = ($get_row->avoid_edit_field == "$edit_value")?1:0;
 					 }
