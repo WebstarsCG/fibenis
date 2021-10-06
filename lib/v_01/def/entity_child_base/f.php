@@ -47,7 +47,7 @@
 									'4' =>array('field_name'	=>'Exav addon suffix',
 											   'field_id'		=>'sn',
 											   'type'			=>'text',
-											   'is_mandatory'	=>1,
+											   'is_mandatory'	=>0,
 											   'allow'     		=> 'x50',
 											   'input_html'		=>'class="w_200"'
 											   ),
