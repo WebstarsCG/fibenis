@@ -116,7 +116,7 @@
 											array_push($lv['entity'],0);
 											array_push($lv['entity'],$USER_ID);
 											
-											$rdsql->exec_query("INSERT INTO entity(code,sn,is_lib,user_id) VALUES(".implode($lv['entity'],',').")",'insert entity');
+										$rdsql->exec_query("INSERT INTO entity(code,sn,is_lib,user_id) VALUES(".implode($lv['entity'],',').")",'insert entity');
 								
 										}
 								
@@ -131,25 +131,22 @@
 												
 												$lv['ecb_attr']=(array)$ecb;  
 												$lv['ecb_values'] = array_values($lv['ecb_attr']);
-												$lv['ecb_attr_values']= implode("','",$lv['ecb_values']);
-												
+												$lv['ecb_attr_values']=implode(",",array_map(function($val){return sprintf("'%s'", $val);},$lv['ecb_values']));
+											//	print_r($lv['ecb_attr_values']);
+
 												$lv['query']=[];
 												
 												// insert entity_child_base values
 												array_push($lv['query'],"'$entity->code'");
-												array_push($lv['query'],"'$lv[ecb_attr_values]'");
+												array_push($lv['query'],"$lv[ecb_attr_values]");
 												array_push($lv['query'], $USER_ID);
-												
-												
-													
-														
+																									
+												print_r($lv['query']);
 													$rdsql->exec_query("INSERT INTO entity_child_base(entity_code,token,sn,ln,note,dna_code,line_order,user_id)
-																			VALUES(".implode($lv['query'],',').")");
+																		VALUES(".implode($lv['query'],',').")");
 									
-										
 													}
-											
-												
+																					
 															
 											} // each attribute
 										
