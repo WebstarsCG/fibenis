@@ -605,13 +605,21 @@
 		height		: 27px;		
 	}
 	
-	fieldset .value .checkbox{
-		border          : 1px solid #ababab;
-		width		: 25px;
+	fieldset .value .checkbox,
+	fieldset .value .radio{
+		border      : 1px solid #ababab;
+		display		: inline-block;
+		width		: 20px;
 	}
-	
-	fieldset .value .radio{		
-		width		: 15px;
+		
+	fieldset .value .checkbox + label,
+	fieldset .value .radio + label{
+		display		: inline-block;
+		padding-left:3px;
+		padding-right:15px;
+		position	: relative;
+		top			: -1rem;
+		width		: auto;
 	}
 	
 	fieldset .value .message{					

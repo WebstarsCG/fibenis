@@ -45,7 +45,7 @@
 	<script language="JavaScript" type="text/javascript">
 		
 		var ckeditor_temp=new Array();
-		var input_temp   = new Object({'range':[],'toggle':[],'date':[],'code_editor':[],'option':[]});
+		var input_temp   = new Object({'range':[],'toggle':[],'date':[],'code_editor':[],'option':[],'check_box':[],'radio':[]});
 				
 		// Generation
 		<TMPL_IF GX>
@@ -987,6 +987,53 @@
 				       </div>
 				</TMPL_IF>
 				<!---end of file---> 
+				
+				<!--- checkbox --->
+				<TMPL_IF field_type_checkbox>			
+
+					<div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"id="X<TMPL_VAR field_id>_panel">
+						<span class="label"><TMPL_VAR field_name></span>
+						<span class=value id="element_area_<TMPL_VAR FIELD_ID>" >	
+							<TMPL_LOOP OPTIONS><input type="checkbox"
+									   name="<TMPL_VAR __counter__>" value="<TMPL_VAR VALUE>" class="checkbox"
+									   id="<TMPL_VAR __counter__>"><label><TMPL_VAR LABEL></label></TMPL_LOOP>	
+							
+								
+						<!--- set default-->
+								    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+									<span class=message id="message_X<TMPL_VAR field_id>"></span>
+					  <script>f_series.setCheckbox('<TMPL_VAR FIELD_ID>');input_temp.check_box['X<TMPL_VAR field_id>']='<TMPL_VAR field_id>';</script>
+						
+						</span>
+				      </div> 
+				
+				</TMPL_IF>	
+				
+				<TMPL_IF field_type_radio>			
+
+					<div class="row <TMPL_IF is_hide>hide</TMPL_IF> <TMPL_IF field_token><TMPL_VAR field_token></TMPL_IF>"id="X<TMPL_VAR field_id>_panel">
+						<span class="label"><TMPL_VAR field_name></span>
+						 <span class=value id="element_area_<TMPL_VAR FIELD_ID>">
+						 
+						<TMPL_LOOP OPTIONS><input type="radio"
+									   value="<TMPL_VAR VALUE>"
+									   name="<TMPL_VAR __counter__>"
+									   id="<TMPL_VAR __counter__>"
+									   class="radio"
+									   ><label><TMPL_VAR LABEL></label></TMPL_LOOP>
+						
+								
+								 
+								 <!--- set default-->
+								    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+									<span class=message id="message_X<TMPL_VAR field_id>"></span>
+					 <script>f_series.setRadio('<TMPL_VAR FIELD_ID>');input_temp.radio['X<TMPL_VAR field_id>']='<TMPL_VAR field_id>';</script>
+						</span>
+				      </div> 
+				
+				</TMPL_IF>			
 				 
 				 
 				<!---TA=Text Area---> 
@@ -2565,6 +2612,14 @@
 									$("#<TMPL_VAR ID>").trigger( "onchange");
 								}
 							
+							}else if(input_temp.check_box['<TMPL_VAR ID>']!=undefined){
+																						
+								f_series.setCheckboxRadioValue(input_temp.check_box['<TMPL_VAR ID>'],'<TMPL_VAR VALUE>');
+
+							}else if(input_temp.radio['<TMPL_VAR ID>']!=undefined){
+																						
+									f_series.setCheckboxRadioValue(input_temp.radio['<TMPL_VAR ID>'],'<TMPL_VAR VALUE>');
+						
 							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-multiple'){							
 								//alert(ELEMENT('<TMPL_VAR ID>').dataset.inputType+'=='+'<TMPL_VAR VALUE>');
 								select_multiple_index_value('<TMPL_VAR ID>_TEMP','<TMPL_VAR VALUE>');

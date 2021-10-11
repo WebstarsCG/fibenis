@@ -230,7 +230,68 @@
 							 return $option_box;
 				      
 				      } // end of option builder
-		   
+					  
+		  /**************************** checkbox option builder ***********************************************************************************/  	
+
+/***************************************************************************************************************************************
+			* Function Name: checkbox_option_builder
+			*
+			* Desc : Pass table name and field label and value for checckbox
+			*
+			****************************************************************************************************************************/
+					  
+					  function checkbox_option_builder($param){
+								
+								$lv				= [];
+								$lv['temp'] 	= [];
+								$lv['exe_query']= '';
+								
+								if($param['field_label'] && $param['field_value']){
+									
+								$lv['sql']="SELECT $param[field_label] as label, $param[field_value] as value FROM  $param[table]"." ".@$param['where'];
+										
+								$lv['exe_query'] = $this->rdsql->exec_query($lv['sql'],"ERROR in checkbox_option_builder<br>$lv[sql]");
+							
+								while($option = $this->rdsql->data_fetch_assoc($lv['exe_query'])){								
+										
+										array_push($lv['temp'],['label'=>$option['label'],'value'=>$option['value']]);
+								}
+								
+							  }
+							  return $lv['temp'];
+					     } // end of option builder
+					  
+/**************************** checckbox option builder ***********************************************************************************/  		
+/**************************** radio option builder ***********************************************************************************/  	
+
+/***************************************************************************************************************************************
+			* Function Name: radio_option_builder
+			*
+			* Desc : Pass table name and field label and value for checckbox
+			*
+			****************************************************************************************************************************/
+					  
+					  function radio_option_builder($param){
+								
+								$lv				= [];
+								$lv['temp'] 	= [];
+								$lv['exe_query']= '';
+								
+								if($param['field_label'] && $param['field_value']){
+									
+								$lv['sql']="SELECT $param[field_label] as label, $param[field_value] as value FROM  $param[table]"." ".@$param['where'];
+										
+								$lv['exe_query'] = $this->rdsql->exec_query($lv['sql'],"ERROR in checkbox_option_builder<br>$lv[sql]");
+							
+								while($option = $this->rdsql->data_fetch_assoc($lv['exe_query'])){								
+										
+										array_push($lv['temp'],['label'=>$option['label'],'value'=>$option['value']]);
+								}
+							  }
+							  return $lv['temp'];
+					     } // end of option builder
+					  
+/**************************** radio option builder ***********************************************************************************/		   
 		   // ft option builder
 		   
 		   function ft_option_builder($tbl_name,$field,$manipulate){

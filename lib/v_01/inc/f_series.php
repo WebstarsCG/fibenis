@@ -716,6 +716,18 @@
 						elseif(@$value['type']=='textarea'){
 												
 									$temp['field_type_textarea']  = (@$value['type'] =='textarea')?'textarea':0;
+						}elseif(@$value['type']=='checkbox'){
+												
+									$temp['field_type_checkbox']  = (@$value['type'] =='checkbox')?'checkbox':0;
+									
+									$temp['options']			  = @$value['options'];										
+									
+						}elseif(@$value['type']=='radio'){
+												
+									$temp['field_type_radio']  = (@$value['type'] =='radio')?'radio':0;
+									
+									$temp['options']			  = @$value['options'];		
+									
 						}
 						
 						// Field Option
@@ -1163,6 +1175,11 @@
 						$temp['field_name']  	   = $value['field_name'];
 						
 						@$value['ro']              = ((@$value['type']=='heading') || (@$value['type']=='sub_heading') || (@$value['type']=='label') )?1:$_POST["X".$key."_RO"];
+						
+						if($value['type']=='checkbox'){
+							
+							@$_POST["X".$key]=implode(',',@$_POST["X".$key]);
+						}
 						
 						# avoid read only
 						if(@$value['ro']!=1) {						
@@ -1857,6 +1874,11 @@
 						$temp['hidden_field']	   = @$value['hidden_field'];
 						
 						@$value['ro']              = ((@$value['type']=='heading') || (@$value['type']=='sub_heading') || (@$value['type']=='label'))?1:$_POST["X".$key."_RO"];
+						
+						if($value['type']=='checkbox'){
+							
+							@$_POST["X".$key]=implode(',',@$_POST["X".$key]);
+						}
 						
 						# avoid read only
 						
