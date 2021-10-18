@@ -67,7 +67,10 @@
                                                                'input_html'=>'class="w_200"'
                                                                
                                                                ),
-		   
+						   
+
+						   
+						   
 						   '4' =>array('field_name'=>'Long Name',
                                                                
                                                                'field_id'=>'ln',
@@ -122,6 +125,18 @@
 							       'allow'=>'d5[.]',
                                                                
                                                                'input_html'=>' class="w_50"'
+						   
+                                                               ),
+															   
+								    '10' =>array('field_name'=>'Active',
+                                                               
+                                                               'field_id'=>'is_active',
+                                                               
+                                                               'type'=>'toggle',
+							       
+																'on_label'            => 'Active',
+                                                                'off_label'            => 'Inactive',
+                                                                'show_status_label'  => 1,
 						   
                                                                ),
                                                    
