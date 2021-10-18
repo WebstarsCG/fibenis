@@ -2,8 +2,119 @@
 	      <style>
 		     header{display: none;}
 		     footer{display: none;}
-		    .login_panel .close, .hidden-header {display: none;}
-		    .login_panel_area{ margin-top:10%; position:relative;}
+			   .login_panel .close, .hidden-header {display: none;}
+			   
+			   
+		    .login_panel {
+				position: fixed;
+				left:50%;
+				top: 50%;
+				margin-left:-158px;
+				margin-top: -265px;
+			 }
+			 
+			 #loader{
+				position: fixed;
+				top: 50%;					
+				margin-top: -50px;	
+			}
+			
+			#myModal_signUp{				
+							
+				margin-top	: -190px;	
+				position	: fixed;
+				top			: 50%;
+			}
+			
+			#myModalForgetPassword{
+							
+				margin-top	: -116px;	
+				position	: fixed;
+				top			: 50%;
+			}
+			
+			 .modal-footer button,
+			.modal-footer .btn{
+						font-size		: 14px !important;
+						margin-bottom	: 10px !important;
+						padding			: 7px 0px !important;
+						width			: 100% !important;
+			}
+			
+				
+			.modal-footer .btn + .btn{
+				margin-left:0px !important;
+			}
+					
+					
+			
+			 
+			 @media only screen and (max-width: 600px){
+			 
+			 
+					body{
+						background-color:#f9f9f9 !important;
+					}
+			 
+					 .login_panel_area .modal-content{
+						box-shadow : none !important;
+						webkit-box-shadow: none !important;
+					 }
+			 
+			 
+					
+					input[type="text"],
+					input[type="email"],
+					input[type="password"]{
+						font-size	: 15px !important;
+						height		: 40px;
+					}
+					
+					
+					.modal-content{
+						border			: 3px solid #eaeaea !important;
+					}
+					
+					.modal-footer{
+						padding:15px 0px;
+						text-align: centre !important;
+					}
+				
+					 
+					 #loader{
+						position: fixed;
+						left:50%;
+						top: 50%;
+						margin-left:-158px;
+						margin-top: -50px;	
+					}
+					
+					#myModal_signUp{				
+						left		: 50%;				
+						margin-left	:-158px;				
+						margin-top	: -190px;	
+						position	: fixed;
+						top			: 50%;
+					}
+					
+					#myModalForgetPassword{
+						left		: 50%;				
+						margin-left	:-158px;				
+						margin-top	: -116px;	
+						position	: fixed;
+						top			: 50%;
+					}
+					
+					 .modal-footer button,
+					.modal-footer .btn{
+								font-size		: 15px !important;
+								margin-bottom	: 12px !important;
+								padding			: 9px 0px !important;
+					}
+					
+			 }
+			 
+		   <!--.login_panel_area{ margin-top:10%; position:relative;} -->
 	      </style>		      
 
 	      <div class="container" id="content ">
@@ -92,7 +203,7 @@
 			      </div>   
 	 
 			      <div class="modal-footer">	
-					<button class="btn  btn-default btn-sm"
+					<button class="btn  btn-primary btn-sm"
 						type="submit"
 						tabindex="3"
 						>
@@ -118,14 +229,14 @@
 			      <div class="modal-footer">
 			
 			<TMPL_IF IS_OPEN>
-			<a href="#" data-toggle="modal" data-target="#myModal_signUp">
+			<a href="#" class="pad_10_b btn btn-success" data-toggle="modal" data-target="#myModal_signUp">
 			<span class="glyphicon glyphicon-edit clr_green" aria-hidden="true"></span>
-			Sign Up</a>&nbsp;&nbsp;<b>|</b>&nbsp;&nbsp;
+			Sign Up</a><!-- &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp; -->
 			</TMPL_IF>
 			
 			<TMPL_UNLESS IS_LDAP>			
-			      <a href="#" data-toggle="modal" data-target="#myModalForgetPassword">
-			<span class="glyphicon glyphicon-lock clr_gray_5" aria-hidden="true"></span>
+			      <a href="#" class="btn btn-default clr_gray_a" data-toggle="modal" data-target="#myModalForgetPassword">
+			<span class="glyphicon glyphicon-lock clr_gray_a" aria-hidden="true"></span>
 			Forgot Password</a>
 			
 			</TMPL_UNLESS>
