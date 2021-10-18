@@ -505,7 +505,7 @@
 		font-size	: 13px;
 		margin-top	: 9px; 
 		margin-bottom	: 9px; 
-		width		: 100% !important;
+		width		: 100%;
 	}
 	
 	fieldset .row_heading{		
