@@ -71,7 +71,7 @@
 		# for closed access
 	
 		
-		$COACH['step_in']       = ((!get_config('is_open')) && (!get_config('avoid_gate')))?'gate':'home';
+		$COACH['step_in']       = ((get_config('is_open')) && (!get_config('avoid_gate')))?'gate':'home';
 		
 		$PAGE 	 		= (@$PARAM[0])?@$PARAM[0]:$COACH['step_in'] ;
                 		
@@ -89,8 +89,7 @@
 		
 		
 			
-		$SHOW_DOOR              = ( (get_config('access_key')==@$PARAM[0]) &&
-					    (get_config('avoid_gate')))?1:0;
+		$SHOW_DOOR              = ( (get_config('access_key')==@$PARAM[0]) && (get_config('avoid_gate')))?1:0;
 		
 		if(($SHOW_DOOR) && (!$IS_HOME)){  $PAGE=$COACH['step_in'] ; }
 		
