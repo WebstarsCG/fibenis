@@ -1812,7 +1812,7 @@
 						<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY>" >
 					
 						<TMPL_LOOP ADDON_ACTIONS>
-							<TMPL_UNLESS IS_RIGHT>
+							<TMPL_UNLESS IS_LEFT>
 								<TMPL_LOOP ACTIONS>	
 							<input type="button" onclick="JavaScript:<TMPL_VAR ACTION>(<TMPL_IF PARAM><TMPL_VAR PARAM></TMPL_IF>)" value="<TMPL_VAR LABEL>"       class="<TMPL_IF CLASS><TMPL_VAR CLASS><TMPL_ELSE>button</TMPL_IF>">
 								</TMPL_LOOP>
