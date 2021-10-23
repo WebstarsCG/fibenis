@@ -622,6 +622,46 @@
 		width		: auto;
 	}
 	
+	
+	fieldset .value .checkbox_multistate + label{
+		width:30%;
+	}
+
+
+	fieldset .value .checkbox_multistate{
+		display:none !important;
+	}
+
+	fieldset .value .checkbox_multistate:checked + label:before{
+		border-radius: 25px;
+		background-color: yellow;
+		content: "✓";
+		left: 40%;
+		padding: 1px 6px;
+		position: absolute;
+		top: 40%;
+	}
+
+	fieldset .value input[value$="_S_2"]:checked + label:before{
+		background-color: #ffcc00;
+		color:black;
+	}
+
+	fieldset .value input[value$="_S_3"]:checked + label:before{
+		background-color: red;
+		color:white;
+	}
+
+
+	fieldset .value .checkbox_multistate:checked + label:before img{
+		width:95%;
+	}
+
+	fieldset .value .checkbox_multistate + label{
+		padding-left:0px !important;
+		padding-right:0px !important;
+	}
+	
 	fieldset .value .message{					
 		font-family	: 'Condensed', sans-serif;
 		font-size	: 11px;
@@ -650,8 +690,7 @@
 	
 	.button_green,
 	fieldset .button_green,	
-	.box_filter .button_green
-	
+	.box_filter .button_green	
 	{				
 		background-color: #68429E;
 		border          : 1px solid #e1e1e1   !important; 

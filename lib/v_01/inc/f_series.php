@@ -720,7 +720,21 @@
 												
 									$temp['field_type_checkbox']  = (@$value['type'] =='checkbox')?'checkbox':0;
 									
-									$temp['options']			  = @$value['options'];										
+									$temp['options']			  = @$value['options'];
+
+																		
+
+									// multistate
+									if(@$value['is_multistate']){
+										
+											$temp['is_multistate'] = @$value['is_multistate'];
+											$temp['maxstate'] 	   = @$value['maxstate'];
+											foreach($temp['options'] as $cb_key=>$cb_value){
+												$temp['options'][$cb_key]['is_multistate']='_S_0';
+											}
+									}
+									
+								#print_r($temp['options']);									
 									
 						}elseif(@$value['type']=='radio'){
 												
@@ -1187,7 +1201,7 @@
 								if(@$value['is_mandatory']==1){
 								
 										$is_required_flag  = 1;						
-										$is_required_value.=($value['type']!='file')?$_POST["X".$key]:$_FILES["X".$key]['name'];
+										$is_required_value.=($value['type']!='file')?@$_POST["X".$key]:$_FILES["X".$key]['name'];
 								}						
 								
 								if( ($value['type']!='file')  && (@$value['is_plugin']!==1) && (!@$value['child_table'])){

@@ -995,14 +995,28 @@
 						<span class="label"><TMPL_VAR field_name></span>
 						<span class=value id="element_area_<TMPL_VAR FIELD_ID>" >	
 							<TMPL_LOOP OPTIONS><input type="checkbox"
-									   name="<TMPL_VAR __counter__>" value="<TMPL_VAR VALUE>" class="checkbox"
+									   name="<TMPL_VAR __counter__>" data-prefix="<TMPL_VAR VALUE>" 
+									   
+									   <TMPL_IF IS_MULTISTATE>									   
+										   value="<TMPL_VAR VALUE><TMPL_VAR IS_MULTISTATE>" 
+										   data-touch=0 
+										   class="checkbox checkbox_multistate" 
+										   onchange="checkbox_multistate_action(this)"									   
+									   <TMPL_ELSE>
+										   value="<TMPL_VAR VALUE>" 										 
+										   class="checkbox"									   
+									   </TMPL_IF>
 									   id="<TMPL_VAR __counter__>"><label><TMPL_VAR LABEL></label></TMPL_LOOP>	
-							
-								
 						<!--- set default-->
 								    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
 									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 									<span class=message id="message_X<TMPL_VAR field_id>"></span>
+									
+									<input type="hidden" id="X<TMPL_VAR field_id>_multistate" name="X<TMPL_VAR field_id>_multistate"
+									       value="<TMPL_IF IS_MULTISTATE>1</TMPL_IF>">
+									<input type="hidden" id="X<TMPL_VAR field_id>_maxstate" name="X<TMPL_VAR field_id>_maxstate"
+									       value="<TMPL_VAR MAXSTATE>">	   
+									
 					  <script>f_series.setCheckbox('<TMPL_VAR FIELD_ID>');input_temp.check_box['X<TMPL_VAR field_id>']='<TMPL_VAR field_id>';</script>
 						
 						</span>
@@ -1029,6 +1043,13 @@
 								    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
 									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 									<span class=message id="message_X<TMPL_VAR field_id>"></span>
+									
+									<input type="hidden" id="X<TMPL_VAR field_id>_multistate" name="X<TMPL_VAR field_id>_multistate"
+									       value="<TMPL_IF IS_MULTISTATE>1</TMPL_IF>">
+									<input type="hidden" id="X<TMPL_VAR field_id>_maxstate" name="X<TMPL_VAR field_id>_maxstate"
+									       value="<TMPL_VAR MAXSTATE>">	 
+										   
+										   
 					 <script>f_series.setRadio('<TMPL_VAR FIELD_ID>');input_temp.radio['X<TMPL_VAR field_id>']='<TMPL_VAR field_id>';</script>
 						</span>
 				      </div> 
