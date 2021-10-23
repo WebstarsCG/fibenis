@@ -423,10 +423,5 @@ $F_SERIES['before_add_update'] = function ()
 
     } // if new entity
     
+
 }; // end
-
-?>
-<style>
-
-
-</style>
