@@ -1201,7 +1201,7 @@
 								if(@$value['is_mandatory']==1){
 								
 										$is_required_flag  = 1;						
-										$is_required_value.=($value['type']!='file')?$_POST["X".$key]:$_FILES["X".$key]['name'];
+										$is_required_value.=($value['type']!='file')?@$_POST["X".$key]:$_FILES["X".$key]['name'];
 								}						
 								
 								if( ($value['type']!='file')  && (@$value['is_plugin']!==1) && (!@$value['child_table'])){
