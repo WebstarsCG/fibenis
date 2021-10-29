@@ -2,6 +2,7 @@
 
 ---11OCT2021
 ---- Addition of checkbox & radio column
+ALTER TABLE demo ADD type_hidden VARCHAR(64) DEFAULT NULL AFTER text_flat;
 ALTER TABLE demo ADD checkbox VARCHAR(64) DEFAULT NULL AFTER type_hidden;
 ALTER TABLE demo ADD radio VARCHAR(64) DEFAULT NULL AFTER checkbox;
 ALTER TABLE demo ADD checkbox_ms VARCHAR(512) DEFAULT NULL COMMENT 'Multistate Checkbox' AFTER radio;
