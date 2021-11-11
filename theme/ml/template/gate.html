@@ -127,137 +127,177 @@
 		   					   <div class="modal-header">
 							     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							     <!--<h4 class="modal-title" id="myModalLabel">Welcome</h4>-->
-							     <img src="terminal//default/images/logo_1.png" class="img-responsive">
+							     <img src="terminal/default/images/logo_1.png" class="img-responsive">
 							   </div>
 				      			 <div class="modal-body">
 		   
-				      <form class="form-signin" id="form-sign-in" onsubmit="return  check_key();">
-	  
-			    <div class="form-group has-feedback" 
-				 id="inputEmail_area">
-				<label class="txt_size_12 clr_red" id="inputEmail_warn"></label>
-                             
-				<div class="input-group">				
-				    
-					
-					<TMPL_IF IS_LDAP>
-					
-					<span class="input-group-addon" id="basic-addon9">
-				      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				    </span>
-					
-				     <input type="text" placeholder="Your LDAP user name"
-					    class="form-control"
-					    tabindex="1"
-					    id="inputEmail"
-					    maxlength="75"
-					    onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});"
-						onkeypress  = "return PR_All_Alpha_Numeric(event,' ');"
-					    onblur="return has_length(this);"
-					   
-					     aria-describedby="inputEmailStatus">
-						 
-					<TMPL_ELSE>
-					
-					<span class="input-group-addon" id="basic-addon9">
-				      <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-				    </span>
-					
-						<input type="text" placeholder="Your email address"
-					    class="form-control"
-					    tabindex="1"
-					    id="inputEmail"
-					    maxlength="75"
-					    onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});"
-						 onkeypress  = "return PR_All_Alpha_Numeric(event,'@-_.');"
-					    onblur="return check_mail(this);"
-					    
-					     aria-describedby="inputEmailStatus">
-
-					</TMPL_IF>
-						 
-				      <span id="inputEmail_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
-				    
-				 </div>
-			    </div>
-			    
-			      <div class="form-group has-feedback" 
-			            id="inputPassword_area">
-				  
-				  <div class="input-group">
-				     
-				    
-				    <span class="input-group-addon" >
-				      <span class="glyphicon  glyphicon-lock" aria-hidden="true"></span>
-				    </span>
-                                   <input type="password" placeholder="Your password"
-                                          class="form-control"
-                                          tabindex="2"
-                                          id="inputPassword"                                          
-                                         
-					  onkeydown="JavaScript:set_stlye_neutral(this);"
-					  onblur="return is_empty(this);" 
-					  >
-				    <span id="inputPassword_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
-				  </div> 
-			      </div>   
-	 
-			      <div class="modal-footer">	
-					<button class="btn  btn-primary btn-sm"
-						type="submit"
-						tabindex="3"
-						>
-					<span id="lbl-sign-in" class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;
-					Sign In
-					</button>
-					
+				<form class="form-signin" id="form-sign-in" onsubmit="return  check_key();">
 				
-					
-				     
-			      </div>
-			      
-				<!--<div class="modal-footer" style="text-align:right;">
-				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						-- <div class="fb-login-button"   data-scope="email"   data-show-faces="false"  onlogin="checkLoginState();"></div>
-			 <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-				</div>-->
+				<TMPL_IF IS_OTP>
+						<div class="form-group has-feedback" 
+							 id="inputEmail_area">
+							<label class="txt_size_12 clr_red" id="inputEmail_warn"></label>											 
+							<div class="input-group">			
+								<span class="input-group-addon" id="basic-addon9">
+								  <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+								</span>
+								<input type="text" placeholder="Give your email address"
+								class="form-control"
+								tabindex="1"
+								id="inputEmail"
+								maxlength="75"
+								data-message-mismatch="Sorry, given OTP seems invalid. Kindly verify it or Resend OTP.";
+								onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});"
+								 onkeypress  = "return PR_All_Alpha_Numeric(event,'@-_.');"
+								onblur="return check_mail(this);"
+								 aria-describedby="inputEmailStatus">
+								<span id="inputEmail_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+							 </div>
+						</div>
+						
+						  <div class="form-group has-feedback hide" 
+										id="inputPassword_area">				  
+										  <div class="input-group">							
+											<span class="input-group-addon" >
+												<span class="glyphicon  glyphicon-lock" aria-hidden="true"></span>
+											</span>
+										   <input type="password" placeholder="Enter the OTP"
+																  class="form-control"
+																  tabindex="2"
+																  id="inputPassword"  
+																  autocomplete="off"
+											  onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});set_stlye_neutral(G.$('inputEmail'),{'is_warn':1});"
+											  onblur="return is_empty(this);" 
+											  >
+											<span id="inputPassword_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+										  </div> 
+							  <label id="inputPassword_warn" class="txt_size_12 clr_gray_9">Check email, If OTP did n't recieve, check SPAM once.</label>
+						  </div> 
+								  
+						
+						<div class="modal-footer">	
+							<button class="btn  btn-primary btn-sm"
+								type="button"
+								onclick="JavaScript:check_mail_otp(G.$('inputEmail'))"
+								tabindex="3"
+								id="buttonSignIn">
+							<span id="lbl-sign-in" class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;
+							Sign In with E-mail OTP
+							</button>
+							<button class="btn  btn-success btn-sm hide"
+								type="submit"
+								tabindex="4"
+								id="buttonVerifyOTP">
+							<span id="lbl-sign-in" class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;
+							Verify OTP
+							</button>
+							<a class="btn  btn-default clr_gray_a btn-sm mar_top_10 hide"
+								type="button"
+								tabindex="5"
+								href="JavaScript:change_email_otp();"
+								id="buttonChangeEmail">
+							<span id="lbl-sign-in" class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;
+							Change Email
+							</a>
+						</div>
+						
+						
 				
-			      <div class="modal-footer">
-			
-			<TMPL_IF IS_OPEN>
-			<a href="#" class="pad_10_b btn btn-success" data-toggle="modal" data-target="#myModal_signUp">
-			<span class="glyphicon glyphicon-edit clr_green" aria-hidden="true"></span>
-			Sign Up</a><!-- &nbsp;&nbsp;<b>|</b>&nbsp;&nbsp; -->
-			</TMPL_IF>
-			
-			<TMPL_UNLESS IS_LDAP>			
-			      <a href="#" class="btn btn-default clr_gray_a" data-toggle="modal" data-target="#myModalForgetPassword">
-			<span class="glyphicon glyphicon-lock clr_gray_a" aria-hidden="true"></span>
-			Forgot Password</a>
-			
-			</TMPL_UNLESS>
-			
-			</div>
-	   
-			   
-		    </form>
-		      </div></div></div>
-				  
-				      
-		   </div>
-		   
-		   
-		   <div class="col-md-4">
-				      
-				   
-				      
-		   </div>
+				<TMPL_ELSE>
+								<div class="form-group has-feedback" 
+								 id="inputEmail_area">
+								<label class="txt_size_12 clr_red" id="inputEmail_warn"></label>
+											 
+								<div class="input-group">				
+									
+									
+									<TMPL_IF IS_LDAP>
+									
+									<span class="input-group-addon" id="basic-addon9">
+									  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+									</span>
+									
+									 <input type="text" placeholder="Your LDAP user name"
+										class="form-control"
+										tabindex="1"
+										id="inputEmail"
+										maxlength="75"
+										onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});"
+										onkeypress  = "return PR_All_Alpha_Numeric(event,' ');"
+										onblur="return has_length(this);"
+									   
+										 aria-describedby="inputEmailStatus">
+										 
+									<TMPL_ELSE>
+									
+									<span class="input-group-addon" id="basic-addon9">
+									  <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+									</span>
+									
+										<input type="text" placeholder="Your email address"
+										class="form-control"
+										tabindex="1"
+										id="inputEmail"
+										data-message-mismatch="Sorry! Email and password does n't match";
+										maxlength="75"
+										onkeydown="JavaScript:set_stlye_neutral(this,{'is_warn':1});"
+										 onkeypress  = "return PR_All_Alpha_Numeric(event,'@-_.');"
+										onblur="return check_mail(this);"
+										
+										 aria-describedby="inputEmailStatus">
 
-       </div>
+									</TMPL_IF>
+										 
+									  <span id="inputEmail_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									
+								 </div>
+								</div>
+								
+								  <div class="form-group has-feedback" 
+										id="inputPassword_area">				  
+										  <div class="input-group">							
+											<span class="input-group-addon" >
+												<span class="glyphicon  glyphicon-lock" aria-hidden="true"></span>
+											</span>
+										   <input type="password" placeholder="Your password"
+																  class="form-control"
+																  tabindex="2"
+																  id="inputPassword"                                          
+																 
+											  onkeydown="JavaScript:set_stlye_neutral(this);"
+											  onblur="return is_empty(this);" 
+											  >
+											<span id="inputPassword_icon" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+										  </div> 
+								  </div>   
+					 
+								  <div class="modal-footer">	
+									<button class="btn  btn-primary btn-sm"
+										type="submit"
+										tabindex="3"
+										id="buttonSignIn">
+									<span id="lbl-sign-in" class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;
+									Sign In
+									</button>
+								  </div>
+						<!--footer-->
+						<div class="modal-footer">
+								<TMPL_IF IS_OPEN>
+								 <a href="#" class="pad_10_b btn btn-success" data-toggle="modal" data-target="#myModal_signUp">
+								 <span class="glyphicon glyphicon-edit clr_green" aria-hidden="true"></span>
+								 Sign Up</a>
+								</TMPL_IF>
+								
+								<TMPL_UNLESS IS_LDAP>			
+								 <a href="#" class="btn btn-default clr_gray_a" data-toggle="modal" data-target="#myModalForgetPassword">
+								 <span class="glyphicon glyphicon-lock clr_gray_a" aria-hidden="true"></span>
+								 Forgot Password</a>			
+								</TMPL_UNLESS>
+						</div> 
+					</TMPL_IF>	
+      </form>
+    </div></div></div></div>		   
+</div> <!---end--->
 
      
       
