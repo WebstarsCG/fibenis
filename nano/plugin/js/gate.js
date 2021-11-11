@@ -86,6 +86,8 @@
 	function check_key(){
 		
 		if(validate_check_key()==true){
+			
+			G.showLoader('Verifying...');
 		
 			var req = 	'&user_email='+GET_E_VALUE('inputEmail')+
 				   	'&password='+GET_E_VALUE('inputPassword')+
@@ -106,7 +108,7 @@
 			
 			//G.bs_alert_error("Please give valid information","SIE");
 			
-			 document.getElementById('inputEmail_warn').innerHTML='Please enter a valid value';
+			 document.getElementById('inputEmail_warn').innerHTML='Please enter valid information';
 		         set_series({'elements':temp_gate.action.SI.elements,
 			  	    'set_alert':1
 				   });
@@ -129,7 +131,7 @@
 		
 		var chk_res = check_gate_response(temp_response);
 		
-		
+		G.hideLoader();
 		
 		if (chk_res==1) {
 			   
@@ -138,8 +140,6 @@
 		}else{
 		         
 			  var tempResponse=JSON.parse(temp_response);
-			   
-			 // alert('======'+tempResponse.redirect_page);
 			   
 			  if(Number(tempResponse.status)==1){
 		       
@@ -158,26 +158,20 @@
 			 }else if(Number(tempResponse.status)==-1){
 			   
 			       action_blink_off('SI');
-			      document.getElementById('inputEmail_warn').innerHTML = 'Sorry! Email and password doesn\'t match';
+			      document.getElementById('inputEmail_warn').innerHTML = document.getElementById('inputEmail').dataset.messageMismatch;
 			      set_series({'elements':temp_gate.action.SI.elements,
 					   'set_alert':1
 					  });
 			   
 			 }
 			 else{
-			       action_blink_off('SI');
-			       
-			       //G.bs_alert_error('Please check your email and password');
-			       
+			       action_blink_off('SI');			       
 			       document.getElementById('inputEmail_warn').innerHTML = 'Please check your password';
-							  
-			       //setTimeout(function(){document.getElementById('inputEmail').focus();},500);
-			       
 			       set_series({'elements':temp_gate.action.SI.elements,
 					   'set_alert':1
 					  });
 				  
-		       }
+		     }
 		}
 		
 		return false;
@@ -203,6 +197,8 @@
 		
 		var email_syntax = PR_Email(element);
 		
+		
+		
 		var ele_area    = ELEMENT(element.id+'_area');
 			
                 var ele_warn    = ELEMENT(element.id+'_warn');
@@ -212,7 +208,7 @@
 		temp_gate.element = element;
 		
 		
-		if(email_syntax==false){
+		if((email_syntax==false) || (G.isUndefined(email_syntax,0)==0)){
 			   
 			//show_message_box('Please give a valid email');
 			//G.bs_alert_error('Please give a valid email');			
@@ -252,8 +248,6 @@
 		} // end
 		
 		temp_gate.element='';
-		
-		
 	
 	} // end
 	
@@ -815,8 +809,56 @@
 				
 	}
 	
-	// loader
+	// checkmail otp
+	function check_mail_otp(element){
+		
+		var lv = {};
+		
+		if(check_mail(element)==true){
+			
+			G.showLoader('Verifying mail & sending OTP');
+			
+			lv.req = '&user_email='+element.value+
+					 '&action=AOTP&request=1';
+								
+			temp_gate.element = element;
+			ajxrqst.set_url(lv.req);
+			ajxrqst.send_post(check_mail_otp_response);
+		}
+		
+	} // end
 	
+	// check mail otp response
+	function check_mail_otp_response(temp_response){
+			
+			G.hideLoader();
+			
+			var response = JSON.parse(temp_response);
+			
+			if(response.status==1){		
+				G.$('inputEmail').disabled=true;		
+				$('#inputPassword_area').removeClass('hide');
+				G.$('inputPassword').value='';
+				G.$('inputPassword').placeholder = 'Enter the OTP'; 
+				$('#buttonSignIn').addClass('hide');
+				$('#buttonVerifyOTP').removeClass('hide');
+				$('#buttonChangeEmail').removeClass('hide');				
+			}
+		
+	} // end
+	
+	function change_email_otp(){
+			G.$('inputEmail').disabled=false;		
+			G.$('inputEmail').value='';
+			
+			G.$('inputPassword').value='';
+			$('#inputPassword_area').addClass('hide');
+			$('#buttonSignIn').removeClass('hide');
+			$('#buttonVerifyOTP').addClass('hide');
+			$('#buttonChangeEmail').addClass('hide');						
+	}
+	
+	// loader	
 	function show_loader(message){		
 		 
 		 message=(message==undefined)?'Loading..':message;		 
@@ -825,17 +867,19 @@
 			   
 	} // end
 	
-        // get out
+	// get out
 	function get_out(){
 	
-        	    ajxrqst.set_request('plugin/inc/wp_login.php','&action=GTO&isFB=0&uid='+GET_E_VALUE('user_id')+'&request=1');
+			G.showLoader('Exiting Application');
+	
+        	ajxrqst.set_request('plugin/inc/wp_login.php','&action=GTO&isFB=0&uid='+GET_E_VALUE('user_id')+'&request=1');
 		    ajxrqst.send_post(get_out_response_log);		
         
         } // end
 	
-        // get out response
-        function get_out_response_log(php_response){
-        
+	// get out response
+	function get_out_response_log(php_response){
+					G.hideLoader();
                     document.location.href = 'index.php';
         
         } // end
