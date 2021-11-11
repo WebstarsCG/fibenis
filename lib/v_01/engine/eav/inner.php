@@ -127,6 +127,7 @@
 					if($COACH['step_in']=='gate'){
 						$c->AddParam('IS_LDAP',( (get_config('auth_type') && (get_config('auth_type')=='ldap'))?1:0));
 						$c->AddParam('IS_OPEN',get_config('is_open'));
+						$c->AddParam('IS_OTP',get_config('is_otp'));
 					}
 					
 					if($content['add_on']){ $c->AddParam($content['add_on']); } 
