@@ -8,13 +8,14 @@
 		
 		$PV = [];
 		
-		# gateaction - md5(GATE_<code>)
+		# gateaction - md5(GATE__<code>)
 		$PV['GATE_CODE'] = ['AAKY' => 'e89a83384d48a4ac572bc84fc468ed9d', # add key
 							'AAKV' => '226d370c039d2ab26f7d6c776dc09952', # key verification
 							'ACKY' => '7f84cf049cd1ca1ec04c0150d4d0c356', # Check Password/User
 							'ACHP' => 'f68a5834818e3b481d2108e3fb0ea5a3', # change password
 							'AFGK' => 'db3aeab2d92092e5586b7375fd885ba0', # forget password
 							'AGTO' => '2d4a92e779d30cc823a3feffafa56c8c', # logout
+							'AOTP' => '98b470c3e60a5c7f23da85efa36cb04f', # otp
 							'ACUE' => 'e9eb891ad083d2470230f6a4b61528ae'
 						];
 		
@@ -78,134 +79,68 @@
 		
 		if(@$_POST['action']=='AKY'){
 				
-				$user_name  =   $_POST['user_name'];
-				
-				$user_email = strtolower($_POST['user_email']);
-				
-				$user_mobile = strtolower($_POST['mobile']);
-				
-				$entryType  =   $_POST['entryType'];
-				
-				$password   =   md5($_POST['user_key']);
+				$user_name   = $_POST['user_name'];				
+				$user_email	 = strtolower($_POST['user_email']);				
+				$user_mobile = strtolower($_POST['mobile']);				
+				$entryType   = $_POST['entryType'];				
+				$password    = md5($_POST['user_key']);
 				
 				$no_row = $G->table_no_rows(
 				 					array(
-											'table_name' =>$PV['login_table'],
-									
+											'table_name' =>$PV['login_table'],									
 										  	'WHERE_FILTER'=>" AND $PV[login_email]='$user_email'"
 										  )
-									
 				 				  );
+								  
 				if($no_row[0]==0){
 					
-					//$session = $SG->set_session();
-					
-						// insert user
-						
-						$insert_contact_query="INSERT INTO
-										entity_child(entity_code,user_id)
-								       VALUES
-										('CO',0)";						
-					
-						$rdsql->exec_query($insert_contact_query,"");
-						
-						$contact_id = $rdsql->last_insert_id('entity_child');
-						
-						# insert detail
-						
-						$insert_contact_detail="INSERT INTO
-										eav_addon_varchar(parent_id,ea_code,ea_value)
-								       VALUES
-										($contact_id,'COFN','$user_name'),
-										($contact_id,'COEM','$user_email'),
-										($contact_id,'COMB','$user_mobile')
-								";						
-					
-						$rdsql->exec_query($insert_contact_detail,"");
-					
-						$set_data = "INSERT INTO
-									 user_info(password,user_role_id,is_internal)
-								     VALUES
-									 ('$password',(SELECT id FROM user_role WHERE sn='BAS'),$contact_id)";
-							
-						
-						$exe_set_data = $rdsql->exec_query($set_data,'set data');
-						
-						$last_id      = $rdsql->last_insert_id('user_info');
-						
-						$in	      = array('user_id'=>$last_id,'page_code'=>$PV['GATE_CODE']['AAKY'],'action_type'=>'AAKY','action'=>'Sign Up by  '.$user_email);
-								 
-						$G->set_system_log($in);
-					
-					
-					$def = array('user_id' =>$last_id);
-					
-					$crypt_id = $G->generate_hash($def);
-					
-					$PROFILE_KEY = get_config('PROFILE_KEY').$last_id;
-					
-					$update_last_data = "   UPDATE
-										user_info
-								SET
-										user_comm = '$crypt_id',
-										is_send_welcome_mail=1
-								WHERE
-										id = $last_id ";
-					
-					$rdsql->exec_query($update_last_data,'$update_last_data');
+					$action_code = 'AAKY';
+					add_new_user([ 'user_name'	=> $user_name,
+								   'user_email'	=> $user_email,
+								   'user_mobile'=> $user_mobile,
+								   'user_role_code' => 'BAS',
+								   'action_code'	=> $action_code,
+								   'action_hash'	=> $PV['GATE_CODE'][$action_code],
+								   'rdsql'		=> $rdsql,
+								   'g'			=> $G,
+								   'password'	=> $password]);		
 					
 					//send mail
 					$def = array( 'user_name'  => $user_name,
-						     'user_email' => $user_email,
-						     'user_key'   => $_POST['user_key'],
-						     'domain_name' => $PV['domain_name'],
-						    
-						   );
+								  'user_email' => $user_email,
+								  'user_key'   => $_POST['user_key'],
+						          'domain_name' => $PV['domain_name']);
+								 
 					$msg = custom_mail_message($def);
 					
 					//echo $msg['REG_MSG'];
 					$MAIL=array(
 								'from'    => $SG->get_session('mail_send_by').'  Admin ',					
 								'to'      => $_POST['user_email'], //'ratbew@gmail.com',
-								'cc'	  =>  get_config('cc_mail'),
+								'cc'	  => get_config('cc_mail'),
 								'bcc'	  => get_config('bcc_mail'),
 								'subject' => $SG->get_session('mail_send_by').' | Registration Confirmation',					
-								'message' =>$msg['REG_MSG']
-											  
-						);
+								'message' => $msg['REG_MSG']);
 					
 					
 					
-					if($PV['is_smtp_mail']){
-						
+					if($PV['is_smtp_mail']){						
 					    mail_send_smtp($MAIL);
-					    
-					    $mail_param=array('user_id'=>$last_id,'page_code'=>$PV['GATE_CODE']['AAKY'],'action_type'=>'AAKY','action'=>'Mail->Sign Up by '.$user_email.$msg['REG_MSG']);
-						         
-					    $G->set_system_log($mail_param);
-					
-					
+					}else{
+						$send = $G->mail_send($MAIL);
 					}
-					else{
-					    $send = $G->mail_send($MAIL);
-					    
-					     $mail_param=array('user_id'=>$last_id,'page_code'=>$PV['GATE_CODE']['AAKY'],'action_type'=>'AAKY','action'=>'Mail->Sign Up by '.$user_email.$msg['REG_MSG']);
-						         
-					     $G->set_system_log($mail_param);
-					}
+					
+					$mail_param=array('user_id'=>$last_id,'page_code'=>$PV['GATE_CODE']['AAKY'],'action_type'=>'AAKY','action'=>'Mail->Sign Up by '.$user_email.$msg['REG_MSG']);
+							 
+					$G->set_system_log($mail_param);
+						
 					echo 1;
 					
-				}//if
-				
-				else{
-						
+				}else{						
 					echo 0;	
 				}
 				
-				
-				
-				
-		}
+		} // end of AKY/SignUp
 		
 		
 		//key verification
@@ -423,6 +358,85 @@
 		} // end
 		
 		
+		// email OTP
+		if(@$_POST['action']=='AOTP'){
+			
+				$user_email = strtolower($_POST['user_email']);
+				
+				$no_row = $G->table_no_rows(['table_name' =>$PV['login_table'],
+										  	'WHERE_FILTER'=>" AND $PV[login_email]='$user_email'"]);
+											
+				$current_time	= date('is');
+				$pass			= "0".$current_time;
+				//$new_key		= substr($pass,0,6);
+				$new_key		= 'testotp';
+				$password  		=   md5($new_key);
+															
+				if($no_row[0]==1){
+					$set_otp_query = "UPDATE user_info SET password='$password' WHERE $PV[login_email] = '$user_email' ";					
+				    $exe_set_otp_query = $rdsql->exec_query($set_otp_query,'Error! CK Update');
+					
+					$msg = custom_mail_message(['user_key'   => $new_key]);
+					
+					$MAIL_OTP=array(
+								'from'    => $SG->get_session('mail_send_by').' Admin ',					
+								'to'      => $user_email, //'ratbew@gmail.com',
+								
+								'cc'	  =>  get_config('cc_mail'),
+								'bcc'	  => get_config('bcc_mail'),
+								
+								'subject' =>  $SG->get_session('mail_send_by').' | OTP for Sign In',
+								'message' => $msg['OTP_MSG'],
+							);
+					
+					if($PV['is_smtp_mail']){						
+					   mail_send_smtp($MAIL_OTP);
+					}else{
+					   $send = $G->mail_send($MAIL_OTP);
+					}
+					
+					echo '{"status":"1","message":"Verifiy OTP"}';
+					
+				}else if($no_row[0]==0){
+					
+					$action_code = 'AOTP';
+					add_new_user([ 
+								   'user_email'	=> $user_email,								   
+								   'user_role_code' => (get_config('signup_user_role') ?? 'BAS'),
+								   'action_code'	=> $action_code,
+								   'action_hash'	=> $PV['GATE_CODE'][$action_code],
+								   'rdsql'		=> $rdsql,
+								   'g'			=> $G,
+								   'password'	=> $password]);		
+							
+						$msg = custom_mail_message(['user_key'   => $new_key]);
+					
+						$MAIL_OTP=array(
+									'from'    => $SG->get_session('mail_send_by').' Admin ',					
+									'to'      => $user_email, //'ratbew@gmail.com',
+									
+									'cc'	  =>  get_config('cc_mail'),
+									'bcc'	  => get_config('bcc_mail'),
+									
+									'subject' =>  $SG->get_session('mail_send_by').' | OTP for Sign In',
+									'message' => $msg['OTP_MSG'],
+								);
+						
+						if($PV['is_smtp_mail']){						
+							mail_send_smtp($MAIL_OTP);
+						}else{
+							$send = $G->mail_send($MAIL_OTP);
+						}
+						
+					echo '{"status":"1","message":"Verifiy OTP"}';
+							
+								   
+				} // new user					
+				
+				exit;
+			
+		} // end of AOTP
+		
 		// change password
 		
 		if(@$_POST['action']=='CP'){
@@ -613,5 +627,61 @@
 			  echo 0;		
 			}
 		}
+		
+		
+		// addition of new user
+		function add_new_user($param){
+
+			$lv = [];
+			
+			$lv['contact_cols']	= ['COFN'=>'user_name',
+								   'COEM'=>'user_email',
+								   'COMB'=>'user_mobile'];
+			
+			# insert contact
+			$lv['contact_query'] = "INSERT INTO
+										entity_child(entity_code,user_id)
+								       VALUES
+										('CO',1)";						
+					
+			$param['rdsql']->exec_query($lv['contact_query'],"Contact Query");						
+			$lv['ec_id'] = $param['rdsql']->last_insert_id('entity_child');
+						
+			# insert contact detail	
+			$lv['contact_detail_values'] = [];
+	
+			foreach($lv['contact_cols'] as $contact_code =>$contact_key){
+				if(@$param[$contact_key]){
+					$lv['contact_eav'] = @$param[$contact_key];
+					array_push($lv['contact_detail_values'],"($lv[ec_id],'$contact_code','$lv[contact_eav]',1)");				
+				} // check key exists
+			} // end
+				
+			$lv['contact_detail_query']="INSERT INTO
+										eav_addon_varchar(parent_id,ea_code,ea_value,user_id)
+									   VALUES
+										".implode(',',$lv['contact_detail_values']);
+										
+			$param['rdsql']->exec_query($lv['contact_detail_query'],"Contact Detail Query");
+			
+			# insert user info
+			$lv['user_info_query']= "INSERT INTO
+										 user_info(password,user_role_id,is_internal,is_mail_check,is_active,user_id)
+										 VALUES
+										 ('$param[password]',(SELECT id FROM user_role WHERE sn='$param[user_role_code]'),$lv[ec_id],1,1,1)";
+							
+						
+			$lv['user_info_result'] = $param['rdsql']->exec_query($lv['user_info_query'],'User Info');
+						
+			$lv['user_info_id']     = $param['rdsql']->last_insert_id('user_info');
+						
+			$param['g']->set_system_log(array('user_id'		=> $lv['user_info_id'],
+											  'page_code'	=> $param['action_hash'],
+											  'action_type'	=>  $param['action_code'],
+											  'action'		=> 'Sign Up by  '.$param['user_email']));
+			
+			return 1;
+			
+		} // add user
 		
 ?>
