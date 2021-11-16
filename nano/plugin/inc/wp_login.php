@@ -15,8 +15,8 @@
 							'ACHP' => 'f68a5834818e3b481d2108e3fb0ea5a3', # change password
 							'AFGK' => 'db3aeab2d92092e5586b7375fd885ba0', # forget password
 							'AGTO' => '2d4a92e779d30cc823a3feffafa56c8c', # logout
-							'AOTP' => '98b470c3e60a5c7f23da85efa36cb04f', # otp
-							'ACUE' => 'e9eb891ad083d2470230f6a4b61528ae'
+							'ACUE' => 'e9eb891ad083d2470230f6a4b61528ae', # check user exists
+							'AOTP' => '98b470c3e60a5c7f23da85efa36cb04f'  # otp
 						];
 		
 		if(@$_POST['request'] OR @$_GET['request']){
@@ -95,7 +95,7 @@
 				if($no_row[0]==0){
 					
 					$action_code = 'AAKY';
-					add_new_user([ 'user_name'	=> $user_name,
+					$new_user_id=add_new_user([ 'user_name'	=> $user_name,
 								   'user_email'	=> $user_email,
 								   'user_mobile'=> $user_mobile,
 								   'user_role_code' => 'BAS',
@@ -130,7 +130,7 @@
 						$send = $G->mail_send($MAIL);
 					}
 					
-					$mail_param=array('user_id'=>$last_id,'page_code'=>$PV['GATE_CODE']['AAKY'],'action_type'=>'AAKY','action'=>'Mail->Sign Up by '.$user_email.$msg['REG_MSG']);
+					$mail_param=array('user_id'=>$new_user_id,'page_code'=>$PV['GATE_CODE']['AAKY'],'action_type'=>'AAKY','action'=>'Mail->Sign Up by '.$user_email.$msg['REG_MSG']);
 							 
 					$G->set_system_log($mail_param);
 						
@@ -369,12 +369,19 @@
 				$current_time	= date('is');
 				$pass			= "0".$current_time;
 				//$new_key		= substr($pass,0,6);
-				$new_key		= 'testotp';
-				$password  		=   md5($new_key);
+				$new_key		= substr(str_shuffle(rand()),0,5);
+				$password  		=  md5($new_key);
+				
+				$action_type 	= 'AOTP';
+				$page_code		= $PV['GATE_CODE'][$action_type];
 															
 				if($no_row[0]==1){
+					
 					$set_otp_query = "UPDATE user_info SET password='$password' WHERE $PV[login_email] = '$user_email' ";					
 				    $exe_set_otp_query = $rdsql->exec_query($set_otp_query,'Error! CK Update');
+					
+					$login_user_id = $G->get_one_column(['table'=>'user_info','field'=>'is_internal',
+					                                          'manipulation'=>" WHERE $PV[login_email] = '$user_email' "]);
 					
 					$msg = custom_mail_message(['user_key'   => $new_key]);
 					
@@ -395,40 +402,49 @@
 					   $send = $G->mail_send($MAIL_OTP);
 					}
 					
-					echo '{"status":"1","message":"Verifiy OTP"}';
+					$otp_signin_log = array('user_id'		=> $login_user_id,
+											  'page_code'	=>  $page_code,
+											  'action_type'	=>  $action_type,
+											  'action'		=> 'Sign In by '.$user_email);
 					
-				}else if($no_row[0]==0){
+					$G->set_system_log($otp_signin_log);
+					 
+					echo '{"status":"1","message":"Sign In "}';
 					
-					$action_code = 'AOTP';
-					add_new_user([ 
-								   'user_email'	=> $user_email,								   
-								   'user_role_code' => (get_config('signup_user_role') ?? 'BAS'),
-								   'action_code'	=> $action_code,
-								   'action_hash'	=> $PV['GATE_CODE'][$action_code],
-								   'rdsql'		=> $rdsql,
-								   'g'			=> $G,
-								   'password'	=> $password]);		
-							
-						$msg = custom_mail_message(['user_key'   => $new_key]);
+				}else if($no_row[0]==0){					
 					
-						$MAIL_OTP=array(
-									'from'    => $SG->get_session('mail_send_by').' Admin ',					
-									'to'      => $user_email, //'ratbew@gmail.com',
-									
-									'cc'	  =>  get_config('cc_mail'),
-									'bcc'	  => get_config('bcc_mail'),
-									
-									'subject' =>  $SG->get_session('mail_send_by').' | OTP for Sign In',
-									'message' => $msg['OTP_MSG'],
-								);
-						
-						if($PV['is_smtp_mail']){						
-							mail_send_smtp($MAIL_OTP);
-						}else{
-							$send = $G->mail_send($MAIL_OTP);
-						}
-						
-					echo '{"status":"1","message":"Verifiy OTP"}';
+					$new_user_id = add_new_user([  'user_email'	=> $user_email,								   
+												   'user_role_code' => (get_config('signup_user_role') ?? 'BAS'),
+												   'rdsql'		=> $rdsql,
+												   'g'			=> $G,
+												   'password'	=> $password]);							
+					$msg		 = custom_mail_message(['user_key'   => $new_key]);
+				
+					$MAIL_OTP=array(
+								'from'    => $SG->get_session('mail_send_by').' Admin ',					
+								'to'      => $user_email, //'ratbew@gmail.com',
+								
+								'cc'	  =>  get_config('cc_mail'),
+								'bcc'	  => get_config('bcc_mail'),
+								
+								'subject' =>  $SG->get_session('mail_send_by').' | OTP for Sign In',
+								'message' => $msg['OTP_MSG'],
+							);
+					
+					if($PV['is_smtp_mail']){						
+						mail_send_smtp($MAIL_OTP);
+					}else{
+						$send = $G->mail_send($MAIL_OTP);
+					}
+					
+					$otp_signup_log = array('user_id'		=> $new_user_id,
+											  'page_code'	=> $page_code,
+											  'action_type'	=>  $action_type,
+											  'action'		=> 'Sign Up by '.$user_email);
+					
+					$G->set_system_log($otp_signup_log);
+					
+					echo '{"status":"1","message":"Sign Up"}';
 							
 								   
 				} // new user					
@@ -674,13 +690,8 @@
 			$lv['user_info_result'] = $param['rdsql']->exec_query($lv['user_info_query'],'User Info');
 						
 			$lv['user_info_id']     = $param['rdsql']->last_insert_id('user_info');
-						
-			$param['g']->set_system_log(array('user_id'		=> $lv['user_info_id'],
-											  'page_code'	=> $param['action_hash'],
-											  'action_type'	=>  $param['action_code'],
-											  'action'		=> 'Sign Up by  '.$param['user_email']));
 			
-			return 1;
+			return $lv['user_info_id'];
 			
 		} // add user
 		
