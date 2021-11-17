@@ -1,0 +1,26 @@
+<table  class="table" cellpadding="10px" width="100%" >
+  <thead>
+     <th>S.No.</th>
+   <th>Code</th>
+   <th>Name</th>
+    <th>Entity Attributes</th>
+ </thead>
+<TMPL_LOOP DATA_INFO>
+ <tr>
+   <td><TMPL_VAR __counter__></td>
+   <td><TMPL_VAR CODE></td>
+   <td><TMPL_VAR NAME></td>
+   <td>
+      <table class="table">
+      <TMPL_LOOP ATTRIBUTES>
+          <tr>
+               <td><TMPL_VAR __counter__></td>
+              <td><TMPL_VAR CODE></td>
+              <td><TMPL_VAR SNAME></td>
+          </tr>  
+      </TMPL_LOOP>
+      </table>
+   </td>
+ </tr>
+</TMPL_LOOP>
+</table>
