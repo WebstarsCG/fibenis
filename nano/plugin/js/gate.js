@@ -4,7 +4,9 @@
 	ajxrqst.set_page('plugin/inc/wp_login.php'); 
 	
 	var temp_gate      = new Object({
-				   
+				   	otp_counter:0,
+					otp_interval:'',
+					otp_offset_seconds:60,
 				   action:{'SI':{'id'       :'lbl-sign-in',
 				                  'lbl':'Sign In',
 				                 'className':'glyphicon glyphicon-log-in',
@@ -22,7 +24,9 @@
                                            'CP':{'id':'lbl-change-pass',
 					         'className':'glyphicon glyphicon-sort',
 						 'elements':['chng_currentPassword','change_confirmPassword','chng_newPassword']}}
-                                });
+                                }
+						
+								);
 	
 	// add key
 	
@@ -85,10 +89,12 @@
 	
 	function check_key(){
 		
+		hide_otp();
+		
 		if(validate_check_key()==true){
 			
 			G.showLoader('Verifying...');
-		
+		 
 			var req = 	'&user_email='+GET_E_VALUE('inputEmail')+
 				   	'&password='+GET_E_VALUE('inputPassword')+
 					'&action=CKY&request=1';
@@ -105,7 +111,7 @@
 			
 		}else{
 			action_blink_off('SI');
-			
+			set_otp_interval();
 			//G.bs_alert_error("Please give valid information","SIE");
 			
 			 document.getElementById('inputEmail_warn').innerHTML='Please enter valid information';
@@ -157,6 +163,7 @@
 			   
 			 }else if(Number(tempResponse.status)==-1){
 			   
+					set_otp_interval();	
 			       action_blink_off('SI');
 			      document.getElementById('inputEmail_warn').innerHTML = document.getElementById('inputEmail').dataset.messageMismatch;
 			      set_series({'elements':temp_gate.action.SI.elements,
@@ -165,7 +172,8 @@
 			   
 			 }
 			 else{
-			       action_blink_off('SI');			       
+			       action_blink_off('SI');	
+				   			   
 			       document.getElementById('inputEmail_warn').innerHTML = 'Please check your password';
 			       set_series({'elements':temp_gate.action.SI.elements,
 					   'set_alert':1
@@ -836,27 +844,114 @@
 			var response = JSON.parse(temp_response);
 			
 			if(response.status==1){		
+			
+				
 				G.$('inputEmail').disabled=true;		
+				
 				$('#inputPassword_area').removeClass('hide');
 				G.$('inputPassword').value='';
 				G.$('inputPassword').placeholder = 'Enter the OTP'; 
+				
 				$('#buttonSignIn').addClass('hide');
 				$('#buttonVerifyOTP').removeClass('hide');
-				$('#buttonChangeEmail').removeClass('hide');				
+				
+				set_otp_interval();
+				
+				$('#buttonChangeEmail').removeClass('hide');	
+				
 			}
 		
 	} // end
 	
 	function change_email_otp(){
-			G.$('inputEmail').disabled=false;		
-			G.$('inputEmail').value='';
 			
+			G.$('inputEmail').disabled=false;		
+			G.$('inputEmail').value='';			
 			G.$('inputPassword').value='';
-			$('#inputPassword_area').addClass('hide');
+			
+			$('#inputPassword_area').addClass('hide');			
 			$('#buttonSignIn').removeClass('hide');
 			$('#buttonVerifyOTP').addClass('hide');
+			
+			hide_otp();
+			
 			$('#buttonChangeEmail').addClass('hide');						
 	}
+	
+	//check otp interval
+	function check_otp_interval(){
+			
+			temp_gate.otp_counter++;
+			
+			if(temp_gate.otp_counter==temp_gate.otp_offset_seconds){
+					clear_otp_interval();
+			}else{					
+					$('#buttonResendOTP').html('Resend OTP in '+(temp_gate.otp_offset_seconds-temp_gate.otp_counter)+' Secs');
+			}
+	} // end
+	
+	//check otp interval
+	function set_otp_interval(){		
+		    G.$('buttonResendOTP').setAttribute("disabled", "disabled");
+			$('#buttonResendOTP').removeClass('hide');
+			
+			temp_gate.otp_counter=0;
+			temp_gate.otp_interval=setInterval(check_otp_interval,1000);
+		
+	} // end
+	
+	//check otp interval
+	function clear_otp_interval(){		
+			clearInterval(temp_gate.otp_interval);
+			temp_gate.otp_counter=0;
+			G.$('buttonResendOTP').removeAttribute("disabled");
+			$('#buttonResendOTP').html('Resend OTP');			
+	} // end
+	
+	//hide otp
+	function hide_otp(){		
+			clearInterval(temp_gate.otp_interval);
+			temp_gate.otp_counter=0;
+			G.$('buttonResendOTP').setAttribute("disabled", "disabled");
+			$('#buttonResendOTP').html('Resend OTP');
+			$('#buttonResendOTP').addClass('hide');
+	} // end
+	
+	// resend otp
+	function check_resend_otp(element){
+		
+		var lv = {};
+		
+		if(check_mail(element)==true){
+			hide_otp();
+			G.showLoader('Resending OTP');
+			
+			lv.req = '&user_email='+element.value+
+					 '&action=ROTP&request=1';
+								
+			temp_gate.element = element;
+			ajxrqst.set_url(lv.req);
+			ajxrqst.send_post(check_resend_otp_response);
+		}
+		
+	} // end
+	
+	// check mail otp response
+	function check_resend_otp_response(temp_response){
+			
+			G.hideLoader();
+			
+			var response = JSON.parse(temp_response);
+			
+			if(response.status==1){				
+
+				G.$('inputPassword').value='';
+				G.$('inputPassword').placeholder = 'Enter the OTP'; 
+				
+				set_otp_interval();			
+			}
+		
+	} // end
 	
 	// loader	
 	function show_loader(message){		
