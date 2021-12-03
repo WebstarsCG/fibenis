@@ -127,8 +127,6 @@ $F_SERIES = array(
 
             'input_html' => 'class="w_200" onchange="check_new_entity(this);"',
 
-            'avoid_default_option' => 0,
-
         ) ,
 
         '22' => array(
@@ -257,7 +255,7 @@ $F_SERIES = array(
         ) ,
 
         '19' => array(
-            'field_name' => 'Radio',
+            'field_name' => 'Radio (Contact Attributes)',
 
             'field_id' => 'radio',
 
@@ -265,7 +263,7 @@ $F_SERIES = array(
 
             'is_mandatory' => 0,
 
-            'options' => $G->radio_option_builder(['table' => 'entity_child_base', 'field_label' => 'ln', 'field_value' => 'id', 'where' => " WHERE entity_code='GN'"]) ,
+            'options' => $G->radio_option_builder(['table' => 'entity_attribute', 'field_label' => 'sn', 'field_value' => 'code', 'where' => " WHERE entity_code='CO'"]) ,
 
             'input_html' => ' class="w_200"  style="height:100px !important"  ',
 
@@ -282,12 +280,12 @@ $F_SERIES = array(
 
             'is_mandatory' => 0,
 
-            'options' => [['label' => 'PHP',
-            'value' => 'PH'],
-            ['label' => 'Python',
-            'value' => 'PY'],
-            ['label' => 'Android',
-            'value' => 'AN']],
+            'options' => [['label' 	 => 'Option A',
+							'value'  => 1],
+							['label' => 'Option B',
+							'value'  => 2],
+							['label' => 'Option C',
+							'value'  => 3]],
 
             'is_multistate' => 0,
 
