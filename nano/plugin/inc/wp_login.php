@@ -453,6 +453,50 @@
 			
 		} // end of AOTP
 		
+		// email OTP
+		if(@$_POST['action']=='ROTP'){
+			$user_email = strtolower($_POST['user_email']);	
+			$new_key	= create_otp();
+			$password  	=  md5($new_key);
+			$action_type 	= 'AOTP';
+			$page_code		= $PV['GATE_CODE'][$action_type];
+			
+			$msg		 = custom_mail_message(['user_key'   => $new_key]);
+			
+			$set_rotp_query = "UPDATE user_info SET password='$password' WHERE $PV[login_email] = '$user_email' ";					
+			$exe_set_rotp_query = $rdsql->exec_query($set_rotp_query,'Error! CK Update');					
+			$login_user_id = $G->get_one_column(['table'=>'user_info','field'=>'is_internal',
+											     'manipulation'=>" WHERE $PV[login_email] = '$user_email' "]);					
+				
+			$MAIL_ROTP=array(
+						'from'    => $SG->get_session('mail_send_by').' Admin ',					
+						'to'      => $user_email, //'ratbew@gmail.com',
+						
+						'cc'	  =>  get_config('cc_mail'),
+						'bcc'	  => get_config('bcc_mail'),
+						
+						'subject' =>  $SG->get_session('mail_send_by').' | OTP for Sign In',
+						'message' => $msg['OTP_MSG'],
+					);
+					
+			if($PV['is_smtp_mail']){						
+				mail_send_smtp($MAIL_ROTP);
+			}else{
+				$send = $G->mail_send($MAIL_ROTP);
+			}
+			
+			$otp_signup_log = array('user_id'		=> $login_user_id,
+									  'page_code'	=> $page_code,
+									  'action_type'	=>  $action_type,
+									  'action'		=> 'Sign Up by '.$user_email);
+			
+			$G->set_system_log($otp_signup_log);
+			
+			echo '{"status":"1","message":"Sign In with New OTP"}';
+		
+			
+		} // end
+		
 		// change password
 		
 		if(@$_POST['action']=='CP'){
@@ -694,5 +738,9 @@
 			return $lv['user_info_id'];
 			
 		} // add user
-		
+	
+		// create new password
+		function create_otp(){						
+			return $new_key		= substr(str_shuffle(rand()),0,5);			
+		} //end
 ?>
