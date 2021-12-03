@@ -388,7 +388,7 @@
 								 "debug"    => 0));
 				    
 				    $LOGIN->AddParam('IS_OPEN',$PV['is_open']);
-	    
+					$LOGIN->AddParam('IS_OTP',get_config('is_otp'));
 				    
 		    
 		    
