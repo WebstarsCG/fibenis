@@ -1899,22 +1899,18 @@
 						if(@$value['ro']!=1){
 								
 								
-								if(@$value['no_edit']==1){
-								
+								if(@$value['no_edit']==1){								
 										$key_query.=$value['hidden_field'].'='."'".$_POST["X".$key]."',";
 								}
 								
-								if(@$value['is_mandatory']==1){
-								
+								if(@$value['is_mandatory']==1){								
 										$is_required_flag=1;								
-										$is_required_value.=($value['type']!='file')?$_POST["X".$key]:$_FILES["X".$key]['name'];
+										$is_required_value.=($value['type']!='file')?@$_POST["X".$key]:$_FILES["X".$key]['name'];
 								}
 								
-								if(@($value['child_table'] && $value['child_attr_code'])){
-										
+								if(@($value['child_table'] && $value['child_attr_code'])){										
 										@$_POST["X".$key]=($value['type']=='autocomplete')?@$_POST["X".$key."_hidden"]:@$_POST["X".$key];
-										array_push($vertical_eav,$key);
-																	
+										array_push($vertical_eav,$key);																	
 								}
 								
 								if((@$value['type']!='file') && (!@$value['child_table'])){
