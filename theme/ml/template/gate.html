@@ -10,7 +10,7 @@
 				left:50%;
 				top: 50%;
 				margin-left:-158px;
-				margin-top: -265px;
+				margin-top: -280px !important;
 			 }
 			 
 			 #loader{
@@ -49,7 +49,7 @@
 					
 			
 			 
-			 @media only screen and (max-width: 600px){
+			 @media only screen and (max-width: 768px){
 			 
 			 
 					body{
@@ -61,6 +61,10 @@
 						webkit-box-shadow: none !important;
 					 }
 			 
+					 .login_panel {
+						
+						margin-top: -70% !important;
+					 }
 			 
 					
 					input[type="text"],
@@ -112,6 +116,11 @@
 								padding			: 9px 0px !important;
 					}
 					
+					
+					.fbn-app-intro{
+						padding-left:5%;
+						padding-right:5%;
+					}
 			 }
 			 
 		   <!--.login_panel_area{ margin-top:10%; position:relative;} -->
@@ -124,7 +133,7 @@
 				      
 				      <div class="modal-dialog login_panel modal-dialog modal-sm" >
 				      			 <div class="modal-content">
-		   					   <div class="modal-header">
+		   					   <div class="modal-header align_CM">
 							     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							     <!--<h4 class="modal-title" id="myModalLabel">Welcome</h4>-->
 							     <img src="terminal/default/images/logo_1.png" class="img-responsive">
@@ -191,9 +200,19 @@
 							<span id="lbl-sign-in" class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;
 							Verify OTP
 							</button>
+							
+							<a class="btn  btn-default col-md-12 col-xs-12 clr_gray_a pad_5_tb align_CM hide"
+								type="button"
+								href="JavaScript:check_resend_otp(G.$('inputEmail'))"
+								tabindex="5"
+								id="buttonResendOTP">							
+							Resend OTP
+							</a>
+							
+							
 							<a class="btn  btn-default clr_gray_a btn-sm mar_top_10 hide"
 								type="button"
-								tabindex="5"
+								tabindex="6"
 								href="JavaScript:change_email_otp();"
 								id="buttonChangeEmail">
 							<span id="lbl-sign-in" class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;
