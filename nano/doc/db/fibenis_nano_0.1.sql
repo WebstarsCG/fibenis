@@ -1,12 +1,12 @@
 
 
----11OCT2021
----- Addition of checkbox & radio column
+-- 11OCT2021
+-- Addition of checkbox & radio column
 ALTER TABLE demo ADD type_hidden VARCHAR(64) DEFAULT NULL AFTER text_flat;
 ALTER TABLE demo ADD checkbox VARCHAR(64) DEFAULT NULL AFTER type_hidden;
 ALTER TABLE demo ADD radio VARCHAR(64) DEFAULT NULL AFTER checkbox;
 ALTER TABLE demo ADD checkbox_ms VARCHAR(512) DEFAULT NULL COMMENT 'Multistate Checkbox' AFTER radio;
-ALTER TABLE demo ADD option_code CHAR(2) DEFAULT NULL COMMENT 'Multistate Checkbox' AFTER checkbox_ms ;
+ALTER TABLE demo ADD option_code CHAR(2) DEFAULT NULL COMMENT 'Multistate Checkbox' AFTER checkbox_ms;
 ALTER TABLE demo ADD option_sn VARCHAR(32) DEFAULT NULL COMMENT 'Multistate Checkbox' AFTER option_code;
 
 CREATE OR REPLACE VIEW entity_internal_external as SELECT IF(is_lib=0,'External','Internal') as entity ,count(*) as total_count FROM entity GROUP BY is_lib;
