@@ -342,7 +342,7 @@
 										readonly="true"
 									>
 								    
-									<TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+									<span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 									<span class=message id="message_X<TMPL_VAR field_id>"></span>
 						
@@ -489,7 +489,7 @@
 							 > <!--- end--->
 							  <!--onblur="JavaScript:checkIsMust(this);"-->
 								     
-									 <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+									 <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									 <span id="X<TMPL_VAR field_id>_v_msg">&nbsp;</span>	
 									 <TMPL_IF hint><div class="label_grand_child"><TMPL_VAR hint></div></TMPL_IF>								
 									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
@@ -548,7 +548,7 @@
 										 <TMPL_IF IS_MANDATORY>data-is-must=1</TMPL_IF>
 									 >
 								     
-									 <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+									 <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									 <div><TMPL_VAR hint></div>
 									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
 						</span>
@@ -599,7 +599,7 @@
 								     
 									 
 									
-									 <TMPL_IF is_mandatory><font class="red_star">*</font></TMPL_IF>
+									 <font class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></font>
 									 <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
 						</span>
@@ -634,7 +634,7 @@
 										 
 										 <TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
 									 >
-									 <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+									 <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									 <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
 						</span>
@@ -691,7 +691,7 @@
 										<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" data-input-type="select-multiple" value="">
 									</TMPL_IF>
 								    
-									<TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+									<span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 									<span class=message id="message_X<TMPL_VAR field_id>"></span>
 									
@@ -797,7 +797,7 @@
 												</TMPL_IF>
 												
 											        </select>
-											        <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF><br/>
+											        <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span><br/>
 												<a  href="JavaScript:select_up('X<TMPL_VAR field_id>_RIGHT');selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');" class="icon">Up</a>
 												<a  href="JavaScript:select_down('X<TMPL_VAR field_id>_RIGHT');selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');" class="icon">Down</a>
 												
@@ -850,7 +850,7 @@
 								     
 								     value	= "">     
 								     
-							    <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF><br>
+							    <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span><br>
 							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>
 					  
@@ -920,7 +920,7 @@
 								     type	= "text"
 								     
 								     value	= "0"> </select>    
-							    <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+							    <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>					  
 							    <input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="">
@@ -968,7 +968,7 @@
 							<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
 							style="display:inline-block;"
 							onchange="check_file_in(this);"
-						><TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+						><span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 							 
 						
 						<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
@@ -1008,7 +1008,7 @@
 									   </TMPL_IF>
 									   id="<TMPL_VAR __counter__>"><label><TMPL_VAR LABEL></label></TMPL_LOOP>	
 						<!--- set default-->
-								    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+								    <span class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 									<span class=message id="message_X<TMPL_VAR field_id>"></span>
 									
@@ -1040,7 +1040,7 @@
 								
 								 
 								 <!--- set default-->
-								    <TMPL_IF is_mandatory><span class="red_star">*</span></TMPL_IF>
+								    <span class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 									<span class=message id="message_X<TMPL_VAR field_id>"></span>
 									
@@ -1123,7 +1123,7 @@
 							    
 							    ></textarea>
 								     
-							    <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+							    <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>
 					  </span>
@@ -1139,7 +1139,7 @@
 					  <span class=value>
 							    <textarea id="X<TMPL_VAR field_id>" name="X<TMPL_VAR field_id>" ></textarea>
 								     
-							    <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF><br>
+							    <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span><br>
 							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>
 					  </span>
@@ -1282,7 +1282,7 @@
 							    
 							    ></textarea>
 								     
-							    <TMPL_IF is_mandatory><span id="m_X<TMPL_VAR field_id>" class="red_star">*</span></TMPL_IF>
+							    <span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 							    <span class="message" id="message_X<TMPL_VAR field_id>"></span>
 					  
