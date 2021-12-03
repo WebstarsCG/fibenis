@@ -46,9 +46,9 @@ $F_SERIES = array(
 
             'type' => 'text',
 
-            'allow' => 'd10[.]',
+            'allow' => 'c2,3',
 
-            'is_mandatory' => 0,
+            'is_mandatory' => 1,
 
             'input_html' => 'class="w_60"',
 
@@ -136,19 +136,20 @@ $F_SERIES = array(
             'allow' => 'w2=',
             'is_hide' => 1,
             'ro' => 1,
-            'is_mandatory' => 1,
+            'is_mandatory' => 0,
             'input_html' => 'class="w_50 txt_case_upper" onchange="check_entity_code(this);"',
         ) ,
 
         '23' => array(
             'field_name' => 'New Entity name',
-            'field_id' => 'option_sn',
-            'type' => 'text',
-            'allow' => 'x16',
-            'is_hide' => 1,
-            'ro' => 1,
-            'iis_mandatory' => 1
-        ) ,
+            'field_id'	 => 'option_sn',
+            'type' 		 => 'text',
+            'allow' 	 => 'x16',
+            'is_hide' 	 => 1,
+            'ro' 		 => 1,
+            'is_mandatory' => 0
+        ),
+		
 
         '8' => array(
             'field_name' => 'Option Multiple',
@@ -201,6 +202,8 @@ $F_SERIES = array(
             'field_id' => 'date_flat',
 
             'type' => 'date',
+			
+			'is_mandatory' => 1,
 
         ) ,
 

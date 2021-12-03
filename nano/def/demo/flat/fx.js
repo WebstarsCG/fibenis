@@ -24,9 +24,11 @@
 	function check_new_entity(element){
 		
 			if(element.value==-1){
-				element_show_hide(['22','23'],{'status':'true','is_ro':0});
+				element_show_hide(['22','23'],{'status':true,'is_ro':0});
+				f_series.setValidation(['X22','X23']);
 			}else{
-				element_show_hide(['22','23'],{'status':'false','is_ro':1});
+				element_show_hide(['22','23'],{'status':false,'is_ro':1});
+				f_series.unsetValidation(['X22','X23']);
 			}
 		
 	} // end
