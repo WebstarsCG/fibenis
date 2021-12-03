@@ -1,3 +1,10 @@
+
+<TMPL_IF IS_OTP>
+	<input type="hidden" id="is_otp" name="is_otp" value=1>
+<TMPL_ELSE>
+	<input type="hidden" id="is_otp" name="is_otp" value=0>
+</TMPL_IF>
+
 <!-- Modal -->
 <div class="modal fade" id="myModalSignIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="width:300px">

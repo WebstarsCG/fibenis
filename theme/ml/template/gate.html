@@ -185,6 +185,9 @@
 								  
 						
 						<div class="modal-footer">	
+						
+							<input type="hidden" id="is_otp" name="is_otp" value=1>
+						
 							<button class="btn  btn-primary btn-sm"
 								type="button"
 								onclick="JavaScript:check_mail_otp(G.$('inputEmail'))"
@@ -301,6 +304,9 @@
 								  </div>
 						<!--footer-->
 						<div class="modal-footer">
+						
+								<input type="hidden" id="is_otp" name="is_otp" value=0>
+						
 								<TMPL_IF IS_OPEN>
 								 <a href="#" class="pad_10_b btn btn-success" data-toggle="modal" data-target="#myModal_signUp">
 								 <span class="glyphicon glyphicon-edit clr_green" aria-hidden="true"></span>

@@ -4,6 +4,7 @@
 	ajxrqst.set_page('plugin/inc/wp_login.php'); 
 	
 	var temp_gate      = new Object({
+		
 				   	otp_counter:0,
 					otp_interval:'',
 					otp_offset_seconds:60,
@@ -89,7 +90,9 @@
 	
 	function check_key(){
 		
-		hide_otp();
+		if(GET_E_VALUE('is_otp')==1){
+			hide_otp();
+		}
 		
 		if(validate_check_key()==true){
 			
@@ -111,7 +114,10 @@
 			
 		}else{
 			action_blink_off('SI');
-			set_otp_interval();
+			
+			if(GET_E_VALUE('is_otp')==1){
+				set_otp_interval();
+			}
 			//G.bs_alert_error("Please give valid information","SIE");
 			
 			 document.getElementById('inputEmail_warn').innerHTML='Please enter valid information';
@@ -163,7 +169,8 @@
 			   
 			 }else if(Number(tempResponse.status)==-1){
 			   
-					set_otp_interval();	
+					if(GET_E_VALUE('is_otp')==1){set_otp_interval();}
+					
 			       action_blink_off('SI');
 			      document.getElementById('inputEmail_warn').innerHTML = document.getElementById('inputEmail').dataset.messageMismatch;
 			      set_series({'elements':temp_gate.action.SI.elements,
