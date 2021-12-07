@@ -189,7 +189,7 @@
                 $F_SERIES['data'][1]['avoid_default_option'] = 1;
                 $F_SERIES['back_to']['is_back_button'] = 1;
                 $F_SERIES['back_to']['back_menu_off']=@$_GET['menu_off'];
-		$F_SERIES['back_to']['back_default_addon']=@$_GET['default_addon'];
+				$F_SERIES['back_to']['back_default_addon']=@$_GET['default_addon'];
 		
                 $F_SERIES['add_button']['is_add'] = 0;
                 $LAYOUT	    = 'layout_full';

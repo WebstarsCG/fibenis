@@ -6,9 +6,6 @@
 
 	$PV['MASTER']   = (!@$_SESSION['meta_title'])?$SG->set_get_master_session($COACH['name_hash']):$_SESSION;
 	
-	#print_r($PV['COOKIE']);
-	
-	#print_r($_SESSION);
 
 	if(is_file($LIB_PATH."/inc/".$PAGE.".php")){
 		
@@ -42,7 +39,7 @@
 		
 	
 	$CONTENT[@$PAGE]   	= 	array(
-						        'add_on'	=> '',
+						    'add_on'	=> '',
 							'layout'        => $LAYOUT,
 							'lib_path'      => $LIB_PATH,
 							
