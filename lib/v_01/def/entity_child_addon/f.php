@@ -10,14 +10,12 @@
 				#Table field
                     
 				'data'	=>   array(
-						   '2' =>array(
-							       'field_name'=>'Entity Code',
-							       'field_id' => 'entity_code',                                                               
-                                                               'type' => 'hidden',                                                                                                                              
-                                                               'is_mandatory'=>1)
-						
-				    
-                                ),
+								'2' =>array(
+										   'field_name'=>'Entity Code',
+										   'field_id' => 'entity_code',                                                               
+										   'type' => 'hidden',                                                 
+										   'is_mandatory'=>1)
+							),
                                     
 				#Table Name
 				
@@ -31,6 +29,8 @@
 				# Default Additional Column
                                 
 				'is_user_id'       => 1,
+				
+				'is_field_id_as_token'=>1,
 								
 				# Communication
 								
@@ -45,11 +45,7 @@
 				
 				'divider' => 'tab', 
 				
-				'gx'=>1,
-				
-				
-				
-                                
+				'gx'=>1,                                
 			);
     
 			if(isset($_GET['default_addon'])){
@@ -84,11 +80,8 @@
     
 
 			if(isset($_GET['menu_off'])){
-
 			    $menu_off = @$_GET['menu_off'];
-			    $F_SERIES['back_to']['back_menu_off']=$menu_off;
-			    
+			    $F_SERIES['back_to']['back_menu_off']=$menu_off;			    
 			    $F_SERIES['back_to']['is_back_button']=0;
-
 			}     
 ?>
