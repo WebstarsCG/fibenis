@@ -8,8 +8,7 @@
 		
 		$PAGE_ID   = $PAGE;
 		
-		$PAGE_INFO = '';
-				
+		$PAGE_INFO = '';	
 		# loader
 		
 		if(($PAGE_ID=='t_series') || ($PAGE_ID=='t') || ($PAGE_ID=='tx') ){
@@ -18,19 +17,27 @@
 							'page_name' => $PAGE_NAME,
 							'lib_path'  => $LIB_PATH
 							));					
+				include($router['action']);
+				
+				$PAGE_CODE_HASH = md5($PAGE_CODE);
 				
 				if($router['action']){
 						
-						if(!$USER_ID && !$T_SERIES['session_off']){					
-								$SG->s_destroy('index.php');		
-						}else if($USER_ID){										
-								
-								$PAGE_CODE_HASH = md5($PAGE_CODE);
-								//$SG->check_entry($SG->get_permission($PAGE_CODE_HASH));
-								$SG->check_entry($SG->get_permission_direct($PAGE_CODE_HASH));	
-						}
+						if(@$_GET['session']=='off'){
 						
-						include($router['action']);
+								if(!$T_SERIES['session_off']){					
+										$SG->s_destroy('index.php');
+								}							
+						}else{
+							if(!$USER_ID && !$T_SERIES['session_off']){					
+									$SG->s_destroy('index.php');		
+							}else if($USER_ID){										
+									
+									
+									//$SG->check_entry($SG->get_permission($PAGE_CODE_HASH));
+									$SG->check_entry($SG->get_permission_direct($PAGE_CODE_HASH));	
+							}
+						}
 						
 						$T_SERIES['page_code'] = $PAGE_CODE_HASH;						
 		
