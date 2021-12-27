@@ -609,6 +609,8 @@
 	fieldset .value .radio{
 		border      : 1px solid #ababab;
 		display		: inline-block;
+		margin-left	: unset !important;
+		position	: relative !important;
 		width		: 20px;
 	}
 		
