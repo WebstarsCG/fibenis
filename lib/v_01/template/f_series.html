@@ -344,12 +344,14 @@
 								    
 									<span id="m_X<TMPL_VAR field_id>" class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+									 <span id="X<TMPL_VAR field_id>_v_msg">&nbsp;</span>	
 									<span class=message id="message_X<TMPL_VAR field_id>"></span>
-						
+							
 									<input								
 										id	= "X<TMPL_VAR field_id>"
 										name	= "X<TMPL_VAR field_id>"  								
 										autocomplete="off"
+										data-input-type="DT"
 										<TMPL_VAR input_html>
 										<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
 										type    = "hidden"
