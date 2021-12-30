@@ -2101,7 +2101,7 @@
 										
 										}elseif($existing_doc_name){
 												
-												if($temp_file_column['child_table'] && $temp_file_column['child_attr_code']){
+												if(@$temp_file_column['child_table'] && @$temp_file_column['child_attr_code']){
 														
 														$image_update_query = "UPDATE
 																				$temp_file_column[child_table]
