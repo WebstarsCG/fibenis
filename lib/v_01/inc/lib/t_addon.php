@@ -1,0 +1,254 @@
+<?php
+
+
+        function t_addon($param){
+			
+			global $T_ADDON_ACTION;
+            
+			$lv = [ 
+					'template_cols'						=> [],
+					'data' 								=> [],
+				    'dkeys'								=> ['token','input_type','sn'],
+										 
+					'input_type'   						=> ['ITTX'=>['table'=>'varchar'],
+															'ITNM'=>['table'=>'decimal'],
+															'ITHD'=>['table'=>''],
+															'ITLA'=>['table'=>''],
+															'ITIG'=>['table'=>'num'],
+															'ITTA'=>['table'=>'text'],
+															'ITCE'=>['table'=>'text'],
+															'ITTG'=>['table'=>'bool'],
+															'ITTE'=>['table'=>'text'],
+															'ITSL'=>['table'=>'varchar'],									
+															'ITML'=>['table'=>'varchar'],
+															'ITFT'=>['table'=>'text'],
+															'ITFD'=>['table'=>'varchar'],
+															'ITFI'=>['table'=>'varchar'],
+															'ITDT'=>['table'=>'date'],
+															'ITRG'=>['table'=>'varchar'],
+															'ITTB'=>['table'=>'varchar']],
+					'key_filter'						=> ''
+				];
+																
+				$lv['counter'] = ['row'=>1];
+																
+				$lv['t_query'] = "SELECT
+											token,
+											get_ecb_av_addon_varchar(id,'APIT') as input_type,											
+											sn,
+											get_ecb_av_addon_varchar(id,'APTN') as tg_on_label,
+											get_ecb_av_addon_varchar(id,'APTF') as tg_off_label,
+											get_ecb_av_addon_varchar(id,'APSL') as select_option,
+											get_ecb_av_addon_varchar(id,'APFO') as grid_detail
+											
+								FROM
+											entity_child_base
+								WHERE
+											entity_code='$param[default_addon]' AND
+											is_active = 1 ORDER BY line_order";
+
+							
+				$lv['t_query_result']      = $param['rdsql']->exec_query("$lv[t_query]","Error t_addon child");
+				
+				while($lv['t_query_info']  = $param['rdsql']->data_fetch_assoc($lv['t_query_result'])){
+					
+						$temp = [];
+						$lv['token'] = $lv['t_query_info']['token'];
+						
+						$template_col = $lv['t_query_info'];
+
+						if($template_col['input_type'] && $template_col['token']){
+							
+							$temp['field']="get_exav_addon_".$lv['input_type'][$template_col['input_type']]['table'].
+															"(id,'".$lv['t_query_info']['token']."')";
+							
+							if(@$T_ADDON_ACTION[$template_col['input_type']]){
+								$temp=$T_ADDON_ACTION[$template_col['input_type']]($temp,$lv['t_query_info']);
+							}
+							
+							if(@$desk_col['col_func']){
+								
+								if(preg_match('/(this)/',$template_col['col_func'])==0){  // get_ecb_sn_by_token ->  get_ecb_sn_by_token(<current result>)											
+									$temp['field']=	$template_col['col_func'].'('.$temp['field'].')';
+								
+								}else{ // get_exav_addon_varchar([[this]],'FTTX') ->  get_exav_addon_varchar(<current_result>,'FTTX')			
+									$temp['field']=str_replace('[[this]]',$temp['field'],$template_col['col_func']);									
+								}
+							}																										
+
+							$lv['data'][$lv['token']."_label"]=['field'=>"'".$lv['t_query_info']['sn']."'"];
+							
+							if(@$temp['template_content_text']){
+								$lv['col_template']="<table class='table table-stripped'><TMPL_LOOP $lv[token]>$temp[template_content_text]</TMPL_LOOP></table>";
+								unset($temp['template_content_text']);
+							}else{
+								$lv['col_template']="<TMPL_VAR $lv[token]>";
+							}
+							
+							$lv['data'][$lv['token']]=$temp;
+							
+							array_push($lv['template_cols'],"<div class='col-md-12 $lv[token]'>".
+																 " <div class='col-md-6 fbn-lbl'><TMPL_VAR $lv[token]_label></div>".
+																 " <div class='col-md-6 fbn-val'>$lv[col_template]</div>".
+														     "</div>\n");
+														
+							$lv['counter']['row']++;
+						}
+					
+				} // end
+																
+				// filter
+				if(@$param['default_addon']){																	
+					$lv['key_filter'] = " AND entity_code='$param[default_addon]'";			
+				}
+				
+				
+				return ['data'      =>$lv['data'],
+						'key_filter'=>$lv['key_filter'],
+						'template_content'=>implode($lv['template_cols'],'')
+						]; 
+
+        } // end
+	
+	
+		$T_ADDON_ACTION = [];
+		
+		$T_ADDON_ACTION['ITTG'] = function($col,$attr){
+			
+			$col['filter_out']= function($in){
+													$lv=[];
+													$lv['on_label'] = 'Yes';
+													$lv['off_label'] = 'No';
+													
+													$lv['status'] = ($in==1)?$lv['on_label']:$lv['off_label'];		
+													
+													return "<div class=$lv[status]>$lv[status]</div>"; 
+								}; // end
+								
+			return $col;				
+			
+		}; // end
+		
+		
+		$T_ADDON_ACTION['ITSL'] = function($col,$attr){
+		
+			$lv = [];
+			
+			$lv['field'] = $col['field'];
+			
+			$lv['select_option'] = json_decode($attr['select_option'],true);
+			
+			$lv['select_option_table'] = $lv['select_option'][0][0];
+			
+			$lv['select_option_table_lc'] = strtolower($lv['select_option'][0][0]);
+			
+			
+			if($lv['select_option_table_lc']=='entity_child_base'){
+				$col['field']="get_ecb_sn_by_token($col[field])";
+			}else if($lv['select_option_table_lc']=='entity_child'){
+				//$col['field']="get_ecb_sn_by_token($col[field])";
+			}
+			
+			return $col;				
+			
+		}; // end
+		
+		$T_ADDON_ACTION['ITML'] = function($col,$attr){
+						
+			$lv = [];
+			
+			$lv['field'] = $col['field'];
+			
+			$lv['select_option'] = json_decode($attr['select_option'],true);
+			
+			$lv['select_option_table'] = $lv['select_option'][0][0];
+			
+			$lv['select_option_table_lc'] = strtolower($lv['select_option'][0][0]);
+			
+			//SELECT GROUP_CONCAT(sn) FROM entity_child_base WHERE  token IN('TKBDGEN','TKBDHDU')
+			
+			if($lv['select_option_table_lc']=='entity_child_base'){
+				
+				$lv['tokens'] = explode(',',$col['field']);	
+				$lv['tokens_quoted'] = array_map(function($a){ return "'$a'";},$lv['tokens']);				
+				$lv['tokens_neutralized'] = implode(',',$lv['tokens_quoted']);	
+				
+				$col['filter_out'] = function($in){
+					
+					$lv= [];
+					
+					global $G;
+					
+					$lv['tokens'] = explode(',',$in);	
+					$lv['tokens_quoted'] = array_map(function($a){ return "'$a'";},$lv['tokens']);				
+				    $lv['tokens_neutralized'] = implode(',',$lv['tokens_quoted']);	
+					
+					return $G->get_one_column(['table'=>'entity_child_base',
+												   'field'=>'group_concat(sn)',
+												   'manipulation'=>" WHERE token IN($lv[tokens_neutralized])"]);
+					
+				};
+			
+			} // end
+			
+			return $col;				
+			
+		}; // end
+		
+		
+		$T_ADDON_ACTION['ITDT'] = function($col,$attr){		
+		
+			$col['field']="date_format($col[field],'%d-%b-%Y')";			
+			return $col;				
+			
+		}; // end
+		
+		
+		$T_ADDON_ACTION['ITFT'] = function($col,$attr){		
+		
+			$lv= ['grid_columns'    =>[],
+				  'grid_row_counter'=>1,
+				  'template_content'=>[]
+				 ];
+		
+			$attr['grid_detail'] = json_decode($attr['grid_detail'],true);
+			
+			
+			array_push($lv['template_content'],'<tr>');
+			
+			foreach($attr['grid_detail'] as $grid_index=>$grid_row){
+				
+				list($lv['label'],$lv['width'],$lv['input_type']) = $grid_row;
+				
+				
+				
+				if($lv['label'] && $lv['width'] && $lv['input_type']){
+					
+					$lv['col_key'] = "C_".$lv['grid_row_counter'];
+					
+					// field
+					$lv['grid_columns'][$lv['grid_row_counter']] = array('key'=>$lv['col_key']); 
+
+					// template construction					
+					array_push($lv['template_content'],"<td><TMPL_VAR $lv[col_key]></td>");
+					
+					$lv['grid_row_counter']++;
+					
+				}
+				
+				
+			
+			} // end of grid 
+			
+			array_push($lv['template_content'],'</tr>');
+			
+			
+			$col['data'] = $lv['grid_columns'];
+			$col['template_content_text'] = implode('',$lv['template_content']);
+			
+			return $col;				
+			
+		}; // end
+	
+
+?>	
