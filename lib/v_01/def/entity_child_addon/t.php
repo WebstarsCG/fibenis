@@ -24,18 +24,22 @@
 		);
 		
 		
-	$T_SERIES['temp'] = t_addon(['default_addon'=>$_GET['default_addon'],
-								  't_series'     => ['data'=>$T_SERIES['data']],
-								  'rdsql'        => $rdsql
-						]);
-						
-	$T_SERIES['data'] = $T_SERIES['temp']['data'];
+	if(@$_GET['default_addon']){	
 	
-	$T_SERIES['key_filter'] = $T_SERIES['temp']['key_filter'];
-	
-	$T_SERIES['template_content'] =  "<TMPL_LOOP DATA_INFO>".$T_SERIES['temp']['template_content']."</TMPL_LOOP>";
+		$default_addon = $_GET['default_addon'];
+		
+		$T_SERIES['temp'] = t_addon(['default_addon'=>['entity_code'=>$_GET['default_addon']],
+									  't_series'     => ['data'=>$T_SERIES['data']],
+									  'rdsql'        => $rdsql
+							]);
+							
+		$T_SERIES['data'] = $T_SERIES['temp']['data'];
+		
+		$T_SERIES['key_filter'] = " AND entity_code='$default_addon'";	
+		
+		$T_SERIES['template_content'] =  "<TMPL_LOOP DATA_INFO>".$T_SERIES['temp']['template_content']."</TMPL_LOOP>";
 										
-	#print_r($T_SERIES['temp']);
+	}
 
 	
 ?>

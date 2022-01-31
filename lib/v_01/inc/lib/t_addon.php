@@ -7,7 +7,10 @@
             
 			$lv = [ 
 					'template_cols'						=> [],
-					'data' 								=> [],
+					'data' 								=> @$param['t_series']['data'],
+					'template_content'					=> @$param['t_series']['template_content'],
+					'entity_code'						=> @$param['default_addon']['entity_code'],
+					'entity_tokens'						=> @$param['default_addon']['tokens'],
 				    'dkeys'								=> ['token','input_type','sn'],
 										 
 					'input_type'   						=> ['ITTX'=>['table'=>'varchar'],
@@ -31,6 +34,12 @@
 				];
 																
 				$lv['counter'] = ['row'=>1];
+				
+				$lv['token_filter'] = (@$lv['entity_tokens'])?"AND token IN(".implode(',',
+																		array_map(function($a){return "'$a'";},
+																				  $lv['entity_tokens'])
+																		).")":''; 
+			
 																
 				$lv['t_query'] = "SELECT
 											token,
@@ -40,78 +49,88 @@
 											get_ecb_av_addon_varchar(id,'APTF') as tg_off_label,
 											get_ecb_av_addon_varchar(id,'APSL') as select_option,
 											get_ecb_av_addon_varchar(id,'APFO') as grid_detail
-											
 								FROM
 											entity_child_base
 								WHERE
-											entity_code='$param[default_addon]' AND
-											is_active = 1 ORDER BY line_order";
+											entity_code='$lv[entity_code]' $lv[token_filter]
+                      									AND is_active = 1 
+								ORDER BY 
+											line_order";
 
 							
 				$lv['t_query_result']      = $param['rdsql']->exec_query("$lv[t_query]","Error t_addon child");
 				
+				// each field
 				while($lv['t_query_info']  = $param['rdsql']->data_fetch_assoc($lv['t_query_result'])){
 					
-						$temp = [];
-						$lv['token'] = $lv['t_query_info']['token'];
-						
-						$template_col = $lv['t_query_info'];
+						$col = [];						
+						$lv['token'] = $lv['t_query_info']['token'];						
+						$collate_col = $lv['t_query_info'];
 
-						if($template_col['input_type'] && $template_col['token']){
+						if($collate_col['input_type'] && $collate_col['token']){
 							
-							$temp['field']="get_exav_addon_".$lv['input_type'][$template_col['input_type']]['table'].
-															"(id,'".$lv['t_query_info']['token']."')";
+							if(@$lv['input_type'][$collate_col['input_type']]['table']){
 							
-							if(@$T_ADDON_ACTION[$template_col['input_type']]){
-								$temp=$T_ADDON_ACTION[$template_col['input_type']]($temp,$lv['t_query_info']);
+								$col['field']="get_exav_addon_".$lv['input_type'][$collate_col['input_type']]['table'].
+																"(id,'".$lv['t_query_info']['token']."')";
+							}else{
+								$col['field']= "'0'";	
 							}
 							
-							if(@$desk_col['col_func']){
-								
-								if(preg_match('/(this)/',$template_col['col_func'])==0){  // get_ecb_sn_by_token ->  get_ecb_sn_by_token(<current result>)											
-									$temp['field']=	$template_col['col_func'].'('.$temp['field'].')';
-								
-								}else{ // get_exav_addon_varchar([[this]],'FTTX') ->  get_exav_addon_varchar(<current_result>,'FTTX')			
-									$temp['field']=str_replace('[[this]]',$temp['field'],$template_col['col_func']);									
-								}
-							}																										
+							if(@$T_ADDON_ACTION[$collate_col['input_type']]){
+								$col=$T_ADDON_ACTION[$collate_col['input_type']]($col,$lv['t_query_info']);
+							}																						
 
 							$lv['data'][$lv['token']."_label"]=['field'=>"'".$lv['t_query_info']['sn']."'"];
 							
-							if(@$temp['template_content_text']){
-								$lv['col_template']="<table class='table table-stripped'><TMPL_LOOP $lv[token]>$temp[template_content_text]</TMPL_LOOP></table>";
-								unset($temp['template_content_text']);
+							if(@$col['template_content_text']){
+								$lv['col_template']="<table class='table table-stripped fbn-t-tbl'>".
+								                            "$col[template_heading_text]".   
+															"<TMPL_LOOP $lv[token]>$col[template_content_text]</TMPL_LOOP>".
+													"</table>";
+								
+								unset($col['template_heading_text']);
+								unset($col['template_content_text']);
+																
 							}else{
-								$lv['col_template']="<TMPL_VAR $lv[token]>";
+								$lv['col_template']="<TMPL_IF $lv[token]><TMPL_VAR $lv[token]>
+								                     <TMPL_ELSE><span class='fbn-t-na'>NA</span>
+													 </TMPL_IF>";
 							}
 							
-							$lv['data'][$lv['token']]=$temp;
-							
-							array_push($lv['template_cols'],"<div class='col-md-12 $lv[token]'>".
-																 " <div class='col-md-6 fbn-lbl'><TMPL_VAR $lv[token]_label></div>".
-																 " <div class='col-md-6 fbn-val'>$lv[col_template]</div>".
-														     "</div>\n");
-														
+							$lv['data'][$lv['token']]=$col;
+							$lv['template_col_content'] = (@$col['is_heading'])?"<div class='col-md-12 fbn-t-row $lv[token]'>".
+																 "<template>$lv[col_template]</template><div class='col-md-12  fbn-t-head'>
+																 <TMPL_VAR $lv[token]_label></div></div>\n":
+																 "<div class='col-md-12 fbn-t-row $lv[token]'>".
+																	" <div class='col-md-6 fbn-t-lbl'><TMPL_VAR $lv[token]_label></div>".
+																	" <div class='col-md-6 fbn-t-val'>$lv[col_template]</div>".
+																 "</div>\n";
+															
+							array_push($lv['template_cols'],$lv['template_col_content']);
 							$lv['counter']['row']++;
-						}
+							
+						} // end of valid input
 					
-				} // end
-																
-				// filter
-				if(@$param['default_addon']){																	
-					$lv['key_filter'] = " AND entity_code='$param[default_addon]'";			
-				}
-				
-				
-				return ['data'      =>$lv['data'],
-						'key_filter'=>$lv['key_filter'],
-						'template_content'=>implode($lv['template_cols'],'')
+				} // end of each field
+							
+				$lv['template_cols_text'] = implode('',$lv['template_cols']);			
+							
+				return ['data'      =>$lv['data'],				
+						'template_content'=>((@$lv['template_content'])?(@$lv['template_content'].$lv['template_cols_text']):
+																		$lv['template_cols_text'])
 						]; 
 
         } // end
 	
 	
 		$T_ADDON_ACTION = [];
+		
+		$T_ADDON_ACTION['ITHD'] = function($col,$attr){
+			$col['is_heading'] = 1;			
+			$col['field']	   ="'0'";				
+			return $col;
+		}; // end
 		
 		$T_ADDON_ACTION['ITTG'] = function($col,$attr){
 			
@@ -127,8 +146,7 @@
 								
 			return $col;				
 			
-		}; // end
-		
+		}; // end		
 		
 		$T_ADDON_ACTION['ITSL'] = function($col,$attr){
 		
@@ -208,19 +226,19 @@
 		
 			$lv= ['grid_columns'    =>[],
 				  'grid_row_counter'=>1,
+				  'heading'			=>[],
 				  'template_content'=>[]
 				 ];
 		
-			$attr['grid_detail'] = json_decode($attr['grid_detail'],true);
+			$attr['grid_detail'] = json_decode($attr['grid_detail'],true);			
 			
+			array_push($lv['heading'],'<tr>');
+			array_push($lv['template_content'],"<TMPL_IF C_$lv[grid_row_counter]><tr>");
 			
-			array_push($lv['template_content'],'<tr>');
-			
+			// parse grid detail
 			foreach($attr['grid_detail'] as $grid_index=>$grid_row){
 				
 				list($lv['label'],$lv['width'],$lv['input_type']) = $grid_row;
-				
-				
 				
 				if($lv['label'] && $lv['width'] && $lv['input_type']){
 					
@@ -228,22 +246,23 @@
 					
 					// field
 					$lv['grid_columns'][$lv['grid_row_counter']] = array('key'=>$lv['col_key']); 
+		
+					// column
+					array_push($lv['heading'],"<th>$lv[label]</th>");
 
 					// template construction					
 					array_push($lv['template_content'],"<td><TMPL_VAR $lv[col_key]></td>");
 					
-					$lv['grid_row_counter']++;
-					
+					$lv['grid_row_counter']++;					
 				}
 				
-				
-			
 			} // end of grid 
 			
-			array_push($lv['template_content'],'</tr>');
-			
+			array_push($lv['template_content'],'</tr></TMPL_IF>');
+			array_push($lv['heading'],"</tr>");			
 			
 			$col['data'] = $lv['grid_columns'];
+			$col['template_heading_text'] = implode('',$lv['heading']);
 			$col['template_content_text'] = implode('',$lv['template_content']);
 			
 			return $col;				
