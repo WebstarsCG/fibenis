@@ -100,8 +100,13 @@
 							
 							$lv['data'][$lv['token']]=$col;
 							$lv['template_col_content'] = (@$col['is_heading'])?"<div class='col-md-12 fbn-t-row $lv[token]'>".
+<<<<<<< HEAD
 																 "<template>$lv[col_template]</template><div class='col-md-12  fbn-t-head'>
 																 <TMPL_VAR $lv[token]_label></div></div>\n":
+=======
+																 " <div class='col-md-12  fbn-t-head'".
+																        " data-hide='$lv[col_template]'><TMPL_VAR $lv[token]_label></div></div>\n":
+>>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
 																 "<div class='col-md-12 fbn-t-row $lv[token]'>".
 																	" <div class='col-md-6 fbn-t-lbl'><TMPL_VAR $lv[token]_label></div>".
 																	" <div class='col-md-6 fbn-t-val'>$lv[col_template]</div>".
@@ -113,12 +118,24 @@
 						} // end of valid input
 					
 				} // end of each field
+<<<<<<< HEAD
 							
 				$lv['template_cols_text'] = implode('',$lv['template_cols']);			
 							
 				return ['data'      =>$lv['data'],				
 						'template_content'=>((@$lv['template_content'])?(@$lv['template_content'].$lv['template_cols_text']):
 																		$lv['template_cols_text'])
+=======
+																
+				// filter
+				if(@$param['default_addon']){																	
+					$lv['key_filter'] = " AND entity_code='$param[default_addon]'";			
+				}
+				
+				return ['data'      =>$lv['data'],
+						'key_filter'=>$lv['key_filter'],
+						'template_content'=>implode('',$lv['template_cols'])
+>>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
 						]; 
 
         } // end
@@ -233,7 +250,11 @@
 			$attr['grid_detail'] = json_decode($attr['grid_detail'],true);			
 			
 			array_push($lv['heading'],'<tr>');
+<<<<<<< HEAD
 			array_push($lv['template_content'],"<TMPL_IF C_$lv[grid_row_counter]><tr>");
+=======
+			array_push($lv['template_content'],'<tr>');
+>>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
 			
 			// parse grid detail
 			foreach($attr['grid_detail'] as $grid_index=>$grid_row){
@@ -258,7 +279,11 @@
 				
 			} // end of grid 
 			
+<<<<<<< HEAD
 			array_push($lv['template_content'],'</tr></TMPL_IF>');
+=======
+			array_push($lv['template_content'],'</tr>');
+>>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
 			array_push($lv['heading'],"</tr>");			
 			
 			$col['data'] = $lv['grid_columns'];
