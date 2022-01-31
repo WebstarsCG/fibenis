@@ -42,9 +42,7 @@
 										
 	}
 
-	$T_SERIES['key_filter'] = $T_SERIES['temp']['key_filter'];
 	
-	$T_SERIES['template_content'] =  "<TMPL_LOOP DATA_INFO>".$T_SERIES['temp']['template_content']."</TMPL_LOOP>";
 
 
 
