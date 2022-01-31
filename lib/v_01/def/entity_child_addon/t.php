@@ -10,8 +10,9 @@
 			'data'  	=>	array(),	
 			
 			'key_id' 	=> 'id',
-			'key_filter'=> " AND entity_code='FT'",
+			//'key_filter'=> " AND entity_code='FT'",
 			
+			'show_query'=>0,
 			
 			
 			// save data 
@@ -34,8 +35,7 @@
 	$T_SERIES['key_filter'] = $T_SERIES['temp']['key_filter'];
 	
 	$T_SERIES['template_content'] =  "<TMPL_LOOP DATA_INFO>".$T_SERIES['temp']['template_content']."</TMPL_LOOP>";
-										
-	#print_r($T_SERIES['temp']);
+
 
 	
 ?>
