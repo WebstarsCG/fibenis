@@ -84,7 +84,7 @@
 							$lv['data'][$lv['token']."_label"]=['field'=>"'".$lv['t_query_info']['sn']."'"];
 							
 							if(@$col['template_content_text']){
-								$lv['col_template']="<table class='table table-stripped fbn-t-tbl'>".
+								$lv['col_template']="<table class=\"inner\" cellpadding=\"5px\">".
 								                            "$col[template_heading_text]".   
 															"<TMPL_LOOP $lv[token]>$col[template_content_text]</TMPL_LOOP>".
 													"</table>";
@@ -93,19 +93,23 @@
 								unset($col['template_content_text']);
 																
 							}else{
-								$lv['col_template']="<TMPL_IF $lv[token]><TMPL_VAR $lv[token]>
-								                     <TMPL_ELSE><span class='fbn-t-na'>NA</span>
-													 </TMPL_IF>";
+								$lv['col_template']="<TMPL_IF $lv[token]><TMPL_VAR $lv[token]><TMPL_ELSE><span class=\"na\">NA</span></TMPL_IF>";
 							}
 							
 							$lv['data'][$lv['token']]=$col;
-							$lv['template_col_content'] = (@$col['is_heading'])?"<div class='col-md-12 fbn-t-row $lv[token]'>".
-																 "<template>$lv[col_template]</template><div class='col-md-12  fbn-t-head'>
-																 <TMPL_VAR $lv[token]_label></div></div>\n":
-																 "<div class='col-md-12 fbn-t-row $lv[token]'>".
-																	" <div class='col-md-6 fbn-t-lbl'><TMPL_VAR $lv[token]_label></div>".
-																	" <div class='col-md-6 fbn-t-val'>$lv[col_template]</div>".
-																 "</div>\n";
+							/* $lv['template_col_content'] = (@$col['is_heading'])?"<div class='fbn-t-row $lv[token]'>\n".
+																 "<template>$lv[col_template]</template>\n<div class='col-md-12  fbn-t-head'><TMPL_VAR $lv[token]_label></div>\n</div>\n":
+																 "<div class='col-md-12 fbn-t-row $lv[token]'>\n".
+																	"\t<div class='fbn-t-lbl'><TMPL_VAR $lv[token]_label></div>\n".
+																	"\t<div class='fbn-t-val'>$lv[col_template]</div>\n".
+																 "</div>\n"; */
+																 
+					  $lv['template_col_content'] = (@$col['is_heading'])?"<tr class=\"$lv[token]\">\n".
+													 "<div class=\"template\">$lv[col_template]</div><th class=\"heading\" colspan=\"2\"><TMPL_VAR $lv[token]_label></th></tr>\n":
+													 "<tr class=\"$lv[token]\">\n".
+														"\t<td class=\"label\"><TMPL_VAR $lv[token]_label></td>\n".
+														"\t<td class=\"detail\">$lv[col_template]</td>\n".
+													 "</tr>\n";
 															
 							array_push($lv['template_cols'],$lv['template_col_content']);
 							$lv['counter']['row']++;
@@ -141,7 +145,7 @@
 													
 													$lv['status'] = ($in==1)?$lv['on_label']:$lv['off_label'];		
 													
-													return "<div class=$lv[status]>$lv[status]</div>"; 
+													return "<div class=\"$lv[status]\">$lv[status]</div>"; 
 								}; // end
 								
 			return $col;				
