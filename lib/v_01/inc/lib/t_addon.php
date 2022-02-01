@@ -84,11 +84,8 @@
 							$lv['data'][$lv['token']."_label"]=['field'=>"'".$lv['t_query_info']['sn']."'"];
 							
 							if(@$col['template_content_text']){
-<<<<<<< HEAD
+
 								$lv['col_template']="<table class=\"inner\" cellpadding=\"5px\">".
-=======
-								$lv['col_template']="<table class='table table-stripped fbn-t-tbl'>".
->>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
 								                            "$col[template_heading_text]".   
 															"<TMPL_LOOP $lv[token]>$col[template_content_text]</TMPL_LOOP>".
 													"</table>";
@@ -101,13 +98,7 @@
 							}
 							
 							$lv['data'][$lv['token']]=$col;
-<<<<<<< HEAD
-							/* $lv['template_col_content'] = (@$col['is_heading'])?"<div class='fbn-t-row $lv[token]'>\n".
-																 "<template>$lv[col_template]</template>\n<div class='col-md-12  fbn-t-head'><TMPL_VAR $lv[token]_label></div>\n</div>\n":
-																 "<div class='col-md-12 fbn-t-row $lv[token]'>\n".
-																	"\t<div class='fbn-t-lbl'><TMPL_VAR $lv[token]_label></div>\n".
-																	"\t<div class='fbn-t-val'>$lv[col_template]</div>\n".
-																 "</div>\n"; */
+
 																 
 					  $lv['template_col_content'] = (@$col['is_heading'])?"<tr class=\"$lv[token]\">\n".
 													 "<div class=\"template\">$lv[col_template]</div><th class=\"heading\" colspan=\"2\"><TMPL_VAR $lv[token]_label></th></tr>\n":
@@ -115,41 +106,20 @@
 														"\t<td class=\"label\"><TMPL_VAR $lv[token]_label></td>\n".
 														"\t<td class=\"detail\">$lv[col_template]</td>\n".
 													 "</tr>\n";
-=======
-							$lv['template_col_content'] = (@$col['is_heading'])?"<div class='col-md-12 fbn-t-row $lv[token]'>".
-																 " <div class='col-md-12  fbn-t-head'".
-																        " data-hide='$lv[col_template]'><TMPL_VAR $lv[token]_label></div></div>\n":
-																 "<div class='col-md-12 fbn-t-row $lv[token]'>".
-																	" <div class='col-md-6 fbn-t-lbl'><TMPL_VAR $lv[token]_label></div>".
-																	" <div class='col-md-6 fbn-t-val'>$lv[col_template]</div>".
-																 "</div>\n";
->>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
-															
 							array_push($lv['template_cols'],$lv['template_col_content']);
 							$lv['counter']['row']++;
 							
 						} // end of valid input
 					
 				} // end of each field
-<<<<<<< HEAD
+
 							
 				$lv['template_cols_text'] = implode('',$lv['template_cols']);			
 							
 				return ['data'      =>$lv['data'],				
 						'template_content'=>((@$lv['template_content'])?(@$lv['template_content'].$lv['template_cols_text']):
 																		$lv['template_cols_text'])
-=======
-																
-				// filter
-				if(@$param['default_addon']){																	
-					$lv['key_filter'] = " AND entity_code='$param[default_addon]'";			
-				}
-				
-				return ['data'      =>$lv['data'],
-						'key_filter'=>$lv['key_filter'],
-						'template_content'=>implode('',$lv['template_cols'])
->>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
-						]; 
+						];
 
         } // end
 	
@@ -263,11 +233,8 @@
 			$attr['grid_detail'] = json_decode($attr['grid_detail'],true);			
 			
 			array_push($lv['heading'],'<tr>');
-<<<<<<< HEAD
 			array_push($lv['template_content'],"<TMPL_IF C_$lv[grid_row_counter]><tr>");
-=======
-			array_push($lv['template_content'],'<tr>');
->>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
+
 			
 			// parse grid detail
 			foreach($attr['grid_detail'] as $grid_index=>$grid_row){
@@ -292,11 +259,8 @@
 				
 			} // end of grid 
 			
-<<<<<<< HEAD
+
 			array_push($lv['template_content'],'</tr></TMPL_IF>');
-=======
-			array_push($lv['template_content'],'</tr>');
->>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
 			array_push($lv['heading'],"</tr>");			
 			
 			$col['data'] = $lv['grid_columns'];
