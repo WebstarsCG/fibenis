@@ -10,6 +10,10 @@
 			'data'  	=>	array(),	
 			
 			'key_id' 	=> 'id',
+<<<<<<< HEAD
+=======
+			//'key_filter'=> " AND entity_code='FT'",
+>>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
 			
 			'show_query'=>0,
 			
@@ -26,6 +30,7 @@
 		
 	if(@$_GET['default_addon']){	
 	
+<<<<<<< HEAD
 
 		$default_addon = $_GET['default_addon'];
 		
@@ -44,6 +49,11 @@
 
 	
 
+=======
+	$T_SERIES['key_filter'] = $T_SERIES['temp']['key_filter'];
+	
+	$T_SERIES['template_content'] =  "<TMPL_LOOP DATA_INFO>".$T_SERIES['temp']['template_content']."</TMPL_LOOP>";
+>>>>>>> 2fe97dd8a7804845670f74f0a1f65463e1e785cd
 
 
 	
