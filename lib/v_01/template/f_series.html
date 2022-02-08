@@ -425,6 +425,9 @@
 						    
 						    
 							 <input type="text"  <TMPL_IF validate> onchange="<TMPL_VAR validate_fun>;" </TMPL_IF>  name="X<TMPL_VAR field_id>" autocomplete="off"  	id="X<TMPL_VAR field_id>"
+							 
+										 data-label = "<TMPL_VAR field_name>"
+										 
 									      <TMPL_VAR input_html>
 										 <TMPL_IF IS_INTEGER>
 											 onkeypress  = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
@@ -460,6 +463,13 @@
 											 data-type   = 'v'											 
 											 data-min-value=<TMPL_VAR MIN_VALUE>
 											 data-max-value=<TMPL_VAR MAX_VALUE>
+										</TMPL_IF>
+										
+										<TMPL_IF IS_REGX>
+											 onkeypress  = "return PR_All_Alpha_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+											 onpaste     = "return PR_All_Alpha_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+											 data-type   = 'rx'											 
+											 data-pattern=<TMPL_VAR PATTERN>											 
 										</TMPL_IF>
 										 
 										 <TMPL_IF MAX_LENGTH>
