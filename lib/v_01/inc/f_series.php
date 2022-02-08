@@ -8,9 +8,9 @@
 		$MENU_OFF   = 0;
 		
 		$PAGE_ID = $PAGE;
-		
-		$F_DEFAULT = ['user_id'   => 'user_id',
-			          'created_by'=> 'created_by',
+
+		$F_DEFAULT = ['user_id'   	=> 'user_id',
+			          'created_by'	=> 'created_by',
 					  'f_series'  	=> array('f_series'=>'d_series','f'=>'d','fx'=>'dx'),
 					  'any_user_id' => 1 // anonymous user id
 				  ];
