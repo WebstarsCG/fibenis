@@ -11,7 +11,9 @@
 		
 		$F_DEFAULT = ['user_id'   => 'user_id',
 			          'created_by'=> 'created_by',
-					  'f_series'  => array('f_series'=>'d_series','f'=>'d','fx'=>'dx') ];
+					  'f_series'  	=> array('f_series'=>'d_series','f'=>'d','fx'=>'dx'),
+					  'any_user_id' => 1 // anonymous user id
+				  ];
               		
 		$F_MESSAGE 		  					= '';
 		$F_SERIES['temp']['last_insert'] 	= '';
@@ -183,7 +185,7 @@
 				
 				
 				# for saving 				
-				if(isset($_POST['ADD'])){
+				if(isset($_POST['ADD']) || isset($_POST['SAVE'])){
 				
 						// action after add_update
 						
@@ -227,14 +229,15 @@
 							
 							$alert_mail_data = @$F_SERIES['alert']['mail']['data'];
 							
-							$mail_msg='';
+							$mail_msg		  = '';
 							
 							if(count(array_keys($alert_mail_data))){
 							
 								$mail_field = '';
+								
 								foreach($alert_mail_data as $key=>$value){
 									
-									$mail_field.=$key.',';
+									$mail_field.=$value.' as '.$key.',';
 								}
 								
 								$mail_field = substr($mail_field,0,-1);
@@ -247,12 +250,15 @@
 								$mail_row  = $rdsql->data_fetch_object($exe_mail_data);
 									
 								
-								$mail_msg='<table widht="75%" style="font-family:Tahoma;font-size:14px;border:1px solid #f1f1f1;">';
+								$mail_msg='<table width="90%" style="font-family:Tahoma;font-size:13px;border:none;">';
 								
 								foreach($alert_mail_data as $key=>$value){
 									
-									$mail_msg.='<tr><td width="30%" style="font-weight:bold;">'.$alert_mail_data[$key].'</td><td  width="45%">'.$mail_row->$key.'</td></tr>';
-									$mail_msg.='<tr><td width="30%" style="font-weight:bold;">'.$alert_mail_data[$key].'</td><td  width="45%">'.$mail_row->$key.'</td></tr>';
+									$mail_msg.='<tr >'.
+									               '<td width="30%" style="color:#818181;font-size:12px;padding-top:7px;padding-bottom:7px;border-bottom:1px solid #cacaca;">'.$key.'</td>'.
+									               '<td  width="5%" style="font-weight:bold;padding-top:7px;padding-bottom:7px;border-bottom:1px solid #cacaca;">&nbsp;</td>'.
+												'<td  width="65%" style="color:#454545;padding-top:7px;padding-bottom:7px;border-bottom:1px solid #cacaca;">'.$mail_row->$key.'</td>'.
+											 '</tr>';
 								}			
 							
 								$mail_msg.='</table>';
@@ -464,7 +470,8 @@
 								 'w'=> 'is_atoz',
 								 'x'=> 'is_atoz_1to9_default',
 								 'c'=>'is_decimal',
-								 'v'=>'is_value'
+								 'v'=>'is_value',
+								 'p'=>'is_regx'
 								);
 				
 				// divide
@@ -930,11 +937,8 @@
 									    array_keys($lv['allow']['pattern'])
 									)
 								){
-								
-										// set match pattern
-		
-										$temp[$lv['allow']['pattern'][ $lv['allow_matches'][1] ] ]  = 1;
-									
+										// set match pattern		
+										$temp[$lv['allow']['pattern'][ $lv['allow_matches'][1] ] ]  = 1;									
 										$temp['special_in'] = (@$lv['allow_matches'][7])?@$lv['allow_matches'][7]:'';
 										
 										if( (@$lv['allow_matches'][2]) && (@$lv['allow_matches'][3]=='=')){										
@@ -963,6 +967,19 @@
 										}
 										
 										$temp['is_format'] = (!$temp['is_mandatory'])?1:0;
+								}else{
+										
+										
+										$lv['allow_matches']=null;
+										preg_match('/^(p)(\[)(.*?)(\])((\[)(.*)(\]))*$/i',$value['allow'],$lv['allow_matches']);
+										
+										if(in_array(@$lv['allow_matches'][1],array_keys($lv['allow']['pattern']))){
+										
+												// set match pattern
+												$temp[ $lv['allow']['pattern'][ $lv['allow_matches'][1] ] ]  = 1;
+												$temp['pattern']   = $lv['allow_matches'][3];
+												$temp['special_in'] = (@$lv['allow_matches'][5])?@$lv['allow_matches'][5]:'';										
+										}
 								}
 								
 								#print_r($lv['allow_matches']);
@@ -1349,7 +1366,7 @@
 												  'column_value'=>@$_POST["X".$key],
 												  'id'	 =>$last_insert_id,
 												  'rdsql'=>$rdsql,
-												  'user_id'=>$USER_ID
+												  'user_id'=>$USER_ID ?? $F_DEFAULT['any_user_id']
 										));
 										
 								} // end 
