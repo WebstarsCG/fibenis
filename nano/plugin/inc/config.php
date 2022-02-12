@@ -153,7 +153,7 @@
 										 
 								 'OTP_MSG' => '
 								 Dear User,<br><br><p>'.
-								'One Time Password(OTP) for Sign In FIT: '.@$def['user_key'].'<br><br></p>'.
+								'One Time Password(OTP) for Sign In: '.@$def['user_key'].'<br><br></p>'.
 							    'Regards,<br>'.$mail_regards.'<br><br></p>',
 								   
 								   
