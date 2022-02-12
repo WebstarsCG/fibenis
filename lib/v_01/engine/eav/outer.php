@@ -68,26 +68,19 @@
 	
 		@$PARAM	 		= array_keys($_GET);
 		
-		# for closed access
-	
-		
-		$COACH['step_in']       = ((get_config('is_open')) && (!get_config('avoid_gate')))?'gate':'home';
+		# Home screen	
+		$COACH['step_in']       = (get_config('avoid_gate'))?'home':'gate';
 		
 		$PAGE 	 		= (@$PARAM[0])?@$PARAM[0]:$COACH['step_in'] ;
                 		
-		# id to page setup
-		
-                if($PAGE=="id"){                
-                    $PAGE               = ($PAGE=="id")?@$_GET['id']:$COACH['step_in'] ;		
-                }
+		# id to page setup		
+		if($PAGE=="id"){                
+			$PAGE               = ($PAGE=="id")?@$_GET['id']:$COACH['step_in'] ;		
+		}
                 
 		# Closed Access		
 		
 		$IS_HOME 		= ((($PAGE==$COACH['step_in']) || ($PAGE==''))?1:'');
-		
-		
-		
-		
 			
 		$SHOW_DOOR              = ( (get_config('access_key')==@$PARAM[0]) && (get_config('avoid_gate')))?1:0;
 		
