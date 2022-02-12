@@ -20,7 +20,7 @@
 					'ECBAI'=>function($param){
 						
 								
-						                if($param['user_id']){ 
+								if($param['user_id']){ 
 						
 									$inline_param     = json_decode($param['data']);
 									
@@ -45,5 +45,5 @@
 						
 						
 					}, // end
-                                )
+	)
 ?>
