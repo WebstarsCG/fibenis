@@ -59,7 +59,7 @@
 										
 										$data_out = array(
 												  'data'=>array('id'   => $temp[0],															
-														'key'  => md5($temp[0]),															
+														'key'  => md5($temp[0].'ELOU'),															
 														'label'=> 'Line Order Update',
 														'info' => htmlentities($temp[1]),
 														'type' => 'text',
@@ -91,7 +91,7 @@
 										      
 										      $data_out = array(
 													'data'=>array('id'   => $temp[0],
-														      'key'  => md5($temp[0]),
+														      'key'  => md5($temp[0].'ECBAI'),
 														      'label'=> 'Page',
 														      'cv'   => $temp[1],
 														      'fv'   => $flag[$temp[1]],
