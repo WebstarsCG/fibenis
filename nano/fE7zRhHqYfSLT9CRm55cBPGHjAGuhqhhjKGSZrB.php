@@ -10,23 +10,28 @@
                         "domain_name"   =>  "http://localhost/fibenis/nano/",
                         "lib_path"      =>  "../lib/v_01/",
 						
-                        "is_smtp_mail"  =>  1,                            
-                        "smpt_host"     =>  "",
+						"is_smtp_mail"  =>  1,                            
+                        "smpt_host"     =>  "fiben.mail.pairserver.com",
                         "smpt_port"     =>  "465",
                         "smpt_secure"   =>  "ssl",
-                        "smpt_mail"     =>  "",
-                        "smpt_pswrd"    =>  "",
+                        "smpt_mail"     =>  "pm@covid1912.webt20.com",
+                        "smpt_pswrd"    =>  "ofniVOC21@!",
 						
 
 						
 						
 						"ldap"			=> ['host'			=> 'ldap://172.17.2.201',
 											'port'			=>	389,
-											'basedn'		=> 'dc=kalycito,dc=com',
+											'basedn'		=> 'dc=<domain_name>,dc=com',
 											'usersdn'		=> 'ou=users',
 											'exclude_users'	=> ['sa@webstarscg.com']											
 										   ],	
-						"auth_type"		=> 'ldap',
+						"auth_type"		=> 'base',
+						
+						"is_otp"		=> 0,
+					    "signup_user_role"=>'BAS',
+						
+						
 
                         
                         "to_admin"      =>  "ratbew@gmail.com",
@@ -41,7 +46,8 @@
                         "engine"        => 'eav',
                         
                         "is_open"       => 0,
-                        'avoid_gate'    => 1,
+                        'avoid_gate'    => 0,
+						'entry_gates'	=>'KAED,KALU',
                         
                         "access_key"    => "fortknox",
                         

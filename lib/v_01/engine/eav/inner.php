@@ -125,6 +125,15 @@
 						$c->AddParam('IS_LDAP',( (get_config('auth_type') && (get_config('auth_type')=='ldap'))?1:0));
 						$c->AddParam('IS_OPEN',get_config('is_open'));
 						$c->AddParam('IS_OTP',get_config('is_otp'));
+						
+						$lv['entry_gates_text'] = get_config('entry_gates');
+						$lv_['gate']			= @$_GET['gate'];
+						
+						if($lv['entry_gates_text'] && $lv_['gate']){
+							$lv['entry_gates'] 		= explode(',',$lv['entry_gates_text']);
+							$c->AddParam('GATE',(in_array($lv_['gate'],$lv['entry_gates'])?$lv_['gate']:''));
+						}
+						
 					}
 					
 					if($content['add_on']){ $c->AddParam($content['add_on']); } 

@@ -192,9 +192,11 @@
 				
 				
 				
-				$user_email  	= $_POST['user_email'];
+				$user_email  	= @$_POST['user_email'];
 				
-				@$password   	= md5($_POST['password']);				
+				@$password   	= md5($_POST['password']);	
+
+				$PV['gate']		= $_POST['gate'];	
 				
 				$user_def 	= array(
 								'user_email' => $user_email,
@@ -243,7 +245,8 @@
 					# echo user_role
 					// page_redirect($user_role_code);
 					 $session = $SG->set_session(['table'   => $PV['login_table'],
-												  'id'		=> $get_row->id]);
+												  'id'		=> $get_row->id,
+												  'gate'	=> $PV['gate']]);
 												
 					 					 
 					 $_SESSION['COMM_KEY'] = md5($get_row->id);

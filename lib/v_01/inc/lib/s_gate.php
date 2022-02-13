@@ -77,7 +77,10 @@
 							
 							$_SESSION['home_page_url']   = @$get_user_row->home_page_url;
 							
-							$this->user_role_permission(@$get_user_row->user_role_id);
+							#earlier session stored check,replaced by live check
+							#$this->user_role_permission(@$get_user_row->user_role_id);
+							
+							$_SESSION['gate']			 = @$param['gate'];
 							
 							// domain
 							

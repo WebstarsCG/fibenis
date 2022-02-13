@@ -100,6 +100,7 @@
 		 
 			var req = 	'&user_email='+GET_E_VALUE('inputEmail')+
 				   	'&password='+GET_E_VALUE('inputPassword')+
+					'&gate='+GET_E_VALUE('inputGate')+
 					'&action=CKY&request=1';
 					
 			action_blink_on('SI');
