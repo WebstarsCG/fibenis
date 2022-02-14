@@ -445,7 +445,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=root@localhost*/ /*!50003 TRIGGER trg_eav_addon_vc128uniq_before_ins BEFORE INSERT ON eav_addon_vc128uniq
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER trg_eav_addon_vc128uniq_before_ins BEFORE INSERT ON eav_addon_vc128uniq
  FOR EACH ROW BEGIN
 
  IF(LENGTH(new.ea_value)=0) THEN
@@ -468,7 +468,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=root@localhost*/ /*!50003 TRIGGER trg_eav_addon_vc128uniq_before_upd BEFORE UPDATE ON eav_addon_vc128uniq
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER trg_eav_addon_vc128uniq_before_upd BEFORE UPDATE ON eav_addon_vc128uniq
  FOR EACH ROW BEGIN
 
      IF(LENGTH(new.ea_value)=0) THEN
@@ -739,7 +739,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=root@localhost*/ /*!50003 TRIGGER trg_entity_child_base_before_ins BEFORE INSERT ON entity_child_base
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER trg_entity_child_base_before_ins BEFORE INSERT ON entity_child_base
  FOR EACH ROW BEGIN
 IF(LENGTH(new.token)=0) THEN
         
@@ -762,7 +762,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=root@localhost*/ /*!50003 TRIGGER trg_entity_child_base_before_upd BEFORE UPDATE ON entity_child_base
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER trg_entity_child_base_before_upd BEFORE UPDATE ON entity_child_base
  FOR EACH ROW BEGIN
 
     IF(LENGTH(new.token)=0) THEN        
@@ -1162,7 +1162,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=root@localhost*/ /*!50003 TRIGGER trg_exav_addon_vc128uniq_before_ins BEFORE INSERT ON exav_addon_vc128uniq
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER trg_exav_addon_vc128uniq_before_ins BEFORE INSERT ON exav_addon_vc128uniq
  FOR EACH ROW BEGIN
 
  IF(LENGTH(new.exa_value)=0) THEN
@@ -1185,7 +1185,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=root@localhost*/ /*!50003 TRIGGER trg_exav_addon_vc128uniq_before_upd BEFORE UPDATE ON exav_addon_vc128uniq
+/*!50003 CREATE*/ /*!50017 */ /*!50003 TRIGGER trg_exav_addon_vc128uniq_before_upd BEFORE UPDATE ON exav_addon_vc128uniq
  FOR EACH ROW BEGIN
 
      IF(LENGTH(new.exa_value)=0) THEN
@@ -2085,7 +2085,7 @@ DELIMITER ;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=root@localhost SQL SECURITY DEFINER */
+/*!50013  SQL SECURITY DEFINER */
 /*!50001 VIEW entity_count AS select entity_child.entity_code AS entity_code,count(0) AS count from entity_child group by entity_child.entity_code order by entity_child.entity_code */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -2104,7 +2104,7 @@ DELIMITER ;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=root@localhost SQL SECURITY DEFINER */
+/*!50013  SQL SECURITY DEFINER */
 /*!50001 VIEW entity_ec_count AS select entity.code AS code,entity.sn AS sn,(select count(0) from entity_child where (entity_child.entity_code = entity.code)) AS count from entity group by entity.code order by entity.sn */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -2123,7 +2123,7 @@ DELIMITER ;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=root@localhost SQL SECURITY DEFINER */
+/*!50013  SQL SECURITY DEFINER */
 /*!50001 VIEW page_view_log_by_day AS select date_format(sys_log.timestamp_punch,'%Y-%m-%d') AS date,sys_log.page_code AS page_code,count(0) AS total from sys_log group by date_format(sys_log.timestamp_punch,'%d-%b-%Y'),sys_log.page_code */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
