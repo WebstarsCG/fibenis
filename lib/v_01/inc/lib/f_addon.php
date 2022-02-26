@@ -6,6 +6,8 @@
 		
 		$lv = [];
 		
+		
+		
 		# addon
 		if(@$param['default_addon']){
 			
@@ -35,7 +37,9 @@
 							
 							$f_series=[];
 					
-							$f_series['data'] = $param['f_series']['data'];
+							$f_series['data']     = $param['f_series']['data'];
+							$f_series['data_map'] = [];
+							
 												
 							$temp_input_to_table = ['ITTX'=>['table'=>'varchar','action'=>function($data_in){  $data_in['allow']='x128';$data_in['maxlength']='128'; $data_in['attr']['class']="w_250"; return $data_in; }],
 													'ITNM'=>['table'=>'decimal','action'=>function($data_in){  $data_in['allow']='d14[.]';$data_in['maxlength']='15';$data_in['attr']['class']="w_150"; return $data_in; }],
@@ -184,8 +188,9 @@
 												   
 												if(!$param['hide_addon_tab']){   
 										
-										array_push($f_series['data'],['field_name'	=>'Addon',                                                               
+										array_push($f_series['data'],['field_name'	=>'Addon',        
 																			  'type'		=>'heading']);
+																			
 												} //
 										}
 										
@@ -937,16 +942,26 @@
 								
 								$temp_input['field_token'] = $get_row->token;
 								
-														array_push($f_series['data'],$temp_input);
+								array_push($f_series['data'],$temp_input);
 														
-										} // each element
+								} // each element
 								
 							} // end
+							
+							if(@$f_series['data']){
+									
+									foreach($f_series['data'] as $dky => $dkv){
+											if(@$dkv['field_token']){
+												$f_series['data_map'][$dkv['field_token']]=$dky;
+											}
+									}
+							}
 				
 				
 							$lv['result']	= array('rows'=>$temp['addon']->result->num_rows,
 													 'addon'=>$temp['addon'],
-													 'data'=>$f_series['data']
+													 'data'=>$f_series['data'],
+													 'data_map'=>$f_series['data_map']
 													 );
 				
 				
