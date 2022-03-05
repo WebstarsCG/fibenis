@@ -15,7 +15,7 @@ $F_SERIES = array(
 
         '1' => array(
             'field_name' => 'Basic',
-            'type' => 'heading',
+            'type' => 'heading'
         ) ,
 
         '2' => array(
@@ -36,8 +36,7 @@ $F_SERIES = array(
             'field_id' => 'text_area',
             'type' => 'textarea',
             'input_html' => 'class="w_200"',
-            'allow' => 'x250',
-			 'is_mandatory' => 1,
+            'allow' => 'x250'
         ) ,
 
         '4' => array(
@@ -49,7 +48,7 @@ $F_SERIES = array(
 
             'allow' => 'c2,3',
 
-            'is_mandatory' => 0,
+            'is_mandatory' => 1,
 
             'input_html' => 'class="w_60"',
 
@@ -82,7 +81,7 @@ $F_SERIES = array(
             ) ,
             'location' => 'media/',
 
-            'is_mandatory' => 1,
+            'is_mandatory' => 0,
 
             'input_html' => 'class="w_200"',
 
@@ -109,7 +108,7 @@ $F_SERIES = array(
 
             'location' => 'media/',
 
-            'is_mandatory' => 1,
+            'is_mandatory' => 0,
 
             'input_html' => 'class="w_200"',
 
@@ -124,7 +123,7 @@ $F_SERIES = array(
 
             'option_data' => $G->option_builder('entity', 'id,sn', ' WHERE is_lib = 0 ORDER by sn ASC') . '<option value=-1 class=clr_green>+Add New</option>',
 
-            'is_mandatory' => 1,
+            'is_mandatory' => 0,
 
             'input_html' => 'class="w_200" onchange="check_new_entity(this);"',
 
@@ -137,7 +136,7 @@ $F_SERIES = array(
             'allow' => 'w2=',
             'is_hide' => 1,
             'ro' => 1,
-            'is_mandatory' => 1,
+            'is_mandatory' => 0,
             'input_html' => 'class="w_50 txt_case_upper" onchange="check_entity_code(this);"',
         ) ,
 
@@ -148,7 +147,7 @@ $F_SERIES = array(
             'allow' 	 => 'x16',
             'is_hide' 	 => 1,
             'ro' 		 => 1,
-            'is_mandatory' => 1
+            'is_mandatory' => 0
         ),
 		
 
@@ -163,7 +162,7 @@ $F_SERIES = array(
 
             'option_data' => $G->option_builder('entity', 'code,sn', ' WHERE is_lib = 0 ORDER by sn ASC') ,
 
-            'is_mandatory' => 1,
+            'is_mandatory' => 0,
 
             'input_html' => ' class="w_200"  style="height:200px !important"  ',
 
@@ -180,18 +179,9 @@ $F_SERIES = array(
 
             'is_index' => 1,
 
-            'is_mandatory' => 1,
-			
-			'max_rows'=>3,
+            'is_mandatory' => 0,
 
             'colHeaders' => array(
-			
-			   array(   'column'       => 'Auto Complete Dynamic',                                                                                             
-                                           'width'        => '50',
-                                           'type'         => 'autocomplete',
-                                           'get_data_url' => 'router.php?series=ax&action=demo__flat&token=FT_FT'),
-										   
-										   
                 array(
                     'column' => 'Name',
                     'width' => '50',
@@ -223,8 +213,6 @@ $F_SERIES = array(
             'field_id' => 'range_flat',
 
             'type' => 'range',
-			
-			
 
         ) ,
 
@@ -253,8 +241,6 @@ $F_SERIES = array(
             'remote_link' => 'router.php?series=ax&action=demo__flat&token=FT_AUT',
 
             'restrict_new_entry' => 1,
-			
-			'is_mandatory' => 1,
 
         ) ,
 
@@ -398,7 +384,7 @@ $F_SERIES = array(
 
     'divider' => 'accordion',
 
-    'is_field_id_as_token' => 1,
+    'field_id_as_token' => 1,
 
     'avoid_trans_key_direct' => 1,
 

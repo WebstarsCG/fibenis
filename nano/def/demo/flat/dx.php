@@ -1,5 +1,4 @@
 <?PHP
-
  $D_SERIES = array(
      'title' => 'Demo Flat',
      'gx' => 1,
