@@ -95,6 +95,9 @@
 		}
 		
 		$IS_APP = (@$_GET[$PAGE] && is_file($LIB_PATH."/inc/".$PAGE.".php"))?1:0;
+		
+		# set coach
+		$G->set_coach($COACH);	
      				
 		# Content Stream
 				
