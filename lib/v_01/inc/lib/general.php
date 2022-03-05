@@ -6,20 +6,11 @@
 		   *			  general.php
 		   *		
 		   *		Class Name : General
-		   *
-		   *
-		   *
-		   *
-		   *
-		   *
-		   *
-		   *
-		   *
-		   *
 		   *********************************************************************************************************************/
 	
 		   $G = new General();
- 
+		  
+		   
 		   class General{
 				
 			//  file location
@@ -27,6 +18,9 @@
 			  var $file_location;
 			  
 			  protected $rdsql;	 
+			  protected $coach=array();
+			  
+			  
 				
 		// 1. create construct for db
 		
@@ -47,8 +41,13 @@
 								     'nov' =>11,
 								     'dec' =>12);
 									 
-						$this->rdsql = new rdsql();		 
+						$this->rdsql = new rdsql();	
+									
 					
+				} // end
+				
+				function set_coach($coach){				
+						$this->coach = $coach;
 				}
 	
 	/***************************************************************************************************************/			
@@ -1115,10 +1114,9 @@
 					 function encode($data){
 					 
 								$crypt=array(
-										array('a','m','e','w','g','x','j','q','o','y'),
-										
-										array('z','t','c','v','b','n','q','w','e','r'),
-										
+								
+										array('a','m','e','w','g','x','j','q','o','y'),										
+										array('z','t','c','v','b','n','q','w','e','r'),										
 										array ('p','o','i','u','y','f','e','s','c','a')
 									);	
 						
@@ -1361,42 +1359,25 @@
 				$expiry = time()+3600;
 			
 				if(isset($value)){
-					
-					setcookie($key,$value,$expiry);
-					
-				}
-				
-				elseif( (isset($_COOKIE[$key])==false) && (isset($default)==true) ){
-					
-					setcookie($key,$default,$expiry);			
-				}
-				
-				elseif(@$is_expire ){ 
-						
+					setcookie($key,$value,$expiry,'/','',true,true);					
+				}elseif( (isset($_COOKIE[$key])==false) && (isset($default)==true) ){					
+					setcookie($key,$default,$expiry,'/','',true,true);			
+				}elseif(@$is_expire ){ 
 					 	unset($_COOKIE[$key]);
-						
-						 setcookie($key, '', time()-3600);
-				
+						setcookie($key,'', time()-3600,'/','',true,true);
 				}
 				
 				
 				if($default){
 					return $default;
-				}
-				
-				elseif(@$_COOKIE[$key] == true ){	
+				}elseif(@$_COOKIE[$key] == true ){	
 					return isset($_COOKIE[$key])?$_COOKIE[$key]:NULL;			
-				}
-				elseif(@$_COOKIE[$key] == false){
-					
+				}elseif(@$_COOKIE[$key] == false){
 					return NULL;
-				}
-				else{
-							
+				}else{	
 					return NULL;
 				}
 				
-			
 		} // end
 	
 /*********************************************************************************************************************/		
@@ -1695,12 +1676,12 @@
 		    }
 		   /********************************************************************************************************************************************************************************************************/		
 		
-		
+	  
 		//set_custom_cookies
 		//input:array of value
 	       //set cookies depend on condition
 	       //output:return cookie
-        
+           
           function set_custom_cookies($key){
                     
                     $cookie='';
@@ -1728,6 +1709,7 @@
                    
                   
           }//end
+	  
 	  
 	  
 	  
@@ -1964,16 +1946,42 @@
 				      $sBase64 = strtr($sData, '-_', '+/');
 				      return base64_decode($sBase64.'==');
 			      }
-				
-/***********************************************************************************************************************************************************************************************************/				
+				  
+				  // key generator
+				  function hashKeyGenerator($starter,$tailend){
+					  
+							$starter = $starter ?? rand();
+							$tailend = $tailend ?? rand();
+											
+							return md5($starter.rand(1,4).rand().rand(10,100).time().$tailend);
+					  
+				  } // end
+				  
+/*get_ekv
+* get entity key value
+* i/p - entity_code, key
+  o/p - entity_key_value
+*/
+
+function getEKV($entity_code,$key){	
+
+	$coach = $this->coach['id'];
+	if($entity_code && $key){
+		return $this->get_column_value('entity_key_value',
+									   'entity_value',
+									   " WHERE coach_id=$coach AND entity_code='$entity_code' AND entity_key='$key' ");
+	}
+	
+} // end
+
+/**********************************************************************************************************************************************************************************************************/				
 		
 						
-				
-				
-				
 		
-		
-    } // class
+} // end of class
+	
+	
+
     
     
 ////////////////////////////////////////////////////////////////////////
