@@ -34,15 +34,4 @@
 		
 		$USER_COMM_KEY =  @$_SESSION['COMM_KEY'];
 		
-                //
-		//$split_prm = explode(',',$USER_PERMISSION);
-		//	
-		//for($prm_i = 0; $prm_i< count($split_prm); $prm_i++){
-		//		
-		//		$_SESSION[$split_prm[$prm_i]] = $split_prm[$prm_i];
-		//}
-		
-		
-		
-		
 ?>
