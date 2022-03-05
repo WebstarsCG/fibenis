@@ -10,7 +10,8 @@
 				 				
 				function __construct(){	
 				
-					$this->rdsql =new rdsql();	
+					$this->rdsql = new rdsql();	
+					$this->g 	 = new General();	
 				}	
 				
 				//set the session variable for user_info & user_permission
@@ -59,6 +60,9 @@
 									
 							$get_user_row = $rdsql->data_fetch_object($exe_query);
 							
+							// session id generate
+							session_commit(); //  close the current sessions
+							$session_id = session_id($this->g->hashKeyGenerator($get_user_row->id,$get_user_row->email));
 							session_start();
 							
 							//$_SESSION['communication_id']= @$get_user_row->communication_id;
@@ -71,7 +75,7 @@
 							
 							$_SESSION['user_name'] 	     = @$get_user_row->user_name;
 							
-							$_SESSION['PASS_ID']	     = session_id();
+							$_SESSION['PASS_ID']	     = $session_id;
 							
 							$_SESSION['user_email']	     = @$get_user_row->email;
 							
