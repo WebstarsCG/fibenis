@@ -649,7 +649,7 @@
 			$param=array('user_id'=>$_POST['uid'],'page_code'=>$PV['GATE_CODE']['AGTO'],'action_type'=>'AGTO','action'=>'Logout ');
 						         
 			$G->set_system_log($param);
-		        get_out();
+			get_out();
 		}
 		
 		function get_out(){
@@ -659,10 +659,14 @@
 			$USER_ID 	= 0;			
 			$USER_NAME 	= '';
 			
-			session_start();
+			session_start();	
+			session_destroy();		
+			unset($_SESSION['PHPSESSID']);	
+			unset($_COOKIE['PHPSESSID']);
 			
-			session_destroy();
-						
+			session_start();			
+			session_id($G->hashKeyGenerator(rand(),base64_encode(rand())));
+			
 			header('Location:'.$PV['DOMAIN_NAME'].'/index.php');
 			return $USER_ID=0;
 			
