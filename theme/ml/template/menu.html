@@ -61,6 +61,35 @@
             
             <!-- Start Navigation List -->
             <ul class="nav navbar-nav navbar-right">
+			
+			  <TMPL_IF USER_AGN>	
+	<li ><a href="?dx=ticket__base" class="txt_size_15"><i class="fa fa-ticket clr_dark_blue txt_size_16" aria-hidden="true">&nbsp;</i>&nbsp;Tickets</a></li>
+	<li ><a href="?fx=ticket__base" class="txt_size_15"><i class="fa fa-plus-square clr_green txt_size_16" aria-hidden="true">&nbsp;</i>&nbsp;New Ticket</a></li>
+	
+		<li><a>|</a></li>
+				<li>			    
+			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
+				<span class="glyphicon glyphicon-filter clr_gray_a more txt_size_18" aria-hidden="true"></span><span class="caret"></span>
+			    </a>			  
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="?dx=ticket__base&default_addon=BESCD" >							
+								&nbsp;&nbsp;Dropped Calls
+							</a>
+						</li>
+					</ul>			  
+				</li>
+						 
+						 
+			</TMPL_IF> <!--- End of Agent--->	
+			
+			<TMPL_IF USER_OTU>
+<li ><a href="?dx=ticket__base" class="txt_size_15"><i class="fa fa-ticket clr_dark_blue txt_size_16" aria-hidden="true">&nbsp;</i>&nbsp;Tickets</a></li>	
+			</TMPL_IF> <!--- End of Doctor--->	
+			
+			<TMPL_IF USER_SYS>
+<li ><a href="?dx=ticket__dash" class="txt_size_15"><i class="fa fa-bar-chart clr_orange txt_size_16" aria-hidden="true">&nbsp;</i>&nbsp;Dashboard</a></li>	
+<li ><a href="?dx=ticket__base" class="txt_size_15"><i class="fa fa-ticket clr_dark_blue txt_size_16" aria-hidden="true">&nbsp;</i>&nbsp;Tickets</a></li>	
+			</TMPL_IF> <!--- End of Doctor--->	
 		  
 		  <TMPL_IF APP_MENU_TEXT>
 			      <TMPL_VAR APP_MENU_TEXT>
@@ -74,7 +103,7 @@
 							 class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">			       
 							 <TMPL_VAR MENU_TITLE>&nbsp;<span class="caret"></span>
 						     </a>
-						     
+						    
 						     <ul class="dropdown-menu" role="menu">
 							 
 							 <TMPL_LOOP CHILD_MENU>
@@ -166,7 +195,7 @@
 			
 			
 			<!---Issues--->
-			<li>			    
+		<!-- 	<li>			    
 			    <a href="#"
 			       class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false"			       
 			      >
@@ -178,6 +207,7 @@
 				   <li> <a href="?d=issue">Issue</a></li>
 			    </ul>			    
 			</li>
+			 -->
 			
 			
 			
@@ -185,6 +215,7 @@
 
 			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
 				&nbsp;
+				
 				<i class="fa fa-user"></i>
 				&nbsp;Setup&nbsp;
 				<span class="caret"></span>
@@ -200,6 +231,33 @@
 			    </ul>
 			    
 			</li>
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				&nbsp;
+				
+				<i class="fa fa-user"></i>
+				&nbsp;Users&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			      <ul class="dropdown-menu" role="menu">
+					<li><a href="?dx=ticket__contact__agents">Contact Call Centers</a></li>
+					<li><a href="?dx=ticket__manage__agent_admin">Manage Agent Admin</a></li>
+					<li><a href="?dx=ticket__contact__others">Contact Departments</a></li>
+					<li><a href="?dx=ticket__manage__other_admin">Manage Dept. Admin</a></li>					
+			        <li><a href="?dx=ticket__contact__zone">Contact Zone</a></li>
+					<li><a href="?dx=ticket__manage__zone_admin">Manage Zone Admin</a></li>
+			        <li><a href="?dx=ticket__contact__assembly">Contact Assembly Constituency</a></li>	
+					<li><a href="?dx=ticket__manage__assembly_admin">Manage Assembly Const. Admin</a></li>
+					<li><a href="?dx=ticket__contact__all">Contact All</a></li>
+
+
+			    </ul>
+			    
+			    
+			</li>
+			
 			
 			
 			
@@ -218,7 +276,7 @@
 			    
 			</li>
 			
-	
+
 			
 			<!---EA--->
 			<li>
@@ -246,17 +304,21 @@
 		    
 		    <!--- Base User---> 
 		    <TMPL_IF USER_BAS></TMPL_IF> 
-		     
-			
-			<!--- Kal User---> 			
-			<TMPL_IF USER_KUR></TMPL_IF> 
-			
-			<!--- Kal Admin---> 			
-			<TMPL_IF USER_KAD></TMPL_IF>		    
-			 
-			 
-			 
-			 
+		    <!--- Agent Admin User---> 
+			<TMPL_IF USER_AGA></TMPL_IF> 
+
+			<!--- Other Admin User---> 
+			<TMPL_IF USER_OTA></TMPL_IF> 
+			<!--- Other Agent User---> 
+			<TMPL_IF USER_OTU></TMPL_IF> 
+			<!--- Zone Admin User---> 
+			<TMPL_IF USER_ZNA></TMPL_IF> 
+			<!--- Zone User---> 
+			<TMPL_IF USER_ZNU></TMPL_IF> 
+			  <!--- Assembly Constituency Admin User---> 
+			<TMPL_IF USER_AC></TMPL_IF>
+			<!--- Assembly Constituency User---> 
+			<TMPL_IF USER_ACU></TMPL_IF> 
 		    
 		     <TMPL_UNLESS NO_USER>
 			 
@@ -360,43 +422,7 @@
 
        
         <!-- Mobile Menu Start -->
-        <ul class="wpb-mobile-menu">
-
-		 
-		  <TMPL_IF APP_MENU_TEXT>
-			      <TMPL_VAR APP_MENU_TEXT>
-		  <TMPL_ELSE>			
-			      <TMPL_LOOP APP_MENU>
-					  <TMPL_IF CHILD_MENU> 
-						    
-						 <li>
-						     
-						     <a  href="#" title="<TMPL_VAR MENU_TITLE>"
-							 class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">			       
-							 <TMPL_VAR MENU_TITLE>&nbsp;<span class="caret"></span>
-						     </a>
-						     
-						     <ul class="dropdown-menu" role="menu">
-							 
-							 <TMPL_LOOP CHILD_MENU>
-							     <li>
-								 <a href="<TMPL_VAR MENU_HREF>">
-								     <span class="<TMPL_VAR css_class>" aria-hidden="true"></span>
-								     &nbsp;&nbsp;<TMPL_VAR MENU_TITLE> 
-								    
-								 </a>
-							     </li>
-							 </TMPL_LOOP>
-								      
-						     </ul> 
-						 </li>
-						     
-					     <TMPL_ELSE>
-						 <li ><a href="<TMPL_VAR menu_href>"><TMPL_VAR menu_title>&nbsp;</a></li>
-					     </TMPL_IF>
-				    
-			      </TMPL_LOOP>
-		  </TMPL_IF>	
+        <ul class="wpb-mobile-menu">	 
 	  
 	   <TMPL_IF USER_SAD>		      
 		      
@@ -465,6 +491,7 @@
 			</li>
 			
 			
+			
 			<li>
 
 			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
@@ -481,7 +508,31 @@
 			    </ul>
 			    
 			</li>
-			
+			<li>
+
+			    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-expanded="false">
+				&nbsp;
+				<i class="fa fa-user"></i>
+				&nbsp;User Setup&nbsp;
+				<span class="caret"></span>
+			    </a>				
+				 
+			    <ul class="dropdown-menu" role="menu">
+					<li><a href="?dx=ticket__contact__agents">Contact Call Centers</a></li>
+					<li><a href="?dx=ticket__manage__agent_admin">Manage Agent Admin</a></li>
+					<li><a href="?dx=ticket__contact__others">Contact Departments</a></li>
+					<li><a href="?dx=ticket__manage__other_admin">Manage Dept. Admin</a></li>					
+			        <li><a href="?dx=ticket__contact__zone">Contact Zone</a></li>
+					<li><a href="?dx=ticket__manage__zone_admin">Manage Zone Admin</a></li>
+			        <li><a href="?dx=ticket__contact__assembly">Contact Assembly Constituency</a></li>	
+					<li><a href="?dx=ticket__manage__assembly_admin">Manage Assembly Const. Admin</a></li>
+					<li><a href="?dx=ticket__contact__all">Contact All</a></li>
+
+
+
+			    </ul>
+			    
+			</li>
 			
 			
 			<li>
@@ -530,7 +581,23 @@
 		    <TMPL_IF USER_ADM></TMPL_IF> <!--- End of Member A --->
 		    <!--- Base User---> 
 		    <TMPL_IF USER_BAS></TMPL_IF> <!--- End of Member A --->	
-		     
+			 <!--- Agent Admin User---> 
+			<TMPL_IF USER_AGA></TMPL_IF> 
+			<!--- Other Admin User---> 
+			<TMPL_IF USER_OTA></TMPL_IF> 
+			<!--- Other Agent User---> 
+			<TMPL_IF USER_OTU></TMPL_IF> 
+			<!--- Zone Admin User---> 
+			<TMPL_IF USER_ZNA></TMPL_IF>
+			<!--- Zone User---> 
+			<TMPL_IF USER_ZNU></TMPL_IF> 			
+			<!--- Agent---> 
+		    <TMPL_IF USER_AGN></TMPL_IF> <!--- End of Agent--->	
+			<TMPL_IF USER_DTR></TMPL_IF> <!--- End of Doctor--->	
+		     <!--- Assembly Constituency Admin User---> 
+			<TMPL_IF USER_ACA></TMPL_IF>
+			<!--- Assembly Constituency User---> 
+			<TMPL_IF USER_ACU></TMPL_IF> 
 		    
 		    <TMPL_UNLESS NO_USER>
 				<li><a>|</a></li>
@@ -563,8 +630,7 @@
 				
 			   <li>
 			      <a href="JavaScript:get_out();" class="txt_clr_red"
-				 rel="txtTooltip" title="Log Out" data-toggle="tooltip" data-placement="bottom"
-				 >
+				 rel="txtTooltip" title="Log Out" data-toggle="tooltip" data-placement="bottom">
 			      
 				 <button class="btn btn-xs btn-danger" type="button">			
 				    <span class="glyphicon glyphicon-log-out pad_5" aria-hidden="true"></span>
