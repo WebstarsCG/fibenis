@@ -821,17 +821,13 @@
 									'message' => @$P_V['message']
 						)
 					);
+
+				
+		 $MENU_OFF  = (@$D_SERIES['menu_off'])?$D_SERIES['menu_off']:'';
+		 
+		 $PAGE_INFO = $T->Output();
 		
-		if(@PAGE_PERM){
-				
-			 $MENU_OFF  = (@$D_SERIES['menu_off'])?$D_SERIES['menu_off']:'';
-			 
-			 $PAGE_INFO = $T->Output();
-		}
-		else{
-				
-		    $SG->check_entry(PAGE_PERM);
-		}
+		
 		
 		
 	
