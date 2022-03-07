@@ -18,7 +18,7 @@
 				function set_session($param){
 							
 						   global $rdsql;	
-						   
+						 
 						   global $PV;
 						   
 						   global $COACH;
@@ -62,7 +62,8 @@
 							
 							// session id generate
 							session_commit(); //  close the current sessions
-							$session_id = session_id($this->g->hashKeyGenerator($get_user_row->id,$get_user_row->email));
+							$session_id = $this->g->hashKeyGenerator($get_user_row->id,$get_user_row->email);
+							session_id($session_id);
 							session_start();
 							
 							//$_SESSION['communication_id']= @$get_user_row->communication_id;
@@ -73,7 +74,7 @@
 							
 							$_SESSION['user_id']	     = @$get_user_row->id;
 							
-							$_SESSION['user_name'] 	     = @$get_user_row->user_name;
+							$_SESSION['user_name'] 	     = @$get_user_row->user_name.$session_id;
 							
 							$_SESSION['PASS_ID']	     = $session_id;
 							
@@ -119,7 +120,7 @@
 							     $_SESSION['user_email'],							     
 							     $_SESSION['PASS_ID'],							     
 							     $_SESSION['user_role']);  
-			}           
+					}           
               
            			 return NULL;
 		     } // end of get user detail
