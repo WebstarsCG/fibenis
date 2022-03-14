@@ -178,12 +178,12 @@
            ($_POST['X9'])){
             
             // create dir
-            $lv['def_path']    = 'def/'.$_POST['X2'];
+			
+			$lv['def_path']    = 'def/'.str_replace('__','/',$_POST['X2']);
+		 
             $lv['entity_code'] = $_POST['X9'];
             
-            echo 'DIR'.var_dump(is_dir($lv['def_path']));
-            
-            echo $lib = $LIB_PATH.'/comp/guzzle_rest/vendor/autoload.php';				
+            $lib = $LIB_PATH.'/comp/guzzle_rest/vendor/autoload.php';				
 
             require_once $lib ;
 		  
