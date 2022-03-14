@@ -178,12 +178,7 @@
            ($_POST['X9'])){
             
             // create dir
-			
-			$str_rplce = str_replace('__','/',$_POST['X2']);
-			$lv['def_path']    = 'def/'.$str_rplce;
-			 
-			 
-           // $lv['def_path']    = 'def/'.$_POST['X2'];
+            $lv['def_path']    = 'def/'.$_POST['X2'];
             $lv['entity_code'] = $_POST['X9'];
             
             echo 'DIR'.var_dump(is_dir($lv['def_path']));
