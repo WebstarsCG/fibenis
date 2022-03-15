@@ -190,7 +190,7 @@
             $client = new Client(['timeout'  => 2.0,]);
                         
             if(!is_dir($lv['def_path'])){
-                mkdir($lv['def_path']);
+                mkdir($lv['def_path'],0777,true);
                    
                     // def
                     auto_def_creation(['def_name'    => $_POST['X2'],
