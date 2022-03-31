@@ -32,8 +32,8 @@
 																		],
 									
 																			'table'		=> ' entity_child_base',												
-																			'key_filter'	=> " AND entity_code = '[[parent.code]]'",									
-																			'show_query'	=> 0		
+														'key_filter'	=> " AND entity_code = '[[parent.code]]' AND dna_code <> 'EBAT' ",									
+																			'show_query'	=> 1		
 														),
 													
 												),	
