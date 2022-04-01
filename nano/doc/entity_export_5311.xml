@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity_child_base>
+
+
+
+
+<mode>
+	<ecb>w</ecb>
+</mode>
+<entities>
+
+	<entity>
+		<code>BK</code>		
+		<name>Book</name>
+		<ecb_info>
+			
+			<ecb>
+				<token>BKNA</token>
+				<sn>Name</sn>
+				<ln></ln>
+				<note></note>
+				<dna_code>EBFA</dna_code>
+				<line_order>1.00</line_order>
+							
+			</ecb>
+			
+			<ecb>
+				<token>BKPR</token>
+				<sn>Price</sn>
+				<ln></ln>
+				<note></note>
+				<dna_code>EBFA</dna_code>
+				<line_order>2.00</line_order>
+							
+			</ecb>
+			
+		</ecb_info>
+	</entity>
+
+
+</entities>
+
+
+
+
+</entity_child_base>

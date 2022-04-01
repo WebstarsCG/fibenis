@@ -2,12 +2,12 @@
 
         $temp_config=[
                         "host"          =>   "localhost",
-                        "db_name"       =>   "fibenis_live",
+                        "db_name"       =>   "fibenis",
                         "user"          =>   "root",
                         "pass"          =>   "",
                         "db_engine"     =>  "rdsql_mysqli",
                         
-                        "domain_name"   =>  "http://localhost/fibenis/nano/",
+                        "domain_name"   =>  "http://localhost/wa_dev/fibenis/nano/",
                         "lib_path"      =>  "../lib/v_01/",
 						
 						"is_smtp_mail"  =>  1,                            

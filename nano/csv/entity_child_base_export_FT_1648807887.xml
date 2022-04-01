@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity_child_base>
+
+
+
+
+<mode>
+	<ecb>w</ecb>
+</mode>
+<entities>
+
+	<entity>
+		<code>FT</code>		
+		<name>Demo Form EAV Check</name>
+		<ecb_info>
+			
+			<ecb>
+				<token>FTTX</token>
+				<sn>Text</sn>
+				<ln>Text</ln>
+				<note></note>
+				<dna_code>EBAT</dna_code>
+				<line_order>1.00</line_order>
+							
+			</ecb>
+			
+			<ecb>
+				<token>FTTA</token>
+				<sn>Text Area</sn>
+				<ln>Text Area</ln>
+				<note></note>
+				<dna_code>EBAT</dna_code>
+				<line_order>0.00</line_order>
+							
+			</ecb>
+			
+			<ecb>
+				<token>FTBOOL</token>
+				<sn>Boolean</sn>
+				<ln>Boolean</ln>
+				<note></note>
+				<dna_code>EBAT</dna_code>
+				<line_order>0.00</line_order>
+							
+			</ecb>
+			
+		</ecb_info>
+	</entity>
+
+
+</entities>
+
+
+
+
+</entity_child_base>
