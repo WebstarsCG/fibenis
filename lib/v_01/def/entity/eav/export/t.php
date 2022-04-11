@@ -97,15 +97,14 @@
 				
 	),
 									
-																			'table'=> ' entity_child_base',
-												
-																			'key_filter'=>" AND entity_code='$key' $t_series[filter]",
-									
-																			'show_query'=>0
-			
-																		),
-										
-												),	
+								'table'=> ' entity_child_base',
+								'key_filter'=>" AND entity_code='$key' AND dna_code='EBAT' 
+												$t_series[filter]",
+								'show_query'=>0
+
+							),
+
+	),	
 								
 								
 								'key_id' => 'code',
