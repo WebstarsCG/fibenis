@@ -382,7 +382,7 @@
 		 
 		 $get_sort_by_id =  $G->get_cookies($P_V['cokies_id'].'sort_by',@$_GET['sort_by'],@$_GET['sort_by'],@$P_V['is_cokies_expire']);
 		
-	         $P_V['order_direction']=(@$get_sort_d )?((@$get_sort_d==1)?2:1):1;	
+		 $P_V['order_direction']=(@$get_sort_d )?((@$get_sort_d==1)?2:1):1;	
 	 
 	 
 	
@@ -785,9 +785,19 @@
 		$T->AddParam('SHOW_PAGE',$per_page);
 		
 		
-	   $start_date =  $G->get_cookies($P_V['cokies_id'].'start_date',@$_GET['start_date'],@$_GET['start_date'],@$P_V['is_cokies_expire']);
+	   $start_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'start_date',
+	                                   'key_id'   => 'start_date',
+									   'value'     => @$_GET['start_date'],
+									   'default'   => @$_GET['start_date'],
+									   'is_expire' => @$P_V['is_cokies_expire']]);
+									   
 				
-	   $end_date =  $G->get_cookies($P_V['cokies_id'].'end_date',@$_GET['end_date'],@$_GET['end_date'],@$P_V['is_cokies_expire']);
+	   $end_date =  $G->get_cookies_ii(['key' 		=> $P_V['cokies_id'].'end_date',
+									 'key_id'   => 'end_date',
+									 'value'	=> @$_GET['end_date'],
+									 'default'	=> @$_GET['end_date'],
+									 'is_expire'	=> @$P_V['is_cokies_expire']]);
+									 
 	   
 	  // $is_apply_date = ($start_date)
 				
@@ -796,7 +806,7 @@
 								
 								'start_date'    => (@$start_date)?$start_date:date('d-m-Y'),
 								
-								'end_date'	    => @$end_date?$end_date:date('d-m-Y'),
+								'end_date'	    => (@$end_date)?$end_date:date('d-m-Y'),
 								
 								'is_date_filter' => @$D_SERIES['date_filter']['is_date_filter'],
 								
@@ -1730,15 +1740,31 @@
 				}
 			
 			
-			   	$start_date =  $G->get_cookies($P_V['cokies_id'].'start_date',@$_GET['start_date'],@$_GET['start_date'],@$P_V['is_cokies_expire']);
+			   	$start_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'start_date',
+	                                   'key_id'   => 'start_date',
+									   'value'     => @$_GET['start_date'],
+									   'default'   => @$_GET['start_date'],
+									   'is_expire' => @$P_V['is_cokies_expire']]);
 				
-				$end_date =  $G->get_cookies($P_V['cokies_id'].'end_date',@$_GET['end_date'],@$_GET['end_date'],@$P_V['is_cokies_expire']);
+				$end_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'end_date',
+											  'key_id'   => 'end_date',
+											  'value'     => @$_GET['end_date'],
+											  'default'   => @$_GET['end_date'],
+											  'is_expire' => @$P_V['is_cokies_expire']]);
 				
 				//20-aug-2014(alt_date):
 				
-				$start_alt_date =  $G->get_cookies($P_V['cokies_id'].'start_date',@$_GET['start_alt_date'],@$_GET['start_alt_date'],@$P_V['is_cokies_expire']);
+				$start_alt_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'start_alt_date',
+	                                   'key_id'   => 'start_alt_date',
+									   'value'     => @$_GET['start_alt_date'],
+									   'default'   => @$_GET['start_alt_date'],
+									   'is_expire' => @$P_V['is_cokies_expire']]);
 				
-				$end_alt_date =  $G->get_cookies($P_V['cokies_id'].'end_date',@$_GET['end_alt_date'],@$_GET['end_alt_date'],@$P_V['is_cokies_expire']);
+				$end_alt_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'end_alt_date',
+											  'key_id'   => 'end_alt_date',
+											  'value'     => @$_GET['end_alt_date'],
+											  'default'   => @$_GET['end_alt_date'],
+											  'is_expire' => @$P_V['is_cokies_expire']]);
 				//
 				
 			  //  setcookie('start_date',$start_date);
@@ -1760,7 +1786,7 @@
 					//19 june 2015
 					
 					if(@$D_SERIES['date_filter']['date_field']){
-					       $WHERE.=" AND date_format(".$D_SERIES['date_filter']['date_field'].",'%Y-%m-%d') BETWEEN '$start_alt_date'  and '$end_alt_date' ";	
+					      $WHERE.=" AND date_format(".$D_SERIES['date_filter']['date_field'].",'%Y-%m-%d') BETWEEN '$start_alt_date'  and '$end_alt_date' ";	
 					}else{
 						$WHERE='';
 					}//
@@ -1841,7 +1867,6 @@
 			
 			global $P_V;
 			
-			
 			 $WHERE_FILTER='';
 			 
 			 $PREE_DATA = '';
@@ -1864,12 +1889,15 @@
 					       
 					       //setcookie("bgColor",$newbgColor,time()+3600);
 					       //setcookie("txtColor",$newtxtColor,time()+3600);
-						if(@$P_V['field_id']){
-				       
-						       $get_value =  $G->get_cookies($P_V['cokies_id'].'get_field_id'.$c_f_i,@$_GET[$P_V['field_id']],@$_GET[$P_V['field_id']],@$P_V['is_cokies_expire']);
-						       
-						       
-					       } // end
+							if(@$P_V['field_id']){
+					
+								$get_value =  $G->get_cookies_ii([	'key'		=> $P_V['cokies_id'].'get_field_id'.$c_f_i,
+																	'key_id'	=> $P_V['field_id'],
+																	'value'		=> @$_GET[$P_V['field_id']],
+																	'default'	=> @$_GET[$P_V['field_id']],
+																	'is_expire'	=> @$P_V['is_cokies_expire']]);
+								   
+							} // end
 					       
 						
 					       if(@$D_SERIES['custom_filter'][$c_f_i]['filter_type'] == 'option_list'){

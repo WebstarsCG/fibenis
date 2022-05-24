@@ -1379,6 +1379,41 @@
 				}
 				
 		} // end
+		
+		
+		function get_cookies_ii($param){
+				
+				$key		= $param['key'];
+				$key_id		= $param['key_id'];
+				$value		= $param['value'];
+				$default	= $param['default'];
+				$is_expire	= $param['is_expire'];
+				
+				$expiry = time()+3600;
+				
+				
+				if(isset($value) || 
+				   (array_key_exists($key_id,@$_GET) && (!@$_GET[$key_id])) 
+			    ){
+					setcookie($key,$value,$expiry,'/','',true,true);					
+				}elseif( (isset($_COOKIE[$key])==false) && (isset($default)==true) ){					
+					setcookie($key,$default,$expiry,'/','',true,true);			
+				}elseif(@$is_expire ){ 
+					 	unset($_COOKIE[$key]);
+						setcookie($key,'', time()-3600,'/','',true,true);
+				}				
+				
+				if($default){
+					return $default;
+				}elseif((@$_COOKIE[$key] == true )&& (array_key_exists($key_id,@$_GET)==false)){				
+					return isset($_COOKIE[$key])?$_COOKIE[$key]:NULL;			
+				}elseif(@$_COOKIE[$key] == false){
+					return NULL;
+				}else{	
+					return NULL;
+				}
+				
+		} // end
 	
 /*********************************************************************************************************************/		
 	
