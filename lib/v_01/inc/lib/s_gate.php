@@ -346,6 +346,65 @@
 			function get_cookie($key){				  
 				 return (@$_COOKIE[$key])?@$_COOKIE[$key]:null;
 			} // end
+			
+			
+			
+			// addition of new user
+		function add_new_user($param){
+			
+			global $rdsql;
+
+			$lv = [];
+			
+			$lv['contact_cols']	= ['COFN'=>'user_name',
+								   'COEM'=>'user_email',
+								   'COMB'=>'user_mobile'];
+			
+			# insert contact
+			$lv['contact_query'] = "INSERT INTO
+										entity_child(entity_code,user_id)
+								       VALUES
+										('CO',1)";						
+					
+			$rdsql->exec_query($lv['contact_query'],"Contact Query");						
+			$lv['ec_id'] = $rdsql->last_insert_id('entity_child');
+						
+			# insert contact detail	
+			$lv['contact_detail_values'] = [];
+	
+			foreach($lv['contact_cols'] as $contact_code =>$contact_key){
+				if(@$param[$contact_key]){
+					$lv['contact_eav'] = @$param[$contact_key];
+					array_push($lv['contact_detail_values'],"($lv[ec_id],'$contact_code','$lv[contact_eav]',1)");				
+				} // check key exists
+			} // end
+				
+			$lv['contact_detail_query']="INSERT INTO
+										eav_addon_varchar(parent_id,ea_code,ea_value,user_id)
+									   VALUES
+										".implode(',',$lv['contact_detail_values']);
+										
+			$rdsql->exec_query($lv['contact_detail_query'],"Contact Detail Query");
+			
+			# insert user info
+			$lv['user_info_query']= "INSERT INTO
+										 user_info(password,user_role_id,is_internal,is_mail_check,is_active,user_id)
+										 VALUES
+										 ('$param[password]',(SELECT id FROM user_role WHERE sn='$param[user_role_code]'),$lv[ec_id],1,1,1)";
+							
+						
+			$lv['user_info_result'] =$rdsql->exec_query($lv['user_info_query'],'User Info');
+						
+			$lv['user_info_id']     = $rdsql->last_insert_id('user_info');
+			
+			$lv['user_inactive_query']= "UPDATE user_info SET is_active=0 WHERE id=$lv[user_info_id]";
+			
+			$lv['user_inactive_query_upd']=$rdsql->exec_query($lv['user_inactive_query'],'Error Inactive Update');
+			
+			return $lv['user_info_id'];
+			
+		} // add user
+
 	}//class						
 			
 ?>
