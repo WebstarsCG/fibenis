@@ -2,13 +2,13 @@
 
         $temp_config=[
                         "host"          =>   "localhost",
-                        "db_name"       =>   "fibenis",
+                        "db_name"       =>   "fibenis_live",
                         "user"          =>   "root",
                         "pass"          =>   "",
                         "db_engine"     =>  "rdsql_mysqli",
                         
-                        "domain_name"   =>  "http://localhost/wa_dev/fibenis/nano/",
-                        "lib_path"      =>  "../lib/v_01/",
+                        "domain_name"   =>  "http://localhost/wa_dev/fibenis.v1/nano/",
+                        "lib_path"      =>  "lib/v_01/",
 						
 						"is_smtp_mail"  =>  1,                            
                         "smpt_host"     =>  "fiben.mail.pairserver.com",
@@ -40,7 +40,7 @@
                         
                         "title"         =>  "Fibenis - An Adaptive Web Framework based on Communiction Patterns & Natural Language Principles",
                         "theme"         =>  "ml",
-                        "theme_path"    =>  "../theme",
+                        "theme_path"    =>  "theme",
                         "theme_blend"   => "base",
                         
                         "engine"        => 'eav',
