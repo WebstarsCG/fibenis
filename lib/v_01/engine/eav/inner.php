@@ -105,7 +105,7 @@
 	
 	function page_content($content){
 		
-		global $COACH,$LIB_PATH;
+		global $COACH,$LIB_PATH,$PV;
 				
 		$page = $content['page'];
 		
