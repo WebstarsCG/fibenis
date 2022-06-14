@@ -134,6 +134,7 @@
 						$c->AddParam('IS_LDAP',( ($config['auth_type'] && ($config['auth_type']=='ldap'))?1:0));
 						$c->AddParam('IS_OPEN',$config['is_open']);
 						$c->AddParam('IS_OTP',$config['is_otp']);
+						$c->AddParam('TERMINAL_PATH',$COACH['terminal_path']);
 						
 						$lv['entry_gates_text'] = $config['entry_gates'];
 						$lv_['gate']			= @$_GET['gate'];
