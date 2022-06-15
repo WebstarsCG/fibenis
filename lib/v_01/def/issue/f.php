@@ -114,11 +114,13 @@
 							    
 							    'allow_ext'   => array('jpg','jpeg','png','pdf'),  
 
-							    'location'    => 'doc/issue/',          // attribute code
+							    'location'    => 'media/',          // attribute code
+								
+								'save_file_name_prefix'=> 'issue_',  
                                                             
 							    'field_id' => 'exa_value',
                                                                
-                                                            'child_table'         => 'exav_addon_varchar', // child table
+								'child_table'         => 'exav_addon_varchar', // child table
 							       
 							    'parent_field_id'     => 'parent_id',    // parent field
 										       
@@ -126,7 +128,7 @@
 							       
 							    'child_attr_code'     => 'ISSO',           // attribute code
                                                                
-                                                            'input_html'=>'class="w_200"',
+								'input_html'=>'class="w_200"',
 							    
 							    'max_size'    => 2048,
 							    

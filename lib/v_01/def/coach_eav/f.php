@@ -179,17 +179,19 @@
 	     
 	     if(@$_GET['key']){
 			  
-			  $temp_key_id = @$_GET['key'];
-			  
-			  $F_SERIES['temp'] =$rdsql->data_fetch_row($rdsql->exec_query("SELECT get_eav_addon_varchar($temp_key_id,'CHCD')","1")); 
-			  
-			  $F_SERIES['data']['7']['location'] = "$COACH[path]/".$F_SERIES['temp'][0]."/images/";
-			  $F_SERIES['data']['9']['location'] = "$COACH[path]/".$F_SERIES['temp'][0]."/images/";
-			  
-			  $F_SERIES['data']['1']['is_ro']=1;
+							$temp_key_id = @$_GET['key'];
+							
+							$F_SERIES['temp']['terminal']=$G->get_one_column(['table'				=> 'eav_addon_vc128uniq',
+																																'field'				=> 'ea_value',
+																																'manipulation'=> " WHERE parent_id=$temp_key_id AND ea_code='CHCD'"]);
+							
+							$F_SERIES['data']['7']['location'] = "$COACH[path]/".$F_SERIES['temp']['terminal']."/images/";
+							$F_SERIES['data']['9']['location'] = "$COACH[path]/".$F_SERIES['temp']['terminal']."/images/";
+							
+							$F_SERIES['data']['1']['is_ro']=1;
 			  			  
 	     }
-	     
+			 
 	     # before add update
 	     
 	     function before_add_update(){

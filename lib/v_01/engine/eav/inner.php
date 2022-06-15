@@ -105,7 +105,7 @@
 	
 	function page_content($content){
 		
-		global $COACH,$LIB_PATH;
+		global $COACH,$LIB_PATH,$PV;
 				
 		$page = $content['page'];
 		
@@ -117,23 +117,32 @@
 					$lv 		= ['home'=>"$COACH[path]$COACH[name]/content/$page.html",
 								   'gate'=>"$COACH[theme_route]/template/$COACH[step_in].html"
 								  ];
-								
+								  								  
+					// config keys			  
+					$lv['gate_config']  = ['is_otp','is_open','auth_type','entry_gates'];	
+					$config				= [];
+			
+					foreach ($lv['gate_config'] as $gate_config) {
+						$config[$gate_config]	= @$PV['MASTER'][$gate_config] ?$PV['MASTER'][$gate_config]:get_config($gate_config);
+					}
+					
+					// content					
 					$c 		= new Template(array("filename" => $lv[$COACH['step_in']],
-									    "debug"    => 0));
+												 "debug"    => 0));
 										
 					if($COACH['step_in']=='gate'){
-						$c->AddParam('IS_LDAP',( (get_config('auth_type') && (get_config('auth_type')=='ldap'))?1:0));
-						$c->AddParam('IS_OPEN',get_config('is_open'));
-						$c->AddParam('IS_OTP',get_config('is_otp'));
+						$c->AddParam('IS_LDAP',( ($config['auth_type'] && ($config['auth_type']=='ldap'))?1:0));
+						$c->AddParam('IS_OPEN',$config['is_open']);
+						$c->AddParam('IS_OTP',$config['is_otp']);
+						$c->AddParam('TERMINAL_PATH',$COACH['terminal_path']);
 						
-						$lv['entry_gates_text'] = get_config('entry_gates');
+						$lv['entry_gates_text'] = $config['entry_gates'];
 						$lv_['gate']			= @$_GET['gate'];
 						
 						if($lv['entry_gates_text'] && $lv_['gate']){
 							$lv['entry_gates'] 		= explode(',',$lv['entry_gates_text']);
 							$c->AddParam('GATE',(in_array($lv_['gate'],$lv['entry_gates'])?$lv_['gate']:''));
-						}
-						
+						}						
 					}
 					
 					if($content['add_on']){ $c->AddParam($content['add_on']); } 

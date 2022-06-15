@@ -236,26 +236,26 @@
 		
 		//$_GET['filter_off'];
 	 	
-		//$P_V['is_cokies_expire']  = (@$_GET['show'])?@$_GET['show']:(@$_GET['filter_off_id']?1:0);
+		//$P_V['is_cookies_expire']  = (@$_GET['show'])?@$_GET['show']:(@$_GET['filter_off_id']?1:0);
 		
 		$P_V['show']		 = (@$D_SERIES['clear_history'])?1:@$_GET['show'];
 		
-		$P_V['is_cokies_expire'] = (@$_GET['filter_off_id'])?0:$P_V['show'];
+		$P_V['is_cookies_expire'] = (@$_GET['filter_off_id'])?0:$P_V['show'];
 		
-	 	$P_V['cokies_id'] = (@$P_V['f_off_cookies_id'])?@$P_V['f_off_cookies_id']:$app_key;
+	 	$P_V['cookies_id'] = (@$P_V['f_off_cookies_id'])?@$P_V['f_off_cookies_id']:$app_key;
 		
-		$P_V['s_id'] =  $G->get_cookies($P_V['cokies_id'].'s_id',@$_GET['s_id'],@$_GET['s_id'],@$P_V['is_cokies_expire']);
+		$P_V['s_id'] =  $G->get_cookies($P_V['cookies_id'].'s_id',@$_GET['s_id'],@$_GET['s_id'],@$P_V['is_cookies_expire']);
 		
 	        $SEARCH_FIELD =  (@$D_SERIES['search'][$_GET['s_type']]['search_key'])?@$D_SERIES['search'][$_GET['s_type']]['search_key']:@$SEARCH_FIELD[@$_GET['s_type']];
 		
-		#$P_V['s_type'] =  $G->get_cookies($P_V['cokies_id'].'s_type',@$SEARCH_FIELD[@$_GET['s_type']],@$SEARCH_FIELD[@$_GET['s_type']],@$P_V['is_cokies_expire']);
+		#$P_V['s_type'] =  $G->get_cookies($P_V['cookies_id'].'s_type',@$SEARCH_FIELD[@$_GET['s_type']],@$SEARCH_FIELD[@$_GET['s_type']],@$P_V['is_cookies_expire']);
 		
-		$P_V['s_type'] =  $G->get_cookies($P_V['cokies_id'].'s_type',$SEARCH_FIELD,$SEARCH_FIELD,@$P_V['is_cokies_expire']);
+		$P_V['s_type'] =  $G->get_cookies($P_V['cookies_id'].'s_type',$SEARCH_FIELD,$SEARCH_FIELD,@$P_V['is_cookies_expire']);
 		
 					
-		$P_V['s_text_type'] =  $G->get_cookies($P_V['cokies_id'].'s_text_type',@$_GET['s_text_type'],@$_GET['s_text_type'],@$P_V['is_cokies_expire']);
+		$P_V['s_text_type'] =  $G->get_cookies($P_V['cookies_id'].'s_text_type',@$_GET['s_text_type'],@$_GET['s_text_type'],@$P_V['is_cookies_expire']);
 		
-		$P_V['s_text']	=  $G->get_cookies($P_V['cokies_id'].'s_text',@$_GET['s_text'],@$_GET['s_text'],@$P_V['is_cokies_expire']);
+		$P_V['s_text']	=  $G->get_cookies($P_V['cookies_id'].'s_text',@$_GET['s_text'],@$_GET['s_text'],@$P_V['is_cookies_expire']);
 	// }
 
 	
@@ -343,50 +343,18 @@
 		$OREDR_DIRECTION['1']='ASC';
 		
 		$OREDR_DIRECTION['2']='DESC'; 
-	
-	//$G->cookies_expire($app_key.'s_id');
-	
-	/*if(@$_GET['filter_off_id']){ 
-	
-	#	echo '============-';
-		 $P_V['f_off_data'] = explode('[C]',$_GET['filter_off_id']);
 		
-		 $P_V['f_off_cookies_id'] = $app_key.'_'. $P_V['f_off_data'][0].$P_V['f_off_data'][1];
-		
-		 $get_sort_d =  $G->get_cookies($P_V['f_off_cookies_id'].'_sort_d' ,@$_GET['sort_d'],@$_GET['sort_d'],'');
+		 $get_sort_d =  $G->get_cookies($P_V['cookies_id'].'sort_d',@$_GET['sort_d'],@$_GET['sort_d'],@$P_V['is_cookies_expire']);
 		 
-		 $get_sort_f =  $G->get_cookies($P_V['f_off_cookies_id'].'_sort_f',@$_GET['sort_f'],@$_GET['sort_f'],'');
-		 
-		# print_r($_COOKIE);
-	
-	}
-	
-	else{
-	
-	
-		 $get_sort_d =  $G->get_cookies($app_key.'sort_d',@$_GET['sort_d'],@$_GET['sort_d'],@$P_V['is_cokies_expire']);
-		 
-		 $get_sort_f =  $G->get_cookies($app_key.'sort_f',@$_GET['sort_f'],@$_GET['sort_f'],@$P_V['is_cokies_expire']);
-	}*/
-		
-		
-		
-		
-		 $get_sort_d =  $G->get_cookies($P_V['cokies_id'].'sort_d',@$_GET['sort_d'],@$_GET['sort_d'],@$P_V['is_cokies_expire']);
-		 
-		 $get_sort_f =  $G->get_cookies($P_V['cokies_id'].'sort_f',@$_GET['sort_f'],@$_GET['sort_f'],@$P_V['is_cokies_expire']);
+		 $get_sort_f =  $G->get_cookies($P_V['cookies_id'].'sort_f',@$_GET['sort_f'],@$_GET['sort_f'],@$P_V['is_cookies_expire']);
 		
 		 @$sort_by =   @$D_SERIES['list_sort'][$_GET['sort_by']]['query'];
 		 
-		 $get_sort_by =  $G->get_cookies($P_V['cokies_id'].'sort_by',@$sort_by,@$sort_by,@$P_V['is_cokies_expire']);
+		 $get_sort_by =  $G->get_cookies($P_V['cookies_id'].'sort_by',@$sort_by,@$sort_by,@$P_V['is_cookies_expire']);
 		 
-		 $get_sort_by_id =  $G->get_cookies($P_V['cokies_id'].'sort_by',@$_GET['sort_by'],@$_GET['sort_by'],@$P_V['is_cokies_expire']);
+		 $get_sort_by_id =  $G->get_cookies($P_V['cookies_id'].'sort_by',@$_GET['sort_by'],@$_GET['sort_by'],@$P_V['is_cookies_expire']);
 		
 		 $P_V['order_direction']=(@$get_sort_d )?((@$get_sort_d==1)?2:1):1;	
-	 
-	 
-	
-	 
 		
 		
 	if(@$get_sort_f){
@@ -462,7 +430,7 @@
 	 
 	// setcookie("per_page",@$_GET['page']);
 	 
-		$get_per_page =  $G->get_cookies($P_V['cokies_id'].'get_per_page',@$_GET['page'],@$_GET['page'],@$P_V['is_cokies_expire']);
+		$get_per_page =  $G->get_cookies($P_V['cookies_id'].'get_per_page',@$_GET['page'],@$_GET['page'],@$P_V['is_cookies_expire']);
 	 
 		 $per_page =  (@$get_per_page)?@$get_per_page:$show_default_rows;
 	  
@@ -630,7 +598,7 @@
 		$T->AddParam('show_all_label',$show_all_label);
 		
 		if(@$_GET['filter_off_id']){				
-		        $get_filter_off =  $G->get_cookies($P_V['cokies_id'].'filter_off',@$_GET['filter_off'],@$_GET['filter_off'],@$P_V['is_cokies_expire']);			
+		        $get_filter_off =  $G->get_cookies($P_V['cookies_id'].'filter_off',@$_GET['filter_off'],@$_GET['filter_off'],@$P_V['is_cookies_expire']);			
 			$T->AddParam('filter_off',(@$get_filter_off)?@$get_filter_off:@$D_SERIES['filter_off']);
 		}else{		        
 			$filter_off= (@$D_SERIES['filter_off'])?1:0;
@@ -663,12 +631,6 @@
 		}		
 		
 		
-		
-		if(@$D_SERIES['is_custom_filter']){
-		
-			$T->AddParam(custom_filter());
-		}
-			
 		$P_V['custom_filter'] = custom_filter();
 		
 		
@@ -785,18 +747,18 @@
 		$T->AddParam('SHOW_PAGE',$per_page);
 		
 		
-	   $start_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'start_date',
+	   $start_date =  $G->get_cookies_ii(['key'      => $P_V['cookies_id'].'start_date',
 	                                   'key_id'   => 'start_date',
 									   'value'     => @$_GET['start_date'],
 									   'default'   => @$_GET['start_date'],
-									   'is_expire' => @$P_V['is_cokies_expire']]);
+									   'is_expire' => @$P_V['is_cookies_expire']]);
 									   
 				
-	   $end_date =  $G->get_cookies_ii(['key' 		=> $P_V['cokies_id'].'end_date',
+	   $end_date =  $G->get_cookies_ii(['key' 		=> $P_V['cookies_id'].'end_date',
 									 'key_id'   => 'end_date',
 									 'value'	=> @$_GET['end_date'],
 									 'default'	=> @$_GET['end_date'],
-									 'is_expire'	=> @$P_V['is_cokies_expire']]);
+									 'is_expire'	=> @$P_V['is_cookies_expire']]);
 									 
 	   
 	  // $is_apply_date = ($start_date)
@@ -1010,88 +972,78 @@
 		}//end of search text	
 		
 		
-		// custom filter 
+	// custom filter 
 	
 		function custom_filter(){
 				
-				 	//custom_filter
-					
-					global $D_SERIES;	
-					
-					
-					
-					$INFO = array();
-					
-					$F_TEXT = '';
-					
-					$F_VALUE = '';
-					
-					if(@$D_SERIES['custom_filter']){
-					
-						$custom_filter = @$D_SERIES['custom_filter'];
-						
-						for($c_f_i=0; $c_f_i<count($custom_filter); $c_f_i++){
+				global $D_SERIES;
+				
+				# local variable
+				$lv =[ 'attr_text'				 => '',
+							 'field_text'   		 => '',
+							 'field_value'  		 => '',
+							 'custom_filter'		 => '',
+							 'custom_filter_info'=> []
+						];
+				
+				$lv['custom_filter'] = @$D_SERIES['custom_filter'];
+				
+				if(@$lv['custom_filter']){
+				
+						// traverse each filter
+						foreach($lv['custom_filter'] as  $filter_key=>$filter_item){
 							
-							$temp = array();
-							
-							$temp['field_id']	 = @$custom_filter[$c_f_i]['field_id'];
-							
-							$temp['filter_option']	 = (@$custom_filter[$c_f_i]['filter_type']=='option_list')?1:0;
-							
-							$temp['multi_select'] 	 = (@$custom_filter[$c_f_i]['filter_type']=='multi_select')?1:0;
-							
-							$temp['option_value'] 	 = @$custom_filter[$c_f_i]['option_value'];
-							
-							$temp['search_text'] 	 = (@$custom_filter[$c_f_i]['filter_type']=='search_text')?1:0;
-							
-							$temp['placeholder'] 	 = @$custom_filter[$c_f_i]['placeholder'];
-							
-							$temp['field_name'] 	 = @$custom_filter[$c_f_i]['field_name'];
-							
-							$attr='';
-							
-							if(@$custom_filter[$c_f_i]['attr']){
-									foreach(@$custom_filter[$c_f_i]['attr'] as $attr_key=> $attr_value ){
-											
-											$attr.=$attr_key.'='.$attr_value.' '; 
-									}
-							}
-							
-							
-							$temp['html']      	 = (@$custom_filter[$c_f_i]['html'])?$custom_filter[$c_f_i]['html'] : $attr;
-							
-							
-							$temp['cus_default_label']=(@$custom_filter[$c_f_i]['cus_default_label'])?@$custom_filter[$c_f_i]['cus_default_label']:'Select';
-							
-							$temp['no_default_option']= @$custom_filter[$c_f_i]['no_default_option'];
-							
-							
-							$F_TEXT.=@$custom_filter[$c_f_i]['field_id'].',';
-							
-							$field_name=@$custom_filter[$c_f_i]['field_id'];
-							
-							if($temp['multi_select']){
-							  $multi_value = $field_name.'_hidden';
-							  $F_VALUE.=  "document.getElementById('$multi_value'),";
-							}
-							else{
-							  $F_VALUE.= "document.getElementById('$field_name'),";		  		
-							}
-							
-							
-							array_push($INFO,$temp);	
-						}
-					
-					
-					} // end
-					
-					$F_TEXT = substr($F_TEXT,0,-1);
-					
-					$F_VALUE = substr($F_VALUE,0,-1);
-					
-					return array($INFO,$F_TEXT,$F_VALUE);
+								$temp = array();
+								
+								// fetch params
+								$temp['field_id']	 			 = @$filter_item['field_id'];								
+								$temp['filter_option']	 = (@$filter_item['filter_type']=='option_list')?1:0;								
+								$temp['multi_select'] 	 = (@$filter_item['filter_type']=='multi_select')?1:0;																
+								$temp['option_value'] 	 = @$filter_item['option_value'];								
+								$temp['search_text'] 	 	 = (@$filter_item['filter_type']=='search_text')?1:0;								
+								$temp['placeholder'] 	 	 = @$filter_item['placeholder'];								
+								$temp['field_name'] 	 	 = @$filter_item['field_name'];
+								
+								// temp attribute
+								$lv['attr_text'] 				 ='';
+								
+								// each attribute
+								if(@$filter_item['attr']){
+										foreach($filter_item['attr'] as $attr_key=> $attr_value ){												
+												$lv['attr_text'].=$attr_key.'='.$attr_value.' '; 
+										}
+								} // end of attribute
+								
+								
+								// label and option and setup
+								$temp['html']      			  = (@$filter_item['html'])?@$filter_item['html'] :$lv['attr_text'];																
+								$temp['cus_default_label']=(@$filter_item['cus_default_label'])?@$filter_item['cus_default_label']:'Select';								
+								$temp['no_default_option']= @$filter_item['no_default_option'];
+								
+								$lv['field_name']=@$filter_item['field_id'];
+								$lv['field_text'].=@$filter_item['field_id'].',';																
+								
+								if($temp['multi_select']){
+										$temp['multi_value'] = $lv['field_name'].'_hidden';
+										$lv['field_value'].="document.getElementById('$temp[multi_value]'),";
+								}else{
+										$lv['field_value'].= "document.getElementById('$lv[field_name]'),";		  		
+								}
+								
+								array_push($lv['custom_filter_info'],$temp);
+								
+						} // each item				
+				
+				} // if custom filter
+				
+				// field text & value
+				$lv['field_text']  = substr($lv['field_text'],0,-1);				
+				$lv['field_value'] = substr($lv['field_value'],0,-1);
+				
+				return array($lv['custom_filter_info'],$lv['field_text'],$lv['field_value']);
 				
 		}//end of custom filter
+		
 		
 		//custom sort by(){
 		function custom_list_sort(){
@@ -1740,31 +1692,31 @@
 				}
 			
 			
-			   	$start_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'start_date',
+			   	$start_date =  $G->get_cookies_ii(['key'      => $P_V['cookies_id'].'start_date',
 	                                   'key_id'   => 'start_date',
 									   'value'     => @$_GET['start_date'],
 									   'default'   => @$_GET['start_date'],
-									   'is_expire' => @$P_V['is_cokies_expire']]);
+									   'is_expire' => @$P_V['is_cookies_expire']]);
 				
-				$end_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'end_date',
+				$end_date =  $G->get_cookies_ii(['key'      => $P_V['cookies_id'].'end_date',
 											  'key_id'   => 'end_date',
 											  'value'     => @$_GET['end_date'],
 											  'default'   => @$_GET['end_date'],
-											  'is_expire' => @$P_V['is_cokies_expire']]);
+											  'is_expire' => @$P_V['is_cookies_expire']]);
 				
 				//20-aug-2014(alt_date):
 				
-				$start_alt_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'start_alt_date',
+				$start_alt_date =  $G->get_cookies_ii(['key'      => $P_V['cookies_id'].'start_alt_date',
 	                                   'key_id'   => 'start_alt_date',
 									   'value'     => @$_GET['start_alt_date'],
 									   'default'   => @$_GET['start_alt_date'],
-									   'is_expire' => @$P_V['is_cokies_expire']]);
+									   'is_expire' => @$P_V['is_cookies_expire']]);
 				
-				$end_alt_date =  $G->get_cookies_ii(['key'      => $P_V['cokies_id'].'end_alt_date',
+				$end_alt_date =  $G->get_cookies_ii(['key'      => $P_V['cookies_id'].'end_alt_date',
 											  'key_id'   => 'end_alt_date',
 											  'value'     => @$_GET['end_alt_date'],
 											  'default'   => @$_GET['end_alt_date'],
-											  'is_expire' => @$P_V['is_cokies_expire']]);
+											  'is_expire' => @$P_V['is_cookies_expire']]);
 				//
 				
 			  //  setcookie('start_date',$start_date);
@@ -1867,19 +1819,23 @@
 			
 			global $P_V;
 			
+			
 			 $WHERE_FILTER='';
 			 
 			 $PREE_DATA = '';
 			 
 			 if(@$D_SERIES['custom_filter']){
 			
-				for($c_f_i= 0; $c_f_i<count(@$D_SERIES['custom_filter']); $c_f_i++){
+				foreach(@$D_SERIES['custom_filter'] as $filter_key => $filter_item){
+					
+							$c_f_i=$filter_key;
+							
 					       
-					       $P_V['filter_by'] = @$D_SERIES['custom_filter'][$c_f_i]['filter_by'];
+					       $P_V['filter_by'] = @$filter_item['filter_by'];
 					       
-					       $P_V['field_id']  = @$D_SERIES['custom_filter'][$c_f_i]['field_id']; //$_GET['dsr_select'];
+					       $P_V['field_id']  = @$filter_item['field_id']; //$_GET['dsr_select'];
 					       
-					       $P_V['default_option'] = @$D_SERIES['custom_filter'][$c_f_i]['default_option'];
+					       $P_V['default_option'] = @$filter_item['default_option'];
 					       
 					       
 					       
@@ -1889,29 +1845,27 @@
 					       
 					       //setcookie("bgColor",$newbgColor,time()+3600);
 					       //setcookie("txtColor",$newtxtColor,time()+3600);
-							if(@$P_V['field_id']){
-					
-								$get_value =  $G->get_cookies_ii([	'key'		=> $P_V['cokies_id'].'get_field_id'.$c_f_i,
-																	'key_id'	=> $P_V['field_id'],
-																	'value'		=> @$_GET[$P_V['field_id']],
-																	'default'	=> @$_GET[$P_V['field_id']],
-																	'is_expire'	=> @$P_V['is_cokies_expire']]);
-								   
-							} // end
+						if(@$P_V['field_id']){
+
+										$get_value =  $G->get_cookies_ii([	'key'		=> $P_V['cookies_id'].'get_field_id'.$c_f_i,
+																												'key_id'	=> $P_V['field_id'],
+																													'value'		=> @$_GET[$P_V['field_id']],
+																													'default'	=> @$_GET[$P_V['field_id']]]);
+								}// end
 					       
 						
-					       if(@$D_SERIES['custom_filter'][$c_f_i]['filter_type'] == 'option_list'){
+					       if(@$filter_item['filter_type'] == 'option_list'){
 						       
 						       #echo $get_value.'------------<br>';	
 						       if($get_value > -1){
 									       
 							       //	echo
 							       
-								       if(@$D_SERIES['custom_filter'][$c_f_i]['is_number_match']){							
+								       if(@$filter_item['is_number_match']){							
 										       $WHERE_FILTER.= ' AND '. $P_V['filter_by'].'=' ."$get_value";
 										       $PREE_DATA.= "E_V_PASS('$P_V[field_id]',$get_value);";
 										       
-								       }else if(@$D_SERIES['custom_filter'][$c_f_i]['is_one_to_many']){
+								       }else if(@$filter_item['is_one_to_many']){
 										       
 										       $WHERE_FILTER.= " AND  $get_value  IN($P_V[filter_by])";
 										       $PREE_DATA.= "E_V_PASS('$P_V[field_id]',$get_value);";
@@ -1940,7 +1894,7 @@
 						       
 					       }
 					       
-					       if(@$D_SERIES['custom_filter'][$c_f_i]['filter_type'] == 'multi_select'){
+					       if(@$filter_item['filter_type'] == 'multi_select'){
 							$hidden_field = $P_V['field_id'].'_hidden' ;
 							
 							//echo $get_value.'====='.$hidden_field.'------<br>';
@@ -1965,7 +1919,7 @@
 						       
 					       }
 					       
-					       if(@$D_SERIES['custom_filter'][$c_f_i]['filter_type'] == 'search_text'){
+					       if(@$filter_item['filter_type'] == 'search_text'){
 							       
 							       if($get_value){
 							       
