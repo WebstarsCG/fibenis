@@ -1387,7 +1387,7 @@
 				$key_id		= $param['key_id'];
 				$value		= $param['value'];
 				$default	= $param['default'];
-				$is_expire	= $param['is_expire'];
+				$is_expire	= @$param['is_expire'];
 				
 				$expiry = time()+3600;
 				
