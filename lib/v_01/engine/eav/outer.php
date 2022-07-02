@@ -221,7 +221,7 @@
 		function outer_action(){
 		    
 			global $PV,$THEME_ROUTE,$COACH,$IS_HOME,$LIB_PATH,
-			       $CONTENT,$MENU_OFF,$G,$PAGE,$PAGE_CONTENT,$SG,$PASS_ID,
+			       $CONTENT,$MENU_OFF,$G,$PAGE,$PAGE_CODE,$PAGE_CONTENT,$SG,$PASS_ID,
 			       $DEFAULT_ADDON,$SHOW_DOOR,$USER_ROLE,$USER_ID,$USER_NAME,$USER_EMAIL;
 			
 
@@ -300,32 +300,20 @@
 				}
 
 		
-		# Template
+		// 	Template
 				
-				$TD =   new Template(array("filename"          => $LIB_PATH."/template/index.html",
-							     "debug"             => 0,
-							     "loop_context_vars" => 1)
-					);
-		// Menu Content
-			    
+				$TD =   new Template(array(	"filename"          => $LIB_PATH."/template/index.html",
+											"debug"             => 0,
+											"loop_context_vars" => 1)
+									);
+		//	menu Content		    
 		
 				$MENU_OFF = (!$MENU_OFF)?(((@$_GET['menu']) || (@$_GET['menu_off']))?1:0):$MENU_OFF;
 				
 				if(!$MENU_OFF){
-				
-						//$PV['menu_text']    = 'menu_'.strtolower($USER_ROLE).'x'.$IS_HOME.'o'.$PV['is_open'];
-						//$PV['menu_created'] =  $THEME_ROUTE."/template/role_menu/$PV[menu_text].html";
-						//
-						//if(is_file($PV['menu_created'])){
-						//
-						//	$PV['menu_created_template'] = new Template(array("filename" =>$PV['menu_created']));
-						//	$TD->AddParam('MENU_DATA',$PV['menu_created_template']->Output());    
-						//    
-						//}else{
-						
-												    
+							    
 						    $M 	= new Template(array("filename" => $THEME_ROUTE."/template/menu.html",
-										 "debug"    => 0));						
+													 "debug"    => 0));						
 											    
 						    // User Role
 						    
@@ -363,7 +351,7 @@
 									'is_gallery'     => $SG->get_session('is_gallery'),
 									'is_news_events' => $SG->get_session('is_news_events'),
 									'is_open'        => $PV['is_open'],
-									'is_home'	 => $IS_HOME,
+									'is_home'	 	=> $IS_HOME,
 									'is_page'        => $PV['is_page'],
 									'coach_name'     => $COACH['name'],
 									'coach_path'     => $COACH['path'],
@@ -398,6 +386,7 @@
 					'pass_id'      => $PASS_ID,
 					'page_content' => @$PAGE_CONTENT,
 					'show_door'    => $SHOW_DOOR,
+					'page_code'	   => $PAGE_CODE
 		    ));
 						       
 		    if($USER_ID){

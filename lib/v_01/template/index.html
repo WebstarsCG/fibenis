@@ -4,19 +4,17 @@
     <TMPL_VAR HEADER>
   </head>  
   <!--navbar ==================================================-->
-  <body>
+  <body <TMPL_IF PAGE_CODE>id="<TMPL_VAR PAGE_CODE>"</TMPL_IF>>
    
     <TMPL_UNLESS MENU_OFF>
-	<TMPL_VAR MENU_DATA>
-   </TMPL_UNLESS>
+		<TMPL_VAR MENU_DATA>
+	</TMPL_UNLESS>
          
     <!-- Full Body Container -->
     <!--<div id="container">-->
     <!--<TMPL_VAR PAGE_TITLE><TMPL_VAR PAGE_DESCR><TMPL_VAR lib_path><TMPL_VAR IS_HOME><TMPL_VAR PAGE_ID><TMPL_VAR CURRENT_YEAR>-->
        
         <TMPL_VAR PAGE_CONTENT>
-	  
-	  
 
     <!--</div>-->
     
