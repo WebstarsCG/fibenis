@@ -48,10 +48,15 @@
 				include("../../".$PV['lib_path']."comp/PHPMailer/smtp.php");
 				
 				# coach
-				
 				$COACH=[];
 				
-				$COACH['domain_name']		=   (get_config('is_multiple')==1)?str_replace("www.","",$_SERVER['HTTP_HOST']):'default';
+				# domain name setup
+				if(get_config('is_multiple')==1){					
+					$COACH['domain_name']	=	str_replace("www.","",$_SERVER['HTTP_HOST']);
+					$PV['domain_name']		= 	$COACH['domain_name'];
+				}else{
+					$COACH['domain_name']	=	'default';
+				}
 				
 		    
 				list($COACH['id'],
@@ -59,9 +64,7 @@
 																		  'field'        => "concat(id,'[C]',get_eav_addon_vc128uniq(id,'CHCD'))",
 																		  'manipulation' => " WHERE get_eav_addon_varchar(id,'CHDN') ='$COACH[domain_name]' ",
 						    ]));
-						
-					
-							    
+													    
 				$COACH['name_hash']     =   md5($COACH['name']);
 								
 				$PV['login_table'] 		= 'user_info';
@@ -70,9 +73,9 @@
 				
 				$PV['login_name']  		=  "get_eav_addon_varchar(is_internal,'COFN')";
 				
-				$SG->set_get_master_session($COACH['id']);
-				
-		}	
+				$SG->set_get_master_session($COACH['id']);				
+		
+		} // end	
 		
 		
 		//sign up data
