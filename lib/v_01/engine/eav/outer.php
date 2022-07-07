@@ -285,9 +285,10 @@
                                 
                          
 				
-				$F->AddParam(array('PAGE_ID'        => $PAGE,
-                                                   'default_footer' => @$PV['MASTER']['default_footer'],
-						   'IS_USER'       => (($USER_ID)?1:0),					         
+				$F->AddParam(array('PAGE_ID'        	=> $PAGE,
+								   'default_footer' 	=> @$PV['MASTER']['default_footer'],
+								   'IS_USER'      		=> (($USER_ID)?1:0),	
+								   "IS_$COACH[step_in]"	=> 1
 					    ));				
 				// email:
 				
