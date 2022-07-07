@@ -47,7 +47,7 @@
             $mail->Password = get_config('smpt_pswrd');
             
             //Set who the message is to be sent from
-            $mail->setFrom(get_config('to_admin'),get_config('title'));
+            $mail->setFrom(get_config('to_admin'),(@$param['from'] ?? get_config('title')));
             
             //Set an alternative reply-to address
 	    if(get_config('reply_mail')){
@@ -129,6 +129,7 @@
 								    
 									'message'	=>$message,
 									
+									'from'		=> @$param['from']
 									
 									)
 									
