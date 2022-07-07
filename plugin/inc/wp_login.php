@@ -54,7 +54,7 @@
 				if(get_config('is_multiple')==1){					
 					$COACH['domain_name']	=	str_replace("www.","",$_SERVER['HTTP_HOST']);
 
-					$PV['domain_name']		= 	"http".(($_SERVER['HTTPS'])'?s':'')."//www.".$_SERVER['HTTP_HOST'];
+					$PV['domain_name']		= 	"http".(($_SERVER['HTTPS'])?'s':'')."//www.".$_SERVER['HTTP_HOST'];
 
 				}else{
 					$COACH['domain_name']	=	'default';
