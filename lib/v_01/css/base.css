@@ -796,14 +796,15 @@
 		
 	
 	#inpage_message{
-		display		: none;
-		position	: fixed;
-		top		: 0;
-		z-index		: 10;
-		width		: 50%;
-		left		: 50%;
-		margin-left	: -25%;
-		height		: 45px !important;		
+		display			: none;
+		padding-bottom	: 20px;
+		padding-top		: 10px;
+		position		: fixed;
+		top				: 0;
+		z-index			: 10;
+		width			: 50%;
+		left			: 50%;
+		margin-left		: -25%;		
 	}
 	
 	/* icon */

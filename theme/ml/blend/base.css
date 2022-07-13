@@ -1,7 +1,8 @@
 /* === === = === ===== */
 /* nav bar - css Start */
 /* === === = === ===== */
-
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 .slicknav_menu{
 	display: none;
 	
@@ -1144,7 +1145,10 @@ ul.post-meta li a:hover {
 		
 		fieldset .value input[type="text"],
 		fieldset .value input[type="number"],
-		fieldset .value select{			
+		fieldset .value input[type="file"],
+		fieldset .value textarea,
+		fieldset .value select,
+		fieldset .value .bootstrap-select{			
 			font-size	: 18px !important;
 			height		: 40px;
 			width		: 90% !important;
