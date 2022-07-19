@@ -93,11 +93,18 @@
 																				
 																				$entity->code=$entity->code.'';
 																				$entity->name=$entity->name.'';
-																													
-																				// remove existing
+																				echo $entity->write_mode=$entity->write_mode.'';
+																		
+																		
+								
+								
+								
+								// remove existing
 																
-									if($entity->write_mode=!'A'){		
+									if($entity->write_mode!='A'){		
 									
+									echo "------------".$entity->write_mode;
+									 
 									$rdsql->exec_query("DELETE from entity_child WHERE entity_code='".$entity->code."'",'Remove entity_child');
 									$rdsql->exec_query("DELETE from entity_child_base WHERE entity_code='".$entity->code."'",'Remove entity_child_bae');
 									$rdsql->exec_query("DELETE from entity WHERE code='".$entity->code."'",'Remove entity');
