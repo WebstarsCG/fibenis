@@ -17,7 +17,7 @@
 								'data'=>	array(
 													'code'=>array('field' => 'code'),
 													'name'=>array('field' => 'sn'),
-													'wm'=>array('field' => "'$t_series[wm]'"), //write_mode
+													'wm'=>array('field' => "UPPER('$t_series[wm]')"), //write_mode
 													'attributes'=>array(
 'is_child_addon' =>1,
 
