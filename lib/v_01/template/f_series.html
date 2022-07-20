@@ -782,8 +782,9 @@
 											<TMPL_IF OPTION_IS_QUICK_SEARCH>
 												<span style="height:38px;display: block;">&nbsp;</span>
 											</TMPL_IF>
+										
 											<input type=button  class="button" value=">>"
-											       onClick="JavaScript:left_right_action(<TMPL_VAR field_id>,<TMPL_VAR RIGHT_OPTION_LIMIT>);<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
+											       onClick="JavaScript:left_right_action(<TMPL_VAR field_id>,G.$('X<TMPL_VAR field_id>').dataset.rightOptionLimit);<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
 											<br>	<br>							
 											<input type=button class="button"  value="<<"
 											       onClick="JavaScript:parent_to_child(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_LEFT'));selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');selectbox_capture_text(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_RIGHT_TEXT'),'#');<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
@@ -818,7 +819,7 @@
 										</td>
 								</table>
 								
-								<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="" data-input-type="select-left-right">
+								<input type="hidden" id="X<TMPL_VAR field_id>"  name="X<TMPL_VAR field_id>" value="" data-input-type="select-left-right" data-right-option-limit='<TMPL_VAR RIGHT_OPTION_LIMIT>'>
 								<input type="hidden" id="X<TMPL_VAR field_id>_RIGHT_TEXT"  name="X<TMPL_VAR field_id>_RIGHT_TEXT" value="">
 							    	
 								
