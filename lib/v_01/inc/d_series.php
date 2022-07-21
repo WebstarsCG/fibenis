@@ -1824,7 +1824,7 @@
 			 
 			 $PREE_DATA = '';
 			 
-			 if(@$D_SERIES['custom_filter']){
+			 if((@$D_SERIES['custom_filter'])  && (array_key_exists('show',@$_GET)==false)){
 			
 				foreach(@$D_SERIES['custom_filter'] as $filter_key => $filter_item){
 					
@@ -1845,13 +1845,13 @@
 					       
 					       //setcookie("bgColor",$newbgColor,time()+3600);
 					       //setcookie("txtColor",$newtxtColor,time()+3600);
-						if(@$P_V['field_id']){
+							if(@$P_V['field_id']){
 
-										$get_value =  $G->get_cookies_ii([	'key'		=> $P_V['cookies_id'].'get_field_id'.$c_f_i,
-																												'key_id'	=> $P_V['field_id'],
-																													'value'		=> @$_GET[$P_V['field_id']],
-																													'default'	=> @$_GET[$P_V['field_id']]]);
-								}// end
+									$get_value =  $G->get_cookies_ii([	'key'		=> $P_V['cookies_id'].'get_field_id'.$c_f_i,
+																		'key_id'	=> $P_V['field_id'],
+																		'value'		=> @$_GET[$P_V['field_id']],
+																		'default'	=> @$_GET[$P_V['field_id']]]);
+							}// end
 					       
 						
 					       if(@$filter_item['filter_type'] == 'option_list'){
@@ -1876,21 +1876,19 @@
 										       $PREE_DATA.= "E_V_PASS('$P_V[field_id]','$get_value');";
 								       }
 								  
-								       
-								  
 								  
 						       }elseif($get_value == -1){
 						       
 							      $PREE_DATA.= "E_V_PASS('$P_V[field_id]','$get_value');";
 								       
 							
-						       }else{
+								}else{
 							       
-								       $WHERE_FILTER.=$P_V['default_option']? 'AND '.$P_V['filter_by'].'=\''.$P_V['default_option'].'\'':'';
+									$WHERE_FILTER.=$P_V['default_option']? 'AND '.$P_V['filter_by'].'=\''.$P_V['default_option'].'\'':'';
 								       
-								       $PREE_DATA.=$P_V['default_option']? "E_V_PASS('$P_V[field_id]','$P_V[default_option]');":'';
+									$PREE_DATA.=$P_V['default_option']? "E_V_PASS('$P_V[field_id]','$P_V[default_option]');":'';
 						       
-						       }
+								}
 						       
 					       }
 					       
