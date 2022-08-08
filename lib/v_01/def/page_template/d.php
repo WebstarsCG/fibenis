@@ -63,7 +63,7 @@
 		
 		$default_addon = @$_GET['default_addon'];
 		$D_SERIES['key_filter'] ="AND entity_code='TP' AND parent_id = (SELECT id FROM entity_child_base WHERE entity_code='TH' AND
-					  token = (SELECT ea_value FROM eav_Addon_varchar WHERE ea_code='ECSN' aND parent_id = $default_addon))";
+					  token = (SELECT ea_value FROM eav_addon_varchar WHERE ea_code='ECSN' aND parent_id = $default_addon))";
         	unset($D_SERIES['data'][1]);
 		unset($D_SERIES['export_csv']);
 		$D_SERIES['action']['is_edit']=1;
