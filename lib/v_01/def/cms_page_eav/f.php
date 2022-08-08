@@ -277,7 +277,7 @@
 							       'child_attr_code'     => 'ECDT',           // attribute code
 							       
 							       
-                                                               'type'=>'textarea_editor',
+                                                               'type'=>'code_editor',
 							       
                                                                //'type'=>'textarea',
 							       #'type'=>'textarea',
@@ -683,7 +683,8 @@
 	       
 	        $lv['t_detail'] = explode('[C]',$lv['temp']);
 	       
-	        // addon template token
+		
+		// addon template token
 		
 		$lv['addon_detail'] = $G->get_one_column(['field'=>"concat(token,'[S]',sn)",
 						      'table'=>'entity_child_base',
@@ -713,11 +714,11 @@
 		//		);
 		
 		
-		
 		$node_res = 	$client->GET($_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["HTTP_HOST"].$_SERVER["SCRIPT_NAME"],
 					     ['query'=>[  $lv['engine']  => 'cms_page_eav',
 						          'req'       => $lv['temp_key'],
-						     	  'trans_key' => $lv['trans_key']
+						     	  'trans_key' => $lv['trans_key'],
+								  'clear_cache'=>1
 							]
 						]
 				);

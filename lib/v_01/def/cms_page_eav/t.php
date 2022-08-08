@@ -52,7 +52,7 @@
 		$lv           = [];
 		
 		$lv['content']= '';
-		
+		$lv['t_data']  =[];
 		
 		
 		$lv['IT']=['ITTX'=>function($data_in){ return ['field'=>"get_exav_addon_varchar(id,'$data_in')"]; },
