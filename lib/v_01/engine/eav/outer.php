@@ -57,7 +57,7 @@
 		
 		$COACH['path']          =  ((get_config('coach_path'))?get_config('coach_path'):"template/");
 		
-		$COACH['filter']        =  (get_config('is_multiple')==1)? " AND id=$COACH[id] " :"";
+		$COACH['filter']        =  (get_config('is_multiple')==1)? " AND get_eav_addon_ec_id(id,'PGCH')=$COACH[id] " :"";
 		
 		$COACH['terminal_path'] =  $COACH['path'].$COACH['name'];
 		
