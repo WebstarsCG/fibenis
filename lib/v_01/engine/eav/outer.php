@@ -69,7 +69,7 @@
 		@$PARAM	 		= array_keys($_GET);
 		
 		# Home screen	
-		$COACH['step_in']       = (get_config('avoid_gate'))?'home':'gate';
+		$COACH['step_in']       = (get_config('avoid_gate'))?'home':((@$PARAM[0]=='')?'gate':'home');
 		
 		$PAGE 	 		= (@$PARAM[0])?@$PARAM[0]:$COACH['step_in'] ;
                 		
