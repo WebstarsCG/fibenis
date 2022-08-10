@@ -287,6 +287,7 @@
 				
 				$F->AddParam(array('PAGE_ID'        	=> $PAGE,
 								   'default_footer' 	=> @$PV['MASTER']['default_footer'],
+								   'org_name' 			=> @$PV['MASTER']['org_name'],
 								   'IS_USER'      		=> (($USER_ID)?1:0),	
 								   "IS_$COACH[step_in]"	=> 1
 					    ));				
@@ -417,5 +418,4 @@
 		// close db connection
 		
 		$db_conn_close($db_conn_info);
-				
 ?>

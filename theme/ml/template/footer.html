@@ -1,5 +1,5 @@
 
-         <!---<TMPL_VAR LIB_PATH><TMPL_VAR TERMINAL_PATH><TMPL_VAR PAGE_TITLE><TMPL_VAR CURRENT_YEAR><TMPL_VAR THEME_ROUTE><TMPL_VAR DEFAULT_FOOTER>--->
+         <!---<TMPL_VAR LIB_PATH><TMPL_VAR TERMINAL_PATH><TMPL_VAR PAGE_TITLE><TMPL_VAR CURRENT_YEAR><TMPL_VAR THEME_ROUTE><TMPL_VAR DEFAULT_FOOTER><TMPL_VAR ORG_NAME>--->
       
 	
 <TMPL_UNLESS IS_USER>	
@@ -13,7 +13,7 @@
 		<div class="row">		
 		  
 		  <div class="col-md-9">
-		    <p>&copy; <TMPL_VAR CURRENT_YEAR> </p>
+		    <p>&copy; <TMPL_VAR CURRENT_YEAR>, <TMPL_VAR ORG_NAME></p>
 		    <span id="footer"><TMPL_VAR DEFAULT_FOOTER></span>
 		  </div>		  
 		  
