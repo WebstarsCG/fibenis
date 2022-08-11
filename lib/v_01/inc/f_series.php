@@ -694,7 +694,7 @@
 							
 								$temp['field_type_file']   = (@$value['type'] =='file')?'file':0;
 								
-								$temp['allow_ext']         = (@$value['allow_ext'])?implode($value['allow_ext'],','):'';
+								$temp['allow_ext']         = (@$value['allow_ext'])?implode(',',$value['allow_ext']):'';
 								
 								$temp['max_size']          = (@$value['max_size'])?(@$value['max_size']):512;
 								
