@@ -915,34 +915,34 @@
 			
 				function get_key_value($fields,$table_name,$where){
 				 
-						     global $rdsql;
+						    global $rdsql;
 				
-							$l_v=array();
+							$lv=array();							
+							$lv['field_keys']=[];
+							$lv['result']	 =[];
+							$lv['query_result'] = [];
 							
-							$field_info=array();
-				
-							$l_v['query']="SELECT $fields FROM $table_name WHERE 1=1 $where";
+							if(is_array($fields)){
+								$lv['fields'] 	  = implode(',',array_values($fields));
+								$lv['field_keys'] = array_keys($fields);
+							}else{
+								$lv['fields'] = $fields;
+								$lv['field_keys'] = explode(',',$lv['fields']);
+							}
 							
-							$field_info=explode(',',$fields);
-							
-							$l_v['field_length']=count($field_info);					
+							$lv['query']  		= "SELECT $lv[fields] FROM $table_name WHERE 1=1 $where";	
 																
-						// query execute
+						// query execute						
+							$lv['query_data']=$rdsql->exec_query("$lv[query]","Error");
 						
-							$details_query=$rdsql->exec_query("$l_v[query]","Error");
-							
-						// for single row
-						
-							$details_result=$rdsql->data_fetch_array($details_query);
-							
-							
-							
-							for($key=0;$key<$l_v['field_length'];$key++) {
-									
-									$l_v['result'][$field_info[$key]]=$details_result[$key];						
+						// for single row						
+							$lv['query_result']=$rdsql->data_fetch_array($lv['query_data']);
+														
+							foreach($lv['field_keys'] as $key=>$val){									
+									$lv['result'][$lv['field_keys'][$key]]=$lv['query_result'][$key];						
 							}		
 							
-							return 	$l_v['result'];				 		
+							return 	$lv['result'];				 		
 				}
 		
 		/********************************************************************************************************/									
