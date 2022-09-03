@@ -1017,13 +1017,23 @@
 										   onchange="checkbox_multistate_action(this)"									   
 									   <TMPL_ELSE>
 										   value="<TMPL_VAR VALUE>" 										 
-										   class="checkbox"									   
+										   class="checkbox"	
+											onchange="aggregate_checkbox(this)"											   
 									   </TMPL_IF>
 									   id="<TMPL_VAR __counter__>"><label><TMPL_VAR LABEL></label></TMPL_LOOP>	
 						<!--- set default-->
 								    <span class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></span>
 									<TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
-									<span class=message id="message_X<TMPL_VAR field_id>"></span>
+									<span class="message" id="message_X<TMPL_VAR field_id>"></span>
+									
+									<input type="hidden" id="X<TMPL_VAR field_id>" data-input-type="CB"
+									       value=""
+										   <TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+										   
+										   <TMPL_IF IS_MANDATORY>
+												 data-is-must=1												
+											</TMPL_IF>
+										   >
 									
 									<input type="hidden" id="X<TMPL_VAR field_id>_multistate" name="X<TMPL_VAR field_id>_multistate"
 									       value="<TMPL_IF IS_MULTISTATE>1</TMPL_IF>">
@@ -2649,6 +2659,8 @@
 							}else if(input_temp.check_box['<TMPL_VAR ID>']!=undefined){
 																						
 								f_series.setCheckboxRadioValue(input_temp.check_box['<TMPL_VAR ID>'],'<TMPL_VAR VALUE>');
+								
+								aggregate_checkbox(G.$('<TMPL_VAR ID>_1'));
 
 							}else if(input_temp.radio['<TMPL_VAR ID>']!=undefined){
 																						
