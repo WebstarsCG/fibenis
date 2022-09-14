@@ -81,6 +81,7 @@
 								'child_attr_code'     => 'CHDN',          // attribute code
 								 
 							    ),	
+								
 						       
 						       '4'=>array(
 								'field_name'          => 'Images',
@@ -134,6 +135,38 @@
 								 'save_file_name'	=> 'favicon' 
 				
 							),
+							
+							 '10'=>array(
+								'field_name'          => 'Entity',
+								
+								'type'                => 'heading'
+						      ),
+							  
+							  '11'=>array(
+								'field_name'          => 'Entity',                                                                
+								
+								'field_id'            => 'ea_value',				       
+								
+								'type' 	              => 'list_left_right',
+								
+								'is_mandatory'        => 1,
+						
+								'child_table'         => 'eav_addon_text', // child table 
+								
+								'parent_field_id'     => 'parent_id',         // parent field
+											 
+								'child_attr_field_id' => 'ea_code',   	      // attribute code field
+								
+								'child_attr_code'     => 'CHET',          // attribute code
+								
+								'option_data'  => $G->option_builder("entity","code,sn","WHERE is_lib = 0 order by sn ASC"),
+                                                                    
+                                'input_html'   =>  ' class="w_200" rows="2"  style="height:200px !important"  ',
+
+								 
+							    ),	
+						    
+						      
 						       
 						       
 						     
