@@ -376,11 +376,10 @@
 									<!---For Action Check<TMPL_IF IS_ACTION></TMPL_IF>--->
 									<TMPL_IF is_edit><a  class="ficon <TMPL_IF IS_AVOID_EDIT>hide</TMPL_IF>" 
 																																	<TMPL_IF ACTION_NARROW_DOWN>
-																													href=JavaScript:d_series.call_nd({"id":"<TMPL_VAR key_id>","title":"Edit","src":"?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"})
+						href=JavaScript:d_series.call_nd({"id":"<TMPL_VAR key_id>","title":"Edit","src":"?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"})
 																																	<TMPL_ELSE>
-																													href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"
-																																	</TMPL_IF>
-																																	><i class="fa fa-edit"></i>Edit</a>
+					href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"
+																																	</TMPL_IF>><i class="fa fa-edit"></i>Edit</a>
 									</TMPL_IF>
 							
 								
@@ -812,10 +811,11 @@
 			<TMPL_IF filter_off>
 					
 				function filter_data(){
-					show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&menu=off&filter_off=1&start,sort_f,sort_d,default_addon,filter_off_id,show',
+					show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&filter_off=1&start,sort_f,sort_d,menu_off,default_addon,filter_off_id,show',
 							       document.getElementById('start_page'),
 							       document.getElementById('sort_field'),
 							       document.getElementById('sort_direction'),
+								   document.getElementById('menu_off'),
 							       document.getElementById('default_addon'),
 							       document.getElementById('filter_off_id'),
 							       document.getElementById('filter_off_id')
