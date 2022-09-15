@@ -29,8 +29,8 @@
 												
 							$temp 		= explode(':',$data_in);
 	
-							$data_out	= array('id'   		=> $temp[0],
-										'link_title'	=> '  '.$temp[1],
+							$data_out	= array('id'   		=>$temp[0],
+										'link_title'	=>$temp[1],
 										'is_fa'		=> ' fa fa-folder-o clr_red fa-lg',
 										'title'		=> 'Attribute View',
 										'is_fa'		=> ' fa-chevron-circle-right clr_orange fa-lg ',
@@ -47,7 +47,7 @@
 								  
 							$temp 	  	=  explode(':',$data_in);
 							
-							$data_out 	=  array('id'   => $temp[0],
+							$data_out 	=  array('id'   =>$temp[0],
 								'link_title'	=> "Add Attribute",
 								'is_fa'		=> ' fa fa-plus-square-o clr_red fa-lg',
 								'title'		=> 'Add Attribute',
@@ -59,14 +59,16 @@
 													 
 						};
 						
+	// ec
+						
 	$D_SERIES['data'][5]['field']="concat(id,':',(SELECT COUNT(*) FROM entity_child WHERE entity_code=entity.code),':',code)";
 	
 	$D_SERIES['data'][5]['filter_out'] =function($data_in){
 							$temp = explode(':',$data_in);
 		
-							$data_out = array('id'   => $temp[0],
-							 
-							'link_title'=>'  '.$temp[1],
+							$data_out = array('id'=>$temp[0],
+							  'token'=>'ec_'.$temp[0],
+							'link_title'=>$temp[1],
 							'is_fa'=>' fa-chevron-circle-right clr_dark_blue fa-lg ',
 							'is_fa_btn'=>' btn-default btn-sm ',
 							'title'=>'Child View',
@@ -74,6 +76,25 @@
 							'style'=>"border:none;width:100%;height:600px;");
 							 return json_encode($data_out);		 
 						};
+						
+						
+	$D_SERIES['data'][6]['filter_out']=function($data_in){
+                                                                            
+													$temp = explode(':',$data_in);
+													
+													$data_out = array('id'=>$temp[0],
+																
+																'link_title'=>'Add Child',
+																'is_fa'=>" fa fa-plus-square-o clr_dark_blue fa-lg",
+																'title'=>'Add Child',
+																//'src'=>"?f=entity_child&menu_off=1&mode=simple&default_addon=$data_in",
+																'src'=>"?f=entity_child_addon&menu_off=1&mode=simple&default_addon=$temp[1]:$temp[0]",
+																'style'=>"border:none;width:100%;height:600px;"
+															);
+														
+													return json_encode($data_out);
+													 
+											};
 	
 	// child base excluding attribute
 	
@@ -81,7 +102,7 @@
 	$D_SERIES['data'][7]['filter_out'] = function($data_in){
 							$temp = explode(':',$data_in);
 							$data_out = array('id'   => $temp[0],
-							'link_title'=>'  '.$temp[1],
+							'link_title'=>$temp[1],
 							'is_fa'=>' fa-chevron-circle-right clr_red fa-lg ',
 							'is_fa_btn'=>' btn-default btn-sm ',
 							'title'=>'Entity Child Base',
@@ -89,6 +110,8 @@
 							'style'=>"border:none;width:100%;height:600px;");
 							 return json_encode($data_out);
 						};
-                                                                        							
+                                
+
+	$D_SERIES['js']=['is_top'=>1];					
     
 ?>

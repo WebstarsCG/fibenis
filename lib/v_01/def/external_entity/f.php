@@ -7,6 +7,8 @@
     $F_SERIES['default_fields'] = array ('is_lib' => '"0"');
     
     $F_SERIES['back_to']['back_link']='?d=external_entity';
+	
+	
     
 
 ?>

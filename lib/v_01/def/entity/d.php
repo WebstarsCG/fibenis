@@ -43,7 +43,7 @@
 												$temp = explode(':',$data_in);
 						
 												$data_out = array('id'   => $temp[0],
-												 'link_title'=>'  '.$temp[1],
+												 'link_title'=>$temp[1],
 												 'is_fa'=>' fa fa-folder-o clr_red fa-lg',
 												 'title'=>'Attribute View',
 												 'is_fa'=>' fa-chevron-circle-right clr_orange fa-lg ',
@@ -101,7 +101,7 @@
 						
 													$data_out = array('id'   => $temp[0],
 												         
-													 'link_title'=>'  '.$temp[1],
+													 'link_title'=>$temp[1],
 													 'is_fa'=>' fa-chevron-circle-right clr_dark_blue fa-lg ',
 													 'is_fa_btn'=>' btn-default btn-sm ',
 													 'title'=>'Child View',
@@ -157,7 +157,7 @@
 								
                                                                             
 													$data_out = array('id'   => $temp[0],
-													'link_title'=>'  '.$temp[1],
+													'link_title'=>$temp[1],
 													'is_fa'=>' fa-chevron-circle-right clr_red fa-lg ',
 													'is_fa_btn'=>' btn-default btn-sm ',
 													'title'=>'Entity Child Base',
@@ -221,7 +221,7 @@
 													$temp = explode(':',$data_in);
 									    
 													$data_out = array('id'   => $temp[0],
-													'link_title'=>'  '.$temp[1],
+													'link_title'=>$temp[1],
 													'is_fa'=>' fa-chevron-circle-right clr_sky_blue fa-lg ',
 													'is_fa_btn'=>' btn-default btn-sm ',
 													'title'=>'Entity Key Value',

@@ -45,12 +45,17 @@
 				
 				'divider' => 'tab', 
 				
+				'get_last_insert'=>1,
+				
+				'js'=> ['is_top'=>1],
+				'avoid_trans_key_direct'=>1,
+				
 				'gx'=>1,                                
 			);
     
 			if(isset($_GET['default_addon'])){
 			
-				$default_addon = @$_GET['default_addon'];
+				list($default_addon,$parent_id) = explode(':',@$_GET['default_addon']);
 				
 				if($default_addon){													
 									
@@ -65,10 +70,17 @@
 										]);
 					
 					$F_SERIES['data']=$F_SERIES['temp']['data'];
-														
-					$F_SERIES['data'][2]['attr']['value']=$default_addon;																		
+					
+					$F_SERIES['data'][2]['attr']['value']=$default_addon;
 					array_push($F_SERIES['data'],$F_SERIES['data'][2]);														
 					unset($F_SERIES['data'][2]);
+					
+					//parent field id
+					array_push($F_SERIES['data'],['field_name'=>'Parent Id',
+												  'field_id' => 'line_order',                                                               
+												  'type' => 'hidden', 
+												  'attr'=>['value'=>$parent_id],
+												  'is_ro'=>1]);
 					
 					$F_SERIES['back_to']['back_default_addon']=$default_addon;		
 
@@ -84,4 +96,5 @@
 			    $F_SERIES['back_to']['back_menu_off']=$menu_off;			    
 			    $F_SERIES['back_to']['is_back_button']=0;
 			}     
+			
 ?>
