@@ -1373,6 +1373,10 @@
 		padding-right   : 60px !important;
 	}
 	
+	.fbn_dyn_lbl span{
+		padding-left	: 0.36rem;
+	}
+	
 	.fbn_page_bar{
 		background-color: #fcfcfc;
 		border-bottom   : 1px solid #f1f1f1;
