@@ -5,9 +5,9 @@
 		<link rel="stylesheet" href="<TMPL_VAR LIB_PATH>/css/<TMPL_VAR LAYOUT>.css">
 	</TMPL_IF>
 	
-	<TMPL_IF is_top_js_file>	    
-		<script language="javascript" type="text/javascript"  src="<TMPL_VAR top_js_file>.js"></script>	    
-	</TMPL_IF>   
+	<TMPL_IF is_top_js>  
+		<script language="javascript" type="text/javascript" src="<TMPL_IF top_js_file><TMPL_VAR top_js_file><TMPL_ELSE><TMPL_VAR DEF_PATH><TMPL_VAR d_series></TMPL_IF>.js"></script>	    
+	</TMPL_IF>  
 
 	<script language="javascript">
 		var pager = new Page_Number({current_page:<TMPL_VAR CURRENT_PAGE>, items_per_page :<TMPL_VAR SHOW_PAGE>});
@@ -1014,11 +1014,12 @@
 			
 </script>	 
 
-	<TMPL_IF is_bottom_js_file>
-		<TMPL_IF bottom_js_file>
-			<script language="javascript" type="text/javascript"  src="<TMPL_VAR bottom_js_file>.js"></script>
-		</TMPL_IF>
-	</TMPL_IF>
+			
+	<TMPL_IF is_bottom_js>	    
+			<script language="javascript" type="text/javascript"  
+			src="<TMPL_IF bottom_js_file><TMPL_VAR bottom_js_file><TMPL_ELSE><TMPL_VAR DEF_PATH><TMPL_VAR d_series></TMPL_IF>.js"></script>	    
+	</TMPL_IF>  
+	
 	
 <!--- Updates--->
 <!--- 29082015- hidden fields taken to before column creation --->

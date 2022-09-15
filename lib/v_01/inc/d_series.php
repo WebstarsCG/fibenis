@@ -568,6 +568,7 @@
        /********* 23-Sep------flag to hide header and sno--------************/
 		
 		$T->AddParam('LIB_PATH',$LIB_PATH);
+		$T->AddParam('DEF_PATH',$router['def_path']);
 		
 		$T->AddParam('PAGE_ID',$PAGE);
 		
@@ -587,11 +588,11 @@
 		
 		$T->AddParam('summary',get_summary());
 		
-		$T->AddParam('is_top_js_file',@$D_SERIES['js']['is_top']);
-		
+		$T->AddParam('is_top_js',@$D_SERIES['js']['is_top']);		
 		$T->AddParam('top_js_file',@$D_SERIES['js']['top_js']);
 		
-		$T->AddParam('is_bottom_js_file',@$D_SERIES['js']['is_bottom']);
+		$T->AddParam('is_bottom_js',@$D_SERIES['js']['is_bottom']);
+		$T->AddParam('bottom_js_file',@$D_SERIES['js']['bottom_js']);
 		
 		$show_all_label = (@$D_SERIES['show_all_label'])?$D_SERIES['show_all_label']:'Show All';
 		
@@ -682,6 +683,7 @@
 		
 		$T->AddParam('NO_DATA',@$D_SERIES['no_data_message']);
 		
+		$T->AddParam('D_SERIES',$PAGE_ID);
 		$T->AddParam('F_SERIES',$P_V['f_series'][$PAGE_ID]);
 		
 		
@@ -2047,20 +2049,22 @@
 		} // end of func
                
 	       
-	        # page router
+	       
+		# router		
+		# page router
 	        
 		function action_router($p){
-				
 				
 				
 				$temp = array(
 						
 						'd_series'=>function($p){
 								
-							$temp_path = "inc/data/".$p['page_id']."/".$p['page_name'].".php";	
+							$def_path    = "inc/data/".$p['page_id']."/";	
+							$action_path = $def_path.$p['page_name'].".php";	
 							
-							if(is_file($temp_path)){								
-							     return array('action'=>$temp_path);
+							if(is_file($action_path)){								
+							     return array('action'=>$action_path,'def_path'=>$def_path);
 							}else{								
 							     return array('action'=>false);
 							} // end
@@ -2070,12 +2074,13 @@
 						
 						'd'=>function($p){
 								
-						        $p['page_name']=str_replace('__','/',$p['page_name']);
+							$p['page_name']=str_replace('__','/',$p['page_name']);
 								
-						        $temp_path = $p['lib_path']."/def/".$p['page_name']."/".$p['page_id'].".php";
+						        $def_path 	   = $p['lib_path']."/def/".$p['page_name']."/";
+								$action_path   = $def_path.$p['page_id'].".php";
 							
-							if(is_file($temp_path)){
-							     return array('action'=>$temp_path);						
+							if(is_file($action_path)){
+							     return array('action'=>$action_path,'def_path'=>$def_path);						
 							}else{								
 							     return array('action'=>false);
 							} // end
@@ -2086,10 +2091,11 @@
 								
 						        $p['page_name']=str_replace('__','/',$p['page_name']);
 								
-							$temp_path = "def/".$p['page_name']."/".$p['page_id'].".php";
+								$def_path    = "def/".$p['page_name']."/";
+								$action_path = $def_path.$p['page_id'].".php";
 							
-							if(is_file($temp_path)){
-							     return array('action'=>$temp_path);						
+							if(is_file($action_path)){
+							     return array('action'=>$action_path,'def_path'=>$def_path);						
 							}else{								
 							     return array('action'=>false);
 							} // end
