@@ -32,6 +32,7 @@
 							      ));
 				
 				if($router['action']){
+					
 		
 						include($router['action']);
 						
@@ -336,13 +337,12 @@
 		$T 	 	= new Template($options);
 		
 		$T->AddParam('LIB_PATH',$LIB_PATH);
+		$T->AddParam('DEF_PATH',$router['def_path']);
 		
-		$T->AddParam('is_top_js_file',@$F_SERIES['js']['is_top']);
-		
+		$T->AddParam('is_top_js',@$F_SERIES['js']['is_top']);		
 		$T->AddParam('top_js_file',@$F_SERIES['js']['top_js']);
 		
-		$T->AddParam('is_bottom_js_file',@$F_SERIES['js']['is_bottom']);
-		
+		$T->AddParam('is_bottom_js',@$F_SERIES['js']['is_bottom']);		
 		$T->AddParam('bottom_js_file',@$F_SERIES['js']['bottom_js']);
 		
 		$T->AddParam('is_function',@$F_SERIES['is_function']);
@@ -2213,10 +2213,11 @@
 						
 						'f_series'=>function($p){
 								
-							$temp_path = "inc/data/".$p['page_id']."/".$p['page_name'].".php";	
+							$def_path    = "inc/data/".$p['page_id']."/";	
+							$action_path = $def_path.$p['page_name'].".php";	
 							
-							if(is_file($temp_path)){								
-							     return array('action'=>$temp_path);
+							if(is_file($action_path)){								
+							     return array('action'=>$action_path,'def_path'=>$def_path);
 							}else{								
 							     return array('action'=>false);
 							} // end
@@ -2228,10 +2229,11 @@
 								
 							$p['page_name']=str_replace('__','/',$p['page_name']);
 								
-						        $temp_path = $p['lib_path']."/def/".$p['page_name']."/".$p['page_id'].".php";
+						        $def_path 	   = $p['lib_path']."/def/".$p['page_name']."/";
+								$action_path   = $def_path.$p['page_id'].".php";
 							
-							if(is_file($temp_path)){
-							     return array('action'=>$temp_path);						
+							if(is_file($action_path)){
+							     return array('action'=>$action_path,'def_path'=>$def_path);						
 							}else{								
 							     return array('action'=>false);
 							} // end
@@ -2242,10 +2244,11 @@
 								
 						        $p['page_name']=str_replace('__','/',$p['page_name']);
 								
-						        $temp_path = "def/".$p['page_name']."/".$p['page_id'].".php";
+								$def_path    = "def/".$p['page_name']."/";
+								$action_path = $def_path.$p['page_id'].".php";
 							
-							if(is_file($temp_path)){
-							     return array('action'=>$temp_path);						
+							if(is_file($action_path)){
+							     return array('action'=>$action_path,'def_path'=>$def_path);						
 							}else{								
 							     return array('action'=>false);
 							} // end
