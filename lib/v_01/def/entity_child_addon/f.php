@@ -75,12 +75,15 @@
 					array_push($F_SERIES['data'],$F_SERIES['data'][2]);														
 					unset($F_SERIES['data'][2]);
 					
+					
 					//parent field id
-					array_push($F_SERIES['data'],['field_name'=>'Parent Id',
+					$F_SERIES['data'][0]=['field_name'=>'Parent Id',
 												  'field_id' => 'line_order',                                                               
 												  'type' => 'hidden', 
 												  'attr'=>['value'=>$parent_id],
-												  'is_ro'=>1]);
+												  'is_ro'=>1];
+					
+					//array_push($F_SERIES['data'],$F_SERIES['data'][0]);
 					
 					$F_SERIES['back_to']['back_default_addon']=$default_addon;		
 
