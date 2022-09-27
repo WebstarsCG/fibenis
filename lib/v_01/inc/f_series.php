@@ -1868,6 +1868,8 @@
 				
 				$default_key	= '';
 				
+				$default_key_value='';
+				
 				$table_name 	= $param['table_name'];
 				
 				$key_id			= $param['key_id'];
@@ -1969,7 +1971,7 @@
 				
 						foreach(@$F_SERIES['deafult_value'] as $key=>$value){
 							
-							$default_key.=  $key.',';
+							$default_key.=  $key;
 							
 							$default_key_value.= $key.'='.$value.',';
 						}
@@ -1980,9 +1982,11 @@
 				
 						foreach(@$F_SERIES['default_fields'] as $key=>$value){
 														
-							$default_key.=$key.',';							
+							$default_key.=$key;							
 							$value_neutraled = preg_replace('/(\'|\")/','',$value);
-							@$default_value.="'".$value_neutraled."',";
+							
+							@$default_value.="'".$value_neutraled."'";
+							$default_key_value.= $default_key.'='.$default_value.',';
 							
 							$temp['is_required_flag_value']=(($key) && ($value))?1:0;
 							
@@ -2000,7 +2004,8 @@
 
 				# remove last character
 				
-				$key_query_trimmed   = @$default_key_value.substr($key_query,0,-1);
+				
+				$key_query_trimmed   = substr($default_key_value.$key_query,0,-1);
 				
 				if($is_required_flag==1){
 						
