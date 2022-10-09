@@ -6,8 +6,6 @@
 		
 		$lv = [];
 		
-		
-		
 		# addon
 		if(@$param['default_addon']){
 			
@@ -1010,5 +1008,26 @@
 			
 	} // end
 
+
+	// object 
+	
+	class FormAddon
+	{
+		private $def=[];
+	
+		public function __construct($def)
+		{
+			$this->def =$def;
+			
+		}	
+		
+		//get field
+		public function getFieldByToken($token)
+		{
+			return $this->def['data'][@$this->def['data_map'][$token]] ?? die("Undefined Key:$token");
+		}
+	}
+	
+	
 
 	?>
