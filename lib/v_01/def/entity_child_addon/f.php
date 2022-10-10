@@ -9,13 +9,7 @@
 				
 				#Table field
                     
-				'data'	=>   array(
-								'2' =>array(
-										   'field_name'=>'Entity Code',
-										   'field_id' => 'entity_code',                                                               
-										   'type' => 'hidden',                                                 
-										   'is_mandatory'=>1)
-							),
+				'data'	=>   array(),
                                     
 				#Table Name
 				
@@ -67,27 +61,27 @@
 												'coach'			=> $COACH,
 												'is_cache'		=> 0,
 												'page_code'		=> $default_addon.'_'.$PAGE_CODE
-										]);
-					
+										]);										
+									
 					$F_SERIES['data']=$F_SERIES['temp']['data'];
 					
-					$F_SERIES['data'][2]['attr']['value']=$default_addon;
-					array_push($F_SERIES['data'],$F_SERIES['data'][2]);														
-					unset($F_SERIES['data'][2]);
+					// inserts the entity code finally in data array & remove the earlier.				
+					array_push($F_SERIES['data'],[ 'field_name'		=>'Entity Code',
+												   'field_id' 		=> 'entity_code',                                           
+												   'type' 			=> 'hidden',
+												   'attr'			=> ['value'=>$default_addon],
+												   'is_mandatory'	=>1]);														
+					
 					
 					
 					//parent field id
-					$F_SERIES['data'][0]=['field_name'=>'Parent Id',
+					array_push($F_SERIES['data'],['field_name'=>'Parent Id',
 												  'field_id' => 'line_order',                                                               
 												  'type' => 'hidden', 
 												  'attr'=>['value'=>$parent_id],
-												  'is_ro'=>1];
-					
-					//array_push($F_SERIES['data'],$F_SERIES['data'][0]);
-					
+												  'is_ro'=>1]);		
+										
 					$F_SERIES['back_to']['back_default_addon']=$default_addon;		
-
-						
 					
 				} // end
 			
