@@ -1855,26 +1855,35 @@
 																		'default'	=> @$_GET[$P_V['field_id']]]);
 							}// end
 					       
+						    // filter out
+							$get_value_neutralized = $get_value;
+							if(@$filter_item['filter_out']){								
+								$get_value_neutralized=$filter_item['filter_out']($get_value);								
+							}
 						
 					       if(@$filter_item['filter_type'] == 'option_list'){
 						       
 						       #echo $get_value.'------------<br>';	
 						       if($get_value > -1){
 									       
-							       //	echo
+							       
 							       
 								       if(@$filter_item['is_number_match']){							
-										       $WHERE_FILTER.= ' AND '. $P_V['filter_by'].'=' ."$get_value";
+										       $WHERE_FILTER.= ' AND '. $P_V['filter_by'].'=' ."$get_value_neutralized";
 										       $PREE_DATA.= "E_V_PASS('$P_V[field_id]',$get_value);";
 										       
 								       }else if(@$filter_item['is_one_to_many']){
 										       
-										       $WHERE_FILTER.= " AND  $get_value  IN($P_V[filter_by])";
-										       $PREE_DATA.= "E_V_PASS('$P_V[field_id]',$get_value);";
+										       $WHERE_FILTER.= " AND  $get_value_neutralized  IN($P_V[filter_by])";
+										       $PREE_DATA.= "E_V_PASS('$P_V[field_id]','$get_value');";
 										       
+								       }else if(@$filter_item['is_many_to_one']){
+										       
+										       $WHERE_FILTER.= " AND  $P_V[filter_by] IN($get_value_neutralized)";
+										       $PREE_DATA.= "E_V_PASS('$P_V[field_id]','$get_value');";
 										       
 								       }else{
-										       $WHERE_FILTER.= ' AND '. $P_V['filter_by'].'=' ."'$get_value'";
+										       $WHERE_FILTER.= ' AND '. $P_V['filter_by'].'=' ."'$get_value_neutralized'";
 										       $PREE_DATA.= "E_V_PASS('$P_V[field_id]','$get_value');";
 								       }
 								  
@@ -1899,7 +1908,7 @@
 							
 							//echo $get_value.'====='.$hidden_field.'------<br>';
 						       if($get_value > -1){
-							 $WHERE_FILTER.= ' AND '. $P_V['filter_by'].' IN('."$get_value)";
+							 $WHERE_FILTER.= ' AND '. $P_V['filter_by'].' IN('."$get_value_neutralized)";
 							 //$PREE_DATA.= " $('#$P_V[field_id]').multiselect('select', [$get_value]);";
 							 
 							 $PREE_DATA.= "$('#$P_V[field_id]').selectpicker('val',[$get_value]);";
@@ -1923,7 +1932,7 @@
 							       
 							       if($get_value){
 							       
-									$WHERE_FILTER.= " AND  $P_V[filter_by] LIKE '%$get_value%'";	
+									$WHERE_FILTER.= " AND  $P_V[filter_by] LIKE '%$get_value_neutralized%'";	
 									
 									$PREE_DATA.= "E_V_PASS('$P_V[field_id]','$get_value');";
 							       } 

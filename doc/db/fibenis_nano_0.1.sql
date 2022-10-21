@@ -1,4 +1,26 @@
 
+--12OCT2022
+DROP TABLE IF EXISTS eav_addon_entity_code;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE eav_addon_entity_code (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  parent_id int(11) DEFAULT NULL,
+  ea_code char(4) DEFAULT NULL,
+  entity_code varchar(4) NOT NULL,
+  user_id int(11) DEFAULT NULL,
+  timestamp_punch timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY ea_code (ea_code),
+  KEY parent_id (parent_id),
+  KEY timestamp_punch (timestamp_punch),
+  KEY user_id (user_id),
+  CONSTRAINT eav_addon_entity_code_id_ibfk_1 FOREIGN KEY (user_id) REFERENCES user_info (id),
+  CONSTRAINT eav_addon_entity_code_ea_code_fk FOREIGN KEY (ea_code) REFERENCES entity_attribute (code) ON UPDATE CASCADE,
+  CONSTRAINT eav_addon_entity_code_parent_id_fk FOREIGN KEY (parent_id) REFERENCES entity_child (id) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT eav_addon_entity_code_fk FOREIGN KEY (entity_code) REFERENCES entity(code) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- 11OCT2021
 -- Addition of checkbox & radio column
@@ -19,3 +41,5 @@ CREATE OR REPLACE VIEW session_by_date as SELECT date_format(timestamp_punch,'%Y
 CREATE OR REPLACE VIEW user_session_30_days as  SELECT get_user_internal_name(user_id) as user_name, count(*) as total_count FROM `sys_log` WHERE timestamp_punch > now() - INTERVAL 30 day GROUP BY user_id;
 
 CREATE OR REPLACE VIEW user_engine_sessions as SELECT  get_user_internal_name(id) as user_name, (SELECT count(*) FROM sys_log WHERE action_type='DVEW' AND user_id=user_info.id ) as desk, (SELECT count(*) FROM sys_log WHERE action_type='FVEW' AND user_id=user_info.id ) as form FROM user_info;
+
+
