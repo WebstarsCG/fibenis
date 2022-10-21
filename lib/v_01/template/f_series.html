@@ -766,7 +766,7 @@
 													<TMPL_LOOP OPTION_ID_NAME>
 														
 														<script language="javascript" type="text/javascript">													
-															f_series.temp.__element_out.push({id:<TMPL_VAR ID>,name:'<TMPL_VAR SN>'});																										
+															f_series.temp.__element_out.push({id:'<TMPL_VAR ID>',name:'<TMPL_VAR SN>'});																										
 														</script>														
 														<option value="<TMPL_VAR ID>" ><TMPL_VAR SN></option>														
 													</TMPL_LOOP>
@@ -784,7 +784,7 @@
 											</TMPL_IF>
 										
 											<input type=button  class="button" value=">>"
-											       onClick="JavaScript:left_right_action(<TMPL_VAR field_id>,G.$('X<TMPL_VAR field_id>').dataset.rightOptionLimit);<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
+											       onClick="JavaScript:left_right_action('<TMPL_VAR field_id>',G.$('X<TMPL_VAR field_id>').dataset.rightOptionLimit);<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
 											<br>	<br>							
 											<input type=button class="button"  value="<<"
 											       onClick="JavaScript:parent_to_child(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_LEFT'));selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');selectbox_capture_text(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_RIGHT_TEXT'),'#');<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
@@ -1442,11 +1442,7 @@
 											</TMPL_LOOP> <!-- cell info ---->
 										</tr>	
 										
-											<!-- last row number ---->
-											<TMPL_IF __last__>
-													<input type="hidden" name="ft_last_row_no_<TMPL_VAR field_id>" id="ft_last_row_no_<TMPL_VAR field_id>" value="<TMPL_VAR __counter__>" >
-													
-											</TMPL_IF>
+											
 										
 										</TMPL_LOOP><!-- row info -->
 										
@@ -1456,8 +1452,20 @@
 											
 									</table>  
 									
+									<!-- last row number ---->
+									<!-- for support old version-->		
+									<input type="hidden" name="ft_last_row_no_<TMPL_VAR field_id>" 
+														 id="ft_last_row_no_<TMPL_VAR field_id>" >
+													
+									<input type="hidden" name="ft_rows_length_<TMPL_VAR field_id>" 
+														 id="ft_rows_length_<TMPL_VAR field_id>" >		
+									
 									<script>
-									        loadFtdata('<TMPL_VAR default_data>', '<TMPL_VAR field_id>');
+										
+							G.$('ft_last_row_no_<TMPL_VAR field_id>').value=(G.$('fibenis_table<TMPL_VAR field_id>').rows.length-1);
+							G.$('ft_rows_length_<TMPL_VAR field_id>').value=(G.$('fibenis_table<TMPL_VAR field_id>').rows.length-1);
+							
+									    loadFtdata('<TMPL_VAR default_data>', '<TMPL_VAR field_id>');
 										getfibenisTableData('<TMPL_VAR field_id>');
 										var default_data ='<TMPL_VAR field_id>';
 										var field_id = '<TMPL_VAR field_id>';
