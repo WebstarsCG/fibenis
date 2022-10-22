@@ -1453,15 +1453,18 @@
 									</table>  
 									
 									<!-- last row number ---->
-									<!-- for support old version-->		
+
+									<!-- for support earlier variable-->		
 									<input type="hidden" name="ft_last_row_no_<TMPL_VAR field_id>" 
 														 id="ft_last_row_no_<TMPL_VAR field_id>" >
 													
 									<input type="hidden" name="ft_rows_length_<TMPL_VAR field_id>" 
 														 id="ft_rows_length_<TMPL_VAR field_id>" >		
-									
+
+											
 									<script>
 										
+							// set last row
 							G.$('ft_last_row_no_<TMPL_VAR field_id>').value=(G.$('fibenis_table<TMPL_VAR field_id>').rows.length-1);
 							G.$('ft_rows_length_<TMPL_VAR field_id>').value=(G.$('fibenis_table<TMPL_VAR field_id>').rows.length-1);
 							
