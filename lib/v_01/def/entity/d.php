@@ -317,6 +317,41 @@
                                     'table_name' =>'entity',
                                     
                                     'key_id'    =>'id',
+									
+									
+									
+						 'custom_filter' => array(  			     						   
+														  
+							   array(  'field_name'       => 'Entity Group',
+																  
+								   'field_id'         => 'cf1',   
+																
+								   'filter_type'      => 'option_list', 
+																			
+								   'option_value'     => $G->option_builder('entity_child',"(SELECT ".$DC->group_concat("concat(eav_addon_entity_code.entity_code)")." FROM eav_addon_entity_code WHERE parent_id = entity_child.id AND ea_code='GPEN' ),get_eav_addon_varchar(id,'ECSN')",
+								                                             " WHERE entity_code='GP'"),
+														
+								   'html'             => 'title="Select Entity"   data-width="160px"  ',
+															
+								   'cus_default_label'=>'Show All',
+
+									'filter_by'        => 'code',
+									
+									'filter_out'	   =>function($in){
+																
+																$temp=[];
+																$temp=explode(',',$in);
+																return implode(',',array_map(function($in){return "'$in'";},$temp));
+
+														},
+									'is_many_to_one'=>1
+														
+									   
+									   
+									),
+							),
+							
+							
 				    
 				    'hidden_data'=>array('code'),
                                     
@@ -327,6 +362,8 @@
                                     'prime_index'   => 2,
 				    
 				    'key_filter'    => ' AND is_lib=1',	
+					
+					'show_query'=>0,
 				    				    
 				    #narrow_down
 				    

@@ -11,20 +11,11 @@
                         "lib_path"      =>  "lib/v_01/",
 						
 						"is_smtp_mail"  =>  1,                            
-                      /*   "smpt_host"     =>  "fiben.mail.pairserver.com",
+                        "smpt_host"     =>  "fiben.mail.pairserver.com",
                         "smpt_port"     =>  "465",
                         "smpt_secure"   =>  "ssl",
                         "smpt_mail"     =>  "pm@covid1912.webt20.com",
-                        "smpt_pswrd"    =>  "ofniVOC21@!", */
-						
-						"smpt_host"     =>  "smtppro.zoho.com",
-                        "smpt_port"     =>  "587",
-                        "smpt_secure"   =>  "tls",
-                        "smpt_mail"     =>  "otp@kalycito.com",
-                        "smpt_pswrd"    =>  "He4JvTdi0Jwe",
-						
-
-						
+                        "smpt_pswrd"    =>  "ofniVOC21@!", 
 						
 						"ldap"			=> ['host'			=> 'ldap://172.17.2.201',
 											'port'			=>	389,

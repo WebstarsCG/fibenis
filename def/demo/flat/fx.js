@@ -67,4 +67,13 @@
 			
 	}
 
+	function setRightOptionLimit(){
+		f_series.getElementByToken('left_right').dataset.rightOptionLimit=2;
+		console.log(f_series.getElementByToken('left_right').id);
+		
+	}
 	
+	
+	function last_insert_action(param){
+		console.log('---'+JSON.stringify(param));		
+	}

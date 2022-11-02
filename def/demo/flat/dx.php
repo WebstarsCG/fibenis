@@ -14,10 +14,16 @@
              'is_sort' => 0
          ),
          3 => array(
-             'th' => 'Textarea ',
-             'field' => "text_area",
-             'td_attr' => ' class="align_LM" width="20%"',
-             'is_sort' => 0
+			'th' => 'Base 64 Textarea ',
+			'field' => "text_area",
+			'td_attr' => ' class="align_LM" width="20%"',
+			'is_sort' => 0,
+			 
+			'filter_out'=>function($in){
+				return base64_encode($in);
+			},
+
+			'js_call'=>'base64_decode'
          ),
          4 => array(
              'th' => 'Date ',
@@ -95,6 +101,14 @@
      ),
      'del_permission' => array(
          'able_del' => 1
-     )
+     ),
+	 
+	'js'=>array('is_top' => 1,'top_js'=>'def/demo/flat/dx'),
  );
+ 
+ 
+	print_r($G->get_key_value('id,text_flat,text_area','demo',' AND id=25'));
+ 
+ 
+ 
 ?> 
