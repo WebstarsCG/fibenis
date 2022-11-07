@@ -1,3 +1,3 @@
 <?PHP
-	include("core/d.php");	
-?>	
+	include(__DIR__."/core/d.php");
+?>

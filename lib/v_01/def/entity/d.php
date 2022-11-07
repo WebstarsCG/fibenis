@@ -317,12 +317,12 @@
                                     'table_name' =>'entity',
                                     
                                     'key_id'    =>'id',
-									
+				    
 									
 									
 						 'custom_filter' => array(  			     						   
 														  
-							   array(  'field_name'       => 'Entity Group',
+							  '_EG'=> array(  'field_name'       => 'Entity Group',
 																  
 								   'field_id'         => 'cf1',   
 																
@@ -351,7 +351,6 @@
 									),
 							),
 							
-							
 				    
 				    'hidden_data'=>array('code'),
                                     
@@ -362,8 +361,6 @@
                                     'prime_index'   => 2,
 				    
 				    'key_filter'    => ' AND is_lib=1',	
-					
-					'show_query'=>0,
 				    				    
 				    #narrow_down
 				    
@@ -449,6 +446,30 @@
 		unset($D_SERIES['data'][10]);
 		unset($D_SERIES['data'][11]);
 		
+	}
+	
+	# entity group filter
+	if(@$_GET['cf1']){
+		
+		$D_SERIES['temp']['filter_text_EG'] = $D_SERIES['custom_filter']['_EG']['filter_out'](@$_GET['cf1']);
+			
+		
+	}else{
+		
+		if( (!@$_GET['cf1']) && (!@$_GET['show'])){
+		
+		echo $D_SERIES['temp']['filter_text_cookie'] =  $G->get_cookies_ii([	'key'		=> @$_GET['d'].'get_field_id'.'_EG',
+																		'key_id'	=> 'cf1',
+																		'value'		=> @$_GET['cf1'],
+																		'default'	=> @$_GET['cf1']]);	
+	
+		$D_SERIES['temp']['filter_text_EG']= $D_SERIES['custom_filter']['_EG']['filter_out']($D_SERIES['temp']['filter_text_cookie']);
+		
+		}
+	} // end
+	
+	if(@$D_SERIES['temp']['filter_text_EG']){
+		$D_SERIES['search'][0]['data']['filter'] = " AND code IN(".$D_SERIES['temp']['filter_text_EG'].") AND is_lib=1";	
 	}
     
 ?>
