@@ -64,6 +64,19 @@
 							'option_is_quick_search'=>1, 
 						    'is_mandatory' 		  =>  1
 						),
+						
+					'_IL' => array(						  
+							'field_name' 		  => 'Is Core Library Module',
+							'field_id'			  => 'ea_value',						
+							'child_table'         => 'eav_addon_bool', 	
+							'parent_field_id'     => 'parent_id',    		
+							'child_attr_field_id' => 'ea_code',   		
+							'child_attr_code'     => 'GPIL',
+							'attr'				  => [ 'value'=> 1],					
+						    'type'         		  => 'hidden',
+							'option_is_quick_search'=>1, 
+						    'is_mandatory' 		  =>  1
+						),	
 				    
 				   ),
 		     
@@ -90,7 +103,7 @@
 								
                     # Communication
 								
-			'back_to'  => array( 'is_back_button' =>1, 'back_link'=>'?d=entity_grouping', 'BACK_NAME'=>'Back'),
+			'back_to'  => array( 'is_back_button' =>1),
                                 
 			'prime_index'   => 1,
 			      
