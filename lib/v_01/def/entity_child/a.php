@@ -151,6 +151,54 @@
 						
 						
 					}, // end
+					
+					'SEUR'=>function($param){
+						
+							$temp = [];
+							
+							$temp['decrypt'] = json_decode($param['G']->decrypt($_GET['req'],$_GET['trans_key']),true);
+							
+							if(($param['user_id']==$temp['decrypt']['user_id'])&&($param['pass_id']==$temp['decrypt']['pass_id'])){
+								
+								$temp['temp']    = $param['G']->decrypt($temp['decrypt']['data'],$temp['decrypt']['trans_key']);
+								
+								$temp['ext'] = strtolower(pathinfo($temp['temp'], PATHINFO_EXTENSION));
+								
+								$temp['type_temp'] = [	'pdf'=>'application',
+											'jpeg'=>'image',
+											'png'=>'image',
+											'html'=>'text',
+											'jpg'=>'image'];
+								
+								function data_uri($file, $mime){
+									
+									ob_end_clean();
+																    
+									header("content-type: $mime");
+							   
+									return file_get_contents($file);
+									
+									//readfile($file);
+									
+									//ob_start();
+							   
+							    };
+							       
+								$temp['mime_pre'] = $temp['type_temp'][$temp['ext']].'/'.$temp['ext'];
+							    
+								$temp['op'] = data_uri($temp['temp'],$temp['mime_pre']);
+							    
+								return $temp['op'];
+						
+							}else{
+								
+								header('HTTP/1.0 401 Unauthorized');
+								exit;
+							}
+							
+						      
+					     },
+         
          
 
                             );

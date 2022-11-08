@@ -72,7 +72,62 @@
 		$FILTER['code_editor_neutral'] = function($data_in){				
 				return preg_replace('/\//','\/',$data_in);		
 		};
-		
+		$FILTER['img_to_base64']=function($data_in){
+			
+			if(($data_in!=null) && ($data_in!='')){
+				
+				    $lv=[];
+			
+					 $lv['file_path'] = $data_in;
+					 $lv['file_type'] = pathinfo($lv['file_path'], PATHINFO_EXTENSION);
+					 
+				if(is_file($lv['file_path'])){
+					 $lv['file_data'] = file_get_contents($lv['file_path']);
+					 $lv['base_64_data']=base64_encode($lv['file_data']);
+					 $lv['img_src_base_64'] = 'data:image/' .$lv['file_type']. ';base64,'.$lv['base_64_data'];
+
+					 return $lv['img_src_base_64'];
+				}
+				else
+					return null;
+            }
+			else
+				return null;
+		};
+		$FILTER['secure_doc'] = function($data_in){
+				
+				if(($data_in!=null)&&($data_in!='')){
+				
+						global $G,$PASS_ID,$USER_ID;
+				
+						$lv = [];
+				
+						$lv['trans_key']=time().rand().$PASS_ID;
+						
+						$lv['data'] = $G->encrypt($data_in,$lv['trans_key']);
+						
+						
+						$lv['temp_req'] = json_encode([ 'user_id'     	=>      $USER_ID,
+										'pass_id'	=>	$PASS_ID,
+										'trans_key'	=>	$lv['trans_key'],
+										'data'           =>      $lv['data']]);
+				    
+						
+				    
+						$lv['req']=$G->encrypt($lv['temp_req'],$lv['trans_key']);
+						
+						
+						$lv['data_in'] = 'router.php?series=a&action=entity_child&token=SEUR&req='.$lv['req'].
+								 '&trans_key='.$lv['trans_key'];
+								
+							
+						return $lv['data_in'];
+				}else{
+				
+						return null;		
+				}
+						
+		};
 		
 		
 		
