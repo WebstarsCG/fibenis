@@ -4,22 +4,6 @@
 	
 	$D_SERIES['title']     = 'External Entity';  
 	
-	$D_SERIES['key_filter']= ' AND is_lib=0';
-	
-	$D_SERIES['summary_data'][0]['field']='(SELECT count(id) FROM entity as en WHERE en.is_lib=0)';
-	
-	$D_SERIES['search'] =   array(
-					array(  'data'  =>array('table_name' 	=> 'entity',
-								'field_id'	=> 'id',
-								'field_name' 	=> 'sn',
-								'filter'	=> ' AND is_lib=0 ' 
-							     ),
-										     
-						'title' 		=> 'Name',										
-						'search_key' 		=> 'id',													       
-						'is_search_by_text' 	=> 0,
-					     ),														
-				);
 	
 	$D_SERIES['add_button'] = array( 'is_add' =>1,'page_link'=>'f=external_entity', 'b_name' => 'Add External Entity' );
 	

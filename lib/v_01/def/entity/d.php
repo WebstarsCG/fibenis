@@ -1,8 +1,6 @@
 <?PHP
               
         $D_SERIES       =   array(
-		
-		
 					'title'=>'Core Entity ',
                                     					
 					#generation
@@ -19,8 +17,7 @@
 							),							  
 					
 							2=>array('th'=>'Name',
-								 
-								'field'=>'sn',
+									'field'=>'sn',
 									
 								'attr' =>  ['width' => "24%",
 									    'class' => "txt_size_13 b" ],
@@ -168,10 +165,7 @@
 													 
 												 },
                                                                         
-                                                                        'js_call'=>'d_series.set_nd'
-									
-									
-                                                                        
+												'js_call'=>'d_series.set_nd'
 								    ),
 							
 								8=>array('th'	=> '',
@@ -263,33 +257,7 @@
                                                                         'js_call'=>'d_series.set_nd'
                                                                         
 								    ),
-							
-//							11=>array('th'	=> 'Addon',
-//								     
-//								  'field'	=> "concat(id,':',code)",
-//								  
-//								  'attr' =>  [ 'class'=>"brdr_right align_CM" , 'width'=>"3%"],
-//									
-//								  'filter_out'=>function($data_in){
-//										
-//													$temp = explode(':',$data_in);
-//									    
-//													$data_out = array('id'   => $temp[0],
-//													'link_title'=>'Addon',
-//													'is_fa'=>' fa fa-files-o clr_green fa-lg',
-//													'title'=>'Add Child Base',
-//													'src'=>"?f=entity_child_addon&menu_off=1&mode=simple&default_addon=$temp[1]",
-//													'style'=>"border:none;width:100%;height:600px;"
-//												  );
-//														
-//													return json_encode($data_out);
-//													 
-//												 },
-//                                                                        
-//                                                                        'js_call'=>'d_series.set_nd'
-//                                                                        
-//								    ),
-//							
+						
 							12=>array('th'=>'Updation',
 									 
 								'field'=>"concat(get_user_internal_name(user_id),',',date_format(timestamp_punch,'%d-%b-%y %T'))",
@@ -301,58 +269,19 @@
 								),
 								
 						 ],
-				    
-                                    
-                                    #Sort Info
-                                      
-                                       
-                                        
-                                       'action' => array('is_action'=>1, 'is_edit' =>1, 'is_view' =>0 ),
-                                       
-                                       'order_by'   =>'ORDER BY sn ASC ' ,
-				       		
-                                
+							#Sort Info
+								
+								
+								
+							'action' => array('is_action'=>1, 'is_edit' =>1, 'is_view' =>0 ),
+							'order_by'   =>'ORDER BY sn ASC ' ,
+					
                                     #Table Info
                                     
                                     'table_name' =>'entity',
                                     
                                     'key_id'    =>'id',
-				    
-									
-									
-						 'custom_filter' => array(  			     						   
-														  
-							  '_EG'=> array(  'field_name'       => 'Entity Group',
-																  
-								   'field_id'         => 'cf1',   
-																
-								   'filter_type'      => 'option_list', 
-																			
-								   'option_value'     => $G->option_builder('entity_child',"(SELECT ".$DC->group_concat("concat(eav_addon_entity_code.entity_code)")." FROM eav_addon_entity_code WHERE parent_id = entity_child.id AND ea_code='GPEN' ),get_eav_addon_varchar(id,'ECSN')",
-								                                             " WHERE entity_code='GP'"),
-														
-								   'html'             => 'title="Select Entity"   data-width="160px"  ',
-															
-								   'cus_default_label'=>'Show All',
-
-									'filter_by'        => 'code',
-									
-									'filter_out'	   =>function($in){
-																
-																$temp=[];
-																$temp=explode(',',$in);
-																return implode(',',array_map(function($in){return "'$in'";},$temp));
-
-														},
-									'is_many_to_one'=>1
-														
-									   
-									   
-									),
-							),
-							
-				    
-				    'hidden_data'=>array('code'),
+				   					'hidden_data'=>array('code'),
                                     
                                     # Default Additional Column                         
                                 
@@ -360,7 +289,7 @@
                                 
                                     'prime_index'   => 2,
 				    
-				    'key_filter'    => ' AND is_lib=1',	
+				  
 				    				    
 				    #narrow_down
 				    
@@ -368,12 +297,11 @@
 				   
                                     # File Include
                                     
-                                   'search'=> array(
+					'search'=> array(
 							  
 							array(  'data'  =>array('table_name' 	=> 'entity',
 										'field_id'	=> 'id',
-										'field_name' 	=> 'sn',
-										'filter'	=> ' AND is_lib=1 ' 
+										'field_name' 	=> 'sn'
 									     ),
 												     
 								'title' 		=> 'Name',										
@@ -382,36 +310,13 @@
 							     ),							
 							
 						       ),
-				   
-				   
-					//  'custom_filter' => array(  			     						   
-					//		      
-					//		      array(  'field_name'       => 'Entity',
-					//										       
-					//				'field_id'         => 'cf1',   
-					//												 
-					//				'filter_type'      => 'option_list', 
-					//														     
-					//				'option_value'     => '<option value=FALSE>Application</option><option value=1>Library</option>',
-					//				
-					//				'html'             => 'title="Select Super Entity"   data-width="80px"  ',
-					//										     
-					//				'cus_default_label'=>'Show All',
-					//			
-					//				'filter_by'        => 'is_lib'
-					//			),
-					//		      
-					//		 ),
-					  
+
 					   'summary_data'=>array(
-								array(  'name'=>'Entities:','field'=>'(SELECT count(id) FROM entity as en WHERE en.is_lib=1)','html'=>'class=summary'),
-								//array(  'name'=>'App','field'=>'(SELECT count(id) FROM entity as en WHERE en.is_lib=0)','html'=>'class=summary'),
-								
+							array(  'name'=>'Entities:',
+									'field'=>'(SELECT count(id) FROM entity as en WHERE en.is_lib=1)',
+									'html'=>'class=summary'
+							)								
 						),
-										 
-				
-				#check_field
-												
 								
 					'add_button' => array( 'is_add' =>1,'page_link'=>'f=entity', 'b_name' => 'Add Entity' ),
 								
@@ -447,29 +352,67 @@
 		unset($D_SERIES['data'][11]);
 		
 	}
+
+	# core/external conditions
 	
+	$D_SERIES['temp']['eg_map'] = ['entity'=>1,
+								   'external_entity'=>0];
+	
+	$D_SERIES['temp']['is_lib'] = $D_SERIES['temp']['eg_map'][@$_GET['d']];
+
+
+	// custom filter				
+	$D_SERIES['custom_filter'] = array(  			     						   
+														  
+		'_EG'=> array(  'field_name'       => 'Entity Group',											
+						'field_id'         => 'cf1', 
+						'filter_type'      => 'option_list', 
+						'option_value'     => $G->option_builder('entity_child',
+						"(SELECT ".$DC->group_concat("concat(eav_addon_entity_code.entity_code)")." FROM eav_addon_entity_code WHERE parent_id = entity_child.id AND ea_code='GPEN' ),get_eav_addon_varchar(id,'ECSN')",
+																" WHERE entity_code='GP' AND ".
+																 "get_eav_addon_bool(id,'GPIL')=".$D_SERIES['temp']['is_lib'].""),
+						'html'             => 'title="Select Entity"   data-width="160px"  ',
+						'cus_default_label'=>'Show All',
+						'filter_by'        => 'code',
+						'filter_out'	   =>function($in){										  
+													$temp=[];
+													$temp=explode(',',$in);
+													return implode(',',array_map(function($in){return "'$in'";},$temp));
+											},
+						'is_many_to_one'=>1
+			  		),
+	);
+	
+	// key filter
+	$D_SERIES['key_filter']    = ' AND is_lib='.$D_SERIES['temp']['is_lib'];
+
+	// search
+	$D_SERIES['search'][0]['data']['filter'] =' AND is_lib='.$D_SERIES['temp']['is_lib']; 
+
+	// summary data
+	$D_SERIES['summary_data'][0]['field']= "(SELECT count(id) FROM entity as en WHERE en.is_lib=".$D_SERIES['temp']['is_lib'].")";
+		
 	# entity group filter
-	if(@$_GET['cf1']){
-		
+	if(@$_GET['cf1']){		
 		$D_SERIES['temp']['filter_text_EG'] = $D_SERIES['custom_filter']['_EG']['filter_out'](@$_GET['cf1']);
-			
-		
 	}else{
 		
-		if( (!@$_GET['cf1']) && (!@$_GET['show'])){
-		
-		echo $D_SERIES['temp']['filter_text_cookie'] =  $G->get_cookies_ii([	'key'		=> @$_GET['d'].'get_field_id'.'_EG',
-																		'key_id'	=> 'cf1',
-																		'value'		=> @$_GET['cf1'],
-																		'default'	=> @$_GET['cf1']]);	
-	
-		$D_SERIES['temp']['filter_text_EG']= $D_SERIES['custom_filter']['_EG']['filter_out']($D_SERIES['temp']['filter_text_cookie']);
-		
+		if( (!@$_GET['cf1']) && (!@$_GET['show'])){		
+			$D_SERIES['temp']['filter_text_cookie'] =  $G->get_cookies_ii([	'key'		=> @$_GET['d'].'get_field_id'.'_EG',
+																			'key_id'	=> 'cf1',
+																			'value'		=> @$_GET['cf1'],
+																			'default'	=> @$_GET['cf1']]);			
+			$D_SERIES['temp']['filter_text_EG']= $D_SERIES['custom_filter']['_EG']['filter_out']($D_SERIES['temp']['filter_text_cookie']);			
 		}
+		
 	} // end
 	
-	if(@$D_SERIES['temp']['filter_text_EG']){
-		$D_SERIES['search'][0]['data']['filter'] = " AND code IN(".$D_SERIES['temp']['filter_text_EG'].") AND is_lib=1";	
+	
+	if(strlen(@$D_SERIES['temp']['filter_text_EG'])>2){
+		$D_SERIES['search'][0]['data']['filter'] = " AND code IN(".$D_SERIES['temp']['filter_text_EG'].") ".
+		                                           " AND is_lib=".$D_SERIES['temp']['is_lib'];	
+	}else{
+			$D_SERIES['search'][0]['data']['filter'] = " AND is_lib=".$D_SERIES['temp']['is_lib'];	
 	}
     
 ?>
