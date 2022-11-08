@@ -1,4 +1,7 @@
-
+--08NOV2022
+INSERT INTO entity_attribute (entity_code, code, sn, ln, line_order, creation, user_id, timestamp_punch) VALUES
+                             ('GP', 'GPIL', 'Is Core Group', '', '2.00',now(), 2,now());
+							 
 --12OCT2022
 DROP TABLE IF EXISTS eav_addon_entity_code;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -22,6 +25,7 @@ CREATE TABLE eav_addon_entity_code (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
 -- 11OCT2021
 -- Addition of checkbox & radio column
 ALTER TABLE demo ADD type_hidden VARCHAR(64) DEFAULT NULL AFTER text_flat;
@@ -38,8 +42,6 @@ CREATE OR REPLACE VIEW internal_entity_count as SELECT(SELECT sn FROM entity WHE
 
 CREATE OR REPLACE VIEW session_by_date as SELECT date_format(timestamp_punch,'%Y-%m-%d') as date,count(*) as total_count FROM sys_log GROUP BY date_format(timestamp_punch,'%Y-%m-%d');
 
-CREATE OR REPLACE VIEW user_session_30_days as  SELECT get_user_internal_name(user_id) as user_name, count(*) as total_count FROM `sys_log` WHERE timestamp_punch > now() - INTERVAL 30 day GROUP BY user_id;
+CREATE OR REPLACE VIEW user_session_30_days as  SELECT get_user_internal_name(user_id) as user_name, count(*) as total_count FROM sys_log WHERE timestamp_punch > now() - INTERVAL 30 day GROUP BY user_id;
 
 CREATE OR REPLACE VIEW user_engine_sessions as SELECT  get_user_internal_name(id) as user_name, (SELECT count(*) FROM sys_log WHERE action_type='DVEW' AND user_id=user_info.id ) as desk, (SELECT count(*) FROM sys_log WHERE action_type='FVEW' AND user_id=user_info.id ) as form FROM user_info;
-
-
