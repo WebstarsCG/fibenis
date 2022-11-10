@@ -1,113 +1,65 @@
 <?PHP
-            
-	 
 	       
          $D_SERIES       =   array(
                                    'title'=>'Status Map',
-                                    
-                                    #query display depend on the user
-                                    
-                                    //'is_user_base_query'=>0,
-                                    
-                                    #table data
-                                    
                                     'data'=> array(
-////                            
-							 1=>array('th'=>'Entity',
-								 
-								'field'=>'(SELECT sn FROM entity WHERE code=entity_code) as v1',
-									
-								'td_attr' => ' width="12%" ',
-							                                                                     
-								), 
+                            
+												6=>array('th'			=> 'Code',								 
+															 'field'	=> 'entity_code',									
+															 'attr'		=> ['width'=>'5%','class'=>'label_grand_child align_CM'],
+															
+																										 
+														),
+
+												1=>array('th'			=> 'Name',								 
+														 'field'	=> '(SELECT sn FROM entity WHERE code=entity_code)',									
+														 'attr'		=> ['width'=>'10%','class'=>'label_father txt_size_12']
+																									 
+													), 
 													
-                                                        2=>array('th'=>'Start Code',
+												3=>array('th'			=> 'Start ',								 
+															 'field'	=> 'get_ecb_sn_by_token(status_code_start)',									
+															 'attr'		=> ['width'=>'14%' ,'class'=>'clr_green b']
+																										 
+														), 	
+
+												2=>array('th'			=> 'Start Code',								 
+															 'field'	=> 'status_code_start',									
+															 'attr'		=> ['width'=>'10%' ,'class'=>'clr_gray_7'],
+															 'is_sort'	=> 1,
+																										 
+														), 
+														
+												5=>array('th'			=> 'End',								 
+															 'field'	=> 'get_ecb_sn_by_token(status_code_end)',									
+															 'attr'		=> ['width'=>'14%' ,'class'=>'clr_dark_blue']
+																										 
+														),	
+
+												4=>array('th'			=> 'End Code',								 
+															 'field'	=> 'status_code_end',									
+															 'attr'		=> ['width'=>'10%' ,'class'=>'clr_gray_7'],
+															  'is_sort'	=> 1,
+																										 
+														), 
+														
+												7=>array('th'=>'Updation',
 									 
-								'field'=>'status_code_start as v2',
-                                                                   
-								'html'      =>  'style	= "cursor:pointer" onclick="JavaScript:E_V_PASS(\'sort_field\',2);E_V_PASS(\'sort_direction\',GET_E_VALUE(\'sort_col_2\'));filter_data();"',
-								  
-								'font'      =>  'class="sort"',
-																
-								'span'      =>  '<span id="sort_icon_2" name="sort_icon_2"></span>',
-									 
-								'td_attr' => ' class="label_child align_LM" width="15%"',
-									 
-								),
-								
-							3=>array('th'=>'Start Status',
-								 
-								'field'=>'(select sn from entity_attribute where code = status_code_start) as v3',
-                                                                   
-								'html'      =>  'style	= "cursor:pointer" onclick="JavaScript:E_V_PASS(\'sort_field\',2);E_V_PASS(\'sort_direction\',GET_E_VALUE(\'sort_col_2\'));filter_data();"',
-								  
-								'font'      =>  'class="sort"',
-																
-								'span'      =>  '<span id="sort_icon_2" name="sort_icon_2"></span>',
-									 
-								'td_attr' => ' class="label_child align_LM" width="15%"',
-									 
-								),	
-								
-							 4=>array('th'=>'End Code',
-									 
-								'field'=>'status_code_end as v4',
-                                                                   
-								'html'      =>  'style	= "cursor:pointer" onclick="JavaScript:E_V_PASS(\'sort_field\',2);E_V_PASS(\'sort_direction\',GET_E_VALUE(\'sort_col_2\'));filter_data();"',
-								  
-								'font'      =>  'class="sort"',
-																
-								'span'      =>  '<span id="sort_icon_2" name="sort_icon_2"></span>',
-									 
-								'td_attr' => ' class="label_child align_LM" width="15%"',
-									 
-								),
-								
-							5=>array('th'=>'End Status',
-								 
-								'field'=>'(select sn from entity_attribute where code = status_code_end) as v5',
-                                                                   
-								'html'      =>  'style	= "cursor:pointer" onclick="JavaScript:E_V_PASS(\'sort_field\',2);E_V_PASS(\'sort_direction\',GET_E_VALUE(\'sort_col_2\'));filter_data();"',
-								  
-								'font'      =>  'class="sort"',
-																
-								'span'      =>  '<span id="sort_icon_2" name="sort_icon_2"></span>',
-									 
-								'td_attr' => ' class="label_child align_LM" width="15%"',
-									 
-								),		
-						
-							6=>array('th'=> 'Line order',
-								 
-								'field'=>'(select line_order from entity_attribute where code = status_code_start) as v6',
-                                                                   
-								'html'      =>  'style	= "cursor:pointer" onclick="JavaScript:E_V_PASS(\'sort_field\',2);E_V_PASS(\'sort_direction\',GET_E_VALUE(\'sort_col_2\'));filter_data();"',
-								  
-								'font'      =>  'class="sort"',
-																
-								'span'      =>  '<span id="sort_icon_2" name="sort_icon_2"></span>',
-									 
-								'td_attr' => ' class="label_child align_LM" width="15%"',
-									      
-								),
-							
-							
-							
-                                                    ),
-				    
-                                    
-                                    #Sort Info
-                                      
-                                       'sort_field' =>array('status_code_start',
-							    
-							    //'sn',
-							    
-							    'status_code_start',
-							    
-							    //'ln',
-							    
-							    'line_order'
-							    ),
+														'field'=>"concat(get_user_internal_name(user_id),',',date_format(timestamp_punch,'%d-%b-%y %T'))",
+																								 
+														'td_attr' => 'width="18%"',
+														
+														'js_call'=> 'show_user_info',
+														
+														'is_sort' => 'timestamp_punch'
+															 
+												),		
+																				
+												
+													
+													
+									),
+                            
                                         
                                        'action' => array('is_action'=>0, 'is_edit' =>1, 'is_view' =>0 ),
                                        
@@ -120,41 +72,65 @@
                                     
                                     'key_id'    =>'id',
                                     
-                                    # Default Additional Column
-                                
-                                    //'is_user_id'       => 'user_id',
                                 
                                     # Communication
                                 
-                                    'prime_index'   => 1,
+                                    'prime_index'   => 2,
                                 
-                                    # File Include
-                                
-                                    //'js'            => 'm_code',
-                                    
-                                    #create search field
-									
-                                        'search_text' => array(
-							       
-							       
-							//       1=>array('get_search_text'  => get_search_array('entity_attribute',
-							//							'entity_code as ST1,(SELECT sn FROM entity WHERE code=entity_code)as ST2',
-							//							'Entity Code',1,1,'')),
-								
-								//2=>array('get_search_text'  => get_search_array('entity_attribute','id as ST1,sn as ST2','First Name',2,1,'',''))								
-                                                        ),
-						
 				
 				#Search filter 
-				
-				'search_field' => '',
-				
-				'search_id' 	=> array(),
-				
-				'search_filter_off'   => 1,
-				
-				'custom_filter' => array(	
-								array(
+				'search_filter_off'   => 1,				
+				'custom_filter' => array(),
+				'del_permission' => array('able_del'=>1,'user_flage'=>1), 
+		);
+	
+	
+	# custon filter 1
+	$D_SERIES['functions']['code_filter']=function($code){
+		
+			global $G,$D_SERIES;
+		
+			array_push($D_SERIES['custom_filter'], array(
+						
+							'field_name' => 'Start Code',		
+							'field_id' => 'cf2', 		
+							'filter_type' =>'option_list', 														
+							'option_value'=> $G->option_builder('entity_child_base','token,sn'," WHERE entity_code='$code' ORDER BY line_order"),
+									
+							'cus_default_label' => 'Show All',										
+							'html' => ' class="w_150"',									
+							'filter_by'  => 'status_code_start'										
+				));
+	};
+    
+	
+	if(@$_GET['default_addon']){
+		
+		$default_addon = @$_GET['default_addon'];
+        
+		unset($D_SERIES['data'][6]); // code
+		unset($D_SERIES['data'][1]); // name
+		unset($D_SERIES['export_csv']);
+		
+		$LAYOUT	   			  						= 'layout_full';
+		
+		$D_SERIES['action']['is_edit']	  			= 1;
+		$D_SERIES['action']['action_menu_off']		= 1;
+		$D_SERIES['action']['action_default_addon'] = $default_addon;
+		$D_SERIES['add_button']['is_add'] 			= 0;		
+		$D_SERIES['hide_show_all'] 	  = 1;
+		$D_SERIES['search_filter_off']= 1;
+		$D_SERIES['hide_show_all'] 	  = 1;
+		$D_SERIES['hide_pager'] 	  = 1;
+		$D_SERIES['show_all_rows']	  = 1;
+		$D_SERIES['filter_off'] 	  = 1;
+		
+		$D_SERIES['key_filter']		  = " AND entity_code='$default_addon'";
+		
+		$D_SERIES['functions']['code_filter']($default_addon);
+		
+	}else{
+			array_push($D_SERIES['custom_filter'],array(
 								
 									'field_name' => 'Entity',
 								
@@ -170,57 +146,12 @@
 											
 									'filter_by'  => 'entity_code'
 								
-								),
+								));
 								
-								
-								
-				
-				),
-				
-				
-				#check_field
-								
-					'check_field'   =>  array('user_id' => @$_GET['user_id'],'page_code' => @$_GET['page_code']),								
-								
-					'add_button' => array( 'is_add' =>1,'page_link'=>'f=status_map', 'b_name' => 'Add Status Map' ),
-								
-					'del_permission' => array('able_del'=>1,'user_flage'=>1), 
-								
-					'date_filter'  => array( 'is_date_filter' =>0,'date_field' =>  'timestamp'),	
-								
-				#export data
-				
-				'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
-								
-				'page_code'    => 'DSTM'
-                            
-                            );
-	
-	
-	# custon filter 1
-	
-	if(@$_GET['cf1']){
+			if(@$_GET['cf1']){
 		
-		
-		
-		
-		array_push($D_SERIES['custom_filter'], array(
-				
-									'field_name' => 'Start Code',
-				
-									'field_id' => 'cf2', 
-				
-									'filter_type' =>'option_list', 
-																
-									'option_value'=> $G->option_builder('entity_attribute','code,sn'," WHERE entity_code='$_GET[cf1]' ORDER BY line_order"),
-											
-									'cus_default_label' => 'Show All',
-												
-									'html' => ' class="w_150"',
-											
-									'filter_by'  => 'status_code_start'
-								
-				));
+				$D_SERIES['functions']['code_filter'](@$_GET['cf1']);
+			}
 	}
-    
+	
 ?>
