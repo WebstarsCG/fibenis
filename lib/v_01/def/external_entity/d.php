@@ -94,7 +94,60 @@
 							'style'=>"border:none;width:100%;height:600px;");
 							 return json_encode($data_out);
 						};
-                                
+						
+						
+	// take the last one update field
+    $D_SERIES['temp']['updation_column'] = array_pop($D_SERIES['data']);    
+
+	// view
+	$D_SERIES['data']['sm_view']=array('th'	=> 'Flow', 'th_attr'=>' colspan=2 ',
+								     
+								'field'	=> "concat(id,':',(SELECT COUNT(*) FROM status_map WHERE entity_code=entity.code),':',code)",
+								
+								'attr' =>  [ 'class'=>"", 'width' => "6%",],
+									
+                                                                'filter_out'=>function($data_in){
+													$temp = explode(':',$data_in);
+									    
+													$data_out = array('id'   => $temp[0],
+													'link_title'=>$temp[1],
+													'is_fa'=>' fa-chevron-circle-right clr_light_green fa-lg ',
+													'is_fa_btn'=>' btn-default btn-sm ',
+													'title'=>'Entity Key Value',
+												         'src'=>"?d=status_map&menu_off=1&mode=simple&default_addon=$temp[2]",
+												         'style'=>"border:none;width:100%;height:600px;");
+													 return json_encode($data_out);
+												 },                                                                        
+								'js_call'=>'d_series.set_nd'
+							);
+	
+	// add	
+	$D_SERIES['data']['sm_add']=array('th'	=> '',
+		 
+						  'field'	=> "concat(id,':',code)",
+						  
+						  'attr' =>  [ 'class'=>"brdr_right align_CM"],
+							
+						  'filter_out'=>function($data_in){
+											$temp = explode(':',$data_in);						
+											$data_out = array('id'   => $temp[0],
+												'link_title'=>'Add Entity Key Value',
+												'is_fa'=>' fa fa-plus-square-o clr_lignt_green fa-lg',
+												'title'=>'Add Key Value',
+												'src'=>"?f=status_map&menu_off=1&mode=simple&default_addon=$temp[1]",
+												'style'=>"border:none;width:100%;height:600px;"
+											);
+												
+											return json_encode($data_out);
+											 
+										},
+																
+										'js_call'=>'d_series.set_nd'
+																
+						);
+						
+	// update column
+	$D_SERIES['data']['updation_column']=$D_SERIES['temp']['updation_column'];
 
 	$D_SERIES['js']=['is_top'=>1];					
     
