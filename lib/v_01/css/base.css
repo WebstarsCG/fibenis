@@ -1241,6 +1241,10 @@
 	.normal{ font-weight:normal !important;	}
 	
 	
+	ol.decimal li{
+		list-style:decimal !important;
+	}
+	
 	.opacity_75{ opacity:0.75; -moz-opacity:0.75;}
 	.opacity_50{ opacity:0.5; -moz-opacity:0.5;}
 	.opacity_25{ opacity:0.25; -moz-opacity:0.25;}
@@ -1920,6 +1924,9 @@
 	.txt_case_lower{ text-transform: lowercase;}
 	.txt_case_upper{ text-transform: uppercase;}
 	
+	ul.bullet li{
+		list-style:bullet;
+	}
 	
 	ul.plain li{
 		list-style: none;
