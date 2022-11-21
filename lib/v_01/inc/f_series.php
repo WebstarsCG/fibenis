@@ -268,18 +268,16 @@
 							$mail_msg=($F_SERIES['alert']['message'])?$mail_msg.$F_SERIES['alert']['message']:$mail_msg;
 								
 								
-							$MAIL=array(
+							$mail_param=array(
 										'from'    	=> $SG->get_session('mail_send_by'),					
 										'to'     	=> $F_SERIES['alert']['to'], //'ratbew@gmail.com',
 										'cc'     	=> @$F_SERIES['alert']['cc'],
 										'bcc'    	=> @$F_SERIES['alert']['bcc'],
 										'subject'	=> $F_SERIES['alert']['subject'],						     
-										'message' 	=> $mail_msg,
-													  
-								); 
+										'message' 	=> $mail_msg); 
 								 
 								 
-								mail_send_smtp($MAIL);	
+								mail_send_smtp($mail_param);	
 						}
 						
 						
