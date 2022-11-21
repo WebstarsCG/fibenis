@@ -276,15 +276,13 @@
 										'subject'	=> $F_SERIES['alert']['subject'],						     
 										'message' 	=> $mail_msg); 
 								 
-								 
-								mail_send_smtp($mail_param);	
+							mail_send_smtp($mail_param);	
 						}
+												
+						if(@$F_SERIES['is_send_mail']){							
+							mail_send_action();
+						} // end
 						
-						
-						if(@$F_SERIES['is_send_mail']){
-							
-								mail_send_action();
-						}
 				} // end
 				
 		} // end
