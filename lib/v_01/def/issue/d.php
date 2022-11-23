@@ -1,4 +1,5 @@
 <?PHP
+
 		
 	$default_addon = @$_GET['default_addon'];
 	
@@ -183,7 +184,7 @@
 										
 										'filter_type' =>'option_list', 
 												    
-										'option_value'=> $G->option_builder('entity_child_base','token,sn'," WHERE entity_code = 'IU' ORDER BY id"),
+										'option_value'=> $G->option_builder_cache('entity_child_base','token,sn'," WHERE entity_code = 'IU' ORDER BY id"),
 							    
 										'html'=>'  title="Select Type"   data-width="160px"  ',
 								    
@@ -200,7 +201,7 @@
 										
 										'filter_type' =>'option_list', 
 												    
-										'option_value'=> $G->option_builder('entity_child_base','token,sn'," WHERE entity_code = 'IP' ORDER BY sn"),
+										'option_value'=> $G->option_builder_cache('entity_child_base','token,sn'," WHERE entity_code = 'IP' ORDER BY sn"),
 							    
 										'html'=>'  title="Select Type"   data-width="160px"  ',
 								    
@@ -288,6 +289,8 @@
 				'show_query'=>0,
                             
                             );
+	
+							
 ?>	
 	
     
