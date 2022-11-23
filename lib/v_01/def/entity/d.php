@@ -358,7 +358,7 @@
 	$D_SERIES['temp']['eg_map'] = ['entity'=>1,
 								   'external_entity'=>0];
 	
-	$D_SERIES['temp']['is_lib'] = $D_SERIES['temp']['eg_map'][@$_GET['d']];
+	$D_SERIES['temp']['is_lib'] = $D_SERIES['temp']['eg_map'][@$_GET['d'] ?? 'external_entity'];
 
 
 	// custom filter				
