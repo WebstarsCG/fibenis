@@ -2036,7 +2036,7 @@ function getEKV($entity_code,$key){
 		$fh  			  	   = fopen($param['path'],'w') or "File Open Error";
 		fputs($fh,$param['content']);
 		fclose($fh);
-	}
+	} // end
 	
 	// get file content	
 	function getFileContent($file_path){		
@@ -2044,7 +2044,7 @@ function getEKV($entity_code,$key){
 		$temp_content   	   = fread($fh,filesize($file_path));
 		fclose($fh);
 		return $temp_content;
-	}
+	} //end
 	
 } // end of class
 	
