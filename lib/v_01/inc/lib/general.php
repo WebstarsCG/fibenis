@@ -213,16 +213,18 @@
 				
 				      function option_builder($tbl_name,$field,$manipulate){
 				                    
-							global $rdsql;
+							#global $rdsql;
 				
 						    $sql="SELECT $field FROM $tbl_name $manipulate";
 						   
-							$exe_query = $rdsql->exec_query($sql,"ERROR in option_builder<br>$sql");
+							$exe_query = $this->rdsql->exec_query($sql,"ERROR in option_builder<br>$sql");
 						
 							$option_box='';	
 							$select_count=1;
-							while($option=$rdsql->data_fetch_array($exe_query)){								    
-									$option_box.="<option id='$option[0]' value='$option[0]'  data-ax='".@$option[2]."'>$option[1]</option>";
+							while($option=$this->rdsql->data_fetch_array($exe_query)){								    
+									$option_box.="<option id='$option[0]' value='$option[0]'  data-ax='".@$option[2]."'>".
+									             "$option[1]".
+												 "</option>";
 									$select_count++;
 							}	
 							
@@ -230,7 +232,25 @@
 				      
 				      } // end of option builder
 					  
-		  /**************************** checkbox option builder ***********************************************************************************/  	
+			/**************************** checkbox option builder cache 				  ***********************************************************************************/  	
+			function option_builder_cache($tbl_name,$field,$manipulate){
+
+				$lv = [];	
+						
+				$lv['cache_key'] 	  = 'OB_'.md5('OB_'.$tbl_name.$field.$manipulate);				
+				$lv['cache_key_info'] = $this->coach['terminal_path']."/cache/$lv[cache_key].html";
+						
+				if(is_file($lv['cache_key_info'])){					
+					$lv['temp_content']	=$this->getFileContent($lv['cache_key_info']);
+				}else{
+					$lv['temp_content']		   = $this->option_builder($tbl_name,$field,$manipulate);					
+					$this->putFileContent(['path'=>$lv['cache_key_info'],
+										  'content'=>$lv['temp_content']]);
+				}								
+				
+				return $lv['temp_content'];
+				      
+			} // end of option builder cache
 
 /***************************************************************************************************************************************
 			* Function Name: checkbox_option_builder
@@ -2009,10 +2029,23 @@ function getEKV($entity_code,$key){
 	
 } // end
 
-/**********************************************************************************************************************************************************************************************************/				
-		
-						
-		
+/**********************************************************************************************************************************************************************************************************/		
+	
+	// put file content	
+	function putFileContent($param){		
+		$fh  			  	   = fopen($param['path'],'w') or "File Open Error";
+		fputs($fh,$param['content']);
+		fclose($fh);
+	}
+	
+	// get file content	
+	function getFileContent($file_path){		
+		$fh  			  	   = fopen($file_path,'r') or "File Open Error";
+		$temp_content   	   = fread($fh,filesize($file_path));
+		fclose($fh);
+		return $temp_content;
+	}
+	
 } // end of class
 	
 	
