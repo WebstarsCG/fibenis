@@ -453,16 +453,96 @@
 								</TMPL_IF>
 						
 						
-								<TMPL_IF DATA_INFO>
-									<TMPL_IF cus_bulk_action>
-										<TMPL_LOOP cus_bulk_action>
-											<TMPL_IF is_bulk_button>
-												&nbsp;
-												<button type="button" class="btn btn-primary" onclick="<TMPL_VAR js_call>();"  ><TMPL_VAR button_name></button>									
-											</TMPL_IF>
-										</TMPL_LOOP>	
+								<TMPL_IF cus_bulk_action>
+							<TMPL_LOOP cus_bulk_action>
+								<TMPL_IF is_bulk_button>
+									&nbsp;
+									<button type="button" class="btn btn-primary" 
+									<TMPL_IF IS_PROMPT>
+									onclick="fbn_bulk_call__<TMPL_VAR __counter__>();"
+									<TMPL_ELSE>
+									onclick="<TMPL_VAR js_call>();"  
 									</TMPL_IF>
+									><TMPL_VAR BUTTON_NAME></button>		
+
+									<!--Additional script for prompt--->
+									<TMPL_IF IS_PROMPT>
+										<script>
+											function fbn_bulk_call__<TMPL_VAR __counter__>(){
+											
+												const page_ids = d_series.getDeskCheckboxSelectedIds();
+												
+												var update_action = function(response){
+																				G.hideLoader();
+																				if (response == 1) {           
+																					G.bs_alert_success('Successfully updated');
+																				}else{                
+																				   G.bs_alert_error("Sorry, something went wrong");
+																				}
+																			};
+																												
+												if(page_ids.length==0){
+													bootbox.alert({"size":"small",
+															 "message":"Kindly select atleast one item to do  <TMPL_VAR BUTTON_NAME>"});
+												}else{
+														bootbox.confirm({"size":"small",
+																		 "message":"Are you sure to <TMPL_VAR BUTTON_NAME>",
+																	     "callback":function(response){
+														
+														if(response==true){
+																												
+															bootbox.prompt({
+																title		  : "<TMPL_VAR PROMPT_TITLE>", 
+																
+																required:false,
+																onEscape: true,
+																<TMPL_IF IS_SELECT>
+																
+																inputType	  : 'select',
+																inputOptions  : [
+																	<TMPL_LOOP OPTION_DATA>
+																	<TMPL_IF __first__>
+																	{text: 'Select',
+																	 value: ''},
+																	</TMPL_IF>
+																	{
+																		text: '<TMPL_VAR SN>',
+																		value: '<TMPL_VAR ID>',
+																	},
+																	</TMPL_LOOP>
+																],
+																</TMPL_IF>
+																
+																callback:function(parent_id){
+																
+																	if(parent_id!==null){														
+																		if(parent_id.length==0){
+																			bootbox.alert({'message':"Kindly <TMPL_VAR PROMPT_TITLE>"});
+																		}else{
+																		
+			<TMPL_IF IS_ACTION>																				                
+				d_series.ajax.set_request("router.php","&series=<TMPL_VAR SERIES>&action=<TMPL_VAR DEF>&token=<TMPL_VAR TOKEN>&param="+
+											JSON.stringify({'id':page_ids,
+															'detail':parent_id}));            
+				d_series.ajax.send_get(update_action);                
+				G.showLoader('Updating');
+			<TMPL_ELSE>
+				<TMPL_VAR js_call>(page_ids,parent_id);
+			</TMPL_IF>
+																		}
+																	} // parent id
+																} // callback
+															}); // prompt
+														} // confirm true
+													} // callback
+												  }); //confirm														
+												} // else											
+											} // end <TMPL_VAR __counter__>(
+										</script>
+									</TMPL_IF>	
 								</TMPL_IF>
+							</TMPL_LOOP>	
+						</TMPL_IF>
 							</div>
 						</td>
 					       

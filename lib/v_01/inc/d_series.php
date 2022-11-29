@@ -4,26 +4,26 @@
 		
 		ini_set("display_errors", 1);
 	
-		$D_DEFAULT = ['show_default_rows'   => 5];
+		$D_DEFAULT 				= ['show_default_rows'   => 5];
+		
+		$D_DEFAULT['a_series']  = [	'd_series'	=> 'a_series',
+									'd'			=> 'a',
+									'dx'		=> 'ax'];
 		
 		$P_V['f_series']['d_series'] = 'f_series';
-		$P_V['f_series']['d']	       = 'f';
-		$P_V['f_series']['dx']	      = 'fx';
+		$P_V['f_series']['d']	     = 'f';
+		$P_V['f_series']['dx']	     = 'fx';
 		
 		$PAGE_ID = $PAGE;
-		
 		
 		// Generation oriented balancer functions
 		
 		$GX		= array( 	0=>array(				
 								'get_sort_field'=>function($sort_field,
-											   $d_series_data,
-											   $sort_key_id){										
-														
-												return $sort_field[$sort_key_id];
-										}
-				
-				
+														   $d_series_data,
+														   $sort_key_id){	
+														return $sort_field[$sort_key_id];
+													}
 						), // version 0
 						
 						
@@ -34,7 +34,6 @@
 								return ($d_series_data[$sort_key_id]['is_sort']==1 || $d_series_data[$sort_key_id]['is_sort']=='true')?$d_series_data[$sort_key_id]['field']:$d_series_data[$sort_key_id]['is_sort'];
 										
 							}
-				
 				
 						) // version 1
 				);
@@ -691,39 +690,58 @@
 		// bulk action
 		function get_custome_bulk_action(){
 			
-			global $D_SERIES;
+			global $D_SERIES,$D_DEFAULT,$PAGE_NAME,$PAGE_ID;
 			
 			$bulk_action = @$D_SERIES['bulk_action'];
 			
 			$temp_result = array();
 				
-				if($bulk_action){
+			if($bulk_action){
 				
-			
-						foreach(@$bulk_action as  $key=>$value){
+				foreach(@$bulk_action as  $key=>$value){
+				
+					$temp = array();
+					
+					$temp['is_bulk_button']  = @ $value['is_bulk_button'];
+					
+					$temp['button_name']  =  @$value['button_name'];
+					
+					$temp['js_call']  =  @$value['js_call'];
+					
+					$prompt = @$value['prompt'];
+														
+					if(@$prompt['is_active']){
 						
-									$temp = array();
-									
-									$temp['is_bulk_button']  = @ $value['is_bulk_button'];
-									
-									$temp['button_name']  =  @$value['button_name'];
-									
-									$temp['js_call']  =  @$value['js_call'];
-									array_push($temp_result,$temp);
-							}
-				
-				}
-				//print_r ($temp_result);
-				
-				if(count($temp_result)){
+						$temp['is_prompt'] 	  = 1;
+						$temp['prompt_title'] = $prompt['title'];
+						$temp["is_$prompt[input_type]"] = 1;
+						$temp['option_data'] = $prompt['options'];
 						
-					@$D_SERIES['del_permission']['able_del']=1;	
+						// auto action columns
+						@$value['action']['series'] = @$value['action']['series'] ?? $D_DEFAULT['a_series'][$PAGE_ID];
+						@$value['action']['def']	= @$value['action']['def'] ?? $PAGE_NAME;
+						
+						$temp['is_action'] = @$value['action']['series'] && 
+											 @$value['action']['def'] && 
+											 @$value['action']['token'];
+											 
+						if($temp['is_action']){
+							$temp=array_merge($temp,@$value['action']);
+						}						
+					}
+					array_push($temp_result,$temp);
 				}
+			}
+								
+			if(count($temp_result)){					
+				@$D_SERIES['del_permission']['able_del']=1;	
+			}
 				
+			return $temp_result;
 				
-				return $temp_result;
-				
-		}	//custom_filter();
+		}	// custom_filter
+		
+		
 		
 		if($nrow>5){
 		
