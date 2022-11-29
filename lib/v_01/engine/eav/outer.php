@@ -88,7 +88,6 @@
 		
 		# PAGE used in content.php
 		
-		include($LIB_PATH.'/engine/'.$ENGINE.'/inner.php');
 				
 		if(($IS_HOME) && (strcmp(get_config('access_key'),'never')==0)){
 		    $CONTENT[$PAGE]['title']='';
@@ -103,6 +102,8 @@
 				
 		# checking for series content
 		if($IS_APP){
+									
+				include($LIB_PATH.'/engine/'.$ENGINE.'/inner.php');
 		    
 				# flag
 				
@@ -111,6 +112,10 @@
 				# page code
 				
 				$PAGE_CODE = $PAGE_NAME.'__'.$PAGE;
+				
+				# coach/engine/role url
+				 
+				$PV['url_coach_eng_role']=$COACH['domain_name'].'_'.$PAGE.'_'.$USER_ROLE;
 								
 				# process series content	
 				
@@ -119,12 +124,7 @@
 				# Check Layout
 				
 				$LAYOUT = (@$LAYOUT)?$LAYOUT:'layout_basic';
-				
-				if($USER_ID){							
-					
-					   // space for additional info	
-				}
-														    
+													    
 				# custom theme pages
 										
 				if(@get_config('custom_theme_pages')[$PAGE_ID.'_'.$PAGE_NAME]){
@@ -173,51 +173,83 @@
 						}
 				}
 								
-				// processed content substream
-												
-				$PAGE_CONTENT = $L->Output();
+				// outer layer cache check	
+
+				// cache path		
+				$PV['cache_coach_eng_role'] = $COACH['terminal_path']."/cache/UER_".$PV['url_coach_eng_role'].".html";
 				
-				outer_action();
+				// is cache
+				if(is_file($PV['cache_coach_eng_role'])){
+					$PV['temp_content']	=$G->getFileContent($PV['cache_coach_eng_role']);					
+				}else{
+					
+					$PAGE_CONTENT = '<TMPL_VAR APP_CONTENT>';				
+					$PV['temp_content'] = outer_action();					
 				
+					$G->putFileContent(['path'=>$PV['cache_coach_eng_role'],
+										 'content'=>$PV['temp_content']]);
+										 
+				} // end cache
+				
+				// get content
+				$APP = new Template(array("filename" => $PV['cache_coach_eng_role'],"debug"    => 0));
+				$APP->AddParam('APP_CONTENT',$L->Output());				
+				$APP->EchoOutput();
 	
 		}else{ // open page
 				
-				        
-				    $PV['is_page']  = 1;
-								   
-				    $PV['layout']   = (@$CONTENT[$PAGE]['layout'])?$CONTENT[$PAGE]['layout']:'layout_full';
-									    
-				    $C 		= new Template(array("filename" => $THEME_ROUTE."/template/layout/".$PV['layout'].".html",
-									 "debug"   => 0));
-						    
-				    $C->AddParam('PAGE_ID',$PAGE);
-	    
-				    $C->AddParam('PAGE_TITLE',$CONTENT[$PAGE]['title']);
-				    
-				    $C->AddParam('PAGE_INFO',$CONTENT[$PAGE]['page_content']);
-				    
-				    if(@$CONTENT[$PAGE]['side_menu']){
-				      
-					$C->AddParam('side_menu',@$CONTENT[$PAGE]['side_menu']);		
-				    }
-				    
-				    $C->AddParam('PARENT_KEY_CODE',@$CONTENT[$PAGE]['parent_key_code']);
-				    $C->AddParam('PARENT_NAME',@$CONTENT[$PAGE]['parent_name']);
-	    
-				    $C->AddParam('PARENT_RIGHT_IMAGE',@$CONTENT[$PAGE]['parent_right_image']);
-				    $C->AddParam('PARENT_HEADER_IMAGE',@$CONTENT[$PAGE]['parent_header_image']);
-				    
-				    $C->AddParam('PAGE_RIGHT_IMAGE',@$CONTENT[$PAGE]['page_right_image']);
-				    $C->AddParam('PAGE_HEADER_IMAGE',@$CONTENT[$PAGE]['page_header_image']);				
-				    
-				    $PAGE_CONTENT = $C->Output();
-				    
-				    outer_action();
+					$PV['cache_page_info'] = $COACH['terminal_path']."/cache/PG_$SHOW_DOOR"."_"."$PAGE.html";
+
+					if(is_file($PV['cache_page_info'])){		
+						$PV['temp_content']	=$G->getFileContent($PV['cache_page_info']);
+					}else{					
+					
+							
+						include($LIB_PATH.'/engine/'.$ENGINE.'/inner.php');
+					
+						$PV['is_page']  = 1;
+									   
+						$PV['layout']   = (@$CONTENT[$PAGE]['layout'])?$CONTENT[$PAGE]['layout']:'layout_full';
+											
+						$C 		= new Template(array("filename" => $THEME_ROUTE."/template/layout/".$PV['layout'].".html",
+										 "debug"   => 0));
+								
+						$C->AddParam('PAGE_ID',$PAGE);
+			
+						$C->AddParam('PAGE_TITLE',$CONTENT[$PAGE]['title']);
+						
+						$C->AddParam('PAGE_INFO',$CONTENT[$PAGE]['page_content']);
+						
+						if(@$CONTENT[$PAGE]['side_menu']){
+						  
+						$C->AddParam('side_menu',@$CONTENT[$PAGE]['side_menu']);		
+						}
+						
+						$C->AddParam('PARENT_KEY_CODE',@$CONTENT[$PAGE]['parent_key_code']);
+						$C->AddParam('PARENT_NAME',@$CONTENT[$PAGE]['parent_name']);
+			
+						$C->AddParam('PARENT_RIGHT_IMAGE',@$CONTENT[$PAGE]['parent_right_image']);
+						$C->AddParam('PARENT_HEADER_IMAGE',@$CONTENT[$PAGE]['parent_header_image']);
+						
+						$C->AddParam('PAGE_RIGHT_IMAGE',@$CONTENT[$PAGE]['page_right_image']);
+						$C->AddParam('PAGE_HEADER_IMAGE',@$CONTENT[$PAGE]['page_header_image']);				
+						
+						$PAGE_CONTENT = $C->Output();
+						
+						$PV['temp_content'] = outer_action();
+						
+						 $G->putFileContent(['path'=>$PV['cache_page_info'],
+										   'content'=>$PV['temp_content']]);
+						
+					}
 				
+				echo $PV['temp_content'];
 		
 		} // end of content stream
-			
 		
+		
+		
+		// outer action
 		function outer_action(){
 		    
 			global $PV,$THEME_ROUTE,$COACH,$IS_HOME,$LIB_PATH,
@@ -399,7 +431,7 @@
 					    ));                        
 		    } // user id
 				    
-		    $TD->EchoOutput();
+		    #$TD->EchoOutput();
 		    
 		  					    
 		    # open log
@@ -411,10 +443,13 @@
 				    $param      = array('user_id'=>$USER_ID,'page_code'=>'ed3e225dad017ddafa66fa8a44fda21c','action_type'=>'VIEW','action'=>'General Page Access','access_key'=>$access_key );
 								     
 				    $G->set_system_log($param);
-		    }			
+		    }		
+
+			return $TD->Output();
 	
 		} // outer action
 	
+		
 		// close db connection
 		
 		$db_conn_close($db_conn_info);
