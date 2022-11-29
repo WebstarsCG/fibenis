@@ -1,9 +1,7 @@
 <?php
 		# custom lib
 				
-		include($LIB_PATH."/inc/lib/upload.php");
-		
-		$IS_SESSION = @$_GET['se_id'];
+		include($LIB_PATH."/inc/lib/upload.php");		
 		
 		$MENU_OFF   = 0;
 		
@@ -347,31 +345,12 @@
 		
 		$T->AddParam('is_save_form',@$F_SERIES['is_save_form']);
 		
+		$T->AddParam('title',@$F_SERIES['title']);
+		
+		$T->AddParam('add',@$F_SERIES['button_name']);
+		
 		$T->AddParam(build_form_data(@$F_SERIES['data']));
 		
-		# show data
-		
-		if(@$_GET['key']){
-		
-			$T->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['key']));
-			
-			#set_system_log:
-			$param = array('user_id'=>$USER_ID,
-					   
-					   'page_code'=>$F_SERIES['page_code'],
-					   
-					   'action_type'=>'PSDT',
-					   
-					   'action'=>'View the information by using '.$_GET['key'].'');
-			
-			$G->set_system_log($param);
-						
-		} # app key
-		
-		
-		
-		$T->AddParam('title',@$F_SERIES['title']);
-		$T->AddParam('add',@$F_SERIES['button_name']);
 		
 		if(@$F_SERIES['label']){
 		
@@ -417,22 +396,6 @@
 		
 		} // end
 		
-		//echo "M->".$F_MESSAGE;
-		###TRANSKEY-R-17072018
-		if(@$_COOKIE[@$_GET['trans_key']]){			
-								
-				$T->AddParam('message',@$_COOKIE[@$_GET['trans_key']]);	
-				setcookie($_GET['trans_key'],'',(time()-360));			
-	
-				//$F_SERIES['temp']['last_insert'] = @$_COOKIE[@$_GET['trans_key'].'_last_insert'];	
-				//setcookie($_GET['trans_key'].'_last_insert','',(time()-360));
-
-				//unset($_COOKIE[$_GET['trans_key'].'_last_insert']); 				
-				
-		}elseif($F_MESSAGE){
-				$T->AddParam('message',$F_MESSAGE);
-		}
-		
 		// last_insert
 		if(@$F_SERIES['get_last_insert']){
 				$T->AddParam('last_insert',@$F_SERIES['temp']['last_insert']);
@@ -441,13 +404,39 @@
 		$T->AddParam('addon_actions',@$F_SERIES['addon_actions']);		
 		$T->AddParam('after_prefill_action',@$F_SERIES['after_prefill_action']);
 		
+		# show data
 		
-		// is session	
-		if($IS_SESSION){			
-			$PAGE_INFO= $T->Output();
-		}else{		
-			$PAGE_INFO = $T->Output();
+		if(@$_GET['key']){
+		
+			$T->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['key']));
+			
+			#set_system_log:
+			$param = array('user_id'=>$USER_ID,
+					   
+					   'page_code'=>$F_SERIES['page_code'],
+					   
+					   'action_type'=>'PSDT',
+					   
+					   'action'=>'View the information by using '.$_GET['key'].'');
+			
+			$G->set_system_log($param);
+						
+		} # app key
+		
+		//echo "M->".$F_MESSAGE;
+		###TRANSKEY-R-17072018
+		if(@$_COOKIE[@$_GET['trans_key']]){
+				$T->AddParam('message',@$_COOKIE[@$_GET['trans_key']]);	
+				setcookie($_GET['trans_key'],'',(time()-360));	
+		}elseif($F_MESSAGE){
+				$T->AddParam('message',$F_MESSAGE);
 		}
+		
+		
+		// template output			
+		$PAGE_INFO = $T->Output();
+		
+		
 		
 		# build form data		
 		function build_form_data($data_def){
