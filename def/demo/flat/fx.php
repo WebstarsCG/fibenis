@@ -10,8 +10,6 @@ $F_SERIES = array(
     'key_id' => 'id',
 
     'gx' => 1,
-	
-	
 
     'data' => array(
 
@@ -50,7 +48,7 @@ $F_SERIES = array(
 
             'allow' => 'c2,3',
 
-            'is_mandatory' => 0,
+            'is_mandatory' => 1,
 
             'input_html' => 'class="w_60"',
 
@@ -127,7 +125,7 @@ $F_SERIES = array(
 
             'is_mandatory' => 0,
 
-            'input_html' => 'class="w_200" onchange="check_new_entity(this);setRightOptionLimit();"',
+            'input_html' => 'class="w_200" onchange="check_new_entity(this);"',
 
         ) ,
 
@@ -149,8 +147,7 @@ $F_SERIES = array(
             'allow' 	 => 'x16',
             'is_hide' 	 => 1,
             'ro' 		 => 1,
-            'is_mandatory' => 0,
-			'input_html' => '' 
+            'is_mandatory' => 0
         ),
 		
 
@@ -181,8 +178,6 @@ $F_SERIES = array(
             'type' => 'fibenistable',
 
             'is_index' => 1,
-			
-			
 
             'is_mandatory' => 0,
 
@@ -193,23 +188,9 @@ $F_SERIES = array(
                     'type' => 'text',
                 ) ,
                 array(
-                    'column' => 'Rate',
-                    'width' => '15',
-                    'type' => 'text',
-                ) ,
-				
-				array(
-                    'column' => 'Qty',
-                    'width' => '10',
-                    'type' => 'text',
-					'allow'=>'d2',
-					 'key_up_addon' => "cal_total(this)"
-                ) ,
-				array(
-                    'column' => 'Total',
-                    'width' => '25',
-                    'type' => 'text',
-					'input_html'=>"readonly=true"
+                    'column' => 'DoB',
+                    'width' => '50',
+                    'type' => 'date',
                 ) ,
             )
 
@@ -222,7 +203,7 @@ $F_SERIES = array(
 
             'type' => 'date',
 			
-			'is_mandatory' => 0,
+			'is_mandatory' => 1,
 
         ) ,
 
@@ -273,13 +254,26 @@ $F_SERIES = array(
             'option_data' => $G->option_builder("demo", "id,text_flat", "order by text_flat ASC") ,
 
             'input_html' => ' class="w_200" rows="2"  style="height:200px !important"  ',
-			
-			'right_option_limit'=>1,
 
         ) ,
-		
-		
-		
+
+        '19' => array(
+            'field_name' => 'Radio (Contact Attributes)',
+
+            'field_id' => 'radio',
+
+            'type' => 'radio',
+
+            'is_mandatory' => 0,
+
+            'options' => $G->radio_option_builder(['table' => 'entity_attribute', 'field_label' => 'sn', 'field_value' => 'code', 'where' => " WHERE entity_code='CO'"]) ,
+
+            'input_html' => ' class="w_200"  style="height:100px !important"  ',
+
+            'is_mandatory' => 1
+
+        ) ,
+
         '20' => array(
             'field_name' => 'Checkbox',
 
@@ -301,24 +295,6 @@ $F_SERIES = array(
             'is_mandatory' => 1
 
         ) ,
-
-        '19' => array(
-            'field_name' => 'Radio (Contact Attributes)',
-
-            'field_id' => 'radio',
-
-            'type' => 'radio',
-
-            'is_mandatory' => 0,
-
-            'options' => $G->radio_option_builder(['table' => 'entity_attribute', 'field_label' => 'sn', 'field_value' => 'code', 'where' => " WHERE entity_code='CO'"]) ,
-
-            'input_html' => ' class="w_200"  style="height:100px !important"  ',
-
-            'is_mandatory' => 1
-
-        ) ,
-
 
         '21' => array(
             'field_name' => 'Checkbox Multistate',
@@ -349,8 +325,6 @@ $F_SERIES = array(
             'is_mandatory' => 1
 
         ) ,
-		
-		
 
         '15' => array(
             'field_name' => 'Tab',
@@ -387,12 +361,9 @@ $F_SERIES = array(
             'input_html' => 'class="w_100"',
 
         ) ,
-		
-		
 
     ) ,
 
-'get_last_insert'=>1,
     'is_user_id' => 'user_id',
 
     # Communication
@@ -402,7 +373,8 @@ $F_SERIES = array(
         'BACK_NAME' => 'Back'
     ) ,
 
-    'js' => ['is_top' => 1],
+    'js' => ['is_top' => 1,
+    'top_js' => 'def/demo/flat/fx'],
 
     //'flat_message'	=> 'Successfully Added',
     'prime_index' => 7,
@@ -412,16 +384,16 @@ $F_SERIES = array(
 
     'divider' => 'accordion',
 
-    'is_field_id_as_token' => 1,
+    'field_id_as_token' => 1,
 
-    #'avoid_trans_key_direct' => 1,
+    'avoid_trans_key_direct' => 1,
 
     'before_add_update' => 1,
 
-    'show_query' => 0,
+    'show_query' => 0
     #for debugging
-		
-	'session_off'=>1,
+    
+
     
 );
 
@@ -454,134 +426,3 @@ $F_SERIES['before_add_update'] = function ()
     
 
 }; // end
-
-
-
-
-set_product(['rdsql'=>$rdsql,'f_series'=>$F_SERIES]);
-	
-	
-// get product group
-function set_product($param){
-	
-	global $F_SERIES;
-	
-	$lv = ['content'=>'','items'=>[],'counter'=>0];
-	
-	$lv['product_groups'] = $param['rdsql']->exec_query("SELECT get_exav_addon_text(id,'QCPG') as detail FROM entity_child WHERE entity_code='QC'",										   'Query');
-	
-	
-	
-	while($product_group_item=$param['rdsql']->data_fetch_assoc($lv['product_groups'])){
-			
-			$lv['item_detail']=json_decode($product_group_item['detail'],true);
-			
-			foreach($lv['item_detail'] as &$item){
-				if($item[0]){
-					$lv['counter']++;
-					array_push($lv['items'],[$item[0],$item[1],0,0]);
-				}
-			}
-			
-			array_push($lv['items'],['Total',"","",""]);
-			$lv['counter']++;
-	}		
-	
-	$F_SERIES['data'][9]['default_data']=json_encode($lv['items']);
-	$F_SERIES['data'][9]['default_rows_prop']= array('start_rows'=>$lv['counter'],'max_row'=>$lv['counter']);
-	
-} // end
-
-
-/* if(@$_GET['trans_key'] && @$_COOKIE[@$_GET['trans_key']]){
-	
-	// get cookie message	
-	$F_SERIES['temp']['message']= @$_COOKIE[@$_GET['trans_key']];
-	
-	// split message
-	$F_SERIES['temp']['message_blocks'] = explode('block_pass:',$F_SERIES['temp']['message']);
-
-	//set into content header
-	$F_SERIES['header']	=	[ 'header_content'=> $F_SERIES['temp']['message_blocks'][1],
-								   'header_style'  => 'alert alert-success'
-								];
-								
-	// remove block
-	setcookie($F_SERIES['temp']['trans_key'], time() - 3600);
-
-	// remove form
-	$F_SERIES['data']=[];
-
-} // end  */
-
-?>
-
-<script>
- // cal total
-        
-    function cal_total(element) {
-        
-        var lv =new Object({});
-        
-        lv.pattern = /(\d+)(\_)(ft)(\_)(\d+)(\_)(\d+)/i;
-        
-        lv.element_in = element.id.match(lv.pattern);
-        
-        console.log(element.id);
-        
-        console.log(lv.element_in[5]);
-        
-        lv.row=element.id.replace(lv.pattern,function(m,p1,p2,p3,p4,p5,p6,p7,o,s){
-                        
-                    var temp_sum= new Array();
-                    
-                    temp_sum['c1']=0;
-                    temp_sum['c2']=0;
-                
-                    var temp=new Object({ 'r':ELEMENT(p1+p2+p3+p4+'2'+p6+p7),
-                             'q':ELEMENT(p1+p2+p3+p4+'3'+p6+p7),
-                             't':ELEMENT(p1+p2+p3+p4+'4'+p6+p7),
-                             
-                            'c1_total':ELEMENT('5'+p2+p3+p4+'4'+p6+p7),
-                           /* 'c2_total':ELEMENT('7'+p2+p3+p4+'3'+p6+p7),
-                            'grand_total':ELEMENT('7'+p2+p3+p4+'4'+p6+p7) */
-                    
-                    });
-                    
-                    temp.t.value=Number(temp.r.value)*Number(G.isEmpty(temp.q.value,0));
-                    
-                   
-                    
-                    for(var c_index=1;c_index<=4;c_index++){
-                    
-                        console.log('E'+ELEMENT(c_index+p2+p3+p4+'2'+p6+p7).id+'='+ELEMENT(c_index+p2+p3+p4+'2'+p6+p7).value);
-                    
-                        temp_sum['c1']+=Number(G.isEmpty(ELEMENT(c_index+p2+p3+p4+'4'+p6+p7).value,0));
-                       // temp_sum['c2']+=Number(G.isEmpty(ELEMENT(c_index+p2+p3+p4+'3'+p6+p7).value,0));
-                        
-                    }
-                    
-                    console.log('C1'+temp.c1_total.readonly);
-                    
-                    if (temp.c1_total.readonly!=true){
-                        
-                        temp.c1_total.readOnly=true;
-                        //temp.c2_total.readOnly=true;
-                       // temp.grand_total.readOnly=true;
-                        
-                        temp.c1_total.style='text-align:right;padding-right:7px;font-weight:bold;font-size:15px;color:#2364ce';
-                       // temp.c2_total.style='text-align:right;padding-right:7px;font-weight:bold;font-size:15px;color:#2364ce';
-                       // temp.grand_total.style='text-align:right;padding-right:7px;font-weight:bold;font-size:17px;color:#10a315;';
-                    }
-                    
-                    temp.c1_total.value    = temp_sum['c1'];
-                   // temp.c2_total.value    = temp_sum['c2'];
-                   // temp.grand_total.value = Number(temp.c1_total.value)+Number(temp.c2_total.value);
-                  
-                    return 1;
-                    
-            });
-        
-    } // end
-	
-</script>

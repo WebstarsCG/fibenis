@@ -14,16 +14,11 @@
              'is_sort' => 0
          ),
          3 => array(
-			'th' => 'Base 64 Textarea ',
-			'field' => "text_area",
-			'td_attr' => ' class="align_LM" width="20%"',
-			'is_sort' => 0,
-			 
-			'filter_out'=>function($in){
-				return base64_encode($in);
-			},
-
-			'js_call'=>'base64_decode'
+             'th' => 'Textarea ',
+             'field' => "fiben_table",
+             'td_attr' => ' class="align_LM" width="20%"',
+             'is_sort' => 0,
+			 'js_call'=>'grid_to_list_ol'
          ),
          4 => array(
              'th' => 'Date ',
@@ -103,11 +98,30 @@
          'able_del' => 1
      ),
 	 
-	'js'=>array('is_top' => 1,'top_js'=>'def/demo/flat/dx'),
+	 'js'=>array('is_top' => 1)
  );
  
- 
-	print_r($G->get_key_value('id,text_flat,text_area','demo',' AND id=25'));
+ $D_SERIES['bulk_action'] = array(
+								array('is_bulk_button' =>1,
+									  'button_name'    => ' Update Parent as Yes Or No ',
+									  'js_call'        => 'update_parent_action'
+									  ),
+									  
+								array('is_bulk_button' =>1,
+									  'button_name'    => ' Update Parent ',
+									  'prompt'	   	   => ['is_active'=>1,
+														   'title'=>'Select Parent',
+														   'input_type' => 'select',
+														   'options'=>$G->get_id_name('entity','code,sn', 
+															" WHERE is_lib=0 ")													   
+														   ],
+									  
+									  'action'		   => [ 'series'    => 'ax',
+														    'def'  		=> 'demo__flat',
+														    'token'		=> 'OPT_UPD']
+									  
+									  )
+							);
  
  
  

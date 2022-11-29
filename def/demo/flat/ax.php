@@ -63,6 +63,21 @@
 						       
 					     },
 					     
+				// option update
+
+				'OPT_UPD' => function($param){
 					
-                                )
+
+					$get    = json_decode($param['data'],true);
+					
+					$get['id_csv']=implode(',',$get['id']);
+			
+					$query = "UPDATE demo SET option_single='$get[detail]' WHERE id IN($get[id_csv])";
+		
+					$param['rdsql']->exec_query($query,"Error".$query);
+		
+					return 1;
+
+				}					
+	)
 ?>
