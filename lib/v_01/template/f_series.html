@@ -581,39 +581,33 @@
 				        <div class="row <TMPL_IF is_hide>hide</TMPL_IF>"  id="X<TMPL_VAR field_id>_panel">
 						<span class="label"><TMPL_VAR field_name></span>
 						<span class=value>
-									<!-- onkeypress="remote_quick_list(this,'<TMPL_VAR remote_link>');"  --> 
-									 <input   id="X<TMPL_VAR field_id>"
-										 name	= "X<TMPL_VAR field_id>"  
-										 
-										 onkeypress="remote_auto_list(this,'<TMPL_VAR remote_link>');"
-										 
-										 <TMPL_VAR input_html>
-											<TMPL_IF DEFAULT_LABEL>value="<TMPL_VAR DEFAULT_LABEL>"</TMPL_IF>	
-											 
-											 <TMPL_IF restrict_new_entry>
-											   	onfocusout="JavaScript:check_exit_data(this,'<TMPL_VAR remote_link>');"
-												 
-											  <TMPL_ELSE> onfocusout="JavaScript:check_auto_data(this,'<TMPL_VAR remote_link>');" </TMPL_IF>
-											 
-										 type    = "text"
-										 
-										 <TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
-									 >
-									 
-									 <input   id="X<TMPL_VAR field_id>_hidden"
-										 name	= "X<TMPL_VAR field_id>_hidden"  
-										 <TMPL_VAR input_html>
-											<TMPL_IF DEFAULT_LABEL>value="<TMPL_VAR DEFAULT_LABEL>"</TMPL_IF>	
-										 type    = "hidden"
-										 
-										 
-									 >
-								     
-									 
+							<!-- onkeypress="remote_quick_list(this,'<TMPL_VAR remote_link>');"  --> 
+							<input   id="X<TMPL_VAR field_id>"
+								 name	= "X<TMPL_VAR field_id>"  
+								 data-url='<TMPL_VAR remote_link>'		
+								 onkeypress="ac_get_items(this,'<TMPL_VAR remote_link>');" 
+								
+								<TMPL_VAR input_html>								
+								<TMPL_IF DEFAULT_LABEL>value="<TMPL_VAR DEFAULT_LABEL>"</TMPL_IF>									 
+								<TMPL_IF restrict_new_entry>
+									onfocusout="JavaScript:ac_is_item_there(this);"
+								<TMPL_ELSE> 
+									onfocusout="JavaScript:check_auto_data(this,'<TMPL_VAR remote_link>');" 
+								</TMPL_IF>									 
+								type    = "text"								 
+								<TMPL_IF LAST_DIVIDER_ID>data-last-divider-id=<TMPL_VAR LAST_DIVIDER_ID></TMPL_IF>
+							>
+							 
+							<input   id="X<TMPL_VAR field_id>_hidden"
+								 name	= "X<TMPL_VAR field_id>_hidden"  
+								 <TMPL_VAR input_html>
+									<TMPL_IF DEFAULT_LABEL>value="<TMPL_VAR DEFAULT_LABEL>"</TMPL_IF>	
+								 type    = "hidden"
+							> 
 									
-									 <font class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></font>
-									 <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
-									 <span class=message id="message_X<TMPL_VAR field_id>"></span>
+							 <font class="red_star"><TMPL_IF is_mandatory>*</TMPL_IF></font>
+							 <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
+							 <span class=message id="message_X<TMPL_VAR field_id>"></span>
 						</span>
 				       </div>					
 				</TMPL_IF>

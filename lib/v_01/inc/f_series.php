@@ -1697,23 +1697,20 @@
 																    )
 															){
 															
-																	// set match pattern
+																	/* // set match pattern
 																	$fibenistable_temp[ $lv['allow']['pattern'][ $lv['allow_matches'][1] ] ]  = 1;
 																	
 																	$fibenistable_temp['max_length'] = ($lv['allow_matches'][2])?$lv['allow_matches'][2]:'';
 																	
-																	$fibenistable_temp['special_in'] = (@$lv['allow_matches'][5])?@$lv['allow_matches'][5]:'';
-															}
-																	
-																	#print_r($lv['allow_matches']);
-																	
+																	$fibenistable_temp['special_in'] = (@$lv['allow_matches'][5])?@$lv['allow_matches'][5]:''; */
+															}	
 												}
 												
 												
 												if($fibenistable_temp['is_autocomplete']){
 														
 													$fibenistable_temp['get_data_url'] = @$colvalue['get_data_url'];
-													$fibenistable_temp['s_field'] = @$colvalue['search_field'];
+													//$fibenistable_temp['s_field'] = @$colvalue['search_field'];
 													
 												}
 												
