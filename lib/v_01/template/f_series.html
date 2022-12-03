@@ -148,7 +148,7 @@
 								   
 							}
 						}
-                                        });
+			});
 					  
 					  
 		}
@@ -1861,7 +1861,7 @@
 				      
 					<div class=value>
 					       
-						<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY>" >
+						<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY_TEMPLATE_VAR>" >
 					
 						<TMPL_LOOP ADDON_ACTIONS>
 							<TMPL_UNLESS IS_LEFT>
@@ -1882,21 +1882,16 @@
 							</TMPL_IF>
 							
 							id="ADD"    name="ADD"     class = "button_add" 
-						      
-							<TMPL_IF KEY>
-								 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Update <TMPL_VAR TITLE></TMPL_IF>"
-							<TMPL_ELSE>
-								 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Add <TMPL_VAR TITLE></TMPL_IF>"   
-							</TMPL_IF>
-						
-						>
 							
-						<TMPL_IF KEY>					
-							<TMPL_IF IS_SAVE_FORM>					
-								<input type="submit" id="SAVE" name="SAVE" class = "button" value="Save <TMPL_VAR TITLE>">
-							</TMPL_IF>
-						</TMPL_IF>
-					
+							<TMPL_VAR UPDATE_TEMPLATE_VAR>
+							
+							<TMPL_UNLESS KEY>
+								 value="<TMPL_IF ADD><TMPL_VAR ADD><TMPL_ELSE>Add <TMPL_VAR TITLE></TMPL_IF>"   
+							</TMPL_UNLESS>
+						>
+						
+						<!---save button template--->	
+						<TMPL_VAR SAVE_BUTTON_TEMPLATE_VAR>
 					   
 						<TMPL_IF is_custom_button>
 							<script>G.$('ADD').value='<TMPL_VAR is_custom_button>';
@@ -1916,8 +1911,7 @@
 						<TMPL_IF is_back_button>
 							<a  class="btn btn-default" type="button" href="<TMPL_IF BACK_LINK><TMPL_VAR back_link><TMPL_ELSE>?<TMPL_VAR D_SERIES>=<TMPL_VAR APP_KEY></TMPL_IF><TMPL_IF BACK_MENU_OFF>&menu_off=1</TMPL_IF><TMPL_IF BACK_DEFAULT_ADDON>&default_addon=<TMPL_VAR BACK_DEFAULT_ADDON></TMPL_IF>">
 								<TMPL_IF back_name><TMPL_VAR back_name><TMPL_ELSE>Back</TMPL_IF>
-							</a>
-							
+							</a>							
 						</TMPL_IF> 
 				      </div>
 				</div> <!--- end of row--->
@@ -1945,8 +1939,8 @@
 	    
 		<input type="hidden" id="f_series" name="f_series" value="<TMPL_VAR f_series>">
 		<input type="hidden" id="d_series" name="d_series" value="<TMPL_VAR d_series>">	
-		<input type="hidden" id="key" name="key" value="<TMPL_VAR key>">		
-		<input type="hidden" id="primary_id" name="primary_id" value="<TMPL_VAR last_id>">
+		<input type="hidden" id="key" name="key" value="<TMPL_VAR KEY_TEMPLATE_VAR>">		
+		<input type="hidden" id="primary_id" name="primary_id" value="<TMPL_VAR LAST_ID_TEMPLATE_VAR>">
 		<input type="hidden" id="app_key" name="app_key" value="<TMPL_VAR APP_KEY>">
 		<input type="hidden" id="user_role" name="user_role" value="<TMPL_VAR USER_ROLE>">
 	       
@@ -1962,33 +1956,26 @@
 		</div>
 	 
 	</TMPL_IF> 
-	 
-
-	 
-	 
 
 	<script language="javascript" type="text/javascript" >
 	
-	
-		
 	// ready for loading
 	
 	function ft_selectbox_capture_selected_value(ele){
       
 		var connector=',';
 		var ele_length=ele.id.length;
-		    var ele_option='';
-		    var option_length = document.getElementById(ele.id).options.length;
-		    for(ei=0;ei<option_length;ei++){
-					  if(ele.options[ei].selected==true){
-							  ele_option+=ele.options[ei].value+''+connector;
-						  }
-		   }
-		  
+		var ele_option='';
+		var option_length = document.getElementById(ele.id).options.length;
+		for(ei=0;ei<option_length;ei++){
+			if(ele.options[ei].selected==true){
+				ele_option+=ele.options[ei].value+''+connector;
+			}
+		}
+		
 		E_V_PASS(ele.id+'_hidden',ele_option);
-	 
-	
-	}
+		
+	} // end
 	
 	
 	function M_E_V_PASS(ele_id,ele_data){
@@ -2450,292 +2437,20 @@
 						E_V_PASS('ft_last_row_no'+field_id, rowCount+1);
 						
 						*/
-			}
+			} // end
 			
-			
-		
-		
 		
 	       $(document).ready(function() {
 		
-		
-			<TMPL_LOOP SHOW_DATA_INFO>	
-			  
-			   
-				<TMPL_IF PLUGIN_KEY>
-				
-			  
-					<TMPL_IF fibenistable_info>
-			  				 
-							E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
-							
-							var key_id = <TMPL_VAR plugin_key>;
-														
-							<TMPL_IF VALUE>
-							
-							var fibenistableData= JSON.parse(decodeURI('<TMPL_VAR VALUE>'));
-							
-							var table= document.getElementById("fibenis_table<TMPL_VAR plugin_key>");
-							
-							var tbody = table.getElementsByTagName("tbody")[0];				
-					       
-						        var rowCount = tbody.rows.length;
-							 
-							var tempinsRow  =Number(rowCount)-1;
-							//index_
-							for(row_i = rowCount+1; row_i<=fibenistableData.length;  row_i++){
-								    
-								        // alert(row_i); 
-									var tempinsRow = tempinsRow+1;	
-									 
-									var row = tbody.insertRow(tempinsRow);
-								       
-									var colCount = tbody.rows[0].cells.length;
-								       
-									for(var col_i =0; col_i<colCount; col_i++) {
-								       // alert(col_i);
-										var temp_cell = tbody.rows[0].cells[col_i];
-								
-										var newcell	= row.insertCell(col_i);
-										 
-										newcell.id  = temp_cell.id ;
-										
-										//alert(newcell.id);
-										if(newcell.id == 'ftindex'){
-											
-											newcell.innerHTML = row_i;
-											
-										}
-										else{
-										
-											var temp_row =  	 tbody.rows[0].cells[col_i].innerHTML;
-										
-											newcell.innerHTML = temp_row.replace(/(1\_ft)/g,(row_i)+'_ft');
-										 }
-										 	
-								       
-								        }
-									
-								        E_V_PASS('ft_last_row_no', row_i);
-										       
-							        }
-							       
-						      // E_H_PASS('index_'+row_i,'123');
-							   
-							
-							
-							for(row_i = 0; row_i<fibenistableData.length;  row_i++){
-								    
-									   
-								       <TMPL_LOOP fibenistable_info>
-								       
-										       var row_field = row_i+1;
-										      
-										       var col_field = <TMPL_VAR __COUNTER__>;
-										       
-											<TMPL_IF is_autocomplete>	
-											 
-											       var query_id = fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1];
-											      
-											       if(query_id){
-											       
-													var ajxrqst = new ajax();
-												       
-													   
-													var req = '&query='+query_id+'&field=id&row_field='+row_field+'&col_field='+col_field+'&key_id='+key_id+'&exit_data=1';
-													ajxrqst.set_request('<TMPL_VAR get_data_url>',req);
-													
-													//alert('<TMPL_VAR get_data_url>'+'==='+req); 
-													ajxrqst.send_get(function(res){
-													       var lv = JSON.parse(res);
-														   
-													       var row_id = lv[0].row_field;
-													       var col_id = lv[0].col_field;
-													       var key_id = lv[0].key_id;
-														   
-													       E_V_PASS(row_id+'_ft_'+col_id+'_'+key_id,lv[0].name); 
-														   E_V_PASS(row_id+'_ft_'+col_id+'_'+key_id+'_hidden',lv[0].id); 
-													      
-													})
-												}
-												else{
-													  E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id,''); 
-													  E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id+'_hidden',''); 
-												
-												}
-											   </TMPL_IF> 
-												
-												<TMPL_IF is_multiple_select>   
-												
-												  	
-														M_E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id,fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]);
-														E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id+'_hiden',fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]); 
-												<TMPL_ELSE>
-													
-												
-												  E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id,fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]); 
-											 </TMPL_IF>
-											
-										       
-								       </TMPL_LOOP>
-									   
-									  // E_H_PASS('index_'+row_i,'123');
-								       
-						       }
-						       
-						       </TMPL_IF>
-						       
-						<TMPL_ELSE>
-						
-						        E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
-					 
-							var data<TMPL_VAR plugin_key>='';
-							
-							<TMPL_IF VALUE>
-								data<TMPL_VAR plugin_key> =  $.parseJSON(decodeURI('<TMPL_VAR VALUE>'));
-							       
-								$container<TMPL_VAR plugin_key>.handsontable('loadData', data<TMPL_VAR plugin_key>); 
-						       </TMPL_IF>
-						
-						</TMPL_IF>
-				
-				<TMPL_ELSE>	 
-						<TMPL_IF auto_type>
-						    							
-							var ajxrqst = new ajax();
-							var req = '<TMPL_VAR auto_remote_link>&query=<TMPL_VAR VALUE>&search_key=id&exit_data=1';
-							
-							ajxrqst.set_request(req);
-							
-							ajxrqst.send_get(function(res){
-										var lv = JSON.parse(res);
-										E_V_PASS('<TMPL_VAR ID>',lv[0].name);
-										E_V_PASS('<TMPL_VAR ID>_hidden',lv[0].id);
-									});
-							
-						</TMPL_IF>
-						
-						// other than CK-editor
-						
-						if(typeof(ckeditor_temp['<TMPL_VAR ID>'])=='object'){		
-						
-							ckeditor_temp['<TMPL_VAR ID>'].setData('<TMPL_VAR VALUE>');
-							E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
-						
-						}else{
-								
-							
-							
-							if(input_temp.range['<TMPL_VAR ID>']==1){							
-							
-								init_range('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
-							
-							}else if(input_temp.toggle['<TMPL_VAR ID>']==1){
-							
-								if(Number('<TMPL_VAR VALUE>')==1){
-									document.getElementsByName('<TMPL_VAR ID>')[0].checked=true;
-								}else{
-									document.getElementsByName('<TMPL_VAR ID>')[0].checked=false;
-								}
-								
-								toggle_action(document.getElementsByName('<TMPL_VAR ID>')[0]);
-							
-							}else if((input_temp.date['<TMPL_VAR ID>']==1) ||
-								 (input_temp.date['<TMPL_VAR ID>_SHOW']==1)){								
-								
-								if( (String('<TMPL_VAR VALUE>').length>0) &&
-								    (String('<TMPL_VAR VALUE>').indexOf('0000')==-1)){
-									
-									E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
-								
-								}								
-								
-							}else if(input_temp.code_editor['<TMPL_VAR ID>']==1){
-								
-								input_temp.code_editor['<TMPL_VAR ID>_obj'].getDoc().setValue('<TMPL_VAR VALUE>');
-								
-							}else if(input_temp.option['<TMPL_VAR ID>']==1){
-																								
-								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
-								
-								if ( (ELEMENT('<TMPL_VAR ID>').onchange!=null) &&
-								     (ELEMENT('<TMPL_VAR ID>').dataset.updatePrefillOff!=1)
-								){
-									$("#<TMPL_VAR ID>").trigger( "onchange");
-								}
-							
-							}else if(input_temp.check_box['<TMPL_VAR ID>']!=undefined){
-																						
-								f_series.setCheckboxRadioValue(input_temp.check_box['<TMPL_VAR ID>'],'<TMPL_VAR VALUE>');
-								
-								aggregate_checkbox(G.$('<TMPL_VAR ID>_1'));
-
-							}else if(input_temp.radio['<TMPL_VAR ID>']!=undefined){
-																						
-									f_series.setCheckboxRadioValue(input_temp.radio['<TMPL_VAR ID>'],'<TMPL_VAR VALUE>');
-						
-							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-multiple'){							
-								//alert(ELEMENT('<TMPL_VAR ID>').dataset.inputType+'=='+'<TMPL_VAR VALUE>');
-								select_multiple_index_value('<TMPL_VAR ID>_TEMP','<TMPL_VAR VALUE>');
-								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
-								
-								if ( (ELEMENT('<TMPL_VAR ID>').onchange!=null) &&
-								     (ELEMENT('<TMPL_VAR ID>').dataset.updatePrefillOff!=1)
-								){
-									$("#<TMPL_VAR ID>").trigger( "onchange");
-								}
-							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-left-right'){							
-								
-								select_option_transfer_by_value(ELEMENT('<TMPL_VAR ID>_LEFT'),
-											 ELEMENT('<TMPL_VAR ID>_RIGHT'),
-											 '<TMPL_VAR VALUE>');
-								
-								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
-								
-							}else{								
-								
-								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
-								
-							} // end
-						
-						} // end
-					 
-				</TMPL_IF>
-			   
-			</TMPL_LOOP>			
+			<TMPL_VAR SHOW_DATA_INFO_TEMPLATE_VAR>
+			<TMPL_VAR IMAGE_INFO_TEMPLATE_VAR>
 			
 			<TMPL_LOOP plugin_info></TMPL_LOOP>
 						
-			<TMPL_LOOP IMAGE_INFO>
-			
-				<TMPL_IF VALUE>
-					
-					<TMPL_IF data_src>
-					
-						E_H_PASS('message_<TMPL_VAR ID>','<TMPL_VAR data_src>');
-						
-						E_H_PASS('del_data_out_<TMPL_VAR ID>','<a href=JavaScript:image_delete(\'<TMPL_VAR del_data_info>\');>X</a>');
-						
-						//<TMPL_VAR IMAGE_LOC><TMPL_VAR LOCATION><TMPL_VAR KEY_ID>
-						
-					</TMPL_IF>
-				
-						E_V_PASS("hidden_<TMPL_VAR ID>",'<TMPL_VAR KEY_ID>');
-					
-				</TMPL_IF>
-				
-			</TMPL_LOOP>
-			
 			//after prefill action
-			
-			<TMPL_IF KEY>	
-				<TMPL_IF AFTER_PREFILL_ACTION>
-					after_prefill_action('<TMPL_VAR KEY>');
-				</TMPL_IF>
-			</TMPL_IF>
+			<TMPL_VAR AFTER_PREFILL_ACTION_TEMPLATE_VAR>			
 						
-			// focusing
-						
+			// focusing						
 			//add_focus_style_object({elements:[<TMPL_VAR FIELD_CSV>],
 			//		 
 			//		 on     : { 'border'    : '1px solid #6cac51',

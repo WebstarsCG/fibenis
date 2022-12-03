@@ -325,116 +325,151 @@
 				
 		} # end		
 		 		
+		// cache path		
+		$F_SERIES['temp']['cache_form'] = $COACH['terminal_path']."/cache/F_$PAGE_CODE"."_".$USER_ROLE.".html";
+		
+		if(is_file($F_SERIES['temp']['cache_form'])){	
+			$F_SERIES['temp']['content_form']	=$G->getFileContent($F_SERIES['temp']['cache_form']);
+			echo 'cache';
+		}else{
+		
+			$options 	= array("filename"=>$LIB_PATH."/template/f_series.html", "debug"=>0,"loop_context_vars"=>1);
+						
+			$T 	 	= new Template($options);
 			
-		$options 	= array("filename"=>$LIB_PATH."/template/f_series.html", "debug"=>0,"loop_context_vars"=>1);
+			$T->AddParam('LIB_PATH',$LIB_PATH);
+			$T->AddParam('DEF_PATH',$router['def_path']);
+			
+			$T->AddParam('is_top_js',@$F_SERIES['js']['is_top']);		
+			$T->AddParam('top_js_file',@$F_SERIES['js']['top_js']);
+			
+			$T->AddParam('is_bottom_js',@$F_SERIES['js']['is_bottom']);		
+			$T->AddParam('bottom_js_file',@$F_SERIES['js']['bottom_js']);
+			
+			$T->AddParam('is_function',@$F_SERIES['is_function']);
+			
+			$T->AddParam('form_layout',@$F_SERIES['form_layout']);			
+			
+			$T->AddParam('title',@$F_SERIES['title']);
+			
+			$T->AddParam('add',@$F_SERIES['button_name']);
+			
+			if(@$F_SERIES['label']){
+			
+					$T->AddParam(@$F_SERIES['label']);
+			}
+			
+			# header & footer
+			
+			if(@$F_SERIES['header']){
+			
+					$T->AddParam(@$F_SERIES['header']);
+			}
+			
+			if(@$F_SERIES['footer']){
+			
+					$T->AddParam(@$F_SERIES['footer']);
+			}
+			
+			$T->AddParam('f_series',$PAGE_ID);
+			$T->AddParam('d_series',$F_DEFAULT['f_series'][$PAGE_ID]);
+			
+			
+			$T->AddParam('app_key',$PAGE_NAME);
+			
+			$T->AddParam('user_role',@$USER_ROLE);
+			
+			$T->AddParam('is_custom_button',@$F_SERIES['is_custom_button']);
+			
+			$T->AddParam('is_title',@$F_SERIES['is_title']);
+			
+			$T->AddParam('gx',@$F_SERIES['gx']); // generation
+			
+			$T->AddParam('is_field_id_as_token',@$F_SERIES['is_field_id_as_token']); // generation
+			
+			# header & footer
+			
+			// back to
+			
+			if($F_SERIES['back_to']){
 					
-		$T 	 	= new Template($options);
-		
-		$T->AddParam('LIB_PATH',$LIB_PATH);
-		$T->AddParam('DEF_PATH',$router['def_path']);
-		
-		$T->AddParam('is_top_js',@$F_SERIES['js']['is_top']);		
-		$T->AddParam('top_js_file',@$F_SERIES['js']['top_js']);
-		
-		$T->AddParam('is_bottom_js',@$F_SERIES['js']['is_bottom']);		
-		$T->AddParam('bottom_js_file',@$F_SERIES['js']['bottom_js']);
-		
-		$T->AddParam('is_function',@$F_SERIES['is_function']);
-		
-		$T->AddParam('form_layout',@$F_SERIES['form_layout']);
-		
-		$T->AddParam('is_save_form',@$F_SERIES['is_save_form']);
-		
-		$T->AddParam('title',@$F_SERIES['title']);
-		
-		$T->AddParam('add',@$F_SERIES['button_name']);
-		
-		$T->AddParam(build_form_data(@$F_SERIES['data']));
-		
-		
-		if(@$F_SERIES['label']){
-		
-				$T->AddParam(@$F_SERIES['label']);
-		}
-		
-		# header & footer
-		
-		if(@$F_SERIES['header']){
-		
-				$T->AddParam(@$F_SERIES['header']);
-		}
-		
-		if(@$F_SERIES['footer']){
-		
-				$T->AddParam(@$F_SERIES['footer']);
-		}
-		
-		$T->AddParam('f_series',$PAGE_ID);
-		$T->AddParam('d_series',$F_DEFAULT['f_series'][$PAGE_ID]);
-		
-		$T->AddParam('key',@$_GET['key']);
-		
-		$T->AddParam('app_key',$PAGE_NAME);
-		
-		$T->AddParam('user_role',@$USER_ROLE);
-		
-		$T->AddParam('is_custom_button',@$F_SERIES['is_custom_button']);
-		
-		$T->AddParam('is_title',@$F_SERIES['is_title']);
-		
-		$T->AddParam('gx',@$F_SERIES['gx']); // generation
-		
-		$T->AddParam('is_field_id_as_token',@$F_SERIES['is_field_id_as_token']); // generation
-		
-		# header & footer
-		
-		// back to
-		
-		if($F_SERIES['back_to']){
-				
-			$T->AddParam(@$F_SERIES['back_to']);
-		
-		} // end
-		
-		// last_insert
-		if(@$F_SERIES['get_last_insert']){
+				$T->AddParam(@$F_SERIES['back_to']);
+			
+			} // end
+			
+			// last_insert
+			if(@$F_SERIES['get_last_insert']){
 				$T->AddParam('last_insert',@$F_SERIES['temp']['last_insert']);
-		}
+			}
+			
+			$T->AddParam('addon_actions',@$F_SERIES['addon_actions']);		
+			
+			
+			$T->AddParam(build_form_data(@$F_SERIES['data']));
+			
+			// addon message			
+			$T->AddParam('message','<TMPL_VAR MESSAGE>');
+			$T->AddParam('key_template_var','<TMPL_VAR KEY>');
+			
+			// key based templates
+			$T->AddParam('update_template_var','<TMPL_IF KEY>value="<TMPL_IF ADD>'.
+			                                    '<TMPL_VAR ADD><TMPL_ELSE>Update <TMPL_VAR TITLE></TMPL_IF>"</TMPL_IF>');
+			
+			$T->AddParam('save_button_template_var',
+						'<TMPL_IF KEY><TMPL_IF IS_SAVE_FORM>'.					
+						'<input type="submit" id="SAVE" name="SAVE" class = "button" value="Save <TMPL_VAR TITLE>">'.
+						'</TMPL_IF></TMPL_IF>');
+							
+			$T->AddParam('after_prefill_action_template_var',
+						'<TMPL_IF KEY><TMPL_IF AFTER_PREFILL_ACTION>after_prefill_action("<TMPL_VAR KEY>");</TMPL_IF></TMPL_IF>');
+							
+			$T->AddParam('show_data_info_template_var',$G->getFileContent("$LIB_PATH/template/f_series_show_data.html"));
+			$T->AddParam('image_info_template_var',$G->getFileContent("$LIB_PATH/template/f_series_image_info.html"));
+			$T->AddParam('last_id_template_var','<TMPL_VAR LAST_ID>');
+			
+			// template output			
+			$F_SERIES['temp']['content_form'] = $T->Output();
+			$G->putFileContent(['path'		=> $F_SERIES['temp']['cache_form'],
+								'content'	=> $F_SERIES['temp']['content_form']]);
 		
-		$T->AddParam('addon_actions',@$F_SERIES['addon_actions']);		
-		$T->AddParam('after_prefill_action',@$F_SERIES['after_prefill_action']);
+		} // cache check
+		
+		# template addon_actions
+		$TFA 	 	= new Template(['template_content'=>$F_SERIES['temp']['content_form'],"loop_context_vars"=>1]);
 		
 		# show data
 		
 		if(@$_GET['key']){
-		
-			$T->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['key']));
+			
+			$TFA->AddParam('title',@$F_SERIES['title']);
+			$TFA->AddParam('key',@$_GET['key']);
+			$TFA->AddParam('add',@$F_SERIES['button_name']);		
+			$TFA->AddParam('is_save_form',@$F_SERIES['is_save_form']);			
+			$TFA->AddParam('after_prefill_action',@$F_SERIES['after_prefill_action']);
+			
+			$TFA->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['key']));
 			
 			#set_system_log:
-			$param = array('user_id'=>$USER_ID,
-					   
-					   'page_code'=>$F_SERIES['page_code'],
-					   
-					   'action_type'=>'PSDT',
-					   
-					   'action'=>'View the information by using '.$_GET['key'].'');
+			$param = array(	'user_id'=>$USER_ID,
+					        'page_code'=>$F_SERIES['page_code'],
+							'action_type'=>'PSDT',					   
+							'action'=>'View the information by using '.$_GET['key'].'');
 			
 			$G->set_system_log($param);
 						
 		} # app key
 		
-		//echo "M->".$F_MESSAGE;
-		###TRANSKEY-R-17072018
+		// transkey message
 		if(@$_COOKIE[@$_GET['trans_key']]){
-				$T->AddParam('message',@$_COOKIE[@$_GET['trans_key']]);	
+				$TFA->AddParam('message',@$_COOKIE[@$_GET['trans_key']]);	
 				setcookie($_GET['trans_key'],'',(time()-360));	
 		}elseif($F_MESSAGE){
-				$T->AddParam('message',$F_MESSAGE);
+				$TFA->AddParam('message',$F_MESSAGE);
 		}
 		
 		
 		// template output			
-		$PAGE_INFO = $T->Output();
+		$PAGE_INFO = $TFA->output();
 		
 		
 		
@@ -1641,13 +1676,13 @@
 												
 												
 												$fibenistable_temp = array();
-												$fibenistable_temp['field_id'] = $key;
-												$fibenistable_temp['column']      =  $colvalue['column'];
+												//$fibenistable_temp['field_id'] = $key;
+												//$fibenistable_temp['column']      =  $colvalue['column'];
 												
 												#echo $fibenistable_temp['column'] .'---<br>';
-												$fibenistable_temp['is_text']     =  (@$colvalue['type']== 'text')?1:0;
+												//$fibenistable_temp['is_text']     =  (@$colvalue['type']== 'text')?1:0;
 												
-												$fibenistable_temp['is_dropdown'] =  (@$colvalue['type']== 'dropDown')?1:0;
+												//$fibenistable_temp['is_dropdown'] =  (@$colvalue['type']== 'dropDown')?1:0;
 												$fibenistable_temp['is_multiple_select']  =  (@$colvalue['type']== 'multiple_select')?1:0;
 												
 												#mplate $fibenistable_temp['dropdown_data']      = @$colvalue['data'];
@@ -1822,7 +1857,6 @@
 					 
 				} # for 
 				
-								
 				return array('SHOW_DATA_INFO'=> $temp_info,
 					     'IMAGE_INFO'    => $image_info,
 					     'last_id'	     => $last_id
@@ -2074,12 +2108,11 @@
 												
 												$old_image_name = $_POST["hidden_X".$data_idx];
 												$old_image_file  =  $location.$old_image_name;
-												if(is_file($image_file )){
+												if(is_file(@$image_file )){
 												    #upload($img_data_id,$location,$img_id);
 												   // unlink($image_file);		
 												}
-												
-												
+																						
 												
 												$upload_image = upload(array('image_name'=>$img_data_id,
 															     'location'=>$location,'img_name'=>$img_name,'image_size'=>$image_size,
