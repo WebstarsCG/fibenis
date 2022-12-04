@@ -1144,7 +1144,7 @@
 								
 							$fibenistable_temp['get_data_url'] = @$colvalue['get_data_url'];
 							
-							$fibenistable_temp['s_field'] = @$colvalue['search_field'];
+							//$fibenistable_temp['s_field'] = @$colvalue['search_field'];
 							
 						}
 						
@@ -1161,6 +1161,7 @@
 						//row counter coll counter
 						$fibenistable_temp['row_counter']  = $param['row_counter'];
 						$fibenistable_temp['col_counter']  = $COUNTER+1;
+						$fibenistable_temp['is_first_row'] = ($param['row_counter']==1)?1:0;
 						
 						array_push($fibenistable_info,$fibenistable_temp);
 						
@@ -1691,7 +1692,10 @@
 														
 												if(@$colvalue['allow']){
 														$lv['allow_matches']=null;
-														preg_match('/([a-zA-Z]){1}(\d+)((\[)(.*)(\]))*/i',$colvalue['allow'],$lv['allow_matches']);
+														preg_match('/([a-zA-Z]){1}(\d+)((\[)(.*)(\]))*/i',
+														           $colvalue['allow'],
+														           $lv['allow_matches']);
+														
 														if(in_array(@$lv['allow_matches'][1],
 																    array_keys($lv['allow']['pattern'])
 																    )

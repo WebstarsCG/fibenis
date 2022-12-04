@@ -1,0 +1,19 @@
+<TMPL_LOOP IMAGE_INFO>
+			
+				<TMPL_IF VALUE>
+					
+					<TMPL_IF data_src>
+					
+						E_H_PASS('message_<TMPL_VAR ID>','<TMPL_VAR data_src>');
+						
+						E_H_PASS('del_data_out_<TMPL_VAR ID>','<a href=JavaScript:image_delete(\'<TMPL_VAR del_data_info>\');>X</a>');
+						
+						//<TMPL_VAR IMAGE_LOC><TMPL_VAR LOCATION><TMPL_VAR KEY_ID>
+						
+					</TMPL_IF>
+				
+						E_V_PASS("hidden_<TMPL_VAR ID>",'<TMPL_VAR KEY_ID>');
+					
+				</TMPL_IF>
+				
+</TMPL_LOOP>

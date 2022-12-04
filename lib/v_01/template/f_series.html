@@ -1351,15 +1351,14 @@
 									   <TMPL_LOOP fibenistable_row_info>
 									   	 
 										<tr> 
-											<TMPL_IF is_index> <td id="ftindex"><span id="index_<TMPL_VAR __counter__>"> <TMPL_VAR __COUNTER__><span></td> 
+											<TMPL_IF is_index> <td id="ftindex" data-ft-type="ftindex"><span id="index_<TMPL_VAR __counter__>"> <TMPL_VAR __COUNTER__><span></td> 
 											<TMPL_ELSE>
-												<td id="ftindex">&nbsp; </td>
+												<td id="ftindex" data-ft-type="ftindex">&nbsp; </td>
 											</TMPL_IF>
 											<TMPL_LOOP  fibenistable_cell_info>
 											
 											 <TMPL_IF is_text>
-												<td data-ft-type="fttext" width="<TMPL_VAR WIDTH>">
-												
+												<td data-ft-type="fttext" data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  width="<TMPL_VAR WIDTH>">
 												
 												<input  type="text"  onkeyup="JavaScript:<TMPL_IF KEY_UP_ADDON><TMPL_VAR KEY_UP_ADDON>;</TMPL_IF>getfibenisTableData(this,<TMPL_VAR field_id>,'<TMPL_VAR is_update_route_point>','<TMPL_VAR route_url>');<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  <TMPL_VAR input_html>
 													<TMPL_IF IS_INTEGER>
@@ -1385,7 +1384,9 @@
 												
 												</TMPL_IF>
 												<TMPL_IF is_dropdown>
-													<td id="ftdropdown" width="<TMPL_VAR WIDTH>">
+													<td id="ftdropdown" data-ft-type="ftdropdown" 
+													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"
+													width="<TMPL_VAR WIDTH>">
 													
 													 <select   onchange="JavaScript:<TMPL_IF KEY_UP_ADDON><TMPL_VAR KEY_UP_ADDON>;</TMPL_IF>getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" class="selectpicker"   data-width="100%" data-container="body" <TMPL_VAR input_html> >
 													 		<TMPL_IF is_default_value> <option value="0"> Select</option></TMPL_IF>
@@ -1398,7 +1399,9 @@
 												</TMPL_IF>
 												
 												<TMPL_IF is_multiple_select>
-													<td id="ftMultipledropdown" width="<TMPL_VAR WIDTH>">
+													<td id="ftMultipledropdown" data-ft-type="ftMultipledropdown" 
+													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"													
+													width="<TMPL_VAR WIDTH>">
 													<select  name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  class="selectpicker" multiple="true" multiple data-done-button="true"  onchange="JavaScript:ft_selectbox_capture_selected_value(this);getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);"
 													<TMPL_VAR input_html>>
 														<TMPL_VAR select_data>
@@ -1410,7 +1413,9 @@
 													
 												
 												<TMPL_IF is_date>
-													<td id="ftdate" width="<TMPL_VAR WIDTH>">
+													<td id="ftdate"  data-ft-type="ftdate" 
+													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"
+													width="<TMPL_VAR WIDTH>">
 														
 														<input   type="date" data-date="" data-date-format="DD MMMM YYYY"   name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"     onchange="JavaScript:getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);<TMPL_IF CHANGE_ADDON><TMPL_VAR CHANGE_ADDON>;</TMPL_IF>" <TMPL_VAR input_html>  />
 												
@@ -1419,18 +1424,37 @@
 												</TMPL_IF>	
 												
 													
-													
+												
 											   
 											    <TMPL_IF is_autocomplete>
-													<td id="ftautocomplete" width="<TMPL_VAR WIDTH>">
-													<input type="text"  name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" 	onkeyup="JavaScript:fibenistableAutocomplete(this,'<TMPL_VAR get_data_url>','<TMPL_VAR s_field>');getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_IF entry_new_row> <TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);</TMPL_IF>" <TMPL_IF restrict_new_entry><TMPL_ELSE> onfocusout="JavaScript:check_data(this,'<TMPL_VAR get_data_url>','<TMPL_VAR s_field>');" </TMPL_IF>  <TMPL_VAR input_html> />
-												<input type="hidden" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" />							</td>
+													<td id="ftautocomplete"  data-ft-type="ftautocomplete" 
+													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"
+													width="<TMPL_VAR WIDTH>">
+													
+													<input type="text"  name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" 	onkeyup="JavaScript:ac_get_items(this,G.$('ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'));getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_IF entry_new_row> <TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);</TMPL_IF>" <TMPL_IF add_new_entry><TMPL_ELSE> onfocusout="JavaScript:ac_is_item_there(this,G.$('ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'));" </TMPL_IF><TMPL_VAR input_html> />
+											
+											<input  type="hidden" 
+											        name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" 
+													id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" />
+												
+													 <!-- col header ---->
+											   <TMPL_IF is_first_row>
+													<input type='hidden' id='ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'
+													data-url='<TMPL_VAR get_data_url>'>												
+												</TMPL_IF>	
+												
+												</td>
 											   </TMPL_IF>
+											   
+											   
+												
 											   
 											   <!-- last col number ---->
 												<TMPL_IF __last__>
 													<input type="hidden" name="ft_last_col_no_<TMPL_VAR field_id>" id="ft_last_col_no_<TMPL_VAR field_id>" value="<TMPL_VAR __counter__>" >
 												</TMPL_IF>
+												
+												
 												
 												
 											</TMPL_LOOP> <!-- cell info ---->
@@ -1526,7 +1550,8 @@
 											var tbody = table.getElementsByTagName("tbody")[0];				
 											
 											var row_count = tbody.rows.length;
-											
+											var eid ='';
+											var eid_hidden ='';
 											
 											//alert(row_count);
 											
@@ -1544,38 +1569,16 @@
 														
 														var temp_cell = tbody.rows[row_count_i].cells[col_i];
 														
-														if(temp_cell.id == 'ftautocomplete'){
+														eid		   = temp_cell.dataset.eid;
+														eid_hidden = temp_cell.dataset.eid+'_hidden';
+														
+														if(temp_cell.dataset.ftType == 'ftautocomplete'){
 															
-															//alert(temp_cell.children.length);
-															if(temp_cell.children.length == 4){
-																 var child_node_id =temp_cell.children[3].id;
-																// if(GET_E_VALUE(child_node_id)){
-																// data.push(GET_E_VALUE(child_node_id)); //}
-																data.push(GET_E_VALUE(child_node_id)); 
-																//temp_data = GET_E_VALUE(child_node_id);
-															}
-															
-															else if(temp_cell.children.length == 3){
-															
-																var child_node_id =temp_cell.children[2].id;
-																// if(GET_E_VALUE(child_node_id)){
-																//data.push(GET_E_VALUE(child_node_id));//} 
-																//temp_data = GET_E_VALUE(child_node_id);
-																data.push(GET_E_VALUE(child_node_id)); 
-															}
-															else{							
-																
-																var child_node_id =temp_cell.children[1].id;
-																// if(GET_E_VALUE(child_node_id)){
-																//data.push(GET_E_VALUE(child_node_id));// }
-																//temp_data = GET_E_VALUE(child_node_id);
-																data.push(GET_E_VALUE(child_node_id)); 
-															}
-															
+															data.push(GET_E_VALUE(eid_hidden)); 
 															
 														} //ft complete
 														
-														else if(temp_cell.id == 'ftdropdown'){	
+														else if(temp_cell.dataset.ftType == 'ftdropdown'){	
 															
 															var outer_parent  = temp_cell.children[0];		
 															
@@ -1599,7 +1602,7 @@
 														}// ftdropdown
 														
 															
-														else if(temp_cell.id == 'ftMultipledropdown'){
+														else if(temp_cell.dataset.ftType == 'ftMultipledropdown'){
 																
 															var outer_parent  = temp_cell.children[0];	
 																
@@ -1620,17 +1623,10 @@
 																
 														}//ftMultipledropdown	
 														
-														else if(temp_cell.id == 'ftdate'){
-															var child_node_id  = temp_cell.children[0].id;	
-															data.push(GET_E_VALUE(child_node_id)); 	
-														}
-														
-														else if(temp_cell.id == 'ftindex'){
-														
-														}
-														else{
-															var child_node_id =temp_cell.children[0].id;
-															data.push(GET_E_VALUE(child_node_id)); 
+														else if(temp_cell.dataset.ftType == 'ftdate'){
+															data.push(GET_E_VALUE(eid)); 	
+														}else if(temp_cell.dataset.ftType=='fttext'){
+															data.push(GET_E_VALUE(eid)); 
 														} //else other data						
 														
 														
@@ -1638,16 +1634,9 @@
 												//alert(data.length);
 												if(data.length>0){
 												get_data.push(data);}
-														
-												
 											} 
 											
-											
-											
 											E_V_PASS('X'+field_id,JSON.stringify(get_data));
-											
-											
-											
 											
 										} //function
 									
@@ -2166,13 +2155,13 @@
 		 	function getfibenisTableData(ele,field_id,is_route_point,route_url) {
 			
 				//alert(ele+'------'+field_id,is_route_point,route_url)
-				
-				var table= document.getElementById("fibenis_table"+field_id);
-				
+											
+				var table= document.getElementById("fibenis_table"+field_id);				
 				var tbody = table.getElementsByTagName("tbody")[0];				
 				
 				var row_count = tbody.rows.length;
-				
+				var eid ='';
+				var eid_hidden ='';
 				
 				//alert(row_count);
 				
@@ -2190,38 +2179,16 @@
 							
 							var temp_cell = tbody.rows[row_count_i].cells[col_i];
 							
-							if(temp_cell.id == 'ftautocomplete'){
+							eid		   = temp_cell.dataset.eid;
+							eid_hidden = temp_cell.dataset.eid+'_hidden';
+							
+							if(temp_cell.dataset.ftType == 'ftautocomplete'){
 								
-								//alert(temp_cell.children.length);
-								if(temp_cell.children.length == 4){
-									 var child_node_id =temp_cell.children[3].id;
-									// if(GET_E_VALUE(child_node_id)){
-									// data.push(GET_E_VALUE(child_node_id)); //}
-									data.push(GET_E_VALUE(child_node_id)); 
-									//temp_data = GET_E_VALUE(child_node_id);
-								}
-								
-								else if(temp_cell.children.length == 3){
-								
-									var child_node_id =temp_cell.children[2].id;
-									// if(GET_E_VALUE(child_node_id)){
-									//data.push(GET_E_VALUE(child_node_id));//} 
-									//temp_data = GET_E_VALUE(child_node_id);
-									data.push(GET_E_VALUE(child_node_id)); 
-								}
-								else{							
-									
-									var child_node_id =temp_cell.children[1].id;
-									// if(GET_E_VALUE(child_node_id)){
-									//data.push(GET_E_VALUE(child_node_id));// }
-									//temp_data = GET_E_VALUE(child_node_id);
-									data.push(GET_E_VALUE(child_node_id)); 
-								}
-								
+								data.push(GET_E_VALUE(eid_hidden)); 
 								
 							} //ft complete
 							
-							else if(temp_cell.id == 'ftdropdown'){	
+							else if(temp_cell.dataset.ftType == 'ftdropdown'){	
 								
 								var outer_parent  = temp_cell.children[0];		
 								
@@ -2245,7 +2212,7 @@
 							}// ftdropdown
 							
 								
-							else if(temp_cell.id == 'ftMultipledropdown'){
+							else if(temp_cell.dataset.ftType == 'ftMultipledropdown'){
 									
 								var outer_parent  = temp_cell.children[0];	
 									
@@ -2266,17 +2233,10 @@
 									
 							}//ftMultipledropdown	
 							
-							else if(temp_cell.id == 'ftdate'){
-								var child_node_id  = temp_cell.children[0].id;	
-								data.push(GET_E_VALUE(child_node_id)); 	
-							}
-							
-							else if(temp_cell.id == 'ftindex'){
-							
-							}
-							else{
-								var child_node_id =temp_cell.children[0].id;
-								data.push(GET_E_VALUE(child_node_id)); 
+							else if(temp_cell.dataset.ftType == 'ftdate'){
+								data.push(GET_E_VALUE(eid)); 	
+							}else if(temp_cell.dataset.ftType=='fttext'){
+								data.push(GET_E_VALUE(eid)); 
 							} //else other data						
 							
 							
@@ -2288,23 +2248,11 @@
 					
 				} 
 				
-				
-				
-					E_V_PASS('X'+field_id,JSON.stringify(get_data));
+				E_V_PASS('X'+field_id,JSON.stringify(get_data));
 				
 				
 				if(is_route_point){
 
-								
-
-					/*var ajxrqst = new ajax();
-					
-					var req = '&field=detail&data='+JSON.stringify(get_data);
-					
-					//alert(req);
-					ajxrqst.set_request('router.php?series=a&action=test&token=FT_TEST&FTUPDATE=1212&key=1',req);
-					
-					var new_data = ajxrqst.send_get(ft_update_response);*/
 					
 					var ajxrqst = new ajax();
 					

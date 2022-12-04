@@ -1,0 +1,234 @@
+<TMPL_LOOP SHOW_DATA_INFO>	
+			  
+			   
+				<TMPL_IF PLUGIN_KEY>
+				
+			  
+					<TMPL_IF fibenistable_info>
+			  				 
+							E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
+							
+							var key_id = <TMPL_VAR plugin_key>;
+														
+							<TMPL_IF VALUE>
+							
+							var fibenistableData= JSON.parse(decodeURI('<TMPL_VAR VALUE>'));
+							
+							var table= document.getElementById("fibenis_table<TMPL_VAR plugin_key>");
+							
+							var tbody = table.getElementsByTagName("tbody")[0];				
+					       
+						        var rowCount = tbody.rows.length;
+							 
+							var tempinsRow  =Number(rowCount)-1;
+							//index_
+							for(row_i = rowCount+1; row_i<=fibenistableData.length;  row_i++){
+								    
+								        // alert(row_i); 
+									var tempinsRow = tempinsRow+1;	
+									 
+									var row = tbody.insertRow(tempinsRow);
+								       
+									var colCount = tbody.rows[0].cells.length;
+								       
+									for(var col_i =0; col_i<colCount; col_i++) {
+								       // alert(col_i);
+										var temp_cell = tbody.rows[0].cells[col_i];
+								
+										var newcell	= row.insertCell(col_i);
+										 
+										newcell.id  = temp_cell.id ;
+										
+										//alert(newcell.id);
+										if(newcell.id == 'ftindex'){
+											
+											newcell.innerHTML = row_i;
+											
+										}
+										else{
+										
+											var temp_row =  	 tbody.rows[0].cells[col_i].innerHTML;
+										
+											newcell.innerHTML = temp_row.replace(/(1\_ft)/g,(row_i)+'_ft');
+										 }
+										 	
+								       
+								        }
+									
+								        E_V_PASS('ft_last_row_no', row_i);
+										       
+							        }
+							       
+						      // E_H_PASS('index_'+row_i,'123');
+							   
+							
+							var fibenTableRequest = [];
+							for(row_i = 0; row_i<fibenistableData.length;  row_i++){
+								    
+									   
+								       <TMPL_LOOP fibenistable_info>
+								       
+										       var row_field = row_i+1;
+										      
+										       var col_field = '<TMPL_VAR __COUNTER__>';
+										       
+											<TMPL_IF is_autocomplete>	
+											 
+											       var query_id = fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1];
+											      
+											       if(query_id){
+												   
+												    var temp_key = `${row_field}_ft_${col_field}_${key_id}`;
+													
+													f_series.ajax.set_request('<TMPL_VAR get_data_url>',`&prime=${query_id}&service=fetch`);
+													f_series.ajax.send_get_addon(function(res,ele_id){
+																					var lv = JSON.parse(res).pop();
+																					E_V_PASS(ele_id,lv.name); 
+																					E_V_PASS(ele_id+'_hidden',lv.id); 
+																				},temp_key);
+												}
+												else{
+													  E_V_PASS(temp_key,''); 
+													  E_V_PASS(temp_key+'_hidden',''); 
+												
+												}
+											   </TMPL_IF> 
+												
+												<TMPL_IF is_multiple_select>   												  	
+														M_E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id,fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]);
+														E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id+'_hiden',fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]); 
+												<TMPL_ELSE>
+													
+												
+												  E_V_PASS(row_field+'_ft_'+col_field+'_'+key_id,fibenistableData[row_i][<TMPL_VAR __COUNTER__>-1]); 
+											 </TMPL_IF>
+											
+										       
+								       </TMPL_LOOP>
+									   
+									  // E_H_PASS('index_'+row_i,'123');
+								       
+						       }
+						       
+						       </TMPL_IF>
+						       
+						<TMPL_ELSE>
+						
+						        E_V_PASS('<TMPL_VAR ID>',decodeURI('<TMPL_VAR VALUE>'));
+					 
+							var data<TMPL_VAR plugin_key>='';
+							
+							<TMPL_IF VALUE>
+								data<TMPL_VAR plugin_key> =  $.parseJSON(decodeURI('<TMPL_VAR VALUE>'));
+							       
+								$container<TMPL_VAR plugin_key>.handsontable('loadData', data<TMPL_VAR plugin_key>); 
+						       </TMPL_IF>
+						
+						</TMPL_IF>
+				
+				<TMPL_ELSE>	 
+						<TMPL_IF auto_type>
+						    							
+							//var ajxrqst = new ajax();
+						
+							
+							f_series.ajax.set_request('<TMPL_VAR auto_remote_link>','&prime=<TMPL_VAR VALUE>&service=fetch');
+							
+							f_series.ajax.send_get(function(res){
+										var lv = JSON.parse(res).pop();
+										E_V_PASS('<TMPL_VAR ID>',lv.name);
+										E_V_PASS('<TMPL_VAR ID>_hidden',lv.id);
+									});
+									
+									
+							
+						</TMPL_IF>
+						
+						// other than CK-editor
+						
+						if(typeof(ckeditor_temp['<TMPL_VAR ID>'])=='object'){		
+						
+							ckeditor_temp['<TMPL_VAR ID>'].setData('<TMPL_VAR VALUE>');
+							E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+						
+						}else{
+								
+							
+							
+							if(input_temp.range['<TMPL_VAR ID>']==1){							
+							
+								init_range('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+							
+							}else if(input_temp.toggle['<TMPL_VAR ID>']==1){
+							
+								if(Number('<TMPL_VAR VALUE>')==1){
+									document.getElementsByName('<TMPL_VAR ID>')[0].checked=true;
+								}else{
+									document.getElementsByName('<TMPL_VAR ID>')[0].checked=false;
+								}
+								
+								toggle_action(document.getElementsByName('<TMPL_VAR ID>')[0]);
+							
+							}else if((input_temp.date['<TMPL_VAR ID>']==1) ||
+								 (input_temp.date['<TMPL_VAR ID>_SHOW']==1)){								
+								
+								if( (String('<TMPL_VAR VALUE>').length>0) &&
+								    (String('<TMPL_VAR VALUE>').indexOf('0000')==-1)){
+									
+									E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+								}								
+								
+							}else if(input_temp.code_editor['<TMPL_VAR ID>']==1){
+								
+								input_temp.code_editor['<TMPL_VAR ID>_obj'].getDoc().setValue('<TMPL_VAR VALUE>');
+								
+							}else if(input_temp.option['<TMPL_VAR ID>']==1){
+																								
+								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+								if ( (ELEMENT('<TMPL_VAR ID>').onchange!=null) &&
+								     (ELEMENT('<TMPL_VAR ID>').dataset.updatePrefillOff!=1)
+								){
+									$("#<TMPL_VAR ID>").trigger( "onchange");
+								}
+							
+							}else if(input_temp.check_box['<TMPL_VAR ID>']!=undefined){
+																						
+								f_series.setCheckboxRadioValue(input_temp.check_box['<TMPL_VAR ID>'],'<TMPL_VAR VALUE>');
+								
+								aggregate_checkbox(G.$('<TMPL_VAR ID>_1'));
+
+							}else if(input_temp.radio['<TMPL_VAR ID>']!=undefined){
+																						
+									f_series.setCheckboxRadioValue(input_temp.radio['<TMPL_VAR ID>'],'<TMPL_VAR VALUE>');
+						
+							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-multiple'){							
+								//alert(ELEMENT('<TMPL_VAR ID>').dataset.inputType+'=='+'<TMPL_VAR VALUE>');
+								select_multiple_index_value('<TMPL_VAR ID>_TEMP','<TMPL_VAR VALUE>');
+								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+								if ( (ELEMENT('<TMPL_VAR ID>').onchange!=null) &&
+								     (ELEMENT('<TMPL_VAR ID>').dataset.updatePrefillOff!=1)
+								){
+									$("#<TMPL_VAR ID>").trigger( "onchange");
+								}
+							}else if (ELEMENT('<TMPL_VAR ID>').dataset.inputType=='select-left-right'){							
+								
+								select_option_transfer_by_value(ELEMENT('<TMPL_VAR ID>_LEFT'),
+											 ELEMENT('<TMPL_VAR ID>_RIGHT'),
+											 '<TMPL_VAR VALUE>');
+								
+								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+							}else{								
+								
+								E_V_PASS('<TMPL_VAR ID>','<TMPL_VAR VALUE>');
+								
+							} // end
+						
+						} // end
+					 
+				</TMPL_IF>
+			   
+			</TMPL_LOOP>
