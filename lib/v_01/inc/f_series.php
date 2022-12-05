@@ -1655,91 +1655,20 @@
 						if(@$value['is_plugin']==1){						       
 								 $is_plugin['X'.$key] =  $key ;  //$value['is_plugin'];								       
 						}
-						if(@$value['is_fibenistable']==1){						       
-								
+						
+						if(@$value['is_fibenistable']==1){	
 								$is_plugin['X'.$key] =  $key ;
-								
-								if(@$value['is_fibenistable']){
-								
-										$fibenistable_info['X'.$key] = [];
-									
-										$COUNTER = 0;
-									
-									
-										$lv['allow']['pattern'] = array( 'd'=> 'is_integer',
-												 'w'=> 'is_atoz',
-												 'x'=> 'is_atoz_1to9_default' 
-												);		
-											
-										foreach($value['colHeaders'] as $colkey=>$colvalue){
-										
-												$col_data = $COUNTER;
-												
-												
-												$fibenistable_temp = array();
-												//$fibenistable_temp['field_id'] = $key;
-												//$fibenistable_temp['column']      =  $colvalue['column'];
-												
-												#echo $fibenistable_temp['column'] .'---<br>';
-												//$fibenistable_temp['is_text']     =  (@$colvalue['type']== 'text')?1:0;
-												
-												//$fibenistable_temp['is_dropdown'] =  (@$colvalue['type']== 'dropDown')?1:0;
-												$fibenistable_temp['is_multiple_select']  =  (@$colvalue['type']== 'multiple_select')?1:0;
-												
-												#mplate $fibenistable_temp['dropdown_data']      = @$colvalue['data'];
-												$fibenistable_temp['is_autocomplete']  =  (@$colvalue['type']== 'autocomplete')?1:0;
-												
-														
-												if(@$colvalue['allow']){
-														$lv['allow_matches']=null;
-														preg_match('/([a-zA-Z]){1}(\d+)((\[)(.*)(\]))*/i',
-														           $colvalue['allow'],
-														           $lv['allow_matches']);
-														
-														if(in_array(@$lv['allow_matches'][1],
-																    array_keys($lv['allow']['pattern'])
-																    )
-															){
-															
-																	/* // set match pattern
-																	$fibenistable_temp[ $lv['allow']['pattern'][ $lv['allow_matches'][1] ] ]  = 1;
-																	
-																	$fibenistable_temp['max_length'] = ($lv['allow_matches'][2])?$lv['allow_matches'][2]:'';
-																	
-																	$fibenistable_temp['special_in'] = (@$lv['allow_matches'][5])?@$lv['allow_matches'][5]:''; */
-															}	
-												}
-												
-												
-												if($fibenistable_temp['is_autocomplete']){
-														
-													$fibenistable_temp['get_data_url'] = @$colvalue['get_data_url'];
-													//$fibenistable_temp['s_field'] = @$colvalue['search_field'];
-													
-												}
-												
-												
-																						
-												array_push($fibenistable_info['X'.$key],$fibenistable_temp);
-										
-										}
-										
-										
-								}		
+								$fibenistable_info['X'.$key] = 1;
 						}		
 						
-						
-						# Filter out
-						
+						# Filter out						
 						if(@$value['filter_out']){
-							//echo "F".$key;	
-								
 							$is_filter_out['X'.$key] = $value['filter_out'];					
 						}
 						
 						
 						  
-				} // take read only
+					} // take read only
 				
 		        } # end
 		       

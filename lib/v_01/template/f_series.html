@@ -1353,7 +1353,13 @@
 										<tr> 
 											<TMPL_IF is_index> <td id="ftindex" data-ft-type="ftindex"><span id="index_<TMPL_VAR __counter__>"> <TMPL_VAR __COUNTER__><span></td> 
 											<TMPL_ELSE>
-												<td id="ftindex" data-ft-type="ftindex">&nbsp; </td>
+												<td id="ftindex" data-ft-type="ftindex">&nbsp; 
+													
+													<!-- col header ---->
+													<TMPL_IF is_first_row>
+														<input type='hidden' data-ft-type="ftindex"  id='ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'>												
+													</TMPL_IF>
+													</td>
 											</TMPL_IF>
 											<TMPL_LOOP  fibenistable_cell_info>
 											
@@ -1376,15 +1382,18 @@
 													<TMPL_IF MAX_LENGTH>
 														maxlength=<TMPL_VAR MAX_LENGTH>
 													</TMPL_IF>
-												/>
+													/>
 												
-												
+												<!-- col header ---->
+													<TMPL_IF is_first_row>
+														<input type='hidden' data-ft-type="fttext"  id='ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'>												
+													</TMPL_IF>	
 												
 												</td>
 												
 												</TMPL_IF>
 												<TMPL_IF is_dropdown>
-													<td id="ftdropdown" data-ft-type="ftdropdown" 
+													<td  data-ft-type="ftdropdown" 
 													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"
 													width="<TMPL_VAR WIDTH>">
 													
@@ -1393,13 +1402,16 @@
 															<TMPL_VAR select_data>
 													</select> 
 													
-														
+													<!-- col header ---->
+													<TMPL_IF is_first_row>
+														<input type='hidden' data-ft-type="ftdropdown"  id='ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'>												
+													</TMPL_IF>	
 																			
 													</td>
 												</TMPL_IF>
 												
 												<TMPL_IF is_multiple_select>
-													<td id="ftMultipledropdown" data-ft-type="ftMultipledropdown" 
+													<td  data-ft-type="ftMultipledropdown" 
 													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"													
 													width="<TMPL_VAR WIDTH>">
 													<select  name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  class="selectpicker" multiple="true" multiple data-done-button="true"  onchange="JavaScript:ft_selectbox_capture_selected_value(this);getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);"
@@ -1408,17 +1420,26 @@
 													  </select>
 													  
 													  <input type="hidden" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden"  name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" value="">
+													  
+													  <!-- col header ---->
+													<TMPL_IF is_first_row>
+														<input type='hidden' data-ft-type="ftMultipledropdown"  id='ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'>												
+													</TMPL_IF>
 													</td>
 												</TMPL_IF>	
 													
 												
 												<TMPL_IF is_date>
-													<td id="ftdate"  data-ft-type="ftdate" 
+													<td   data-ft-type="ftdate" 
 													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"
 													width="<TMPL_VAR WIDTH>">
 														
 														<input   type="date" data-date="" data-date-format="DD MMMM YYYY"   name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"     onchange="JavaScript:getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);<TMPL_IF CHANGE_ADDON><TMPL_VAR CHANGE_ADDON>;</TMPL_IF>" <TMPL_VAR input_html>  />
-												
+														
+														<!-- col header ---->
+													<TMPL_IF is_first_row>
+														<input type='hidden' data-ft-type="ftdate"  id='ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'>												
+													</TMPL_IF>
 													
 														</td>
 												</TMPL_IF>	
@@ -1427,7 +1448,7 @@
 												
 											   
 											    <TMPL_IF is_autocomplete>
-													<td id="ftautocomplete"  data-ft-type="ftautocomplete" 
+													<td   data-ft-type="ftautocomplete" 
 													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"
 													width="<TMPL_VAR WIDTH>">
 													
@@ -1437,11 +1458,11 @@
 											        name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" 
 													id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>_hidden" />
 												
-													 <!-- col header ---->
-											   <TMPL_IF is_first_row>
-													<input type='hidden' id='ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'
-													data-url='<TMPL_VAR get_data_url>'>												
-												</TMPL_IF>	
+													<!-- col header ---->
+													<TMPL_IF is_first_row>
+														<input type='hidden' data-ft-type="ftautocomplete"  id='ft_col_<TMPL_VAR col_counter>_<TMPL_VAR field_id>'
+														data-url='<TMPL_VAR get_data_url>'>												
+													</TMPL_IF>	
 												
 												</td>
 											   </TMPL_IF>
@@ -2287,7 +2308,7 @@
 				
 				var rowCount = tbody.rows.length;
 				
-				//alert(rowCount+'---------'+max_row);
+				alert(rowCount+'---------'+max_row);
 				
 				//if(max_row && rowCount )
 				
