@@ -144,25 +144,34 @@
 			lv.tempinsRow  =Number(lv.rowCount)-1;
 			
 			//index_
-			for(row_i =(lv.rowCount+1); row_i<=fibenistableData.length;row_i++){
+			for(var row_i =(lv.rowCount+1); row_i<=fibenistableData.length;row_i++){
 					
-				lv.tempinsRow = tempinsRow+1;						 
-				lv.row = tbody.insertRow(tempinsRow);
-				lv.colCount = tbody.rows[0].cells.length;
+				lv.tempinsRow = lv.tempinsRow+1;						 
+				lv.row = lv.tbody.insertRow(lv.tempinsRow);
+				
+				
+				lv.row
+				lv.colCount = lv.tbody.rows[0].cells.length;
 				
 				// col count	
-				for(var col_i =0; col_i<colCount; col_i++){
+				for(var col_i =0; col_i<lv.colCount; col_i++){
 				
 				   // alert(col_i);
-					lv.cell = tbody.rows[0].cells[col_i];				
-					lv.newCell	= row.insertCell(col_i);						 
-					lv.newCell.id  = lv.cell.id ;
-						
-					if(lv.newCell.id == 'ftindex'){
+					lv.cell = lv.tbody.rows[0].cells[col_i];				
+					lv.newCell	= lv.row.insertCell(col_i);	
+					lv.newCell.dataset.ftType  = lv.cell.dataset.ftType;
+					
+					if(lv.cell.dataset.ftType == 'ftindex'){
 						lv.newCell.innerHTML = row_i;
 					}else{
-						lv.tempRow =  	 tbody.rows[0].cells[col_i].innerHTML;
-						lv.newcell.innerHTML = lv.tempRow.replace(/(1\_ft)/g,(row_i)+'_ft');
+						lv.temp_cell_id = lv.cell.dataset.eid;
+						
+						console.log('--CellID'+lv.temp_cell_id);
+						
+						lv.newCell.dataset.eid  = lv.temp_cell_id.replace(/(1\_ft)/g,(row_i)+'_ft');
+						
+						lv.tempRow =  	 lv.tbody.rows[0].cells[col_i].innerHTML;
+						lv.newCell.innerHTML = lv.tempRow.replace(/(1\_ft)/g,(row_i)+'_ft')
 					}  
 				} // each column
 					

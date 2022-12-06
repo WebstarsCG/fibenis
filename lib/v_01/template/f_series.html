@@ -1397,7 +1397,7 @@
 													data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"
 													width="<TMPL_VAR WIDTH>">
 													
-													 <select   onchange="JavaScript:<TMPL_IF KEY_UP_ADDON><TMPL_VAR KEY_UP_ADDON>;</TMPL_IF>getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" class="selectpicker"   data-width="100%" data-container="body" <TMPL_VAR input_html> >
+													 <select   onchange="JavaScript:<TMPL_IF KEY_UP_ADDON><TMPL_VAR KEY_UP_ADDON>;</TMPL_IF>getfibenisTableData(this,<TMPL_VAR field_id>);<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" data-container="body" <TMPL_VAR input_html> >
 													 		<TMPL_IF is_default_value> <option value="0"> Select</option></TMPL_IF>
 															<TMPL_VAR select_data>
 													</select> 
@@ -1559,11 +1559,18 @@
 													}
 												}
 												
-										}
+										} // end of load
 										
-										
+										// get 
 										function getfibenisTableData(field_id) {
-			
+											var temp = get_fibenis_table_data_engine(field_id);
+											E_V_PASS('X'+field_id,JSON.stringify(temp));
+											
+										} //function
+										
+										// fiben table engine
+										function get_fibenis_table_data_engine(field_id){
+										
 											//alert(ele+'------'+field_id,is_route_point,route_url)
 											
 											var table= document.getElementById("fibenis_table"+field_id);
@@ -1591,7 +1598,7 @@
 														var temp_cell = tbody.rows[row_count_i].cells[col_i];
 														
 														eid		   = temp_cell.dataset.eid;
-														eid_hidden = temp_cell.dataset.eid+'_hidden';
+														eid_hidden = eid+'_hidden';
 														
 														if(temp_cell.dataset.ftType == 'ftautocomplete'){
 															
@@ -1601,14 +1608,16 @@
 														
 														else if(temp_cell.dataset.ftType == 'ftdropdown'){	
 															
-															var outer_parent  = temp_cell.children[0];		
+															data.push(GET_E_VALUE(eid));
+															
+															/*(var outer_parent  = temp_cell.children[0];		
 															
 															if(outer_parent.children.length==2){
 																var child_node_id = outer_parent.children[1].id;
 																 //if(GET_E_VALUE(child_node_id)){								
 																//data.push(GET_E_VALUE(child_node_id));	//}
 																//temp_data = GET_E_VALUE(child_node_id);
-																data.push(GET_E_VALUE(child_node_id)); 
+																data.push(GET_E_VALUE(eid)); 
 															}	
 															
 															if(outer_parent.children.length==3){
@@ -1617,7 +1626,7 @@
 																//data.push(GET_E_VALUE(child_node_id));	//}
 																//temp_data = GET_E_VALUE(child_node_id);
 																data.push(GET_E_VALUE(child_node_id)); 
-															}
+															}*/
 															
 																						
 														}// ftdropdown
@@ -1625,7 +1634,8 @@
 															
 														else if(temp_cell.dataset.ftType == 'ftMultipledropdown'){
 																
-															var outer_parent  = temp_cell.children[0];	
+															data.push(GET_E_VALUE(eid));
+															/*var outer_parent  = temp_cell.children[0];	
 																
 															if(outer_parent.children.length==2){
 																var child_node_id = outer_parent.children[1].id;	
@@ -1640,7 +1650,7 @@
 																 //if(GET_E_VALUE(child_node_id)){								
 																data.push(GET_E_VALUE(child_node_id+'_hidden'));//}	
 															   //temp_data = GET_E_VALUE(child_node_id+'_hidden');
-															}
+															}*/
 																
 														}//ftMultipledropdown	
 														
@@ -1648,18 +1658,19 @@
 															data.push(GET_E_VALUE(eid)); 	
 														}else if(temp_cell.dataset.ftType=='fttext'){
 															data.push(GET_E_VALUE(eid)); 
-														} //else other data						
-														
-														
+														} //else other data		
 												}	
+												
 												//alert(data.length);
 												if(data.length>0){
-												get_data.push(data);}
-											} 
-											
-											E_V_PASS('X'+field_id,JSON.stringify(get_data));
-											
-										} //function
+													get_data.push(data);
+												} 
+												
+											} // end of row
+
+											return get_data;	
+										
+										} // end
 									
 									</script>
 							 		
@@ -2162,112 +2173,14 @@
 				
 			
 					
-	}
-			
-			
-			
-			
-			
-	
+	} // ac
 			
 			
 		 // get fibenis data
 		 
 		 	function getfibenisTableData(ele,field_id,is_route_point,route_url) {
 			
-				//alert(ele+'------'+field_id,is_route_point,route_url)
-											
-				var table= document.getElementById("fibenis_table"+field_id);				
-				var tbody = table.getElementsByTagName("tbody")[0];				
-				
-				var row_count = tbody.rows.length;
-				var eid ='';
-				var eid_hidden ='';
-				
-				//alert(row_count);
-				
-				var get_data = [];
-				
-				for(row_count_i=0;row_count_i<row_count; row_count_i++){
-					
-					var colCount = tbody.rows[row_count_i].cells.length;
-					
-					//alert(colCount);
-					var data = [];
-				
-					var temp_data = '';
-					for(var col_i =0; col_i<colCount; col_i++) {
-							
-							var temp_cell = tbody.rows[row_count_i].cells[col_i];
-							
-							eid		   = temp_cell.dataset.eid;
-							eid_hidden = temp_cell.dataset.eid+'_hidden';
-							
-							if(temp_cell.dataset.ftType == 'ftautocomplete'){
-								
-								data.push(GET_E_VALUE(eid_hidden)); 
-								
-							} //ft complete
-							
-							else if(temp_cell.dataset.ftType == 'ftdropdown'){	
-								
-								var outer_parent  = temp_cell.children[0];		
-								
-								if(outer_parent.children.length==2){
-									var child_node_id = outer_parent.children[1].id;
-									 //if(GET_E_VALUE(child_node_id)){								
-									//data.push(GET_E_VALUE(child_node_id));	//}
-									//temp_data = GET_E_VALUE(child_node_id);
-									data.push(GET_E_VALUE(child_node_id)); 
-								}	
-								
-								if(outer_parent.children.length==3){
-									var child_node_id = outer_parent.children[2].id;	
-									// if(GET_E_VALUE(child_node_id)){							
-									//data.push(GET_E_VALUE(child_node_id));	//}
-									//temp_data = GET_E_VALUE(child_node_id);
-									data.push(GET_E_VALUE(child_node_id)); 
-								}
-								
-															
-							}// ftdropdown
-							
-								
-							else if(temp_cell.dataset.ftType == 'ftMultipledropdown'){
-									
-								var outer_parent  = temp_cell.children[0];	
-									
-								if(outer_parent.children.length==2){
-									var child_node_id = outer_parent.children[1].id;	
-									 //if(GET_E_VALUE(child_node_id)){							
-									data.push(GET_E_VALUE(child_node_id+'_hidden'));//}	
-									
-									//temp_data = GET_E_VALUE(child_node_id+'_hidden');
-								}	
-								
-								if(outer_parent.children.length==3){
-									var child_node_id = outer_parent.children[2].id;
-									 //if(GET_E_VALUE(child_node_id)){								
-									data.push(GET_E_VALUE(child_node_id+'_hidden'));//}	
-								   //temp_data = GET_E_VALUE(child_node_id+'_hidden');
-								}
-									
-							}//ftMultipledropdown	
-							
-							else if(temp_cell.dataset.ftType == 'ftdate'){
-								data.push(GET_E_VALUE(eid)); 	
-							}else if(temp_cell.dataset.ftType=='fttext'){
-								data.push(GET_E_VALUE(eid)); 
-							} //else other data						
-							
-							
-					}	
-					//alert(data.length);
-					if(data.length>0){
-					get_data.push(data);}
-							
-					
-				} 
+				var get_data = get_fibenis_table_data_engine(field_id);
 				
 				E_V_PASS('X'+field_id,JSON.stringify(get_data));
 				
@@ -2330,76 +2243,79 @@
 			}
 		
 			
-			
+			// fibenis nextrow manipulation
 			function nextRowmanipulation(tbody,ele,field_id,rowCount,rowIndex ){
 			
-					   var row = tbody.insertRow(rowCount);
+				var lv = {};
+				var row = tbody.insertRow(rowCount);				
+				var colCount = tbody.rows[0].cells.length;
+				
+				for(var col_i =0; col_i<colCount; col_i++) {
+					
+					var temp_cell = tbody.rows[0].cells[col_i];
+					
+					//alert(temp_cell.id);
+					 
+					var newcell	= row.insertCell(col_i);
+					 
+					//newcell.id  = temp_cell.id ;
+					newcell.dataset.ftType = temp_cell.dataset.ftType;
+					
+					lv.next_row_count = (rowCount+1);
+					
+					if(temp_cell.dataset.ftType== 'ftindex'){
+						newcell.innerHTML = rowIndex;
+					}else{
 						
-						var colCount = tbody.rows[0].cells.length;
+						// eid
+						lv.temp_eid 		   = temp_cell.dataset.eid;
+						newcell.dataset.eid	   = lv.temp_eid.replace(/(1\_ft)/g,(rowCount+1)+'_ft');
+						newcell.width  		   = temp_cell.width;
 						
-						for(var col_i =0; col_i<colCount; col_i++) {
-							
-							var temp_cell = tbody.rows[0].cells[col_i];
-							
-							//alert(temp_cell.id);
-							 
-							var newcell	= row.insertCell(col_i);
-							 
-							newcell.id  = temp_cell.id ;
-							
-							var temp_row =  	 tbody.rows[0].cells[col_i].innerHTML;
-							
-							if(temp_cell.id == 'ftindex'){
-								newcell.innerHTML = rowIndex;
-							}
-							
-							
-							/*else if(temp_cell.id == 'ftMultipledropdown'){
-							
-							}*/
-							
-							else{
-								newcell.innerHTML = temp_row.replace(/(1\_ft)/g,(rowCount+1)+'_ft');
-								E_V_PASS((rowCount+1)+'_ft_'+(col_i+1)+'_'+field_id,'');
-								E_V_PASS((rowCount+1)+'_ft_'+(col_i+1)+'_'+field_id+'_hidden','');
-							
-							}
-						} //for each row 	
+						// innerhtml						
+						lv.temp_html		   = tbody.rows[0].cells[col_i].innerHTML;	
+
+						lv.parent_id 		   = '1_ft_'+(col_i)+'_'+field_id;		
+						lv.temp_id 			   = (lv.next_row_count)+'_ft_'+(col_i)+'_'+field_id;	
 						
-						E_V_PASS('ft_last_row_no'+field_id, rowCount+1);
+						// special case
+						if(temp_cell.dataset.ftType=='ftMultipledropdown'){
 						
-						
-			
-					    /*var row = tbody.insertRow(rowCount);
-						
-						var colCount = tbody.rows[0].cells.length;
-						
-						for(var col_i =0; col_i<colCount; col_i++) {
+							lv.mutiple_dropdown 			= document.createElement('SELECT');
+							lv.mutiple_dropdown.id		    = lv.temp_id;
+							lv.mutiple_dropdown.name	    = lv.temp_id;
+							lv.mutiple_dropdown.multiple    = true;
+							lv.mutiple_dropdown.innerHTML 	= G.$(lv.parent_id).innerHTML;
+							lv.mutiple_dropdown.className	= 'selectpicker';
 							
-							var temp_cell = tbody.rows[0].cells[col_i];
+							newcell.appendChild(lv.mutiple_dropdown);
 							
-							//alert(temp_cell.id);
-							 
-							var newcell	= row.insertCell(col_i);
-							 
-							newcell.id  = temp_cell.id ;
-							
-							var temp_row =  	 tbody.rows[0].cells[col_i].innerHTML;
-							
-							if(temp_cell.id == 'ftindex'){
-								newcell.innerHTML = rowIndex;
-							}
-							else{
-								newcell.innerHTML = temp_row.replace(/(1\_ft)/g,(rowCount+1)+'_ft');
-								E_V_PASS((rowCount+1)+'_ft_'+(col_i+1)+'_'+field_id,'');
-								E_V_PASS((rowCount+1)+'_ft_'+(col_i+1)+'_'+field_id+'_hidden','');
-							
-							}
-						} //for each row 	
+							$('.selectpicker').selectpicker('render');
 						
-						E_V_PASS('ft_last_row_no'+field_id, rowCount+1);
+							console.log(lv.parent_id+'---'+lv.temp_id);
 						
-						*/
+							/*lv.parent_element = document.getElementById(`${lv.parent_id}`);
+							lv.cloned_element = lv.parent_element.cloneNode(true);
+							lv.cloned_element.id =  lv.temp_id;
+							newcell.appendChild(lv.cloned_element);
+						    newcell.innerHTML.replace(/(1\_ft)/g,(rowCount+1)+'_ft');
+							$(`#${lv.temp_id}`).find('.bootstrap-select').remove();
+							$(`#${lv.temp_id}`).find('.bootstrap-select').replaceWith(function() { return $('select', this); });
+							M_E_V_PASS(lv.temp_id,'')*/
+							
+						}else{
+							newcell.innerHTML 	   = lv.temp_html.replace(/(1\_ft)/g,(lv.next_row_count)+'_ft');
+							E_V_PASS(lv.temp_id,'');
+							E_V_PASS(lv.temp_id+'_hidden','');
+						}
+						
+						
+					}
+					
+				} //for each row 	
+				
+				E_V_PASS('ft_last_row_no'+field_id, rowCount+1);
+						
 			} // end
 			
 		
