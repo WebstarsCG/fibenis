@@ -7,7 +7,7 @@
 	
 		$C;	       // content
 		
-		$MENU_OFF=0;   // menu_off
+		$MENU_OFF= @$_GET['menu_off'] ?? 0;   // menu_off
 		
 		$PAGE_CONTENT; // final content variable passes to main stream
 		
@@ -115,7 +115,7 @@
 				
 				# coach/engine/role url
 				 
-				$PV['url_coach_eng_role']=$COACH['domain_name'].'_'.$PAGE.'_'.$USER_ROLE;
+				$PV['url_coach_eng_role']=$COACH['domain_name'].'_'.$PAGE.'_'.$USER_ROLE.'_'.$MENU_OFF;
 								
 				# process series content	
 				
