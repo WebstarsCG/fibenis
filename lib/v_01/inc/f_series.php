@@ -201,10 +201,17 @@
 						
 						// message part
 						if($has_fields==0){			
-							echo $F_MESSAGE = 'block_fail:<b>Give atleast one mandatory field or one default column</b>';								
+							//echo $F_MESSAGE = 'block_fail:<b>Give atleast one mandatory field or one default column</b>';
+
+							$F_MESSAGE		= [ 'status' =>'pass',
+												'message'=>'Give atleast one mandatory field or one default column'
+												];							
 						}else{
 							if(@$F_SERIES['flat_message']){										
-									$F_MESSAGE = 'block_pass:'.$F_SERIES['flat_message'];
+									//$F_MESSAGE = 'block_pass:'.$F_SERIES['flat_message'];
+									$F_MESSAGE		= [ 'status'=>'pass',
+														'message'=>$F_SERIES['flat_message']
+														];
 							}else{
 									
 									$custom_message  = @$F_SERIES['message'];  	
@@ -215,10 +222,15 @@
 										$exe_message 	= $rdsql->exec_query($select_message,' ADD message Error!');										
 										$message_row  	= $rdsql->data_fetch_object($exe_message);										
 										$dip_message 	= $message_row ->message;										
-										$F_MESSAGE 		= 'block_pass:<b>'.$dip_message.'</b> Successfully Added.';
+										#$F_MESSAGE 		= 'block_pass:<b>'.$dip_message.'</b> Successfully Added.';
+										$F_MESSAGE		= ['status'=>'pass',
+														   'message'=>'<b>'.$dip_message.'</b> Successfully Added.'];
 									}
 									else if(isset($F_SERIES['prime_index'])){
-										$F_MESSAGE 		=  'block_pass:<b>'.@$_POST['X'.$F_SERIES['prime_index']].'</b> Successfully Added';
+										//$F_MESSAGE 		=  'block_pass:<b>'.@$_POST['X'.$F_SERIES['prime_index']].'</b> Successfully
+										//Added';
+										$F_MESSAGE		= ['status'=>'pass',
+														   'message'=>'<b>'.@$_POST['X'.$F_SERIES['prime_index']].'</b> Successfully Added.'];
 									}								
 							} //end
 						} // end
@@ -283,6 +295,11 @@
 						
 				} // end
 				
+				http_response_code(200);
+				header("content-type: application/ld+json"); 
+				echo json_encode($F_MESSAGE);
+				exit();
+				
 		} // end
 		
 		
@@ -330,7 +347,7 @@
 		
 		if(is_file($F_SERIES['temp']['cache_form'])){	
 			$F_SERIES['temp']['content_form']	=$G->getFileContent($F_SERIES['temp']['cache_form']);
-			echo 'cache';
+			
 		}else{
 		
 			$options 	= array("filename"=>$LIB_PATH."/template/f_series.html", "debug"=>0,"loop_context_vars"=>1);
@@ -505,10 +522,11 @@
 				$lv['last_divider_id']    = '';
 				$lv['is_divider_type']    = '';
 				$lv['has_sub_heading']    = 0;
-				$lv['form']               = ['has_code_editor'     =>0,
-							     'has_handsontable'    =>0,
-							     'has_textarea_editor' =>0							     
-							     ]; 
+				$lv['form']               = ['has_code_editor'    =>0,
+											'has_fibenis_grid'    =>0,
+											'has_handsontable'    =>0,
+											'has_textarea_editor' =>0							     
+											]; 
 				
 				$lv['type']['divider'] 	  = array('tab'=>1,'accordion'=>1);
 				
@@ -890,9 +908,10 @@
 						
 						elseif(@$value['is_fibenistable']){
 							
-								$temp['is_fibenistable']  	= 	@$value['is_fibenistable'];
+								$temp['is_fibenistable']  		= 	@$value['is_fibenistable'];
+								$lv['form']['has_fibenis_grid'] = 1;
 								
-								$temp['start_rows']        	=  	(@$value['default_rows_prop']['start_rows'])?(@$value['default_rows_prop']['start_rows']):3;
+								$temp['start_rows']        		=  	(@$value['default_rows_prop']['start_rows'])?(@$value['default_rows_prop']['start_rows']):3;
 								
 								$num_colum 			= 	count($value['colHeaders'])-1;
 								

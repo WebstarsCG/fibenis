@@ -30,7 +30,9 @@
 	
 	</TMPL_IF>
 	
-	<script src="<TMPL_VAR LIB_PATH>/js/f_series.grid.js?v=0.1"></script>
+	<TMPL_IF HAS_FIBENIS_GRID>	
+		<script src="<TMPL_VAR LIB_PATH>/js/f_series.grid.js?v=0.1"></script>
+	</TMPL_IF>
 
 	<TMPL_IF FORM_LAYOUT>
 		<link rel="stylesheet" href="<TMPL_VAR LIB_PATH>/css/<TMPL_VAR FORM_LAYOUT>.css">
@@ -98,13 +100,30 @@
 				}else{
 					
 					G.showLoader('Sending your request..');
-					return true;
-				
+					
+					const url = "?<TMPL_VAR F_SERIES>=<TMPL_VAR APP_KEY>";
+					fetch(url, {
+						method : "POST",
+						body: new FormData(document.getElementById("PUB_A")),
+						
+					}).then(
+						response => response.json() // .json(), etc.
+						// same as function(response) {return response.text();}
+					).then(
+						(html)=>{
+							ELEMENT('inpage_message').className=`block_${html.status}`;				    
+							fade_in_out('#inpage_message',5000,html.message);
+							G.hideLoader();
+						}
+					);
+					
+					document.getElementById("PUB_A").reset();
+					return false;				
 				}
 				
 			} // end
 			     
-		     } // validate end
+		 } // validate end
 	
 	          </TMPL_IF>	  
 	 
@@ -176,7 +195,7 @@
 		
 	</script>
 	
-	<div id="inpage_message">&nbsp;</div>
+	<div id="inpage_message"></div>
 	
 	<!--- header-->
 	 
@@ -1715,6 +1734,7 @@
 					<div class=value>
 					       
 						<input type="hidden"  id="UPDATE" name="UPDATE"  value = "<TMPL_VAR KEY_TEMPLATE_VAR>" >
+						<input type="hidden"  id="ADD" name="ADD"  value = "1" >
 					
 						<TMPL_LOOP ADDON_ACTIONS>
 							<TMPL_UNLESS IS_LEFT>
@@ -1734,7 +1754,7 @@
 								type="submit"
 							</TMPL_IF>
 							
-							id="ADD"    name="ADD"     class = "button_add" 
+							id="AXN"    name="AXN"     class = "button_add" 
 							
 							<TMPL_VAR UPDATE_TEMPLATE_VAR>
 							

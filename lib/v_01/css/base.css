@@ -30,44 +30,28 @@
 	
 	.block_pass,
 	.block_fail{				
-		background-position	: 10px 14px;
-		background-repeat	: no-repeat;				
-		color			: #b64c34;
-		display			: block;
-		padding-left		: 35px;
+		border-top		: 0px;
+		border-bottom-left-radius:10px;
+		border-bottom-right-radius:10px;		
+		color				: #b64c34;
+		display				: block;
+		font-size			: 14px;	
 		vertical-align		: middle;
-		z-index			: 1000 !important;
+		z-index				: 1000 !important;
 	}
 
-
 	.block_fail{		
-		background-color	: #FCF5F4;
-		background-image	: url(../images/icon/error.png);
-		border			: 2px solid #BA5957;
-		border-top		: 0px;
+		background-color: #FCF5F4;	
+		border			: 2px solid #BA5957;		
 		box-shadow		: 1px 1px 2px #cacaca;
 		color			: #b64c34;
-		font-family		: sans-serif;
-		font-size		: 14px;
-		font-weight		: bold;
-		padding			: 0px;
-		padding-left		: 35px;
-		padding-top		: 15px;
 	}
 	
 	.block_pass{		
 		background-color	: #f5f8f4;
-		background-image	: url(../images/icon/accept.png);
-		border			: 2px solid #a8c49c;
-		border-top		: 0px;
-		box-shadow		: 1px 1px 2px #E6EDE8;
-		color			: #568542;
-		font-family		: sans-serif;
-		font-size		: 14px;
-		font-weight		: bold;
-		padding			: 0px;
-		padding-left		: 35px;
-		padding-top		: 15px;
+		border				: 2px solid #a8c49c;
+		box-shadow			: 1px 1px 2px #E6EDE8;
+		color				: #568542;
 	}
 	
 	.bg_clr_black{background-color: rgba(0,0,0,0.5);}
@@ -654,7 +638,6 @@
 		color:white;
 	}
 
-
 	fieldset .value .checkbox_multistate:checked + label:before img{
 		width:95%;
 	}
@@ -747,11 +730,9 @@
 		display: -ms-flexbox;
 		display: -webkit-flex;
 		display: flex;
-	
 		-ms-flex-align: center;
 		-webkit-align-items: center;
 		-webkit-box-align: center;
-	
 		align-items: center;
 	}
 	
@@ -768,8 +749,7 @@
 		color		: #ffffff !important;
 	}
 	
-	.a_block a{		
-		
+	.a_block a{
 		border          : 1px solid #68429E !important; 
 		color		: #68429E !important;
 		cursor 		: pointer;
@@ -793,12 +773,9 @@
 		display		: none !important;
 	}
 	
-		
-	
 	#inpage_message{
 		display			: none;
-		padding-bottom	: 20px;
-		padding-top		: 10px;
+		padding			: 30px;
 		position		: fixed;
 		top				: 0;
 		z-index			: 10;
