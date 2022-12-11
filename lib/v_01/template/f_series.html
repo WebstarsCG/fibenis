@@ -107,8 +107,7 @@
 						body: new FormData(document.getElementById("PUB_A")),
 						
 					}).then(
-						response => response.json() // .json(), etc.
-						// same as function(response) {return response.text();}
+						response => response.json() // 
 					).then(
 						(html)=>{
 							ELEMENT('inpage_message').className=`block_${html.status}`;				    
@@ -117,7 +116,10 @@
 						}
 					);
 					
-					document.getElementById("PUB_A").reset();
+					if(G.$('primary_id').value.length==0){
+						document.getElementById("PUB_A").reset();
+					}
+					
 					return false;				
 				}
 				
