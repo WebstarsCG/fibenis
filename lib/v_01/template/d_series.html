@@ -48,7 +48,7 @@
 				<TMPL_IF LIST_ARRAY>			
 					<label>Search by</label>								
 					<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />					
-					<input type="button" onclick="JavaScript:filter_data();" value=" Go "class="button"/>					
+					<input type="button" onclick="JavaScript:d_series.setDeskAction('SR');filter_data();" value=" Go "class="button"/>					
 				<TMPL_ELSE>
 					<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />			
 				</TMPL_IF>	
@@ -72,7 +72,7 @@
 						
 							<TMPL_VAR field_name>
 							
-							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="custom_filter();"  <TMPL_VAR HTML>>
+							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="d_series.setDeskAction('FR');custom_filter();"  <TMPL_VAR HTML>>
 								
 								<TMPL_UNLESS NO_DEFAULT_OPTION>								
 									<option value=""><TMPL_VAR cus_default_label></option>
@@ -87,7 +87,7 @@
 						
 						<TMPL_VAR field_name>
 						
-							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="multiple_select_data('<TMPL_VAR field_id>');"    class="selectpicker"  <TMPL_VAR HTML>  multiple>
+							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="d_series.setDeskAction('FR');multiple_select_data('<TMPL_VAR field_id>');"    class="selectpicker"  <TMPL_VAR HTML>  multiple>
 								<TMPL_UNLESS NO_DEFAULT_OPTION>								
 									<!--- <option value="-1"><TMPL_VAR cus_default_label></option> -->
 								</TMPL_UNLESS>
@@ -134,7 +134,8 @@
 						 
 						 <span class="checkbox_wrapper"><input type="checkbox" id="is_check_date" name="is_check_date" value="1" /></span>
 						
-						<input class="button" type="button" id="go_date"  name="go_date" value="Go"  onclick="JavaScript:filter_data();" />
+						<input class="button" type="button" id="go_date"  name="go_date" value="Go"  
+						onclick="JavaScript:d_series.setDeskAction('DT');filter_data();" />
 						
 						
 				<TMPL_ELSE>
@@ -172,7 +173,7 @@
 					<select 
 						id       = "page" 
 						name     = "page" 
-						onchange = "JavaScript:filter_data();"  class="FI_50" title="Rows">
+						onchange = "JavaScript:d_series.neutralDeskAction();filter_data();"  class="FI_50" title="Rows">
 							
 						<TMPL_IF PAGER_OPTION>
 							<TMPL_VAR PAGER_OPTION>
@@ -305,138 +306,13 @@
 			</TMPL_IF>
 			
 			<tbody id='desk_data'>
-				<TMPL_LOOP DATA_INFO>
-					
-					
-					<tr     id="RX_<TMPL_VAR __counter__>" class="<TMPL_IF __odd__>row_odd<TMPL_ELSE>row_even</TMPL_IF>"
-						onMouseOver="JavaScript:d_series.row_in(this);"
-						onMouseOut ="JavaScript:d_series.row_out(this,<TMPL_VAR NAME=__counter__>);"											     
-						>
-						
-						<TMPL_IF HIDE_SNO>
-							<td class="align_RM">							
-								 <TMPL_VAR record_counter>					
-							</td>
-						</TMPL_IF>
-						
-						
-						<TMPL_IF able_del>
-							<td class="align_CM">						
-								<input type="checkbox" class="no_border"   <TMPL_IF is_row_able_del>disabled="disabled"</TMPL_IF>  id="c<TMPL_VAR __counter__>"   name="c<TMPL_VAR __counter__>" value="<TMPL_VAR key_id>"  />													
-							</td>
-						
-						</TMPL_IF>						
-						
-						
-						<input type="hidden" id="d<TMPL_VAR __COUNTER__>" name="d<TMPL_VAR __COUNTER__>" value='<TMPL_VAR del_name>' />
-						
-						<!--- hidden--->
-						<input type="hidden" id="key_id_<TMPL_VAR __COUNTER__>" name="key_id_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR key_id>"/>
-						
-						<TMPL_IF hidden_data>						
-							<TMPL_LOOP hidden_data>
-								<input type="hidden" id="HX_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>" name="HX_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR h_value>"/>	
-							</TMPL_LOOP>	
-						</TMPL_IF>
-						
-						<TMPL_LOOP COL_RESULT>
-							
-							<TMPL_UNLESS IS_HIDE>
-							
-							<td id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"  <TMPL_VAR TD_ATTR> >
-							
-								<TMPL_IF is_js>									
-									<script language="JavaScript" type="text/javascript"><TMPL_VAR JS_CALL>('<TMPL_VAR VALUE>');</script>																	
-								<TMPL_ELSE>									
-								     <TMPL_VAR VALUE>								     
-								</TMPL_IF>								
-							</td>
-							
-							</TMPL_UNLESS>
-							
-						</TMPL_LOOP>
-												
-					
-						<TMPL_IF action_type>
-							<td class="align_RM no_wrap">
-							<TMPL_IF custom_action>
-									<TMPL_LOOP custom_action>
-										<a <TMPL_VAR fun_name>
-										     <TMPL_IF html><TMPL_VAR html></TMPL_IF>
-										>
-										     <TMPL_VAR action_name>
-										</a> 
-										
-										<input type="hidden" id="row_index" name="row_index" value="<TMPL_VAR row_count>">
-									
-									</TMPL_LOOP>
-							</TMPL_IF> 
-						
-								
-									<!---For Action Check<TMPL_IF IS_ACTION></TMPL_IF>--->
-									<TMPL_IF is_edit><a  class="ficon <TMPL_IF IS_AVOID_EDIT>hide</TMPL_IF>" 
-																																	<TMPL_IF ACTION_NARROW_DOWN>
-						href=JavaScript:d_series.call_nd({"id":"<TMPL_VAR key_id>","title":"Edit","src":"?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"})
-																																	<TMPL_ELSE>
-					href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"
-																																	</TMPL_IF>><i class="fa fa-edit"></i>Edit</a>
-									</TMPL_IF>
-							
-								
-							<TMPL_IF is_view><a class="icon pdf" href="JavaScript:d_series_view(<TMPL_VAR __counter__>);"> View</a></TMPL_IF>
-							    
-							<TMPL_IF is_add_more_info><a href="?f_series=<TMPL_VAR app_key>&key=<TMPL_VAR key_id>">Add More Info</a></TMPL_IF>
-							
-						
-							<TMPL_LOOP view>
-								<a class="icon pdf" href="<TMPL_VAR script>(<TMPL_VAR __counter__>);"></a>
-							</TMPL_LOOP> 
-				
-						</td>
-						</TMPL_IF>
-						
-						<input type="hidden" id="row_idx_<TMPL_VAR key_id>" name="row_idx_<TMPL_VAR key_id>" value="<TMPL_VAR __COUNTER__>">
-						
-					</tr>
-					
-					
-					<input type="hidden" id="id_<TMPL_VAR __COUNTER__>" name="id_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR key_id>">
-					
-					
-					
-					<TMPL_IF __LAST__>
-						<input type="hidden" name="COUNTER" id="COUNTER" value="<TMPL_VAR __COUNTER__>"  />
-						
-						<input type="hidden" name="D_COUNTER" id="D_COUNTER" value="<TMPL_VAR __COUNTER__>"  />
-					</TMPL_IF>
-					
-					
-					
-					<TMPL_IF is_narrow_down>		
-						<tr class="row_even" style="display:none;" id="nd_wall_<TMPL_VAR key_id>"  ><!--<TMPL_VAR col_count>-->
-							
-								
-								<td  id="nd_ground_<TMPL_VAR key_id>"  class="align_RM" colspan="<TMPL_VAR col_count>" style="padding:0px !important"></td>
-								
-								
-						</tr>	
-					</TMPL_IF>
-				
-				
-				</TMPL_LOOP>
-				
-				<TMPL_UNLESS DATA_INFO>
-					<tr>
-						<td  class="align_CM clr_gray_a txt_size_11 normal"></td>
-					</tr>
-				</TMPL_UNLESS>
-				
-				</tbody>
+				<TMPL_VAR DESK_CONTENT>				
+			</tbody>
 			</table>
 				<TMPL_UNLESS DATA_INFO>
 					<script>
-						ELEMENT("primary_table").rows[1].cells[0].colSpan=Number(ELEMENT("primary_table").rows[0].children.length);
-						ELEMENT("primary_table").rows[1].cells[0].innerHTML='<TMPL_IF NO_DATA><TMPL_VAR NO_DATA><TMPL_ELSE>--- No Data ---</TMPL_IF>';
+						/*ELEMENT("primary_table").rows[1].cells[0].colSpan=Number(ELEMENT("primary_table").rows[0].children.length);
+						ELEMENT("primary_table").rows[1].cells[0].innerHTML='<TMPL_IF NO_DATA><TMPL_VAR NO_DATA><TMPL_ELSE>--- No Data ---</TMPL_IF>';*/
 					</script>		
 				</TMPL_UNLESS>
 			
@@ -445,7 +321,7 @@
 					<tr>
 						<td align="left">
 							 <div class="box_filter a_block box_left">
-								<TMPL_IF DATA_INFO>
+								<TMPL_IF DESK_CONTENT>
 									<TMPL_IF DEL_BUTTON>
 										<button type="button" class="btn btn-danger"   value='Delete' onclick="d_series.check_delete();" >Delete</button>
 										<input type="hidden" id="DEL" name="DEL" value=0>
@@ -454,7 +330,7 @@
 						
 						
 								<TMPL_IF cus_bulk_action>
-							<TMPL_LOOP cus_bulk_action>
+								<TMPL_LOOP cus_bulk_action>
 								<TMPL_IF is_bulk_button>
 									&nbsp;
 									<button type="button" class="btn btn-primary" 
@@ -685,6 +561,22 @@
 		
 			$(function() {
 			
+				  				//console.log('JS Calls--'+js_calls);	
+					var JS_CAll =new Object({'show_user_info':show_user_info,
+											'd_series.inline_on_off':d_series.inline_on_off,
+											'd_series.set_nd':d_series.set_nd,
+											'boolean_display':boolean_display,
+											'show_user_info_2l':show_user_info_2l});
+
+					const matches = document.querySelectorAll("td[data-js]");
+					for(var element of matches){
+
+						console.log('---'+element.dataset.js);	
+
+						element.innerHTML = JS_CAll[element.dataset.js](element.dataset.p);
+					}
+				  
+				  
 				  $("#s_date").datepicker({
 										firstDay: 1,
 										dateFormat:'dd-mm-yy',
@@ -796,12 +688,9 @@
 								},//rendermenu
 								
 							//Menu Resize:
-                                                                _resizeMenu: function(){                                                                        
-                                                                        this.menu.element.outerWidth(270);                                                                                                                                                             
+                                                                _resizeMenu: function(){                                         
+                                                                        this.menu.element.outerWidth(270);
                                                                 },
-                                                                    
-								    
-								    
 						});//widget
 		               
 			}//end auto data
@@ -810,8 +699,13 @@
 			function pager_act(start_page,current_page){
 			
 				E_V_PASS('start_page',start_page.dataset.pager);	
-				G.$('pager_action').dataset.pager=start_page.dataset.pager;
-				filter_data();
+				d_series.neutralDeskAction();
+				
+				if( (Number(start_page.dataset.pager) >= Number(G.$('pager_start').dataset.pager)) && 
+				    (Number(start_page.dataset.pager) <= Number(G.$('pager_last').dataset.pager))){
+					G.$('pager_action').dataset.pager=start_page.dataset.pager;
+					filter_data();
+				}
 			
 			} //end
 
@@ -828,16 +722,20 @@
 				$lv['pager_has_next']	= ($lv['pager_total'] > $lv['pager_current'])?1:0;
 
 				console.log(JSON.stringify($lv));
+				
+				if($lv['pager_current']<=$lv['pager_total']){
 
-				for(const element of ['pager_current','pager_total'] ){
-					console.log(element+'--'+G.$(element).dataset.pager);
-					G.$(element).dataset.pager=$lv[element];					
-					G.$(element).innerHTML = $lv[element];
-				}	
+					for(const element of ['pager_current','pager_total'] ){
+						console.log(element+'--'+G.$(element).dataset.pager);
+						G.$(element).dataset.pager=$lv[element];					
+						G.$(element).innerHTML = $lv[element];
+					}	
 
-				for(const element of ['pager_prev','pager_next','pager_last'] ){
-					G.$(element).dataset.pager=$lv[element];					
-				}	
+					for(const element of ['pager_prev','pager_next','pager_last'] ){
+						G.$(element).dataset.pager=$lv[element];					
+					}	
+				
+				}
 
 				return $lv;
 					
@@ -845,9 +743,6 @@
 			
 			
 			function show_all(param){
-					
-					
-					
 					document.location.href='?<TMPL_VAR PAGE_ID>=<TMPL_VAR app_key>&PASS_ID=<TMPL_VAR PASS_ID>&show=1';
 			}
 			
@@ -935,8 +830,6 @@
 							       document.getElementById('default_addon'),
 							       document.getElementById('filter_off_id'),
 							       document.getElementById('filter_off_id')
-							       
-							       
 				       ); 
 							
 				}	

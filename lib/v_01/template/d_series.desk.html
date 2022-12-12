@@ -39,13 +39,11 @@
             <TMPL_UNLESS IS_HIDE>
             
             <td id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"  <TMPL_VAR TD_ATTR> <TMPL_IF JS_CALL> data-js='<TMPL_VAR JS_CALL>' data-p='<TMPL_VAR VALUE></TMPL_IF>'
-                 >
-            
-                <TMPL_IF is_js>									
-                    <script language="JavaScript">js_calls.push({'f':'<TMPL_VAR JS_CALL>','p':'<TMPL_VAR VALUE>'});</script>                    
-                <TMPL_ELSE>									
-                     <TMPL_VAR VALUE>								     
-                </TMPL_IF>								
+                 >								
+					<TMPL_UNLESS JS_CALL> 
+						<TMPL_VAR VALUE>								     
+					</TMPL_UNLESS>
+               							
             </td>
             
             </TMPL_UNLESS>

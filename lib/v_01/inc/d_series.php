@@ -444,20 +444,22 @@
 		}
 		
 		// page action
-		if(@$_GET['page_axn']){
-			
-			// build desk
-			$options 	= array("filename"=>"$LIB_PATH/template/d_series.desk.html", "debug"=>0,"loop_context_vars"=>1);		
-			$TBL 	 	= new Template($options);				
+		// build desk
+		$options 	= array("filename"=>"$LIB_PATH/template/d_series.desk.html", "debug"=>0,"loop_context_vars"=>1);		
+		$TBL 	 	= new Template($options);				
 
-			// get desk info
-			$DESK = build_desk();
-			$TBL->AddParam('DATA_INFO',$DESK['DATA_INFO']);
-			$PV['DESK_CONTENT'] = $TBL->Output();
+		// get desk info
+		$DESK = build_desk();
+		$TBL->AddParam('DATA_INFO',$DESK['DATA_INFO']);
+		$PV['DESK_CONTENT'] = $TBL->Output();
+		
+		if(@$_GET['page_axn']){
 			echo $PV['DESK_CONTENT'];
 			exit();
 			
-		} // end
+		}else{
+			
+		}
 		
 		
 		if(@$_POST['export_data']){
@@ -629,8 +631,8 @@
 		
 		$T->AddParam('able_del',@$D_SERIES['del_permission']['able_del']);
 		
-		$T->AddParam(build_desk());
-		#$T->AddParam('DESK_CONTENT',$PV['DESK_CONTENT']);
+		$T->AddParam('TH_INFO',$DESK['TH_INFO']);
+		$T->AddParam('DESK_CONTENT',$PV['DESK_CONTENT']);
 		
 		$T->AddParam(((@$D_SERIES['add_button'])?@$D_SERIES['add_button']:((@$D_SERIES['add'])?@$D_SERIES['add']:[])));
 		
@@ -1500,7 +1502,7 @@
 						
 						$temp['JS_CALL']     = @$D_SERIES['data'][$key]['js_call'];
 						
-						$temp['is_js']       = ($temp['JS_CALL'])?1:0;
+						#$temp['is_js']       = ($temp['JS_CALL'])?1:0;
 						
 						$temp['IS_HIDE']     = @$D_SERIES['data'][$key]['is_hide'];
 						
