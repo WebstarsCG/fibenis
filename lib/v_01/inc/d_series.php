@@ -442,7 +442,24 @@
 	                        
 				$P_V['PAGER'] = "";
 		}
-	 
+		
+		// page action
+		if(@$_GET['page_axn']){
+			
+			// build desk
+			$options 	= array("filename"=>"$LIB_PATH/template/d_series.desk.html", "debug"=>0,"loop_context_vars"=>1);		
+			$TBL 	 	= new Template($options);				
+
+			// get desk info
+			$DESK = build_desk();
+			$TBL->AddParam('DATA_INFO',$DESK['DATA_INFO']);
+			$PV['DESK_CONTENT'] = $TBL->Output();
+			echo $PV['DESK_CONTENT'];
+			exit();
+			
+		} // end
+		
+		
 		if(@$_POST['export_data']){
 				
 				$field_name = '';
@@ -613,6 +630,7 @@
 		$T->AddParam('able_del',@$D_SERIES['del_permission']['able_del']);
 		
 		$T->AddParam(build_desk());
+		#$T->AddParam('DESK_CONTENT',$PV['DESK_CONTENT']);
 		
 		$T->AddParam(((@$D_SERIES['add_button'])?@$D_SERIES['add_button']:((@$D_SERIES['add'])?@$D_SERIES['add']:[])));
 		
@@ -745,7 +763,7 @@
 		
 		if($nrow>5){
 		
-				$T->AddParam('pager', $G->pager_single_act($nrow,$per_page,$start));
+				$T->AddParam($G->pager_single_act($nrow,$per_page,$start));
 				
 				//set_system_log
 				$param = array('user_id'=>$USER_ID,
@@ -1392,8 +1410,11 @@
 				 
 				 $h_counter = 1;
 				 
-				$key_id = '';
+				 $counter=1;
 				 
+				$key_id = '';
+				
+				$page_start = @$_GET['start'];				
 				 				 
 				if(@$D_SERIES['key_id']){				  
 				   $key_id="$D_SERIES[key_id] as key_id,"; 
@@ -1531,8 +1552,8 @@
 					 $temp_data['page_f_series']  =  $P_V['f_series'][$PAGE_ID];
 					 $temp_data['is_narrow_down'] = @$D_SERIES['is_narrow_down'];
 					 					 
-					 $temp_data['action_th_attr'] = (@$D_SERIES['action']['action_th_attr'])?@$D_SERIES['action']['action_th_attr']:'width="5%"';
-					 					 
+					/*  $temp_data['action_th_attr'] = (@$D_SERIES['action']['action_th_attr'])?@$D_SERIES['action']['action_th_attr']:'width="5%"';
+					 					  */
 					 $temp_data['app_key'] = $P_V['app_key'];
 					 
 					 $temp_data['key_id'] =  (@$D_SERIES['key_id'])?$get_row->key_id:'';
@@ -1552,11 +1573,11 @@
 						$temp_data['is_row_able_del'] = ($get_row->avoid_del_field == "$del_value")?1:0;
 					 }
 					 
-					 $temp_data['is_avoid_edit'] = 0;
+					/*  $temp_data['is_avoid_edit'] = 0;
 					 if(@$D_SERIES['action']['avoid_edit_field']){						
 						$edit_value = @$D_SERIES['action']['avoid_edit_value'];					
 						$temp_data['is_avoid_edit'] = ($get_row->avoid_edit_field == "$edit_value")?1:0;
-					 }
+					 } */
 					 
 					 $temp_data['custom_action'] = custom_action($counter);
 				
@@ -1566,8 +1587,10 @@
 					 
 					 $temp_data['hide_sno']=(@$D_SERIES['hide_sno'])?0:1;
 					 
+					  $temp_data['record_counter']=($page_start+$counter);
 					 
-					 $temp_data['default_addon'] = urlencode($DEFAULT_ADDON);
+					 
+					 //$temp_data['default_addon'] = urlencode($DEFAULT_ADDON);
 					 
 					 $counter++; 
 					 

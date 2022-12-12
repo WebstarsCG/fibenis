@@ -304,7 +304,7 @@
 			</thead>
 			</TMPL_IF>
 			
-			<tbody>
+			<tbody id='desk_data'>
 				<TMPL_LOOP DATA_INFO>
 					
 					
@@ -315,7 +315,7 @@
 						
 						<TMPL_IF HIDE_SNO>
 							<td class="align_RM">							
-								<script language="javascript" type="text/JavaScript">pager.write_item_number(<TMPL_VAR NAME=__counter__>);</script>						
+								 <TMPL_VAR record_counter>					
 							</td>
 						</TMPL_IF>
 						
@@ -553,15 +553,22 @@
 		
 			
 		
-			<TMPL_UNLESS hide_pager>
-				<div class="box_filter a_block box_right">
-					<TMPL_VAR NAME="pager">
-				</div>
-			</TMPL_UNLESS>
+	<TMPL_UNLESS hide_pager>
+		<div class="box_filter a_block box_right">
+			<TMPL_IF pager_total>				
+				<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this);'>First</a>				
+				<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:pager_act(this);'>&nbsp;&laquo;&nbsp;</a>				
+				<span id='pager_current' data-pager="<TMPL_VAR pager_current>"><TMPL_VAR pager_current></span> of
+				<span id='pager_total' data-pager="<TMPL_VAR pager_total>"><TMPL_VAR pager_total></span>											
+				<a id='pager_next' data-pager='<TMPL_VAR pager_next>' <TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
+			<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this);'>Last</a>
+				<input type="hidden" id='pager_records' data-pager='<TMPL_VAR pager_records>'  />
+				<input type="hidden" id='pager_action' data-pager=''  />
+			</TMPL_IF>
+		</div>
+	</TMPL_UNLESS>
 		
-		
-		
-			</form>
+	</form>
 	 
 	   <div id="inner_frame_area" name="inner_frame_area" class="light_window" style="height:600px;display:none;">
  
@@ -799,14 +806,43 @@
 		               
 			}//end auto data
 			
-		
 			
 			function pager_act(start_page,current_page){
 			
-						E_V_PASS('start_page',start_page);	
+				E_V_PASS('start_page',start_page.dataset.pager);	
+				G.$('pager_action').dataset.pager=start_page.dataset.pager;
+				filter_data();
+			
+			} //end
+
+			function set_page_status($nrow,$per_page,$start){
+			
+				$lv = {};
+				
+				$lv['pager_total']	   	= Math.ceil($nrow/$per_page);  //calculate the number of pages		
+				$lv['pager_prev'] 		= $start-$per_page;				//calcuclate previous page, if available or not
+				$lv['pager_prev'] 		= ($lv['pager_prev']<0)?0:$lv['pager_prev'];
+				$lv['pager_next']	  	= ($start+$per_page);			//calculate next page, if available or not							
+				$lv['pager_last']	  	= ($lv['pager_total']-1)*$per_page;
+				$lv['pager_current']    = Math.ceil($start/$per_page)+1;
+				$lv['pager_has_next']	= ($lv['pager_total'] > $lv['pager_current'])?1:0;
+
+				console.log(JSON.stringify($lv));
+
+				for(const element of ['pager_current','pager_total'] ){
+					console.log(element+'--'+G.$(element).dataset.pager);
+					G.$(element).dataset.pager=$lv[element];					
+					G.$(element).innerHTML = $lv[element];
+				}	
+
+				for(const element of ['pager_prev','pager_next','pager_last'] ){
+					G.$(element).dataset.pager=$lv[element];					
+				}	
+
+				return $lv;
 					
-						filter_data();
-					} //end
+			} // end
+			
 			
 			function show_all(param){
 					

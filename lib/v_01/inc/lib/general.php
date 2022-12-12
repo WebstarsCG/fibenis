@@ -54,60 +54,25 @@
 			
 	
 	
-	/***************************************************************************************************************/			
-		// 2. pager single ac
+	/***************************************************************************************************************/				
+	// 2. pager single ac		
+	function pager_single_act($nrow,$per_page,$start){
 		
-				function pager_single_act($nrow,$per_page,$start){
-			
-						   $npage=ceil($nrow/$per_page);  //calculate the number of pages
-					  
-						   $tmp=($start+$per_page);	//calculate next page, if available or not	
-						  
-						   $nxt=ceil($start/$per_page)+1;
-						   
-						   $prv=$start-$per_page;	//calcuclate previous page, if available or not
-						
-						   $first=1;	
-						   
-						   $last=($npage-1)*$per_page;
-							$pagelink='';
-							if($first){
-							
-								$pagelink.= "<a href='JavaScript:pager_act(".($first-1)."0);'&page=$per_page>&nbsp;First&nbsp;</a>&nbsp;&nbsp;";	// first page is enable
-							
-							}
-							
-							if($prv>=0){
-									$pagelink.= "<a href='JavaScript:pager_act(".$prv.");'&page=$per_page>&nbsp;&laquo;&nbsp;</a>&nbsp;&nbsp;";	//previous button is ennable
-							}else{
-									$pagelink.= "<a href='#'>&nbsp;&laquo;&nbsp;</a>&nbsp;&nbsp;";	//previous button is ennable
-							}
-						
-					
-							$pagelink.=$nxt ."&nbsp;of ".$npage."";
-					
-					
-							if($nxt<$npage){
-										
-									//&raquo				
-									$pagelink.= "&nbsp;&nbsp;<a href='JavaScript:pager_act(".$tmp.");'&page=$per_page>&nbsp;&raquo;&nbsp;</a>";	//next button is enable
-							}else{
-							
-								   $pagelink.="&nbsp;&nbsp<a href='#'>&nbsp;&raquo;&nbsp;</a>";
-							}
-							
-						
-						   if($npage){
-						
-							 
-								$pagelink.= "&nbsp;&nbsp;<a href='JavaScript:pager_act(".$last.");'&page=$per_page>&nbsp;Last&nbsp;</a>";	//Last page enable
-							}
-						
-						
-							return $pagelink;	
-							
-				}// pager single act
-		/***************************************************************************************************************/
+		$lv = [];
+
+		$lv['pager_records']    = $nrow;
+		$lv['pager_total']	   	= ceil($nrow/$per_page);  //calculate the number of pages		
+		$lv['pager_prev'] 		= $start-$per_page;	//calcuclate previous page, if available or not
+		$lv['pager_prev'] 		= ($lv['pager_prev']<0)?0:$lv['pager_prev'];
+		$lv['pager_next']	  	= ($start+$per_page);	//calculate next page, if available or not							
+		$lv['pager_last']	  	= ($lv['pager_total']-1)*$per_page;
+		$lv['pager_current']    = ceil($start/$per_page)+1;
+		$lv['pager_has_next']	= ($lv['pager_total']>$lv['pager_current'])?1:0;
+
+		return $lv;
+				
+	} // pager single act
+	/***************************************************************************************************************/
 		
 	
 	
