@@ -48,7 +48,7 @@
 				<TMPL_IF LIST_ARRAY>			
 					<label>Search by</label>								
 					<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />					
-					<input type="button" onclick="JavaScript:d_series.setDeskAction('SR');filter_data();" value=" Go "class="button"/>					
+					<input type="button" onclick="JavaScript:d_series.setDeskStartAction();filter_data();" value=" Go "class="button"/>					
 				<TMPL_ELSE>
 					<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />			
 				</TMPL_IF>	
@@ -72,7 +72,7 @@
 						
 							<TMPL_VAR field_name>
 							
-							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="d_series.setDeskAction('FR');custom_filter();"  <TMPL_VAR HTML>>
+							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="d_series.setDeskStartAction();custom_filter();"  <TMPL_VAR HTML>>
 								
 								<TMPL_UNLESS NO_DEFAULT_OPTION>								
 									<option value=""><TMPL_VAR cus_default_label></option>
@@ -87,7 +87,7 @@
 						
 						<TMPL_VAR field_name>
 						
-							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="d_series.setDeskAction('FR');multiple_select_data('<TMPL_VAR field_id>');"    class="selectpicker"  <TMPL_VAR HTML>  multiple>
+							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="d_series.setDeskStartAction();multiple_select_data('<TMPL_VAR field_id>');"    class="selectpicker"  <TMPL_VAR HTML>  multiple>
 								<TMPL_UNLESS NO_DEFAULT_OPTION>								
 									<!--- <option value="-1"><TMPL_VAR cus_default_label></option> -->
 								</TMPL_UNLESS>
@@ -135,7 +135,7 @@
 						 <span class="checkbox_wrapper"><input type="checkbox" id="is_check_date" name="is_check_date" value="1" /></span>
 						
 						<input class="button" type="button" id="go_date"  name="go_date" value="Go"  
-						onclick="JavaScript:d_series.setDeskAction('DT');filter_data();" />
+						onclick="JavaScript:d_series.setDeskStartAction();filter_data();" />
 						
 						
 				<TMPL_ELSE>
@@ -173,7 +173,7 @@
 					<select 
 						id       = "page" 
 						name     = "page" 
-						onchange = "JavaScript:d_series.neutralDeskAction();filter_data();"  class="FI_50" title="Rows">
+						onchange = "JavaScript:d_series.setDeskStartAction();filter_data();"  class="FI_50" title="Rows">
 							
 						<TMPL_IF PAGER_OPTION>
 							<TMPL_VAR PAGER_OPTION>
@@ -317,10 +317,10 @@
 				</TMPL_UNLESS>
 			
 				<TMPL_IF able_del>			
-				<table align="center" width="95%" border="0">
+				<table align="center" width="95%" border="0" >
 					<tr>
 						<td align="left">
-							 <div class="box_filter a_block box_left">
+							 <div class="box_filter a_block box_left" id="bulk_action_area">
 								<TMPL_IF DESK_CONTENT>
 									<TMPL_IF DEL_BUTTON>
 										<button type="button" class="btn btn-danger"   value='Delete' onclick="d_series.check_delete();" >Delete</button>
@@ -430,17 +430,17 @@
 			
 		
 	<TMPL_UNLESS hide_pager>
-		<div class="box_filter a_block box_right">
-			<TMPL_IF pager_total>				
+		<div class="box_filter a_block box_right" id="pager_area">
+						
 				<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this);'>First</a>				
 				<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:pager_act(this);'>&nbsp;&laquo;&nbsp;</a>				
 				<span id='pager_current' data-pager="<TMPL_VAR pager_current>"><TMPL_VAR pager_current></span> of
 				<span id='pager_total' data-pager="<TMPL_VAR pager_total>"><TMPL_VAR pager_total></span>											
-				<a id='pager_next' data-pager='<TMPL_VAR pager_next>' <TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
-			<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this);'>Last</a>
-				<input type="hidden" id='pager_records' data-pager='<TMPL_VAR pager_records>'  />
+				<a id='pager_next' data-pager='<TMPL_VAR pager_next>' 
+				<TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
+				<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this);'>Last</a>
+			
 				<input type="hidden" id='pager_action' data-pager=''  />
-			</TMPL_IF>
 		</div>
 	</TMPL_UNLESS>
 		
@@ -699,7 +699,7 @@
 			function pager_act(start_page,current_page){
 			
 				E_V_PASS('start_page',start_page.dataset.pager);	
-				d_series.neutralDeskAction();
+				d_series.setDeskPageAction();
 				
 				if( (Number(start_page.dataset.pager) >= Number(G.$('pager_start').dataset.pager)) && 
 				    (Number(start_page.dataset.pager) <= Number(G.$('pager_last').dataset.pager))){
@@ -709,11 +709,16 @@
 			
 			} //end
 
-			function set_page_status($nrow,$per_page,$start){
+			function set_page_status($number_of_rows,
+									 $per_page,
+									 $start){
 			
-				$lv = {};
+				$lv		 	= {};
+				$number_of_rows	= Number($number_of_rows);
+				$start	 		= Number($start);
+				$per_page 		= Number($per_page);
 				
-				$lv['pager_total']	   	= Math.ceil($nrow/$per_page);  //calculate the number of pages		
+				$lv['pager_total']	   	= Math.ceil($number_of_rows/$per_page);  //calculate the number of pages		
 				$lv['pager_prev'] 		= $start-$per_page;				//calcuclate previous page, if available or not
 				$lv['pager_prev'] 		= ($lv['pager_prev']<0)?0:$lv['pager_prev'];
 				$lv['pager_next']	  	= ($start+$per_page);			//calculate next page, if available or not							
@@ -721,12 +726,9 @@
 				$lv['pager_current']    = Math.ceil($start/$per_page)+1;
 				$lv['pager_has_next']	= ($lv['pager_total'] > $lv['pager_current'])?1:0;
 
-				console.log(JSON.stringify($lv));
-				
 				if($lv['pager_current']<=$lv['pager_total']){
 
-					for(const element of ['pager_current','pager_total'] ){
-						console.log(element+'--'+G.$(element).dataset.pager);
+					for(const element of ['pager_current','pager_total'] ){ 
 						G.$(element).dataset.pager=$lv[element];					
 						G.$(element).innerHTML = $lv[element];
 					}	
@@ -900,16 +902,16 @@
 			
 			<TMPL_IF SORT_FIELD>		
 				E_V_PASS("sort_field",'<TMPL_VAR SORT_FIELD>');	
-				E_V_PASS("sort_col_<TMPL_VAR 'SORT_FIELD'>","<TMPL_VAR 'DIRECATION_ON_OF'>");
-				E_H_PASS("sort_icon_<TMPL_VAR 'SORT_FIELD'>",SORT_ICON[<TMPL_VAR 'DIRECATION_ON_OF'>-1]);										
+				E_V_PASS("sort_col_<TMPL_VAR 'SORT_FIELD'>","<TMPL_VAR 'DIRECTION_ON_OF'>");
+				E_H_PASS("sort_icon_<TMPL_VAR 'SORT_FIELD'>",SORT_ICON[<TMPL_VAR 'DIRECTION_ON_OF'>-1]);										
 			</TMPL_IF>
 			
 			<TMPL_IF sort_by>
 			     E_V_PASS("sort_by",'<TMPL_VAR sort_by>');	
 			</TMPL_IF>
 			
-			<TMPL_IF SORT_DIRECATION>						
-				E_V_PASS("sort_direction",'<TMPL_VAR SORT_DIRECATION>');					
+			<TMPL_IF SORT_DIRECTION>						
+				E_V_PASS("sort_direction",'<TMPL_VAR SORT_DIRECTION>');					
 			</TMPL_IF>	
 				
 			<TMPL_IF page>

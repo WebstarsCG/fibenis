@@ -60,7 +60,7 @@
 		
 		$lv = [];
 
-		$lv['pager_records']    = $nrow;
+		//$lv['pager_records']    = $nrow;
 		$lv['pager_total']	   	= ceil($nrow/$per_page);  //calculate the number of pages		
 		$lv['pager_prev'] 		= $start-$per_page;	//calcuclate previous page, if available or not
 		$lv['pager_prev'] 		= ($lv['pager_prev']<0)?0:$lv['pager_prev'];

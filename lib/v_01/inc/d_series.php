@@ -451,6 +451,7 @@
 		// get desk info
 		$DESK = build_desk();
 		$TBL->AddParam('DATA_INFO',$DESK['DATA_INFO']);
+		$TBL->AddParam('NUM_OF_ROWS',$pager_info[0]);
 		$PV['DESK_CONTENT'] = $TBL->Output();
 		
 		if(@$_GET['page_axn']){
@@ -657,9 +658,8 @@
 		$T->AddParam('custom_sort_label',@$D_SERIES['set']['label']);
 		$T->AddParam('custom_sort_by',custom_list_sort());
 		
-		if(@$_GET['sort_by']){
-				
-		 $T->AddParam('pre_sort_by',$_GET['sort_by']);		
+		if(@$_GET['sort_by']){				
+			$T->AddParam('pre_sort_by',$_GET['sort_by']);		
 		}
 		
 		$T->AddParam('custom_filter',$P_V['custom_filter'][0]);		
@@ -675,12 +675,11 @@
 		
 		$T->AddParam('SORT_FIELD',@$get_sort_f);
 		
-		$T->AddParam('sort_by',@$get_sort_by_id);
+		$T->AddParam('sort_by',@$get_sort_by_id);		
 		
+		$T->AddParam('DIRECTION_ON_OF',"$P_V[order_direction]");   	//  sort direction
 		
-		$T->AddParam('DIRECATION_ON_OF',"$P_V[order_direction]");   	//  sort direcation
-		
-		$T->AddParam('SORT_DIRECATION',@$get_sort_d);   	        //  sort direcation		
+		$T->AddParam('SORT_DIRECTION',@$get_sort_d);   	        //  sort direction		
 				
 		$T->AddParam($WHERE_FILTER[2]);
 		
@@ -765,7 +764,7 @@
 		
 		if($nrow>5){
 		
-				$T->AddParam($G->pager_single_act($nrow,$per_page,$start));
+				
 				
 				//set_system_log
 				$param = array('user_id'=>$USER_ID,
@@ -780,10 +779,8 @@
 				
 		}
 		
-		
+		$T->AddParam($G->pager_single_act($nrow,$per_page,$start));		
 		$T->AddParam('CURRENT_PAGE',(($start/$per_page) + 1));
-		
-		
 		$T->AddParam('SHOW_PAGE',$per_page);
 		
 		
@@ -1601,7 +1598,9 @@
 				}	
 				return $data_info; 					
 						
-		}//end of get data
+		} //end of get data
+		
+		
 		
 	/******************************************************************************************************************/	
 		//build custom filter
