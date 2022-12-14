@@ -894,16 +894,11 @@
 			
 			</TMPL_IF>
 			
-			
-			
-			
-						
-						
-			
 			<TMPL_IF SORT_FIELD>		
 				E_V_PASS("sort_field",'<TMPL_VAR SORT_FIELD>');	
-				E_V_PASS("sort_col_<TMPL_VAR 'SORT_FIELD'>","<TMPL_VAR 'DIRECTION_ON_OF'>");
-				E_H_PASS("sort_icon_<TMPL_VAR 'SORT_FIELD'>",SORT_ICON[<TMPL_VAR 'DIRECTION_ON_OF'>-1]);										
+				E_V_PASS("sort_col_<TMPL_VAR 'SORT_FIELD'>","<TMPL_VAR 'DIRECTION_UP_DOWN'>");
+				E_H_PASS("sort_icon_<TMPL_VAR 'SORT_FIELD'>",SORT_ICON[<TMPL_VAR 'DIRECTION_UP_DOWN'>-1]);	
+				G.set_global('last_sort_col','<TMPL_VAR SORT_FIELD>');				
 			</TMPL_IF>
 			
 			<TMPL_IF sort_by>

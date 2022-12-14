@@ -677,9 +677,9 @@
 		
 		$T->AddParam('sort_by',@$get_sort_by_id);		
 		
-		$T->AddParam('DIRECTION_ON_OF',"$P_V[order_direction]");   	//  sort direction
+		$T->AddParam('DIRECTION_UP_DOWN',"$P_V[order_direction]");   	//  sort direction
 		
-		$T->AddParam('SORT_DIRECTION',@$get_sort_d);   	        //  sort direction		
+		$T->AddParam('SORT_DIRECTION',@$get_sort_d);   	       	    //  sort direction		
 				
 		$T->AddParam($WHERE_FILTER[2]);
 		
