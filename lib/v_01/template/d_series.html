@@ -72,7 +72,9 @@
 						
 							<TMPL_VAR field_name>
 							
-							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="d_series.setDeskStartAction();custom_filter();"  <TMPL_VAR HTML>>
+							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>"
+							data-filter-type='CF'
+							onchange="d_series.setDeskStartAction();custom_filter();"  <TMPL_VAR HTML>>
 								
 								<TMPL_UNLESS NO_DEFAULT_OPTION>								
 									<option value=""><TMPL_VAR cus_default_label></option>
@@ -87,7 +89,9 @@
 						
 						<TMPL_VAR field_name>
 						
-							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" onchange="d_series.setDeskStartAction();multiple_select_data('<TMPL_VAR field_id>');"    class="selectpicker"  <TMPL_VAR HTML>  multiple>
+							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" 
+							data-filter-type='CF'
+							onchange="d_series.setDeskStartAction();multiple_select_data('<TMPL_VAR field_id>');"    class="selectpicker"  <TMPL_VAR HTML>  multiple>
 								<TMPL_UNLESS NO_DEFAULT_OPTION>								
 									<!--- <option value="-1"><TMPL_VAR cus_default_label></option> -->
 								</TMPL_UNLESS>
@@ -96,7 +100,8 @@
 							</select>
 							 
 							<input class="button" type="button" id="go_multi_select"  name="go_multi_select" value="Go"  onclick="JavaScript:custom_filter();" />
-							<input type="hidden" name="<TMPL_VAR field_id>_hidden" id="<TMPL_VAR field_id>_hidden" value="";>
+							<input type="hidden" name="<TMPL_VAR field_id>_hidden" id="<TMPL_VAR field_id>_hidden" 
+									data-filter-type='CF' value="";>
 							
 							
 					</TMPL_IF>
@@ -112,7 +117,8 @@
 					
 					
 					<TMPL_IF __LAST__>
-							<input type="hidden" name="CUSTOM_FILTER_COUNT" id="CUSTOM_FILTER_COUNT" value="<TMPL_VAR __COUNTER__>"  />
+							<input type="hidden" name="CUSTOM_FILTER_COUNT" id="CUSTOM_FILTER_COUNT" 
+							 value="<TMPL_VAR __COUNTER__>"  />
 					</TMPL_IF>
 					
 			</TMPL_LOOP>	
@@ -193,14 +199,17 @@
 				
 					<font class="spliter">|</font>
 						
-
+<!---onclick="JavaScript:show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR APP_KEY>');"--->
 							<TMPL_UNLESS HIDE_SHOW_ALL>
 							
 								<input type="button" 
 									   class="button" 
 									   name="go_date" 
 									   id="go_date" 
-									   value="<TMPL_VAR show_all_label>"  onclick="JavaScript:show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR APP_KEY>');"/>
+									   value="<TMPL_VAR show_all_label>" 									   
+									   onclick="JavaScript:d_series.clearFilter();show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR APP_KEY>');"
+									   
+									   />
 									   
 								<font class="spliter">|</font>
 								
@@ -745,7 +754,7 @@
 			
 			
 			function show_all(param){
-					document.location.href='?<TMPL_VAR PAGE_ID>=<TMPL_VAR app_key>&PASS_ID=<TMPL_VAR PASS_ID>&show=1';
+					crypt_url(`?${param}&show=1`);
 			}
 			
 			
