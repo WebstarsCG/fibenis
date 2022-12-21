@@ -595,6 +595,8 @@
 		
 		$T->AddParam('hide_pager',@$D_SERIES['hide_pager']);
 		
+		$T->AddParam('is_load_by_scroll',@$D_SERIES['is_load_by_scroll']);
+		
 		$T->AddParam('hide_show_all',@$D_SERIES['hide_show_all']);
 		
 		$T->AddParam('title',@$D_SERIES['title']);

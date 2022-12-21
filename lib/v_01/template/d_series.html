@@ -1,4 +1,4 @@
-	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js"></script>
+	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=1"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/general.c3001.js"></script>
 	
 	<TMPL_IF LAYOUT>
@@ -171,9 +171,6 @@
 								</TMPL_LOOP>
 							</select>	
 					</TMPL_IF> 	
-							
-					
-					
 					
 					<label>Show</label>
 					<select 
@@ -282,7 +279,7 @@
 							
 							<a class = "sort"											
 							   style = "cursor:pointer"
-								onclick="JavaScript:E_V_PASS('sort_field','<TMPL_VAR SORT_ID>');E_V_PASS('sort_direction',GET_E_VALUE('sort_col_<TMPL_VAR SORT_ID>'));filter_data();">
+								onclick="JavaScript:sort_action(<TMPL_VAR SORT_ID>)">
 								
 							<TMPL_VAR TH>
 												
@@ -437,20 +434,30 @@
 			
 		
 			
-		
+	<input type='hidden' id='d_series_config' data-is-load-by-scroll="<TMPL_VAR is_load_by_scroll>"  value="" >
 	<TMPL_UNLESS hide_pager>
 		<div class="box_filter a_block box_right" id="pager_area">
-						
-				<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this);'>First</a>				
-				<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:pager_act(this);'>&nbsp;&laquo;&nbsp;</a>				
+			<TMPL_IF is_load_by_scroll>
+				<input type='text' id='pager_start' data-pager='0'>
+				<input type='text' id='pager_prev'  data-pager='<TMPL_VAR pager_prev>'>
+				
+				<input type='text' id='pager_current' data-pager='<TMPL_VAR pager_current>'>
+				<input type='text' id='pager_total'  data-pager='<TMPL_VAR pager_total>'>
+				
+				<input type='text' id='pager_next' data-pager='<TMPL_VAR pager_next>'>
+				<input type='text' id='pager_last' data-pager='<TMPL_VAR pager_last>'>
+				<input type="text" id='pager_loaded_rows' data-pager=''  />
+			<TMPL_ELSE>	
+				<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this,0);'>First</a>				
+				<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:pager_act(this,0);'>&nbsp;&laquo;&nbsp;</a>				
 				<span id='pager_current' data-pager="<TMPL_VAR pager_current>"><TMPL_VAR pager_current></span> of
 				<span id='pager_total' data-pager="<TMPL_VAR pager_total>"><TMPL_VAR pager_total></span>											
 				<a id='pager_next' data-pager='<TMPL_VAR pager_next>' 
-				<TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
-				<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this);'>Last</a>
-			
-				<input type="hidden" id='pager_action' data-pager=''  />
-		</div>
+				<TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this,0);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
+				<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this,0);'>Last</a>
+			</TMPL_IF>
+			<input type="hidden" id='pager_action' data-pager=''  />
+		</div>				
 	</TMPL_UNLESS>
 		
 	</form>
@@ -569,23 +576,6 @@
 		var list_array =new Array(<TMPL_VAR list_array> );
 		
 			$(function() {
-			
-				  				//console.log('JS Calls--'+js_calls);	
-					var JS_CAll =new Object({'show_user_info':show_user_info,
-											'd_series.inline_on_off':d_series.inline_on_off,
-											'd_series.set_nd':d_series.set_nd,
-											'boolean_display':boolean_display,
-											'show_user_info_2l':show_user_info_2l});
-
-					const matches = document.querySelectorAll("td[data-js]");
-					for(var element of matches){
-
-						console.log('---'+element.dataset.js);	
-
-						element.innerHTML = JS_CAll[element.dataset.js](element.dataset.p);
-					}
-				  
-				  
 				  $("#s_date").datepicker({
 										firstDay: 1,
 										dateFormat:'dd-mm-yy',
@@ -704,11 +694,24 @@
 		               
 			}//end auto data
 			
+			function sort_action(sort_col_id){
+					E_V_PASS('sort_field',sort_col_id);
+					E_V_PASS('sort_direction',GET_E_VALUE('sort_col_'+sort_col_id));
+					d_series.setDeskSortAction();
+					filter_data();
+			}
 			
-			function pager_act(start_page,current_page){
+			function pager_act(start_page,is_scroll_action){
 			
-				E_V_PASS('start_page',start_page.dataset.pager);	
-				d_series.setDeskPageAction();
+				console.log('Scroll---'+is_scroll_action);
+			
+				E_V_PASS('start_page',start_page.dataset.pager);
+
+				if(is_scroll_action==1){
+					d_series.setDeskScrollAction();
+				}else{
+					d_series.setDeskPageAction();
+				}				
 				
 				if( (Number(start_page.dataset.pager) >= Number(G.$('pager_start').dataset.pager)) && 
 				    (Number(start_page.dataset.pager) <= Number(G.$('pager_last').dataset.pager))){
@@ -732,10 +735,21 @@
 				$lv['pager_prev'] 		= ($lv['pager_prev']<0)?0:$lv['pager_prev'];
 				$lv['pager_next']	  	= ($start+$per_page);			//calculate next page, if available or not							
 				$lv['pager_last']	  	= ($lv['pager_total']-1)*$per_page;
-				$lv['pager_current']    = Math.ceil($start/$per_page)+1;
+				$lv['pager_current']    = ($number_of_rows==0)?0:(Math.ceil($start/$per_page)+1);
 				$lv['pager_has_next']	= ($lv['pager_total'] > $lv['pager_current'])?1:0;
 
-				if($lv['pager_current']<=$lv['pager_total']){
+				if($number_of_rows==0){
+				
+					for(const element of ['pager_current','pager_total'] ){ 
+						G.$(element).dataset.pager=$lv[element];					
+						G.$(element).innerHTML = $lv[element];
+					}	
+
+					for(const element of ['pager_prev','pager_next','pager_last'] ){
+						G.$(element).dataset.pager=$lv[element];					
+					}
+				
+				}else if($lv['pager_current']<=$lv['pager_total']){
 
 					for(const element of ['pager_current','pager_total'] ){ 
 						G.$(element).dataset.pager=$lv[element];					
@@ -769,18 +783,34 @@
 					 E_V_PASS(set_value+'_hidden',selectedOptionValue);
 				      }
 				      //document.getElementById("is_multi_"+set_value).checked = true;
-			      }								 
+			} // multipass								 
 			
 
+			
+			// js update	
+			var JS_CAll =new Object({'show_user_info':show_user_info,
+									'd_series.inline_on_off':d_series.inline_on_off,
+									'd_series.set_nd':d_series.set_nd,
+									'boolean_display':boolean_display,
+									'show_user_info_2l':show_user_info_2l});
 
+			const matches = document.querySelectorAll("td[data-js]");
+			for(var element of matches){
+
+				console.log('---'+element.dataset.js);	
+
+				element.innerHTML = JS_CAll[element.dataset.js](element.dataset.p);
+			}
+			G.$('pager_loaded_rows').dataset.pager=Number(G.$('pager_loaded_rows').dataset.pager)+Number(G.$('COUNTER').value);
 			
 			<TMPL_IF filter_value>
 			
-					function custom_filter(){
+			function custom_filter(){
 						
 						var is_apply_date = document.getElementById('is_check_date').checked;
+						
 					    if(is_apply_date){
-							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start,sort_f,sort_d,s_text_type,default_addon,start_date,end_date,start_alt_date,end_alt_date<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start,sort_f,sort_d,s_text_type,default_addon,start_date,end_date,start_alt_date,end_alt_date,is_check_date<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
 														document.getElementById('s_text'),
 														document.getElementById('s_text_hidden'),
 														document.getElementById('s_text_id'),	
@@ -793,19 +823,19 @@
 														document.getElementById('s_date'),
 														document.getElementById('to_date'),
 														document.getElementById('s_date_hidden'),
-														document.getElementById('to_date_hidden')
+														document.getElementById('to_date_hidden'),
+														document.getElementById('is_check_date')
 														<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
 														<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
 										);
 						
-						}
+						}else{
 						
-						else{
-						
-							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start,sort_f,sort_d,s_text_type,default_addon<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,is_check_date,page,start,sort_f,sort_d,s_text_type,default_addon<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
 														document.getElementById('s_text'),
 														document.getElementById('s_text_hidden'),
-														document.getElementById('s_text_id'),	
+														document.getElementById('s_text_id'),
+														document.getElementById('is_check_date'),
 														document.getElementById('page'),
 														document.getElementById('start_page'),
 														document.getElementById('sort_field'),
@@ -817,8 +847,6 @@
 										);
 						
 						}
-							//alert(GET_E_VALUE('CUSTOM_FILTER_COUNT')+'<TMPL_VAR dtext>' );
-							
 							
 					}
 					
@@ -844,9 +872,6 @@
 				       ); 
 							
 				}	
-					
-					
-
 			
 			<TMPL_ELSE>
 			
@@ -856,7 +881,7 @@
 					
 					if(is_apply_date){
 					
-							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start_date,end_date,start_alt_date,end_alt_date,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start_date,end_date,start_alt_date,end_alt_date,is_check_date,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
 									document.getElementById('s_text'),
 									document.getElementById('s_text_hidden'),		
 									document.getElementById('s_text_id'),		
@@ -865,6 +890,7 @@
 									document.getElementById('to_date'),
 									document.getElementById('s_date_hidden'),
 									document.getElementById('to_date_hidden'),
+									document.getElementById('is_check_date'),
 									document.getElementById('start_page'),
 									document.getElementById('sort_field'),
 									document.getElementById('sort_direction'),
@@ -873,18 +899,16 @@
 									document.getElementById('menu_off')
 									<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
 									<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
-									
-									
-								
 							);
 					}
 					
 					else{
 						
-						       show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+						       show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,is_check_date,page,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
 												document.getElementById('s_text'),
 												document.getElementById('s_text_hidden'),
 												document.getElementById('s_text_id'),	
+												document.getElementById('is_check_date'),	
 												document.getElementById('page'),
 												document.getElementById('start_page'),
 												document.getElementById('sort_field'),
@@ -1025,6 +1049,21 @@
 			<TMPL_IF pre_sort_by>
 			   E_V_PASS('sort_by','<TMPL_VAR pre_sort_by>');
 			</TMPL_IF> 
+			
+			<TMPL_IF is_load_by_scroll>
+			// onscroll load
+			document.addEventListener("scroll", (event) => {
+				
+				var lv = {};
+
+				lv.screen_rect = document.body.getBoundingClientRect();	
+							
+				if(Math.floor(lv.screen_rect.bottom)==window.innerHeight){					
+					pager_act(G.$('pager_next'),1);
+				}
+			
+			});
+			</TMPL_IF>
 								
 			
 </script>	 
