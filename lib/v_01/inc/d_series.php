@@ -785,10 +785,10 @@
 		
 		
 	   $start_date =  $G->get_cookies_ii(['key'      => $P_V['cookies_id'].'start_date',
-	                                   'key_id'   => 'start_date',
-									   'value'     => @$_GET['start_date'],
-									   'default'   => @$_GET['start_date'],
-									   'is_expire' => @$P_V['is_cookies_expire']]);
+										   'key_id'   => 'start_date',
+										   'value'     => @$_GET['start_date'],
+										   'default'   => @$_GET['start_date'],
+										   'is_expire' => @$P_V['is_cookies_expire']]);
 									   
 				
 	   $end_date =  $G->get_cookies_ii(['key' 		=> $P_V['cookies_id'].'end_date',
@@ -796,12 +796,17 @@
 									 'value'	=> @$_GET['end_date'],
 									 'default'	=> @$_GET['end_date'],
 									 'is_expire'	=> @$P_V['is_cookies_expire']]);
-									 
+		
+		$is_check_date =  $G->get_cookies_ii(['key' 		=> $P_V['cookies_id'].'is_check_date',
+									 'key_id'   => 'is_check_date',
+									 'value'	=> @$_GET['is_check_date'],
+									 'default'	=> @$_GET['is_check_date'],
+									 'is_expire'	=> @$P_V['is_cookies_expire']]);		
 	   
 	  // $is_apply_date = ($start_date)
 				
 		$T->AddParam( array(
-								'is_apply_date' => (@$start_date)?1:0,
+								'is_apply_date' => $is_check_date,
 								
 								'start_date'    => (@$start_date)?$start_date:date('d-m-Y'),
 								
@@ -1761,24 +1766,16 @@
 											  'value'     => @$_GET['end_alt_date'],
 											  'default'   => @$_GET['end_alt_date'],
 											  'is_expire' => @$P_V['is_cookies_expire']]);
-				//
-				
-			  //  setcookie('start_date',$start_date);
-				
-				//$start_date = (@$_GET['start_date'])?@$_GET['start_date']:@$_COOKIE['start_date']; 
-				
-				
-				//setcookie('end_date',@$_GET['end_date']);
-				
-				//$end_date = (@$_GET['end_date'])?@$_GET['end_date']:@$_COOKIE['end_date']; 
+											  
+				$is_check_date =  $G->get_cookies_ii(['key'      => $P_V['cookies_id'].'is_check_date',
+													  'key_id'   => 'is_check_date',
+													  'value'     => @$_GET['is_check_date'],
+													  'default'   => @$_GET['is_check_date'],
+													  'is_expire' => @$P_V['is_cookies_expire']]);
 				
 				
-				if($start_alt_date && $end_alt_date){
+				if($start_alt_date && $end_alt_date && $is_check_date){
 				
-					//echo $WHERE.=" AND date_format(".$D_SERIES['date_filter']['date_field'].",'%Y-%m-%d') BETWEEN '$start_date'  and '$end_date' ";
-					
-					//20-aug-14
-					
 					//19 june 2015
 					
 					if(@$D_SERIES['date_filter']['date_field']){
