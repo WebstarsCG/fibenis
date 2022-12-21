@@ -446,7 +446,7 @@
 				
 				<input type='text' id='pager_next' data-pager='<TMPL_VAR pager_next>'>
 				<input type='text' id='pager_last' data-pager='<TMPL_VAR pager_last>'>
-				<input type="text" id='pager_loaded_rows' data-pager=''  />
+			
 			<TMPL_ELSE>	
 				<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this,0);'>First</a>				
 				<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:pager_act(this,0);'>&nbsp;&laquo;&nbsp;</a>				
@@ -456,6 +456,7 @@
 				<TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this,0);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
 				<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this,0);'>Last</a>
 			</TMPL_IF>
+				<input type="text" id='pager_loaded_rows' data-pager=''  /> 	 	
 			<input type="hidden" id='pager_action' data-pager=''  />
 		</div>				
 	</TMPL_UNLESS>
@@ -801,7 +802,10 @@
 
 				element.innerHTML = JS_CAll[element.dataset.js](element.dataset.p);
 			}
-			G.$('pager_loaded_rows').dataset.pager=Number(G.$('pager_loaded_rows').dataset.pager)+Number(G.$('COUNTER').value);
+			
+			if(G.$('COUNTER')){			
+				G.$('pager_loaded_rows').dataset.pager=Number(G.$('pager_loaded_rows').dataset.pager)+Number(G.$('COUNTER').value);
+			}
 			
 			<TMPL_IF filter_value>
 			
