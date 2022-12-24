@@ -438,14 +438,14 @@
 	<TMPL_UNLESS hide_pager>
 		<div class="box_filter a_block box_right" id="pager_area">
 			<TMPL_IF is_load_by_scroll>
-				<input type='text' id='pager_start' data-pager='0'>
-				<input type='text' id='pager_prev'  data-pager='<TMPL_VAR pager_prev>'>
+				<input type='hidden' id='pager_start' data-pager='0'>
+				<input type='hidden' id='pager_prev'  data-pager='<TMPL_VAR pager_prev>'>
 				
-				<input type='text' id='pager_current' data-pager='<TMPL_VAR pager_current>'>
-				<input type='text' id='pager_total'  data-pager='<TMPL_VAR pager_total>'>
+				<input type='hidden' id='pager_current' data-pager='<TMPL_VAR pager_current>'>
+				<input type='hidden' id='pager_total'  data-pager='<TMPL_VAR pager_total>'>
 				
-				<input type='text' id='pager_next' data-pager='<TMPL_VAR pager_next>'>
-				<input type='text' id='pager_last' data-pager='<TMPL_VAR pager_last>'>
+				<input type='hidden' id='pager_next' data-pager='<TMPL_VAR pager_next>'>
+				<input type='hidden' id='pager_last' data-pager='<TMPL_VAR pager_last>'>
 			
 			<TMPL_ELSE>	
 				<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this,0);'>First</a>				
@@ -456,7 +456,7 @@
 				<TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this,0);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
 				<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this,0);'>Last</a>
 			</TMPL_IF>
-				<input type="text" id='pager_loaded_rows' data-pager=''  /> 	 	
+				<input type="hidden" id='pager_loaded_rows' data-pager=''  /> 	 	
 			<input type="hidden" id='pager_action' data-pager=''  />
 		</div>				
 	</TMPL_UNLESS>
@@ -809,54 +809,10 @@
 			
 			<TMPL_IF filter_value>
 			
-			function custom_filter(){
-						
-						var is_apply_date = document.getElementById('is_check_date').checked;
-						
-					    if(is_apply_date){
-							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start,sort_f,sort_d,s_text_type,default_addon,start_date,end_date,start_alt_date,end_alt_date,is_check_date<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
-														document.getElementById('s_text'),
-														document.getElementById('s_text_hidden'),
-														document.getElementById('s_text_id'),	
-														document.getElementById('page'),
-														document.getElementById('start_page'),
-														document.getElementById('sort_field'),
-														document.getElementById('sort_direction'),
-														document.getElementById('is_s_text_type'),
-														document.getElementById('default_addon'),
-														document.getElementById('s_date'),
-														document.getElementById('to_date'),
-														document.getElementById('s_date_hidden'),
-														document.getElementById('to_date_hidden'),
-														document.getElementById('is_check_date')
-														<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
-														<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
-										);
-						
-						}else{
-						
-							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,is_check_date,page,start,sort_f,sort_d,s_text_type,default_addon<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
-														document.getElementById('s_text'),
-														document.getElementById('s_text_hidden'),
-														document.getElementById('s_text_id'),
-														document.getElementById('is_check_date'),
-														document.getElementById('page'),
-														document.getElementById('start_page'),
-														document.getElementById('sort_field'),
-														document.getElementById('sort_direction'),
-														document.getElementById('is_s_text_type'),
-														document.getElementById('default_addon')
-														<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
-														<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
-										);
-						
-						}
-							
-					}
-					
-			<TMPL_ELSE>
-			
-			           
+				function custom_filter(){				
+						filter_data();
+				}
+				
 			</TMPL_IF> 
 			
 			
@@ -883,7 +839,9 @@
 
 					var is_apply_date = document.getElementById('is_check_date').checked;
 					
-					if(is_apply_date){
+					//if(is_apply_date){
+					
+					
 					
 							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start_date,end_date,start_alt_date,end_alt_date,is_check_date,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
 									document.getElementById('s_text'),
@@ -904,7 +862,7 @@
 									<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
 									<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
 							);
-					}
+					/*}
 					
 					else{
 						
@@ -924,7 +882,7 @@
 												<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
 							); 
 					
-					}		
+					}*/		
 					
 			} // end of filter data
 			

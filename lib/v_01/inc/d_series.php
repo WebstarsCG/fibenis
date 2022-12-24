@@ -428,10 +428,24 @@
 	 
 	 
 	// setcookie("per_page",@$_GET['page']);
+	
+		// check scroll sort action
+		
+		 $ss_axn =  $G->get_cookies_ii(['key'      => $P_V['cookies_id'].'ss_axn',
+										   'key_id'   => 'ss_axn',
+										   'value'     => @$_GET['ss_axn'],
+										   'default'   => @$_GET['ss_axn'],
+										   'is_expire' => @$P_V['is_cookies_expire']]);
+		
+		if(@$_GET['ss_axn']){
 	 
-		$get_per_page =  $G->get_cookies($P_V['cookies_id'].'get_per_page',@$_GET['page'],@$_GET['page'],@$P_V['is_cookies_expire']);
+			$per_page 	  = @$_GET['page'] ?? $D_DEFAULT['show_default_rows'];
+	  
+		}else{
+			$get_per_page =  $G->get_cookies($P_V['cookies_id'].'get_per_page',@$_GET['page'],@$_GET['page'],@$P_V['is_cookies_expire']);
 	 
-		 $per_page =  (@$get_per_page)?@$get_per_page:$show_default_rows;
+			$per_page 	  =  (@$get_per_page)?@$get_per_page:$show_default_rows;
+		}
 	  
 		if(!@$D_SERIES['show_all_rows']){
 		
