@@ -8,9 +8,8 @@
         >
         
         <TMPL_IF HIDE_SNO>
-            <td class="align_RM">			
-            <TMPL_VAR record_counter>
-                <!-- <script language="javascript" type="text/JavaScript">pager.write_item_number(<TMPL_VAR NAME=__counter__>);</script>						 -->
+            <td class="align_RM" id="SNO_<TMPL_VAR __counter__>">			
+            <TMPL_VAR record_counter>             					
             </td>
         </TMPL_IF>
         
@@ -110,9 +109,7 @@
     <TMPL_IF is_narrow_down>		
         <tr class="row_even" style="display:none;" id="nd_wall_<TMPL_VAR key_id>"  ><!--<TMPL_VAR col_count>-->
             
-                
                 <td  id="nd_ground_<TMPL_VAR key_id>"  class="align_RM" colspan="<TMPL_VAR col_count>" style="padding:0px !important"></td>
-                
                 
         </tr>	
     </TMPL_IF>
