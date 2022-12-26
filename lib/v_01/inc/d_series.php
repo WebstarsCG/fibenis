@@ -202,7 +202,19 @@
 					}
 						
 				}	
+		
+			// delete
+			$D_MESSAGE		= [ 
+								'message'=> 'Successfully Deleted'
+							];	
+			
+			http_response_code(200);
+			header("content-type: application/ld+json"); 
+			echo json_encode($D_MESSAGE);
+			exit();
+			
 		}
+		
 		/**************************************************************************************************************/	 
 	
 	 $OREDR_DIRECTION=array();

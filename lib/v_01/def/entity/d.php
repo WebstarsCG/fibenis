@@ -265,6 +265,8 @@
 								'attr' => [ 'width'=>"12%"],
 								
 								'js_call'=> 'show_user_info_2l',
+								
+								'is_sort'=>'timestamp_punch'
 									 
 								),
 								
@@ -331,7 +333,7 @@
 								  
 							), 
 								
-					
+					'date_filter'  => array( 'is_date_filter' =>1,'date_field' =>  'timestamp_punch'),	
 								
 				#export data
 				
