@@ -66,7 +66,7 @@
 		$lv['pager_prev'] 		= ($lv['pager_prev']<0)?0:$lv['pager_prev'];
 		$lv['pager_next']	  	= ($start+$per_page);	//calculate next page, if available or not							
 		$lv['pager_last']	  	= ($lv['pager_total']-1)*$per_page;
-		$lv['pager_current']    = ceil($start/$per_page)+1;
+		$lv['pager_current']    = ($nrow>0)?ceil($start/$per_page)+1:0;
 		$lv['pager_has_next']	= ($lv['pager_total']>=$lv['pager_current'])?1:0;
 
 		return $lv;
