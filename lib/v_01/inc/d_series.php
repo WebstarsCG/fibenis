@@ -124,7 +124,6 @@
 		
 		// show default
 		
-		
 		$default_rows 	   = @$D_SERIES['show_default_rows']?@$D_SERIES['show_default_rows']:@$_SESSION['show_default_rows'];		 
 		$show_default_rows =  ($default_rows)?$default_rows:$D_DEFAULT['show_default_rows'];
 		   
@@ -135,12 +134,37 @@
 		@$D_SERIES['del_permission'] = (@$D_SERIES['del_permission'])?@$D_SERIES['del_permission']:['able_del'=>0];
 		@$D_SERIES['prime_index']    = (@$D_SERIES['prime_index'])?@$D_SERIES['prime_index']:array_keys($D_SERIES['data'])[0]; 
 	 
-		if(@$D_SERIES['mode']){
-				
+		if(@$D_SERIES['mode']){				
 			$D_SERIES=set_mode($D_SERIES);	
 		}
 	 
+		// cookie id
+		if(@$_GET['filter_off_id']){ 
+			 $P_V['f_off_data'] 	  = explode('[C]',@$_GET['filter_off_id']);		
+			 $P_V['f_off_cookies_id'] = $app_key.'_'. @$P_V['f_off_data'][0].@$P_V['f_off_data'][1];		 
+		} 
+		
+		$P_V['show']		 		= (@$D_SERIES['clear_history'])?1:@$_GET['show'];		
+		$P_V['is_cookies_expire'] 	= (@$_GET['filter_off_id'])?0:$P_V['show'];		
+	 	$P_V['cookies_id'] 			= (@$P_V['f_off_cookies_id'])?@$P_V['f_off_cookies_id']:$app_key;
+		
+				/**********summary action*/
+		if(isset($_GET['sum_axn'])){
+
+			$P_V['temp_filter'] = @$_COOKIE[$P_V['cookies_id'].'_where_filter'];			
+			http_response_code(200);
+			header('Content-type:application/json');
+			echo json_encode(get_summary(['summary'	 => @$D_SERIES['summary_data'],
+							'table_name' =>	@$D_SERIES['table_name'],
+							'G'			 => $G,
+							'rdsql'		 => $rdsql,
+							'where'		 => $P_V['temp_filter'],
+							'mode'  	 => 'fill',											
+						]));
+			exit();		
 				
+		} // end
+	 
 		/*******************************************************************************************************************************************/	 
 		
 		if(isset($_POST['DEL'])){
@@ -236,24 +260,7 @@
 	 }  
 	 
 	 
-	 	if(@$_GET['filter_off_id']){ 
-
-			 $P_V['f_off_data'] = explode('[C]',@$_GET['filter_off_id']);
-		
-			 $P_V['f_off_cookies_id'] = $app_key.'_'. @$P_V['f_off_data'][0].@$P_V['f_off_data'][1];
-		 
-		} 
-	 
-		
-		//$_GET['filter_off'];
 	 	
-		//$P_V['is_cookies_expire']  = (@$_GET['show'])?@$_GET['show']:(@$_GET['filter_off_id']?1:0);
-		
-		$P_V['show']		 = (@$D_SERIES['clear_history'])?1:@$_GET['show'];
-		
-		$P_V['is_cookies_expire'] = (@$_GET['filter_off_id'])?0:$P_V['show'];
-		
-	 	$P_V['cookies_id'] = (@$P_V['f_off_cookies_id'])?@$P_V['f_off_cookies_id']:$app_key;
 		
 		$P_V['s_id'] =  $G->get_cookies($P_V['cookies_id'].'s_id',@$_GET['s_id'],@$_GET['s_id'],@$P_V['is_cookies_expire']);
 		
@@ -332,7 +339,9 @@
 	
 		$P_V['WHERE_FILTER'].=  @$D_SERIES['key_filter'];	
 	
-		$P_V['WHERE_FILTER'].=$WHERE_FILTER[0];						
+		$P_V['WHERE_FILTER'].=$WHERE_FILTER[0];	
+
+		$G->get_cookies($P_V['cookies_id'].'_where_filter',$P_V['WHERE_FILTER'],$P_V['WHERE_FILTER'],@$P_V['is_cookies_expire']);					
 		
 		$SORT_FIELD = array();
 		 
@@ -633,7 +642,12 @@
 		
 		$T->Addparam('is_action',$action_decision['action_type']);
 		
-		$T->AddParam('summary',get_summary());
+		$T->AddParam(get_summary(['summary'	 => @$D_SERIES['summary_data'],
+								'table_name' =>	@$D_SERIES['table_name'],
+								'G'			 => $G,
+								'rdsql'		 => $rdsql,
+								'where'		 => @$P_V['WHERE_FILTER']											
+					]));
 		
 		$T->AddParam('is_top_js',@$D_SERIES['js']['is_top']);		
 		$T->AddParam('top_js_file',@$D_SERIES['js']['top_js']);
@@ -2020,43 +2034,81 @@
 	/*************************************************************************************************/		
 	
 	
-	function get_summary(){
+	/*************************************************************************************************/		
+	// Preparing the summary data
+	// i/p: ['summary'	  => @$D_SERIES['summary_data'],
+	//   	 'table_name' => @$D_SERIES['table_name'],
+	//	     'G'		  => $G,
+	//	     'rdsql'	  => $rdsql,
+	//	     'where'	  => @$P_V['wHERE_FILTER'] 
+	//	     'mode'		  => frame/fill/all ]			
+	/*************************************************************************************************/
 	
-			global $D_SERIES;
-			
-			global $P_V;
-			
-			global $rdsql;
-			
-			$INFO = array();
-			
-			if(@$D_SERIES['summary_data']){
-			
-				for($summary_i =0; $summary_i<count(@$D_SERIES['summary_data']);  $summary_i++){
-					
-					$temp = array();
-					
-					$field_name =  @$D_SERIES['summary_data'][$summary_i]['field'];
-					$manipulation = @$D_SERIES['summary_data'][$summary_i]['manipulation'];
-					
-					$select = "SELECT  $field_name as summary_data FROM $D_SERIES[table_name] WHERE 1=1  $P_V[WHERE_FILTER] $manipulation ";
+	function get_summary($param){
 				
-					$exe_select				= $rdsql->exec_query($select,"Error!summary");
-						
-					$get_row 				= $rdsql->data_fetch_object($exe_select);
-					
-					$temp['field_name'] 	=  @$D_SERIES['summary_data'][$summary_i]['name'];
-					
-					$temp['summary_value'] =  (@$get_row->summary_data)?$get_row->summary_data:0;
-					
-					$temp['html']	       = @$D_SERIES['summary_data'][$summary_i]['html'];
-						
-					array_push($INFO,$temp);	
-					
-				}
-			} //
-			return $INFO;
-	  }
+		$lv = [];
+
+		$lv['frame'] = [];
+		$lv['fill'] = [];
+
+		$lv['action']['frame'] = function($in){ unset($in['summary_fill']); return $in;  };
+		$lv['action']['fill']  = function($in){ unset($in['summary_frame']); return $in;  };
+		$lv['action']['all']   = function($in){ return $in;  };
+
+		$lv['mode'] = @$lv['action'][@$param['mode']]?@$param['mode']:'all';
+		
+		// check existance of summary & table name
+		if(@$param['summary'] && @$param[table_name] ){
+		
+			// each summary
+			foreach(@$param['summary'] as $idx => $summary){
+				
+				// query
+				$lv['query']  = "SELECT  
+											$summary[field] as summary
+								FROM 
+											$param[table_name] 
+								WHERE
+											 1=1  ".(@$param[where])."".(@$summary['manipulation'])." LIMIT 0,1";				
+
+				// result												 
+				$lv['result'] = $param['rdsql']->exec_query($lv['query'],"Error!summary");						
+				
+				//fetch row as obj
+				$lv['row'] 	  = $param['rdsql']->data_fetch_object($lv['result']);
+			
+				// check value
+				$lv['value'] =  (@$lv['row']->summary) ?? 0;
+
+				$lv['label'] =  @$summary['name'] ?? @$summary['label'];	
+				$lv['token'] =  $param['G']->getCleanAlphaNum($lv['label']);
+
+
+
+				// prepare 
+				array_push($lv['frame'],
+							['label'	=> $lv['label'],								 
+							 'html'		=> $summary['html'],
+							 'token'	=> $lv['token']
+							]
+						);	
+
+				array_push($lv['fill'],
+						[							
+						 'value'	=> $lv['value'],
+						 'token'	=> $lv['token']
+						]
+					);	
+
+			} // end of each
+		} // end of existance
+		
+		$lv['summary'] = ['summary_frame'=>$lv['frame'],
+						  'summary_fill' =>$lv['fill']];
+
+		return $lv['action'][$lv['mode']]($lv['summary']);
+			
+	} // end of summary
 	  
 	  
 	  //todo unused 

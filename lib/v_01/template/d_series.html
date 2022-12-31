@@ -1,5 +1,7 @@
-	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=1.5"></script>
+	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=1.6"></script>
+	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/waiting_list.js"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/general.c3001.js"></script>
+	
 	
 	<TMPL_IF LAYOUT>
 		<link rel="stylesheet" href="<TMPL_VAR LIB_PATH>/css/<TMPL_VAR LAYOUT>.css">
@@ -230,22 +232,15 @@
 		</div>
 </TMPL_IF>
 		
-	<TMPL_IF summary>
-		
-		<table class="no_border_II"  width="95%" border="0" align="center">
-			<tr>
-				<td <TMPL_VAR html> >					
-					<TMPL_LOOP summary>
-						<div class="box_key_value">
-							<div ><TMPL_VAR field_name></div>
-							<div><TMPL_VAR summary_value></div>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-						</div>
-					</TMPL_LOOP> 
-				</td>
-			</tr>
-
-		</table>
+	<TMPL_IF SUMMARY_FRAME>		
+		<div class="container">
+			<TMPL_LOOP SUMMARY_FRAME>
+				<div class="box_key_value">
+					<div><TMPL_VAR LABEL></div>
+					<div <TMPL_VAR HTML> >[[wl.<TMPL_VAR TOKEN>]]</div>							
+				</div>
+			</TMPL_LOOP> 
+		</div>
 	</TMPL_IF>
 
 
@@ -566,10 +561,8 @@
 		  
  <script language="javascript" type="text/javascript">
  
-		// pre select menu
-		
-		if(ELEMENT('<TMPL_VAR APP_KEY>')!=undefined){
-		
+		// pre select menu		
+		if(ELEMENT('<TMPL_VAR APP_KEY>')!=undefined){		
 			ELEMENT('<TMPL_VAR APP_KEY>').style='color:#285BBA !important;';
 		}
 		
@@ -577,6 +570,18 @@
 		var list_array =new Array(<TMPL_VAR list_array> );
 		
 			$(function() {
+			
+				var wl= new WaitingList(document.body);
+				
+				wl.prepare();
+
+				<TMPL_LOOP SUMMARY_FILL>					
+					wl.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
+				</TMPL_LOOP>
+				
+				//setInterval(()=>{wl.getResponse({'url':'?'+G.$('PAGE_ID').value+'='+G.$('app_key').value+'&sum_axn=1'}) },2000);	
+			
+			
 				  $("#s_date").datepicker({
 										firstDay: 1,
 										dateFormat:'dd-mm-yy',

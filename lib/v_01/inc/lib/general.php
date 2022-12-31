@@ -2011,10 +2011,12 @@ function getEKV($entity_code,$key){
 		return $temp_content;
 	} //end
 	
+	//getClean
+	function getCleanAlphaNum($in){
+		return strtolower(preg_replace('/\W/i','',$in));
+	} // end		 
+	
 } // end of class
-	
-	
-
     
     
 ////////////////////////////////////////////////////////////////////////
