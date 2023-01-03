@@ -345,7 +345,7 @@
 		// cache path		
 		$F_SERIES['temp']['cache_form'] = $COACH['terminal_path']."/cache/F_$PAGE_CODE"."_".$USER_ROLE.".html";
 		
-		if(is_file($F_SERIES['temp']['cache_form'])){	
+		if(is_file($F_SERIES['temp']['cache_form']) && (!@$F_SERIES['is_cc'])){	
 			$F_SERIES['temp']['content_form']	=$G->getFileContent($F_SERIES['temp']['cache_form']);
 			
 		}else{
@@ -439,6 +439,9 @@
 							
 			$T->AddParam('after_prefill_action_template_var',
 						'<TMPL_IF KEY><TMPL_IF AFTER_PREFILL_ACTION>after_prefill_action("<TMPL_VAR KEY>");</TMPL_IF></TMPL_IF>');
+						
+			$T->AddParam('default_addon_var',
+						'<TMPL_IF DEFAULT_ADDON>E_V_PASS("default_addon","<TMPL_VAR DEFAULT_ADDON>");</TMPL_IF>');
 							
 			$T->AddParam('show_data_info_template_var',$G->getFileContent("$LIB_PATH/template/f_series_show_data.html"));
 			$T->AddParam('image_info_template_var',$G->getFileContent("$LIB_PATH/template/f_series_image_info.html"));
@@ -464,6 +467,7 @@
 			$TFA->AddParam('is_save_form',@$F_SERIES['is_save_form']);			
 			$TFA->AddParam('after_prefill_action',@$F_SERIES['after_prefill_action']);
 			
+			
 			$TFA->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['key']));
 			
 			#set_system_log:
@@ -484,6 +488,9 @@
 				$TFA->AddParam('message',$F_MESSAGE);
 		}
 		
+		// passes
+		echo "DA".$DEFAULT_ADDON;
+		$TFA->AddParam('default_addon',$DEFAULT_ADDON);
 		
 		// template output			
 		$PAGE_INFO = $TFA->output();

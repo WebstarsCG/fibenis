@@ -101,7 +101,9 @@
 					
 					G.showLoader('Sending your request..');
 					
-					const url = "?<TMPL_VAR F_SERIES>=<TMPL_VAR APP_KEY>";
+					const da_axn = (G.$('default_addon').value.length>0)?'&default_addon='+G.$('default_addon').value:'';
+					
+					const url = "?<TMPL_VAR F_SERIES>=<TMPL_VAR APP_KEY>"+da_axn;
 					fetch(url, {
 						method : "POST",
 						body: new FormData(document.getElementById("PUB_A")),
@@ -1842,7 +1844,10 @@
 			<TMPL_LOOP plugin_info></TMPL_LOOP>
 						
 			//after prefill action
-			<TMPL_VAR AFTER_PREFILL_ACTION_TEMPLATE_VAR>			
+			<TMPL_VAR AFTER_PREFILL_ACTION_TEMPLATE_VAR>	
+
+			// default addon
+			<TMPL_VAR DEFAULT_ADDON_VAR>			
 						
 			// focusing						
 			//add_focus_style_object({elements:[<TMPL_VAR FIELD_CSV>],
