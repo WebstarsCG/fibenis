@@ -632,6 +632,8 @@
 		
 		$T->AddParam('is_load_by_scroll',@$D_SERIES['is_load_by_scroll']);
 		
+		$T->AddParam('has_child_page',@$D_SERIES['has_child_page']);
+		
 		$T->AddParam('hide_show_all',@$D_SERIES['hide_show_all']);
 		
 		$T->AddParam('title',@$D_SERIES['title']);
