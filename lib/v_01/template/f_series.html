@@ -101,12 +101,15 @@
 					
 					G.showLoader('Sending your request..');
 					
-					const da_axn = (G.$('default_addon').value.length>0)?'&default_addon='+G.$('default_addon').value:'';
-					
+					// default addon action
+					const da_axn = (G.$('default_addon').value.length>0)?'&default_addon='+G.$('default_addon').value:'';					
 					const url = "?<TMPL_VAR F_SERIES>=<TMPL_VAR APP_KEY>"+da_axn;
+
+					// form data
+					const form_data = new FormData(document.getElementById("PUB_A"));
 					fetch(url, {
 						method : "POST",
-						body: new FormData(document.getElementById("PUB_A")),
+						body: form_data,
 						
 					}).then(
 						response => response.json() // 
@@ -114,7 +117,14 @@
 						(html)=>{
 							ELEMENT('inpage_message').className=`block_${html.status}`;				    
 							fade_in_out('#inpage_message',5000,html.message);
+							
+							if(html.last_insert){
+									const child_to_parent = html.last_insert;
+									window.parent.postMessage(JSON.stringify(child_to_parent));
+							}
+							
 							G.hideLoader();
+							
 						}
 					);
 					
