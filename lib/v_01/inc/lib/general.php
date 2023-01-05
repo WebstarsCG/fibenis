@@ -2014,7 +2014,12 @@ function getEKV($entity_code,$key){
 	//getClean
 	function getCleanAlphaNum($in){
 		return strtolower(preg_replace('/\W/i','',$in));
-	} // end		 
+	} // end
+
+	//get number only
+	function getCleanNum($in){
+		return strtolower(preg_replace('/\D/i','',$in));
+	} // end	
 	
 } // end of class
     
