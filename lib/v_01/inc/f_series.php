@@ -295,6 +295,13 @@
 						
 				} // end
 				
+				// get_last_insert
+				if(is_int(@$F_SERIES['get_last_insert'])){	
+					$F_MESSAGE['last_insert'] = array_merge($_POST,['id'=>$row_id,
+															'default_addon'=>@$_GET['default_addon']]);
+				
+				}
+				
 				http_response_code(200);
 				header("content-type: application/ld+json"); 
 				echo json_encode($F_MESSAGE);
@@ -318,8 +325,9 @@
 				
 					if(is_int($F_SERIES['get_last_insert'])){						
 						$F_SERIES['temp']['last_insert'] =  json_encode(array_merge($_POST,['id'=>$row_id,
-																							'default_addon'=>json_decode(@$_GET['default_addon'],true)]));						
-					}
+																							'default_addon'=>json_decode(@$_GET['default_addon'],true)]));							
+						
+					} // end
 					
 					//setcookie($uniq_trans_key."_last_insert",$F_SERIES['temp']['last_insert'],(time()+360));
 				
@@ -489,7 +497,6 @@
 		}
 		
 		// passes
-		echo "DA".$DEFAULT_ADDON;
 		$TFA->AddParam('default_addon',$DEFAULT_ADDON);
 		
 		// template output			
