@@ -102,9 +102,9 @@
 							</select>
 							 
 							<input class="button" type="button" id="go_multi_select"  name="go_multi_select" value="Go"  onclick="JavaScript:custom_filter();" />
-							<input type="hidden" name="<TMPL_VAR field_id>_hidden" id="<TMPL_VAR field_id>_hidden" 
+							<input type="hidden" name="<TMPL_VAR multi_value>" id="<TMPL_VAR multi_value>" 
 									data-filter-type='CF' value="";>
-							
+						
 							
 					</TMPL_IF>
 					
@@ -250,15 +250,15 @@
     		
 		<table  id="primary_table" <TMPL_IF table_attr> <TMPL_VAR table_attr><TMPL_ELSE>class="basic" width="100%" cellpadding=0 cellspacing="0" </TMPL_IF>>
 			
-			<TMPL_IF hide_header>
+			<TMPL_UNLESS hide_header>
 				
 			<thead >
 			
 				<tr id="desk_header">
 			
-					<TMPL_IF HIDE_SNO>
+					<TMPL_UNLESS HIDE_SNO>
 					<th width="5%">S.No</th>
-					</TMPL_IF>
+					</TMPL_UNLESS>
 				
 					<TMPL_IF able_del>
 						<th width="5%"><input id="master_check_box" name="master_check_box"  type="checkbox" onclick="JavaScript:check_box_action(this,ELEMENT('COUNTER').value);">
@@ -304,7 +304,7 @@
 			
 				</tr>
 			</thead>
-			</TMPL_IF>
+			</TMPL_UNLESS>
 			
 			<tbody id='desk_data'>
 				<TMPL_VAR DESK_CONTENT>				
@@ -429,31 +429,40 @@
 			
 		
 			
-	<input type='hidden' id='d_series_config' data-is-load-by-scroll="<TMPL_VAR is_load_by_scroll>"  value="" >
-	<TMPL_UNLESS hide_pager>
-		<div class="box_filter a_block box_right" id="pager_area">
-			<TMPL_IF is_load_by_scroll>
-				<input type='hidden' id='pager_start' data-pager='0'>
-				<input type='hidden' id='pager_prev'  data-pager='<TMPL_VAR pager_prev>'>
-				
-				<input type='hidden' id='pager_current' data-pager='<TMPL_VAR pager_current>'>
-				<input type='hidden' id='pager_total'  data-pager='<TMPL_VAR pager_total>'>
-				
-				<input type='hidden' id='pager_next' data-pager='<TMPL_VAR pager_next>'>
-				<input type='hidden' id='pager_last' data-pager='<TMPL_VAR pager_last>'>
+	<input type='hidden' id='d_series_config' 
+			data-is-load-by-scroll="<TMPL_VAR is_load_by_scroll>"  
+			data-has-child-page='<TMPL_VAR HAS_CHILD_PAGE>'
+			data-show-all-rows='<TMPL_VAR SHOW_ALL_ROWS>'
+			data-hide-sno ='<TMPL_VAR HIDE_SNO>'
+			data-has-summary='0'
+			value="" >
 			
-			<TMPL_ELSE>	
-				<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this,0);'>First</a>				
-				<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:pager_act(this,0);'>&nbsp;&laquo;&nbsp;</a>				
-				<span id='pager_current' data-pager="<TMPL_VAR pager_current>"><TMPL_VAR pager_current></span> of
-				<span id='pager_total' data-pager="<TMPL_VAR pager_total>"><TMPL_VAR pager_total></span>											
-				<a id='pager_next' data-pager='<TMPL_VAR pager_next>' 
-				<TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this,0);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
-				<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this,0);'>Last</a>
-			</TMPL_IF>
-				<input type="hidden" id='pager_loaded_rows' data-pager=''  /> 	 	
-			<input type="hidden" id='pager_action' data-pager=''  />
-		</div>				
+	<TMPL_UNLESS SHOW_ALL_ROWS>		
+		<TMPL_UNLESS hide_pager>
+			<div class="box_filter a_block box_right" id="pager_area">
+				<TMPL_IF is_load_by_scroll>
+					<input type='hidden' id='pager_start' data-pager='0'>
+					<input type='hidden' id='pager_prev'  data-pager='<TMPL_VAR pager_prev>'>
+					
+					<input type='hidden' id='pager_current' data-pager='<TMPL_VAR pager_current>'>
+					<input type='hidden' id='pager_total'  data-pager='<TMPL_VAR pager_total>'>
+					
+					<input type='hidden' id='pager_next' data-pager='<TMPL_VAR pager_next>'>
+					<input type='hidden' id='pager_last' data-pager='<TMPL_VAR pager_last>'>
+				
+				<TMPL_ELSE>	
+					<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this,0);'>First</a>				
+					<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:pager_act(this,0);'>&nbsp;&laquo;&nbsp;</a>				
+					<span id='pager_current' data-pager="<TMPL_VAR pager_current>"><TMPL_VAR pager_current></span> of
+					<span id='pager_total' data-pager="<TMPL_VAR pager_total>"><TMPL_VAR pager_total></span>											
+					<a id='pager_next' data-pager='<TMPL_VAR pager_next>' 
+					<TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this,0);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
+					<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this,0);'>Last</a>
+				</TMPL_IF>
+					<input type="hidden" id='pager_loaded_rows' data-pager=''  /> 	 	
+					<input type="hidden" id='pager_action' data-pager=''  />
+			</div>				
+		</TMPL_UNLESS>
 	</TMPL_UNLESS>
 		
 	</form>
@@ -577,7 +586,6 @@
 				wl.summary= new WaitingList();
 				</TMPL_IF>
 			
-				
 				//setInterval(()=>{wl.getResponse({'url':'?'+G.$('PAGE_ID').value+'='+G.$('app_key').value+'&sum_axn=1'}) },2000);	
 			
 			
@@ -682,7 +690,6 @@
 					</TMPL_IF>
 					
 					
-					
 					<TMPL_VAR get_cus_filter>
 					
 					<TMPL_IF pre_sort_by>
@@ -709,7 +716,10 @@
 					wl.desk.prepare(G.$('desk_data'));
 					
 					<TMPL_IF SUMMARY_FRAME>		
-					wl.summary.prepare(G.$('fbn-desk-summary'));
+						wl.summary.prepare(G.$('fbn-desk-summary'));
+						d_series.setDeskConfig('has-summary',1);
+					<TMPL_ELSE>
+						d_series.setDeskConfig('has-summary',0);
 					</TMPL_IF>
 
 					<TMPL_LOOP SUMMARY_FILL>					
@@ -825,7 +835,6 @@
 			
 			function pager_act(start_page,is_scroll_action){
 			
-			
 				E_V_PASS('start_page',start_page.dataset.pager);
 
 				if(is_scroll_action==1){
@@ -916,13 +925,10 @@
 
 			const matches = document.querySelectorAll("td[data-js]");
 			for(var element of matches){
-
-				console.log('---'+element.dataset.js);	
-
 				element.innerHTML = JS_CAll[element.dataset.js](element.dataset.p);
 			}
 			
-			if(G.$('COUNTER')){			
+			if(G.$('COUNTER') && G.$('pager_loaded_rows') && G.$('pager_loaded_rows')){			
 				G.$('pager_loaded_rows').dataset.pager=Number(G.$('pager_loaded_rows').dataset.pager)+Number(G.$('COUNTER').value);
 			}
 			

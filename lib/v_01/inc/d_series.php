@@ -574,17 +574,11 @@
 		
 		$P_V['get_header']=1;
 		
-		$P_V['get_sno']=1;
-		
 		if(@$D_SERIES['hide_header']==1)
 		{
 				$P_V['get_header'] = 0;
 		}
-		if(@$D_SERIES['hide_sno']==1)
-		{
-				$P_V['get_sno']=0;
-						
-		}
+		
 		
 	 /***23-sep*****To Display a  action field by--->is_edit is_view flag************/
 		
@@ -626,7 +620,7 @@
 		
 		$T->AddParam('PAGE_ID',$PAGE);
 		
-		$T->AddParam('hide_header',$P_V['get_header']);
+		$T->AddParam('hide_header',@$D_SERIES['hide_header']);
 		
 		$T->AddParam('hide_pager',@$D_SERIES['hide_pager']);
 		
@@ -634,13 +628,15 @@
 		
 		$T->AddParam('has_child_page',@$D_SERIES['has_child_page']);
 		
+		$T->AddParam('show_all_rows',@$D_SERIES['show_all_rows']);
+		
 		$T->AddParam('hide_show_all',@$D_SERIES['hide_show_all']);
 		
 		$T->AddParam('title',@$D_SERIES['title']);
 		
 		$T->AddParam('table_attr',@$D_SERIES['table_attr']);
 		
-		$T->Addparam('hide_sno',$P_V['get_sno']);
+		$T->Addparam('hide_sno',@$D_SERIES['hide_sno']);
 		
 		$T->Addparam('is_action',$action_decision['action_type']);
 		
@@ -697,7 +693,6 @@
 		
 		
 		$P_V['custom_filter'] = custom_filter();
-		
 		
 		$T->AddParam('custom_sort_label',@$D_SERIES['set']['label']);
 		$T->AddParam('custom_sort_by',custom_list_sort());
