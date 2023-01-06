@@ -565,15 +565,17 @@
 		if(ELEMENT('<TMPL_VAR APP_KEY>')!=undefined){		
 			ELEMENT('<TMPL_VAR APP_KEY>').style='color:#285BBA !important;';
 		}
-		
-		
+				
 		var list_array =new Array(<TMPL_VAR list_array> );
 		var wl={};
-			$(function() {
+		
+		$(function() {
 			
 				wl.desk= new WaitingList();
-				wl.summary= new WaitingList();
 				
+				<TMPL_IF SUMMARY_FRAME>		
+				wl.summary= new WaitingList();
+				</TMPL_IF>
 			
 				
 				//setInterval(()=>{wl.getResponse({'url':'?'+G.$('PAGE_ID').value+'='+G.$('app_key').value+'&sum_axn=1'}) },2000);	
@@ -705,7 +707,10 @@
 
 					// wl	
 					wl.desk.prepare(G.$('desk_data'));
+					
+					<TMPL_IF SUMMARY_FRAME>		
 					wl.summary.prepare(G.$('fbn-desk-summary'));
+					</TMPL_IF>
 
 					<TMPL_LOOP SUMMARY_FILL>					
 						wl.summary.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
@@ -715,7 +720,7 @@
 						window.addEventListener("message",receiveChildMessage,false);
 					</TMPL_IF>
 				   
-			});
+			}); // preload 
 			
 			
 			
@@ -804,9 +809,9 @@
 								},//rendermenu
 								
 							//Menu Resize:
-                                                                _resizeMenu: function(){                                         
-                                                                        this.menu.element.outerWidth(270);
-                                                                },
+							_resizeMenu: function(){                                         
+									this.menu.element.outerWidth(270);
+							},
 						});//widget
 		               
 			}//end auto data
@@ -815,12 +820,11 @@
 					E_V_PASS('sort_field',sort_col_id);
 					E_V_PASS('sort_direction',GET_E_VALUE('sort_col_'+sort_col_id));
 					d_series.setDeskSortAction();
-					filter_data();
+					filter_data();		
 			}
 			
 			function pager_act(start_page,is_scroll_action){
 			
-				console.log('Scroll---'+is_scroll_action);
 			
 				E_V_PASS('start_page',start_page.dataset.pager);
 
@@ -888,18 +892,17 @@
 					crypt_url(`?${param}&show=1`);
 			}
 			
-			
 			function multiple_select_data(set_value){
-				      var selectedOptionValue = $('#'+set_value+'').val();
-				      
-				      //alert(selectedOptionValue);
-				      if(selectedOptionValue==null){
-					      E_V_PASS(set_value+'_hidden',-1);
-				      }
-				      else{
-					 E_V_PASS(set_value+'_hidden',selectedOptionValue);
-				      }
-				      //document.getElementById("is_multi_"+set_value).checked = true;
+				var selectedOptionValue = $('#'+set_value+'').val();
+				  
+				  //alert(selectedOptionValue);
+				  if(selectedOptionValue==null){
+					E_V_PASS(set_value+'_hidden',-1);
+				  }
+				  else{
+					E_V_PASS(set_value+'_hidden',selectedOptionValue);
+				  }
+				  //document.getElementById("is_multi_"+set_value).checked = true;
 			} // multipass								 
 			
 
@@ -952,54 +955,28 @@
 			<TMPL_ELSE>
 			
 				function filter_data(){
-
-					var is_apply_date = document.getElementById('is_check_date').checked;
 					
-					//if(is_apply_date){
-					
-					
-					
-							show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start_date,end_date,start_alt_date,end_alt_date,is_check_date,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
-									document.getElementById('s_text'),
-									document.getElementById('s_text_hidden'),		
-									document.getElementById('s_text_id'),		
-									document.getElementById('page'),
-									document.getElementById('s_date'),
-									document.getElementById('to_date'),
-									document.getElementById('s_date_hidden'),
-									document.getElementById('to_date_hidden'),
-									document.getElementById('is_check_date'),
-									document.getElementById('start_page'),
-									document.getElementById('sort_field'),
-									document.getElementById('sort_direction'),
-									document.getElementById('is_s_text_type'),
-									document.getElementById('default_addon'),
-									document.getElementById('menu_off')
-									<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
-									<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
-							);
-					/*}
-					
-					else{
-						
-						       show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,is_check_date,page,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
-												document.getElementById('s_text'),
-												document.getElementById('s_text_hidden'),
-												document.getElementById('s_text_id'),	
-												document.getElementById('is_check_date'),	
-												document.getElementById('page'),
-												document.getElementById('start_page'),
-												document.getElementById('sort_field'),
-												document.getElementById('sort_direction'),
-												document.getElementById('is_s_text_type'),
-												document.getElementById('default_addon'),
-												document.getElementById('menu_off')
-												<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
-												<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
-							); 
-					
-					}*/		
-					
+						show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start_date,end_date,start_alt_date,end_alt_date,is_check_date,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
+								document.getElementById('s_text'),
+								document.getElementById('s_text_hidden'),		
+								document.getElementById('s_text_id'),		
+								document.getElementById('page'),
+								document.getElementById('s_date'),
+								document.getElementById('to_date'),
+								document.getElementById('s_date_hidden'),
+								document.getElementById('to_date_hidden'),
+								document.getElementById('is_check_date'),
+								document.getElementById('start_page'),
+								document.getElementById('sort_field'),
+								document.getElementById('sort_direction'),
+								document.getElementById('is_s_text_type'),
+								document.getElementById('default_addon'),
+								document.getElementById('menu_off')
+								<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
+								<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
+					);
+				
+				
 			} // end of filter data
 			
 			
@@ -1011,20 +988,7 @@
 				document.getElementById("PUB_EXP").submit();					
 			}
 			
-			
-			//<TMPL_IF csv_file_name>				
-			//	open_csv();			
-			//</TMPL_IF>
-			
-			function open_csv(){
-					
-					//window.open('<TMPL_VAR csv_file_name>');
-					
-					//document.location.href="";
-			}	
-			
 			// label
-			
 			function export_label(key){
 				
 				E_V_PASS('export_label',1);
@@ -1038,7 +1002,6 @@
 			</TMPL_IF>
 			
 			function open_file(){
-					
 					window.open('<TMPL_VAR label_file_name>');					
 					document.location.href="";
 			}
