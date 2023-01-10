@@ -45,20 +45,20 @@
 			<!--- Search Filter off --->
 			
 			<TMPL_IF search_filter_off>			
-				<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />			
+				<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:d_series.searchAutoComplete();" value="" class="w_125" />			
 			<TMPL_ELSE>				
 				<TMPL_IF LIST_ARRAY>			
 					<label>Search by</label>								
-					<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />					
+					<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:d_series.searchAutoComplete();" value="" class="w_125" />					
 					<input type="button" onclick="JavaScript:d_series.setDeskStartAction();filter_data();" value=" Go "class="button"/>					
 				<TMPL_ELSE>
-					<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:auto_data();" value="" class="w_125" />			
+					<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:d_series.searchAutoComplete();" value="" class="w_125" />			
 				</TMPL_IF>	
 			</TMPL_IF>
 			
 			<!--- Search Hidden Variables--->
 			
-			<input type="hidden" name="s_text_hidden" id="s_text_hidden" onKeyPress="JavaScript:auto_data();" value="" />
+			<input type="hidden" name="s_text_hidden" id="s_text_hidden" onKeyPress="JavaScript:d_series.searchAutoComplete();" value="" />
 			
 			<input type="hidden" name="s_text_id" id="s_text_id"  value="" />
 			
@@ -112,7 +112,7 @@
 					
 					<TMPL_IF search_text>		
 						<font class="spliter">|</font>
-						<input type="text" id="<TMPL_VAR field_id>"   name="<TMPL_VAR field_id>" placeholder="<TMPL_VAR placeholder>" onKeyPress="JavaScript:auto_data();" value="" class="w_125" />
+						<input type="text" id="<TMPL_VAR field_id>"   name="<TMPL_VAR field_id>" placeholder="<TMPL_VAR placeholder>" onKeyPress="JavaScript:d_series.searchAutoComplete();" value="" class="w_125" />
 						
 						<input type="button" onclick="JavaScript:custom_filter();" value=" Go "class="button"/>
 					</TMPL_IF>
@@ -166,7 +166,7 @@
 					
 						
 					<TMPL_IF custom_sort_by>
-						Sort by <select id="sort_by" name="sort_by" onchange="JavaScript:filter_data();"  >
+						Sort by <select id="sort_by" name="sort_by" onchange="JavaScript:d_series.setDeskStartAction();filter_data();"  >
 								<option value="-1"><TMPL_IF CUSTOM_SORT_LABEL><TMPL_VAR CUSTOM_SORT_LABEL><TMPL_ELSE>Select Sort Option</TMPL_IF></option>
 								<TMPL_LOOP custom_sort_by>
 										<option value="<TMPL_VAR sort_value>"> <TMPL_VAR text_option></option>
@@ -584,61 +584,36 @@
 				wl.desk= new WaitingList();
 				
 				<TMPL_IF SUMMARY_FRAME>		
-				wl.summary= new WaitingList();
+					wl.summary= new WaitingList();
 				</TMPL_IF>
-			
-				//setInterval(()=>{wl.getResponse({'url':'?'+G.$('PAGE_ID').value+'='+G.$('app_key').value+'&sum_axn=1'}) },2000);	
-			
-			
-				  $("#s_date").datepicker({
-										firstDay: 1,
-										dateFormat:'dd-mm-yy',
-										numberOfMonths:1,
-										altField: "#s_date_hidden",
-										altFormat: "yy-mm-dd",
-								 });
-													
-				   $("#s_date").datepicker( "setDate", "<TMPL_VAR start_date>" );
+									
+				// set date filter
+				d_series.setDateFilter({'start':'<TMPL_VAR start_date>',
+				                        'end'  :'<TMPL_VAR end_date>',
+										'isCheck':'<TMPL_VAR is_apply_date>'});
 				   
 				   
-				   $("#to_date").datepicker({
-										firstDay: 1,
-										dateFormat:'dd-mm-yy',
-										numberOfMonths:1,
-										altField: "#to_date_hidden",
-										altFormat: "yy-mm-dd",
-								 });
-													
-				   $("#to_date").datepicker( "setDate", "<TMPL_VAR end_date>" );
-				   
-				   // prefill
-				   <TMPL_IF SORT_FIELD>		
-						E_V_PASS("sort_field",'<TMPL_VAR SORT_FIELD>');	
-						E_V_PASS("sort_col_<TMPL_VAR 'SORT_FIELD'>","<TMPL_VAR 'DIRECTION_UP_DOWN'>");
-						E_H_PASS("sort_icon_<TMPL_VAR 'SORT_FIELD'>",SORT_ICON[<TMPL_VAR 'DIRECTION_UP_DOWN'>-1]);	
-						G.set_global('last_sort_col','<TMPL_VAR SORT_FIELD>');				
-					</TMPL_IF>
+			   // prefill
+			   <TMPL_IF SORT_FIELD>		
+					E_V_PASS("sort_field",'<TMPL_VAR SORT_FIELD>');	
+					E_V_PASS("sort_col_<TMPL_VAR 'SORT_FIELD'>","<TMPL_VAR 'DIRECTION_UP_DOWN'>");
+					E_H_PASS("sort_icon_<TMPL_VAR 'SORT_FIELD'>",SORT_ICON[<TMPL_VAR 'DIRECTION_UP_DOWN'>-1]);
+				</TMPL_IF>
+				
+				<TMPL_IF sort_by>
+					 E_V_PASS("sort_by",'<TMPL_VAR sort_by>');	
+				</TMPL_IF>
+				
+				<TMPL_IF SORT_DIRECTION>						
+					E_V_PASS("sort_direction",'<TMPL_VAR SORT_DIRECTION>');					
+				</TMPL_IF>	
+				
+				
 					
-					<TMPL_IF sort_by>
-						 E_V_PASS("sort_by",'<TMPL_VAR sort_by>');	
-					</TMPL_IF>
-					
-					<TMPL_IF SORT_DIRECTION>						
-						E_V_PASS("sort_direction",'<TMPL_VAR SORT_DIRECTION>');					
-					</TMPL_IF>	
-						
-					<TMPL_IF page>
-						E_V_PASS('page','<TMPL_VAR page>');
-					</TMPL_IF>	
-						
-					<TMPL_IF type>	
-						E_V_PASS('t_type','<TMPL_VAR type>');
-					</TMPL_IF>	
-					
-					<TMPL_IF is_apply_date>
-						document.getElementById('is_check_date').checked= true;					
-					</TMPL_IF>	
-					
+				<TMPL_IF page>
+					E_V_PASS('page','<TMPL_VAR page>');
+				</TMPL_IF>	
+				
 					<TMPL_IF message>
 					
 						<TMPL_IF CSV_FILE_NAME>			
@@ -683,7 +658,7 @@
 						
 						<TMPL_IF filter_value>
 								E_V_PASS('cus_filter','<TMPL_VAR cus_filter>');
-					</TMPL_IF>
+						</TMPL_IF>
 					
 					
 					<TMPL_IF is_s_text_data>
@@ -733,97 +708,6 @@
 				   
 			}); // preload 
 			
-			function auto_data(){
-						
-						$("#s_text").autocomplete({
-										
-							minLength: 2,
-							
-							source: list_array,
-								
-								
-							select: function( event, ui ) {
-									
-								document.getElementById('s_text_hidden').value=ui.item.id;
-							
-								document.getElementById('s_text_id').value=ui.item.s_type;
-								
-								document.getElementById('is_s_text_type').value=ui.item.is_s_text;
-								
-								//alert(ui.item.is_s_text);
-	
-								//return false;
-							}
-							
-						});
-						
-				//Hightlight the text:		
-							
-					String.prototype.replaceAt = function(index, char) {
-                    
-                                            return this.substr(0, index) + "<span style='font-weight:bold;'>" + char + "</span>";
-                                        
-					};//end replace
-					
-				
-                                        
-				        $.ui.autocomplete.prototype._renderItem = function(ul, item) {
-                                                
-                                                this.term = this.term.toLowerCase();
-                                                
-                                                var resultStr = item.label.toLowerCase();
-                                                
-                                                var txt = "";
-                                                
-                                                while (resultStr.indexOf(this.term) != -1) {
-                                                
-                                                        var index = resultStr.indexOf(this.term);
-                                                        
-                                                        txt = txt + item.label.replaceAt(index, item.label.slice(index, index + this.term.length));
-							
-                                                        resultStr = resultStr.substr(index + this.term.length);
-                                                        
-                                                        item.label = item.label.substr(index + this.term.length);
-                                                }//end while
-                        
-                                                return $("<li></li>").data("item.autocomplete", item).append("<a>" + txt + item.label + "</a>").appendTo(ul);
-
-					};//end renderItem
-             	                    
-							
-						
-					//Menu style:
-					
-			                      $.widget( "custom.autocomplete", $.ui.autocomplete, {
-                        
-                                                                _renderMenu: function( ul, items ) {
-									
-                                                                                    var that = this,
-                                                                                    
-                                                                                    currentCategory = "";
-                                                                                    
-                                                                                $.each( items, function( index, item ) {
-                                                                                    
-                                                                                    if ( item.category != currentCategory ) {
-                                                                                    
-												ul.append( "<li class='clr_green'>" + item.category + "</li>" );
-                                                                                    
-												currentCategory = item.category;
-                                                                                    
-											}//end if
-                                                                            
-												that._renderItemData( ul, item );
-										});//end each
-                                                                    
-								},//rendermenu
-								
-							//Menu Resize:
-							_resizeMenu: function(){                                         
-									this.menu.element.outerWidth(270);
-							},
-						});//widget
-		               
-			} // end auto data
 			
 			function sort_action(sort_col_id){
 					E_V_PASS('sort_field',sort_col_id);
@@ -893,8 +777,6 @@
 
 				return $lv;
 				
-				
-					
 			} // end
 			
 			
