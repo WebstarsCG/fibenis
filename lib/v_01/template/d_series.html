@@ -52,7 +52,7 @@
 					<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:d_series.searchAutoComplete();" value="" class="w_125" />					
 					<input type="button" onclick="JavaScript:d_series.setDeskStartAction();filter_data();" value=" Go "class="button"/>					
 				<TMPL_ELSE>
-					<input type="hidden" name="s_text" id="s_text" placeholder="Search text"  onKeyPress="JavaScript:d_series.searchAutoComplete();" value="" class="w_125" />			
+					<input type="hidden" name="s_text" id="s_text" placeholder="Search text"   value="" class="w_125" />			
 				</TMPL_IF>	
 			</TMPL_IF>
 			
@@ -584,7 +584,7 @@
 				wl.desk= new WaitingList();
 				
 				<TMPL_IF SUMMARY_FRAME>		
-					wl.summary= new WaitingList();
+				wl.summary= new WaitingList();
 				</TMPL_IF>
 									
 				// set date filter
@@ -594,117 +594,61 @@
 				   
 				   
 			   // prefill
-			   <TMPL_IF SORT_FIELD>		
-					E_V_PASS("sort_field",'<TMPL_VAR SORT_FIELD>');	
-					E_V_PASS("sort_col_<TMPL_VAR 'SORT_FIELD'>","<TMPL_VAR 'DIRECTION_UP_DOWN'>");
-					E_H_PASS("sort_icon_<TMPL_VAR 'SORT_FIELD'>",SORT_ICON[<TMPL_VAR 'DIRECTION_UP_DOWN'>-1]);
-				</TMPL_IF>
-				
-				<TMPL_IF sort_by>
-					 E_V_PASS("sort_by",'<TMPL_VAR sort_by>');	
-				</TMPL_IF>
-				
-				<TMPL_IF SORT_DIRECTION>						
-					E_V_PASS("sort_direction",'<TMPL_VAR SORT_DIRECTION>');					
-				</TMPL_IF>	
-				
-				
+			   d_series.setSort({'field'    	: '<TMPL_VAR SORT_FIELD>',
+								 'direction'	: '<TMPL_VAR SORT_DIRECTION>',
+								 'up_down'		: Number(<TMPL_VAR DIRECTION_UP_DOWN>),	
+								 'option_value'	: '<TMPL_VAR SORT_BY>',
+								 'pre_option_value'	: '<TMPL_VAR PRE_SORT_BY>'								 
+								});
+								
+				// search filter 
+				d_series.setSearchFilter({'s_text'    		: '<TMPL_VAR s_text_data>',
+										  's_text_hidden'	: '<TMPL_VAR s_id_data>',
+										  's_text_id'		: '<TMPL_VAR s_type_data>',	
+										  'is_s_text_type'	: '<TMPL_VAR is_s_text_data>'								 
+										});	
+								
 					
 				<TMPL_IF page>
 					E_V_PASS('page','<TMPL_VAR page>');
-				</TMPL_IF>	
-				
-					<TMPL_IF message>
+				</TMPL_IF>		
 					
-						<TMPL_IF CSV_FILE_NAME>			
-							bootbox.alert({
-									   'title'  : "Export CSV ",
-									   'message':'<TMPL_VAR message>',
-									   'size'   : 'small',
-										
-									buttons : {
-											ok: {
-												label: 'Open File',
-												className: 'btn-success'
-											},
-										},
-										
-									callback: function() {
-														
-												window.open('<TMPL_VAR CSV_FILE_NAME>');
-										}
+					
+				<TMPL_VAR get_cus_filter>
+					
+				<TMPL_IF is_load_by_scroll>
+				// onscroll load
+				document.addEventListener("scroll", (event) => {
+					
+					var lv = {};
+
+					lv.screen_rect = document.body.getBoundingClientRect();	
 								
-								});				
-						<TMPL_ELSE>					
-							bootbox.alert({'message':'<TMPL_VAR message>',
-									   'size'   : 'small'});
-						</TMPL_IF>
-						
-					</TMPL_IF>
-					
-					//alert('===================<TMPL_VAR s_text>');
-					//url 
-						<TMPL_IF s_text_data>	
-							E_V_PASS('s_text','<TMPL_VAR s_text_data>');
-						</TMPL_IF>		
-						
-						<TMPL_IF s_id_data>	
-							E_V_PASS('s_text_hidden','<TMPL_VAR s_id_data>');
-						</TMPL_IF>	
-						
-						<TMPL_IF s_type_data>	
-							E_V_PASS('s_text_id','<TMPL_VAR s_type_data>');
-						</TMPL_IF>
-						
-						<TMPL_IF filter_value>
-								E_V_PASS('cus_filter','<TMPL_VAR cus_filter>');
-						</TMPL_IF>
-					
-					
-					<TMPL_IF is_s_text_data>
-						  E_V_PASS('is_s_text_type','<TMPL_VAR is_s_text_data>');
-					</TMPL_IF>
-					
-					
-					<TMPL_VAR get_cus_filter>
-					
-					<TMPL_IF pre_sort_by>
-					   E_V_PASS('sort_by','<TMPL_VAR pre_sort_by>');
-					</TMPL_IF> 
-					
-					<TMPL_IF is_load_by_scroll>
-					// onscroll load
-					document.addEventListener("scroll", (event) => {
-						
-						var lv = {};
-
-						lv.screen_rect = document.body.getBoundingClientRect();	
-									
-						if(Math.floor(lv.screen_rect.bottom)==window.innerHeight){					
-							pager_act(G.$('pager_next'),1);
-						}
-					
-					});
-					</TMPL_IF>
+					if(Math.floor(lv.screen_rect.bottom)==window.innerHeight){					
+						pager_act(G.$('pager_next'),1);
+					}
+				
+				});
+				</TMPL_IF>
 					
 
-					// wl	
-					wl.desk.prepare(G.$('desk_data'));
-					
-					<TMPL_IF SUMMARY_FRAME>		
-						wl.summary.prepare(G.$('fbn-desk-summary'));
-						d_series.setDeskConfig('has-summary',1);
-					<TMPL_ELSE>
-						d_series.setDeskConfig('has-summary',0);
-					</TMPL_IF>
+				// wl	
+				wl.desk.prepare(G.$('desk_data'));
+				
+				<TMPL_IF SUMMARY_FRAME>		
+					wl.summary.prepare(G.$('fbn-desk-summary'));
+					d_series.setDeskConfig('has-summary',1);
+				<TMPL_ELSE>
+					d_series.setDeskConfig('has-summary',0);
+				</TMPL_IF>
 
-					<TMPL_LOOP SUMMARY_FILL>					
-						wl.summary.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
-					</TMPL_LOOP>
-					
-					<TMPL_IF HAS_CHILD_PAGE>
-						window.addEventListener("message",receiveChildMessage,false);
-					</TMPL_IF>
+				<TMPL_LOOP SUMMARY_FILL>					
+					wl.summary.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
+				</TMPL_LOOP>
+				
+				<TMPL_IF HAS_CHILD_PAGE>
+					window.addEventListener("message",receiveChildMessage,false);
+				</TMPL_IF>
 				   
 			}); // preload 
 			
@@ -866,14 +810,52 @@
 				
 			} // end of filter data
 			
-			
 			</TMPL_IF>
 			
+			// export csv file name		
+			function export_csv_file(){	
 			
-			function export_csv_file(){				
 				E_V_PASS('export_data',1);					
-				document.getElementById("PUB_EXP").submit();					
-			}
+				G.showLoader();
+				
+				// form data
+				const url = "?"+G.$('PAGE_ID').value+'='+G.$('app_key').value;
+				const form_data = new FormData(document.getElementById("PUB_EXP"));
+				
+				// url
+				fetch(url, {
+					method : "POST",
+					body: form_data,
+					
+				}).then(
+					response => response.json() // 
+				).then(
+					(obj)=>{
+					
+						G.hideLoader();
+						document.getElementById("PUB_EXP").reset();
+						
+						bootbox.alert({
+								   'title'  : "Export CSV ",
+								   'message':obj.message,
+								   'size'   : 'small',
+									
+								buttons : {
+										ok: {
+											label: 'Open File',
+											className: 'btn-success'
+										},
+									},
+									
+								callback: function() {														
+											window.open(obj.csv_file_name);
+								}
+							
+							});	
+					}
+				);		
+						
+			} // end of export
 			
 			// label
 			function export_label(key){
