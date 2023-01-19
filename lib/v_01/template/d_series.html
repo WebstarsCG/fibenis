@@ -1,4 +1,4 @@
-	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=1.6"></script>
+	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=2.0"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/waiting_list.js"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/general.c3001.js"></script>
 	
@@ -608,29 +608,11 @@
 										  'is_s_text_type'	: '<TMPL_VAR is_s_text_data>'								 
 										});	
 								
-					
-				<TMPL_IF page>
-					E_V_PASS('page','<TMPL_VAR page>');
-				</TMPL_IF>		
-					
+				d_series.setPage('<TMPL_VAR PAGE>');
+				d_series.setLoadByScroll('<TMPL_VAR is_load_by_scroll>');
+				d_series.setCrossBorderRelation('<TMPL_VAR has_cross_border_relations>');
 					
 				<TMPL_VAR get_cus_filter>
-					
-				<TMPL_IF is_load_by_scroll>
-				// onscroll load
-				document.addEventListener("scroll", (event) => {
-					
-					var lv = {};
-
-					lv.screen_rect = document.body.getBoundingClientRect();	
-								
-					if(Math.floor(lv.screen_rect.bottom)==window.innerHeight){					
-						pager_act(G.$('pager_next'),1);
-					}
-				
-				});
-				</TMPL_IF>
-					
 
 				// wl	
 				wl.desk.prepare(G.$('desk_data'));
@@ -646,10 +628,8 @@
 					wl.summary.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
 				</TMPL_LOOP>
 				
-				<TMPL_IF HAS_CHILD_PAGE>
-					window.addEventListener("message",receiveChildMessage,false);
-				</TMPL_IF>
-				   
+				
+				
 			}); // preload 
 			
 			

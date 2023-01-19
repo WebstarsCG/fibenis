@@ -627,7 +627,9 @@
 		
 		$T->AddParam('is_load_by_scroll',@$D_SERIES['is_load_by_scroll']);
 		
-		$T->AddParam('has_child_page',@$D_SERIES['has_child_page']);
+		$T->AddParam('has_cross_border_relations',json_encode((is_array(@$D_SERIES['has_cross_border_relations'])?
+													@$D_SERIES['has_cross_border_relations']:[]))
+					);
 		
 		$T->AddParam('show_all_rows',@$D_SERIES['show_all_rows']);
 		
