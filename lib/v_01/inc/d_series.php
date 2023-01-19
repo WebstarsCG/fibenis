@@ -492,9 +492,6 @@
 		if(@$_GET['page_axn']){
 			echo $PV['DESK_CONTENT'];
 			exit();
-			
-		}else{
-			
 		}
 		
 		
@@ -539,6 +536,10 @@
 								'action'=>'create the csv_file');
 						
 						$G->set_system_log($param);
+						
+						echo json_encode(['message'=>'Successfully Created',
+										 'csv_file_name'=>$csv_file_name]);
+						exit();
 				}
 		} // end of export
 		
@@ -701,6 +702,8 @@
 			$T->AddParam('pre_sort_by',$_GET['sort_by']);		
 		}
 		
+		
+		//print_r($P_V['custom_filter']);
 		$T->AddParam('custom_filter',$P_V['custom_filter'][0]);		
 		
 		//print_r( $WHERE_FILTER[1]);
@@ -857,7 +860,7 @@
 								
 								'button_name'	 => (@$D_SERIES['export_csv']['button_name'])?@$D_SERIES['export_csv']['button_name']:'Export CSV',
 								
-								'csv_file_name'	 => @$csv_file_name,
+								//'csv_file_name'	 => @$csv_file_name,
 								
 								'label_file_name'=>@$label_file_name
 								
@@ -867,11 +870,11 @@
 		$T->AddParam($URL =  array( 
 									'app_key' => $app_key,
 									
-									's_text'  => @$_GET['s_text'],
+									//'s_text'  => @$_GET['s_text'],
 									
 									'page'    =>  $per_page, //(@$_GET['page'])?$_GET['page']:$show_default_rows,
 									
-									'message' => @$P_V['message']
+									//'message' => @$P_V['message']
 						)
 					);
 
