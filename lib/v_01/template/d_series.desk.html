@@ -99,8 +99,7 @@
     
     
     <TMPL_IF __LAST__>
-        <input type="hidden" name="COUNTER" id="COUNTER" value="<TMPL_VAR __COUNTER__>"  />
-        
+        <input type="hidden" name="COUNTER" id="COUNTER" value="<TMPL_VAR __COUNTER__>"  />        
         <input type="hidden" name="D_COUNTER" id="D_COUNTER" value="<TMPL_VAR __COUNTER__>"  />
     </TMPL_IF>
     
@@ -117,3 +116,8 @@
 
 </TMPL_LOOP>
   <input type="hidden" id='pager_records' data-pager='<TMPL_VAR NUM_OF_ROWS>'  />
+  
+  <TMPL_UNLESS DATA_INFO>
+		<input type="hidden" name="COUNTER" id="COUNTER" value="0"  />        
+        <input type="hidden" name="D_COUNTER" id="D_COUNTER" value="0"  />
+  </TMPL_UNLESS>
