@@ -337,11 +337,12 @@
 							);
 	
 	
-		$P_V['WHERE_FILTER'].=  @$D_SERIES['key_filter'];	
+	$P_V['WHERE_FILTER'].=  @$D_SERIES['key_filter'];	
 	
 		$P_V['WHERE_FILTER'].=$WHERE_FILTER[0];	
 
 		$G->get_cookies($P_V['cookies_id'].'_where_filter',$P_V['WHERE_FILTER'],$P_V['WHERE_FILTER'],@$P_V['is_cookies_expire']);					
+		
 		
 		$SORT_FIELD = array();
 		 
@@ -1936,6 +1937,7 @@
 																		'key_id'	=> $P_V['field_id'],
 																		'value'		=> @$_GET[$P_V['field_id']],
 																		'default'	=> @$_GET[$P_V['field_id']]]);
+									
 							}// end
 					       
 						    // filter out
@@ -2024,7 +2026,20 @@
 					       
 					}
 					
-			 } // end count
+			 }else if((array_key_exists('show',@$_GET)==true) && (@$_GET['show']==1)){ // clear for show all case
+					
+						
+						$WHERE_FILTER='';
+						$PREE_DATA='';
+						foreach(@$D_SERIES['custom_filter'] as $filter_key => $filter_item){
+							
+							$get_value =  $G->get_cookies_ii([	'key'		=> $P_V['cookies_id'].'get_field_id'.$filter_key,
+																		'key_id'	=>  @$filter_item['field_id'],
+																		'value'		=> '',
+																		'default'	=> '']);	
+						}
+						
+			 }				 // end count
 				 
 			#	echo  $PREE_DATA; 
 				 
