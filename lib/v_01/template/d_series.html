@@ -206,7 +206,7 @@
 									   name="go_date" 
 									   id="go_date" 
 									   value="<TMPL_VAR show_all_label>" 									   
-									   onclick="JavaScript:d_series.clearFilter();show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR APP_KEY>');"
+									   onclick="JavaScript:d_series.clearFilter();d_series.freshDeskLoad();"
 									   
 									   />
 									   
@@ -274,7 +274,7 @@
 							
 							<a class = "sort"											
 							   style = "cursor:pointer"
-								onclick="JavaScript:sort_action(<TMPL_VAR SORT_ID>)">
+								onclick="JavaScript:d_series.doSortAction(<TMPL_VAR SORT_ID>)">
 								
 							<TMPL_VAR TH>
 												
@@ -436,6 +436,8 @@
 			data-hide-sno ='<TMPL_VAR HIDE_SNO>'
 			data-hide-pager ='<TMPL_VAR HIDE_PAGER>'
 			data-has-summary='0'
+			data-page-engine='<TMPL_VAR PAGE_ID>'
+			data-def-name='<TMPL_VAR APP_KEY>'				
 			value="" >
 			
 	<TMPL_UNLESS SHOW_ALL_ROWS>		
@@ -452,15 +454,14 @@
 					<input type='hidden' id='pager_last' data-pager='<TMPL_VAR pager_last>'>
 				
 				<TMPL_ELSE>	
-					<a id='pager_start' data-pager='0' onclick='JavaScript:pager_act(this,0);'>First</a>				
-					<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:pager_act(this,0);'>&nbsp;&laquo;&nbsp;</a>				
+					<a id='pager_start' data-pager='0' onclick='JavaScript:d_series.pagerAction(this,0);'>First</a>				
+					<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:d_series.pagerAction(this,0);'>&nbsp;&laquo;&nbsp;</a>
 					<span id='pager_current' data-pager="<TMPL_VAR pager_current>"><TMPL_VAR pager_current></span> of
 					<span id='pager_total' data-pager="<TMPL_VAR pager_total>"><TMPL_VAR pager_total></span>											
 					<a id='pager_next' data-pager='<TMPL_VAR pager_next>' 
-					<TMPL_IF pager_has_next>onclick='JavaScript:pager_act(this,0);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
-					<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:pager_act(this,0);'>Last</a>
+					<TMPL_IF pager_has_next>onclick='JavaScript:d_series.pagerAction(this,0);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
+					<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:d_series.pagerAction(this,0);'>Last</a>
 				</TMPL_IF>
-					
 			</div>				
 		</TMPL_UNLESS>
 	</TMPL_UNLESS>
@@ -498,21 +499,6 @@
 	<input type="hidden" name="sort_field" id="sort_field"  value=""/>
 	<input type="hidden" name="sort_direction" id="sort_direction" value="0"/>
 	
-	<!--<input type="hidden" name="sort_col_<TMPL_VAR SORT_FIELD>" id="sort_col_<TMPL_VAR SORT_FIELD>" value=""/>-->
-	
-	<input type="hidden" name="sort_col_1" id="sort_col_1" value=""/>	
-	<input type="hidden" name="sort_col_2" id="sort_col_2" value=""/>
-	<input type="hidden" name="sort_col_3" id="sort_col_3" value=""/>
-	<input type="hidden" name="sort_col_4" id="sort_col_4" value=""/>
-	<input type="hidden" name="sort_col_5" id="sort_col_5" value=""/>
-	<input type="hidden" name="sort_col_6" id="sort_col_6" value=""/>
-	<input type="hidden" name="sort_col_7" id="sort_col_7" value=""/>
-	<input type="hidden" name="sort_col_8" id="sort_col_8" value=""/>
-	<input type="hidden" name="sort_col_9" id="sort_col_9" value=""/>
-	<input type="hidden" name="sort_col_10" id="sort_col_10" value=""/>
-	<input type="hidden" name="sort_col_11" id="sort_col_11" value=""/>
-	<input type="hidden" name="sort_col_12" id="sort_col_12" value=""/>
-	<input type="hidden" name="sort_col_13" id="sort_col_13" value=""/>
 	
 	<input type="hidden" name="start_page"id="start_page" value="0"/>
 	
@@ -581,12 +567,9 @@
 		
 		$(function() {
 			
+				// desk waiting list
 				wl.desk= new WaitingList();
-				
-				<TMPL_IF SUMMARY_FRAME>		
-				wl.summary= new WaitingList();
-				</TMPL_IF>
-									
+						
 				// set date filter
 				d_series.setDateFilter({'start':'<TMPL_VAR start_date>',
 				                        'end'  :'<TMPL_VAR end_date>',
@@ -617,109 +600,39 @@
 				// wl	
 				wl.desk.prepare(G.$('desk_data'));
 				
-				<TMPL_IF SUMMARY_FRAME>		
+				<TMPL_IF SUMMARY_FRAME>	
+					
+					wl.summary= new WaitingList();				
 					wl.summary.prepare(G.$('fbn-desk-summary'));
+					
+					<TMPL_LOOP SUMMARY_FILL>					
+						wl.summary.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
+					</TMPL_LOOP>
+					
 					d_series.setDeskConfig('has-summary',1);
+					
 				<TMPL_ELSE>
 					d_series.setDeskConfig('has-summary',0);
 				</TMPL_IF>
-
-				<TMPL_LOOP SUMMARY_FILL>					
-					wl.summary.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
-				</TMPL_LOOP>
 				
-				
-				
-			}); // preload 
+		}); // preload 
 			
 			
-			function sort_action(sort_col_id){
-					E_V_PASS('sort_field',sort_col_id);
-					E_V_PASS('sort_direction',GET_E_VALUE('sort_col_'+sort_col_id));
-					d_series.setDeskSortAction();
-					filter_data();		
-			}
-			
-			function pager_act(start_page,is_scroll_action){
-			
-				E_V_PASS('start_page',start_page.dataset.pager);
-
-				if(is_scroll_action==1){
-					d_series.setDeskScrollAction();
-				}else{
-					d_series.setDeskPageAction();
-				}				
-				
-				if( (Number(start_page.dataset.pager) >= Number(G.$('pager_start').dataset.pager)) && 
-				    (Number(start_page.dataset.pager) <= Number(G.$('pager_last').dataset.pager))){
-					G.$('pager_action').dataset.pager=start_page.dataset.pager;
-					filter_data();
-				}
-			
-			} //end
-
-			function set_page_status($number_of_rows,
-									 $per_page,
-									 $start){
-			
-				$lv		 	= {};
-				$number_of_rows	= Number($number_of_rows);
-				$start	 		= Number($start);
-				$per_page 		= Number($per_page);
-				
-				$lv['pager_total']	   	= Math.ceil($number_of_rows/$per_page);  //calculate the number of pages		
-				$lv['pager_prev'] 		= $start-$per_page;				//calcuclate previous page, if available or not
-				$lv['pager_prev'] 		= ($lv['pager_prev']<0)?0:$lv['pager_prev'];
-				$lv['pager_next']	  	= ($start+$per_page);			//calculate next page, if available or not							
-				$lv['pager_last']	  	= ($lv['pager_total']-1)*$per_page;
-				$lv['pager_current']    = ($number_of_rows==0)?0:(Math.ceil($start/$per_page)+1);
-				$lv['pager_has_next']	= ($lv['pager_total'] > $lv['pager_current'])?1:0;
-
-				if($number_of_rows==0){
-				
-					for(const element of ['pager_current','pager_total'] ){ 
-						G.$(element).dataset.pager=$lv[element];					
-						G.$(element).innerHTML = $lv[element];
-					}	
-
-					for(const element of ['pager_prev','pager_next','pager_last'] ){
-						G.$(element).dataset.pager=$lv[element];					
-					}
-				
-				}else if($lv['pager_current']<=$lv['pager_total']){
-
-					for(const element of ['pager_current','pager_total'] ){ 
-						G.$(element).dataset.pager=$lv[element];					
-						G.$(element).innerHTML = $lv[element];
-					}	
-
-					for(const element of ['pager_prev','pager_next','pager_last'] ){
-						G.$(element).dataset.pager=$lv[element];					
-					}	
-				
-				}
-
-				return $lv;
-				
-			} // end
-			
-			
-			function show_all(param){
-					crypt_url(`?${param}&show=1`);
-			}
-			
-			function multiple_select_data(set_value){
-				var selectedOptionValue = $('#'+set_value+'').val();
-				  
-				  //alert(selectedOptionValue);
-				  if(selectedOptionValue==null){
-					E_V_PASS(set_value+'_hidden',-1);
-				  }
-				  else{
-					E_V_PASS(set_value+'_hidden',selectedOptionValue);
-				  }
-				  //document.getElementById("is_multi_"+set_value).checked = true;
-			} // multipass								 
+		function multiple_select_data(set_value){
+			var selectedOptionValue = $('#'+set_value+'').val();
+			  
+			  //alert(selectedOptionValue);
+			/*   if(selectedOptionValue==null){
+				E_V_PASS(set_value+'_hidden',-1);
+			  }
+			  else{
+				E_V_PASS(set_value+'_hidden',selectedOptionValue);
+			  } */
+			  //document.getElementById("is_multi_"+set_value).checked = true;
+			  
+			  E_V_PASS(set_value+'_hidden',$('#'+set_value).val());
+			  
+		} // multipass								 
 			
 
 			
