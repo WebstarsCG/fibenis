@@ -1,4 +1,4 @@
-	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=4.0"></script>
+	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=5.0"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/waiting_list.js"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/general.c3001.js"></script>
 	
@@ -226,7 +226,7 @@
 								</TMPL_IF>
 							
 								<TMPL_IF is_export_file>
-									<a  id="export_id" name="export_id" class="ficon"  href="JavaScript:export_csv_file();"><i class="fa fa-file-excel-o clr_green"></i><TMPL_VAR button_name></a>								
+									<a  id="export_id" name="export_id" class="ficon"  href="JavaScript:d_series.exportAsCSV();"><i class="fa fa-file-excel-o clr_green"></i><TMPL_VAR button_name></a>								
 								</TMPL_IF>				
 							
 			
@@ -629,13 +629,16 @@
 		
 			// wl	
 			wl.desk.prepare(G.$('desk_data'));
+			
+			// counter update
+			if(G.$('COUNTER') && G.$('pager_loaded_rows')){			
+				G.$('pager_loaded_rows').dataset.pager=Number(G.$('pager_loaded_rows').dataset.pager)+Number(G.$('COUNTER').value);
+			}
 							
 		}); // preload 
 			
 			
-			if(G.$('COUNTER') && G.$('pager_loaded_rows')){			
-				G.$('pager_loaded_rows').dataset.pager=Number(G.$('pager_loaded_rows').dataset.pager)+Number(G.$('COUNTER').value);
-			}
+			
 			
 			<TMPL_IF filter_value>
 			
@@ -682,51 +685,7 @@
 					);	
 				} // end of filter data			
 			</TMPL_IF>
-			
-			// export csv file name		
-			function export_csv_file(){	
-			
-				E_V_PASS('export_data',1);					
-				G.showLoader();
-				
-				// form data
-				const url = "?"+G.$('PAGE_ID').value+'='+G.$('app_key').value;
-				const form_data = new FormData(document.getElementById("PUB_EXP"));
-				
-				// url
-				fetch(url, {
-					method : "POST",
-					body: form_data,
-					
-				}).then(
-					response => response.json() // 
-				).then(
-					(obj)=>{
-					
-						G.hideLoader();
-						document.getElementById("PUB_EXP").reset();
-						
-						bootbox.alert({
-								   'title'  : "Export CSV ",
-								   'message':obj.message,
-								   'size'   : 'small',
-									
-								buttons : {
-										ok: {
-											label: 'Open File',
-											className: 'btn-success'
-										},
-									},
-									
-								callback: function() {														
-											window.open(obj.csv_file_name);
-								}
-							
-							});	
-					}
-				);		
-						
-			} // end of export
+		
 			
 			// label
 			function export_label(key){
