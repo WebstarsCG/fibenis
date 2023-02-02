@@ -1,4 +1,4 @@
-	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=2.0"></script>
+	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=3.0"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/waiting_list.js"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/general.c3001.js"></script>
 	
@@ -93,7 +93,8 @@
 						
 							<select id="<TMPL_VAR field_id>" name="<TMPL_VAR field_id>" 
 							data-filter-type='CF'
-							onchange="d_series.setDeskStartAction();multiple_select_data('<TMPL_VAR field_id>');"    class="selectpicker"  <TMPL_VAR HTML>  multiple>
+							onchange="d_series.setDeskStartAction();d_series.setFilterMultipleValue('<TMPL_VAR field_id>');"   
+							class="selectpicker"  <TMPL_VAR HTML>  multiple>
 								<TMPL_UNLESS NO_DEFAULT_OPTION>								
 									<!--- <option value="-1"><TMPL_VAR cus_default_label></option> -->
 								</TMPL_UNLESS>
@@ -616,23 +617,6 @@
 				</TMPL_IF>
 				
 		}); // preload 
-			
-			
-		function multiple_select_data(set_value){
-			var selectedOptionValue = $('#'+set_value+'').val();
-			  
-			  //alert(selectedOptionValue);
-			/*   if(selectedOptionValue==null){
-				E_V_PASS(set_value+'_hidden',-1);
-			  }
-			  else{
-				E_V_PASS(set_value+'_hidden',selectedOptionValue);
-			  } */
-			  //document.getElementById("is_multi_"+set_value).checked = true;
-			  
-			  E_V_PASS(set_value+'_hidden',$('#'+set_value).val());
-			  
-		} // multipass								 
 			
 
 			
