@@ -1,4 +1,4 @@
-	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=3.0"></script>
+	<script language="javascript" type="text/javascript"  src="<TMPL_VAR LIB_PATH>/js/d_series.js?v=4.0"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/waiting_list.js"></script>
 	<script language="JavaScript" type="text/javascript" src="<TMPL_VAR lib_path>js/general.c3001.js"></script>
 	
@@ -596,10 +596,9 @@
 				d_series.setLoadByScroll('<TMPL_VAR is_load_by_scroll>');
 				d_series.setCrossBorderRelation('<TMPL_VAR has_cross_border_relations>');
 					
-				<TMPL_VAR get_cus_filter>
+				<TMPL_VAR GET_CUS_FILTER>
 
-				// wl	
-				wl.desk.prepare(G.$('desk_data'));
+		
 				
 				<TMPL_IF SUMMARY_FRAME>	
 					
@@ -616,21 +615,32 @@
 					d_series.setDeskConfig('has-summary',0);
 				</TMPL_IF>
 				
+				
+				// js update	
+			var JS_CALL ={'show_user_info':show_user_info,
+						'show_user_info_2l':show_user_info_2l,
+							'boolean_display':boolean_display,
+									'tip_from_list':tip_from_list,
+									'd_series.inline_on_off':d_series.inline_on_off,
+									'd_series.set_inline_update':d_series.set_inline_update,
+									'd_series.set_nd':d_series.set_nd
+								};
+									
+			d_series.setJsCalls(JS_CALL);
+			d_series.runJsCalls();
+			
+			// wl	
+			wl.desk.prepare(G.$('desk_data'));
+			
+				
 		}); // preload 
 			
 
+				
 			
-			// js update	
-			var JS_CAll =new Object({'show_user_info':show_user_info,
-									'd_series.inline_on_off':d_series.inline_on_off,
-									'd_series.set_nd':d_series.set_nd,
-									'boolean_display':boolean_display,
-									'show_user_info_2l':show_user_info_2l});
+			
 
-			const matches = document.querySelectorAll("td[data-js]");
-			for(var element of matches){
-				element.innerHTML = JS_CAll[element.dataset.js](element.dataset.p);
-			}
+			
 			
 			if(G.$('COUNTER') && G.$('pager_loaded_rows')){			
 				G.$('pager_loaded_rows').dataset.pager=Number(G.$('pager_loaded_rows').dataset.pager)+Number(G.$('COUNTER').value);
