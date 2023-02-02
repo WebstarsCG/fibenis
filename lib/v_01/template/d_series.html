@@ -568,83 +568,69 @@
 		
 		$(function() {
 			
-				// desk waiting list
-				wl.desk= new WaitingList();
-						
-				// set date filter
-				d_series.setDateFilter({'start':'<TMPL_VAR start_date>',
-				                        'end'  :'<TMPL_VAR end_date>',
-										'isCheck':'<TMPL_VAR is_apply_date>'});
-				   
-				   
-			   // prefill
-			   d_series.setSort({'field'    	: '<TMPL_VAR SORT_FIELD>',
-								 'direction'	: '<TMPL_VAR SORT_DIRECTION>',
-								 'up_down'		: Number(<TMPL_VAR DIRECTION_UP_DOWN>),	
-								 'option_value'	: '<TMPL_VAR SORT_BY>',
-								 'pre_option_value'	: '<TMPL_VAR PRE_SORT_BY>'								 
-								});
-								
-				// search filter 
-				d_series.setSearchFilter({'s_text'    		: '<TMPL_VAR s_text_data>',
-										  's_text_hidden'	: '<TMPL_VAR s_id_data>',
-										  's_text_id'		: '<TMPL_VAR s_type_data>',	
-										  'is_s_text_type'	: '<TMPL_VAR is_s_text_data>'								 
-										});	
-								
-				d_series.setPage('<TMPL_VAR PAGE>');
-				d_series.setLoadByScroll('<TMPL_VAR is_load_by_scroll>');
-				d_series.setCrossBorderRelation('<TMPL_VAR has_cross_border_relations>');
+			// desk waiting list
+			wl.desk= new WaitingList();
 					
-				<TMPL_VAR GET_CUS_FILTER>
+			// set date filter
+			d_series.setDateFilter({'start':'<TMPL_VAR start_date>',
+									'end'  :'<TMPL_VAR end_date>',
+									'isCheck':'<TMPL_VAR is_apply_date>'});
+			   
+			   
+		    // prefill
+		    d_series.setSort({'field'    	: '<TMPL_VAR SORT_FIELD>',
+							 'direction'	: '<TMPL_VAR SORT_DIRECTION>',
+							 'up_down'		: Number(<TMPL_VAR DIRECTION_UP_DOWN>),	
+							 'option_value'	: '<TMPL_VAR SORT_BY>',
+							 'pre_option_value'	: '<TMPL_VAR PRE_SORT_BY>'								 
+							});
+							
+			// search filter 
+			d_series.setSearchFilter({'s_text'    		: '<TMPL_VAR s_text_data>',
+									  's_text_hidden'	: '<TMPL_VAR s_id_data>',
+									  's_text_id'		: '<TMPL_VAR s_type_data>',	
+									  'is_s_text_type'	: '<TMPL_VAR is_s_text_data>'								 
+									});	
+							
+			d_series.setPage('<TMPL_VAR PAGE>');
+			d_series.setLoadByScroll('<TMPL_VAR is_load_by_scroll>');
+			d_series.setCrossBorderRelation('<TMPL_VAR has_cross_border_relations>');
+				
+			<TMPL_VAR GET_CUS_FILTER>
 
+			<TMPL_IF SUMMARY_FRAME>
+				
+				wl.summary= new WaitingList();				
+				wl.summary.prepare(G.$('fbn-desk-summary'));
+				
+				<TMPL_LOOP SUMMARY_FILL>					
+					wl.summary.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
+				</TMPL_LOOP>
+				
+				d_series.setDeskConfig('has-summary',1);
+				
+			<TMPL_ELSE>
+				d_series.setDeskConfig('has-summary',0);
+			</TMPL_IF>
+			
+			
+			// js update	
+			<TMPL_IF JS_CALL_INFO>
+				
+				d_series.setJsCalls({<TMPL_LOOP JS_CALL_INFO>'<TMPL_VAR NAME>':<TMPL_VAR NAME><TMPL_UNLESS __last__>,</TMPL_UNLESS></TMPL_LOOP>});
+				
+				try{
+					d_series.runJsCalls();
+				}catch(e){
+					console.error(e);
+				}
+			
+			</TMPL_IF>
 		
-				
-				<TMPL_IF SUMMARY_FRAME>	
-					
-					wl.summary= new WaitingList();				
-					wl.summary.prepare(G.$('fbn-desk-summary'));
-					
-					<TMPL_LOOP SUMMARY_FILL>					
-						wl.summary.updateStatus({'<TMPL_VAR TOKEN>':'<TMPL_VAR VALUE>'});
-					</TMPL_LOOP>
-					
-					d_series.setDeskConfig('has-summary',1);
-					
-				<TMPL_ELSE>
-					d_series.setDeskConfig('has-summary',0);
-				</TMPL_IF>
-				
-				
-				// js update	
-			var JS_CALL ={'show_user_info':show_user_info,
-						'show_user_info_2l':show_user_info_2l,
-							'boolean_display':boolean_display,
-									'tip_from_list':tip_from_list,
-									'd_series.inline_on_off':d_series.inline_on_off,
-									'd_series.set_inline_update':d_series.set_inline_update,
-									'd_series.set_nd':d_series.set_nd
-								};
-									
-			d_series.setJsCalls(JS_CALL);
-			
-			try{
-				d_series.runJsCalls();
-			}catch(e){
-				console.error(e);
-			}
-			
 			// wl	
 			wl.desk.prepare(G.$('desk_data'));
-			
-				
+							
 		}); // preload 
-			
-
-				
-			
-			
-
 			
 			
 			if(G.$('COUNTER') && G.$('pager_loaded_rows')){			
@@ -660,8 +646,7 @@
 			</TMPL_IF> 
 			
 			
-			<TMPL_IF filter_off>
-					
+			<TMPL_IF filter_off>				
 				function filter_data(){
 					show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&filter_off=1&start,sort_f,sort_d,menu_off,default_addon,filter_off_id,show',
 							       document.getElementById('start_page'),
@@ -672,11 +657,8 @@
 							       document.getElementById('filter_off_id'),
 							       document.getElementById('filter_off_id')
 				       ); 
-							
-				}	
-			
-			<TMPL_ELSE>
-			
+				}			
+			<TMPL_ELSE>			
 				function filter_data(){
 					
 						show_filter_act(document.location.href,document.getElementById('PAGE_ID').value+'=<TMPL_VAR app_key>&s_text,s_id,s_type,page,start_date,end_date,start_alt_date,end_alt_date,is_check_date,start,sort_f,sort_d,s_text_type,default_addon,menu<TMPL_IF filter_value>,<TMPL_VAR filter_text></TMPL_IF><TMPL_IF custom_sort_by>,sort_by</TMPL_IF>',
@@ -697,11 +679,8 @@
 								document.getElementById('menu_off')
 								<TMPL_IF filter_value>,<TMPL_VAR filter_value></TMPL_IF>
 								<TMPL_IF custom_sort_by>,document.getElementById('sort_by')</TMPL_IF>
-					);
-				
-				
-			} // end of filter data
-			
+					);	
+				} // end of filter data			
 			</TMPL_IF>
 			
 			// export csv file name		

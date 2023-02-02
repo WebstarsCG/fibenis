@@ -484,10 +484,14 @@
 		$options 	= array("filename"=>"$LIB_PATH/template/d_series.desk.html", "debug"=>0,"loop_context_vars"=>1);		
 		$TBL 	 	= new Template($options);				
 
+
+	
 		// get desk info
 		$DESK = build_desk();
 		$TBL->AddParam('DATA_INFO',$DESK['DATA_INFO']);
 		$TBL->AddParam('NUM_OF_ROWS',$pager_info[0]);
+	
+		
 		$PV['DESK_CONTENT'] = $TBL->Output();
 		
 		if(@$_GET['page_axn']){
@@ -681,7 +685,7 @@
 		
 		$T->AddParam(((@$D_SERIES['add_button'])?@$D_SERIES['add_button']:((@$D_SERIES['add'])?@$D_SERIES['add']:[])));
 		
-		
+		$T->AddParam('JS_CALL_INFO',$DESK['JS_CALL_INFO']);
 		
 		// 16 jun 2015
 		
@@ -708,11 +712,6 @@
 		
 		//print_r($P_V['custom_filter']);
 		$T->AddParam('custom_filter',$P_V['custom_filter'][0]);		
-		
-		//print_r( $WHERE_FILTER[1]);
-		
-		//$T->AddParam($WHERE_FILTER[1]);
-		//$P_V['custom_filter'][1] .'----=============='.$P_V['custom_filter'][2]
 		
 		$T->AddParam('filter_text',$P_V['custom_filter'][1]);
 		
@@ -1356,6 +1355,9 @@
 				$temp_info = array();
 				
 				$temp_field = array();
+				
+				$js_call		= [];
+				$js_call_info	= [];
 								
 				//dynamic alias name for field
 		
@@ -1380,6 +1382,8 @@
 						$temp['sort_id'] = @$key;
 						
 						//$temp['js_call'] =@$value['js_call'];
+						
+						if(@$value['js_call']){$js_call[@$value['js_call']]=1;}
 						
 						if($temp['th']){						
 								array_push($temp_info,$temp);
@@ -1421,15 +1425,17 @@
 						}
 				}
 				
-				$field_name = substr($field_name,0,-1);
+				$field_name = substr($field_name,0,-1);		
+				foreach($js_call as $k=>$v){
+					array_push($js_call_info,['name'=>$k]);
+				}
 				
-				
-				
-				 
 				return array(
 							 'TH_INFO'	  => $temp_info,
 							 
 							 'DATA_INFO'  =>get_data($field_name),
+							 
+							 'JS_CALL_INFO' =>$js_call_info
 							 
 						);
 		                
