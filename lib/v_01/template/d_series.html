@@ -627,7 +627,12 @@
 								};
 									
 			d_series.setJsCalls(JS_CALL);
-			d_series.runJsCalls();
+			
+			try{
+				d_series.runJsCalls();
+			}catch(e){
+				console.error(e);
+			}
 			
 			// wl	
 			wl.desk.prepare(G.$('desk_data'));
