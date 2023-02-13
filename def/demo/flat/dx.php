@@ -13,13 +13,13 @@
              ),
              'is_sort' => 0
          ),
-         3 => array(
+      /*    3 => array(
              'th' => 'Textarea ',
              'field' => "fiben_table",
              'td_attr' => ' class="align_LM" width="20%"',
              'is_sort' => 0,
 			 'js_call'=>'grid_to_list_ol'
-         ),
+         ), */
          4 => array(
              'th' => 'Date ',
              'field' => "date_format(date_flat,'%d-%b-%Y')",

@@ -155,15 +155,5 @@
 				'search_filter_off'	=>1,
                             
                             );
-							
-			 print_r($G->get_key_value(['id'=>'id',
-										'tex'=>"get_exav_addon_varchar(entity_child.id,'DETX')",
-										'ta'=>"get_exav_addon_text(entity_child.id,'DETA')",
-										],        
-					"entity_child",
-					" AND id=5859")
-				); 
     		    
-		
-			
 ?>

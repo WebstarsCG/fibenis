@@ -30,6 +30,8 @@ $F_SERIES = array(
             'allow' => 'x5',
 
         ) ,
+		
+		
 
         '3' => array(
             'field_name' => 'Text area',
@@ -167,7 +169,7 @@ $F_SERIES = array(
             'input_html' => ' class="w_200"  style="height:200px !important"  ',
 
         ) ,
-
+ 
         '9' => array(
             'field_name' => 'Fiben Table',
 
@@ -176,25 +178,64 @@ $F_SERIES = array(
             'is_fibenistable' => 1,
 
             'type' => 'fibenistable',
+			
+			 'default_rows_prop'   => array('start_rows'=>'2','max_rows'=>3,'min_rows'=>2),
 
             'is_index' => 1,
 
-            'is_mandatory' => 0,
+            'is_mandatory' => 1,
 
             'colHeaders' => array(
-                array(
-                    'column' => 'Name',
-                    'width' => '50',
-                    'type' => 'text',
-                ) ,
-                array(
-                    'column' => 'DoB',
-                    'width' => '50',
-                    'type' => 'date',
-                ) ,
-            )
+              
+                                 // number
+                                 array( 'column'    => 'Num 5',
+                                        'width'     => '50',
+                                        'type'      => 'text',
+                                        'attr'      => ' class="align_RM"',
+                                        'allow'     => 'd5'),
 
-        ) ,
+                                 // text
+                                 array( 'column'       => 'Alpha. Num. 10',
+                                        'width'        => '100',
+                                        'type'         => 'text',
+                                        'allow'        => 'w10',
+
+                                        // custom function for key up action along with default check
+                                        'key_up_addon' => "check(this)"),
+
+                             /*     array(   'column'           => 'Option',
+                                           'width'            => '200',
+                                           'type'             => 'dropDown', 
+                                           'data'             => $G->ft_option_builder('entity',
+                                                                                'id,sn',
+                                                                                 'ORDER BY sn ASC'),
+                                           'is_default_value' =>0),
+                                     
+                                  array(   'column'       => 'Auto Complete Dynamic',
+                                           'width'        => '150',
+                                           'type'         => 'autocomplete',
+                                           'get_data_url' => 'router.php?series=ax&action=demo__flat&token=FT_AUT'),
+
+                                  array(   'column'             => 'Auto Comp. Static',
+                                           'width'              => '150',
+                                           'type'               => 'autocomplete',
+                                           'get_data_url'       => 'router.php?series=ax&action=demo__flat&token=FT_AUT',
+                                           //'restrict_new_entry' => 1
+										   ),
+
+                                  array(   'column'      => 'Select Multliple',
+                                           'width'       => '125',
+                                           'type'        => 'multiple_select',                                                                                                   
+                                           'data'        => $G->ft_option_builder('entity','id,sn',""),
+                                           'input_html'  => ' data-container="body" '),
+										     
+                                  array(   'column'      => 'Date',
+                                           'width'       => '125',
+                                           'type'        => 'date'),*/
+            ),
+			
+
+        ),   
 
         '10' => array(
             'field_name' => 'Date',
@@ -208,7 +249,7 @@ $F_SERIES = array(
         ) ,
 
         '11' => array(
-            'field_name' => 'Range',
+            'field_name' => 'Twin Box',
 
             'field_id' => 'range_flat',
 
@@ -305,11 +346,6 @@ $F_SERIES = array(
 
             'is_mandatory' => 0,
 
-            /* 		 'options'	      =>$G->radio_option_builder(['table'	=>'entity_child_base',
-            													 'field_label'=>'ln',
-            													 'field_value'=>'id',
-            													 'where'=> " WHERE entity_code='1A'"
-            													  ]), */
 
             'options' => [['label' => "<img src='media/red.jpg' class='img-responsive' >",
             'value' => 'PH'],
@@ -390,9 +426,10 @@ $F_SERIES = array(
 
     'before_add_update' => 1,
 
-    'show_query' => 0
+    'show_query' => 0,
     #for debugging
     
+	'form_layout'=>'form_100'
 
     
 );

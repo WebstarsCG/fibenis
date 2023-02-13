@@ -1,49 +1,64 @@
 <?PHP
        
 	 $A_SERIES       =   array(
+	 
 					'FT_AUT' => function($param){
 				    
-						      if(@$_GET['exit_data']){
-							     
-							     if(@$_GET['search_key']){
-						      
-										 $where= " WHERE $_GET[search_key] like '%".@$_GET['query']."%'";
-										
-								       }
-								       
-								      $data    = $param['data'];
-							       
-							               $result  = $param['rdsql']->exec_query("SELECT id,sn FROM entity $where ORDER BY sn",
-														"Check Query");
-								       $info    = [];					     
+								 $get = @$_GET;
+								 
+								$service_req = @$get['service'];
+								$service = [];
+								 
+								 
+								$service['fetch'] = function($param,$get){
+									
+									$lv  = [];
+									
+									if(@$get['query']){								  
+										$lv['where'] = " WHERE sn like '%".@$get['query']."%'";
+									}
+									
+									if(@$get['prime']){								  
+										$lv['where'] = " WHERE id=$get[prime]";
+									}
+								   
+									$lv['result']  = $param['rdsql']->exec_query("SELECT id,sn FROM entity $lv[where] ORDER BY sn",
+																	"Check Query");
+									$lv['info']    = [];					     
 									  
-									  while($row=$param['rdsql']->data_fetch_array($result)){
-										
-										 array_push($info,array( 'id'   => $row[0],
-														   'name' =>$row[1]
-											     ));
-									  }
-									  
-									return json_encode($info);  
-							       
-						      } // if exit				     
-					     
-						      if(@$_GET['check_entry']){
-							       
-							       if(@$_GET['search_key']){
-							     
-								      $lv['where'] = " AND  $_GET[search_key] like '%".@$_GET['query']."%'";						      
-								 }
-											
-							       $no_row = $param['G']->get_one_column([
+									while($lv['row']=$param['rdsql']->data_fetch_array($lv['result'])){										
+										array_push($lv['info'],array( 'id'   => $lv['row'][0],
+																	  'name' =>$lv['row'][1]));
+									}
+									
+									return json_encode($lv['info']); 
+									 
+								}; // end
+								
+								$service['is_there'] = function($param,$get){
+									
+									$rows = $param['G']->get_one_column([
 												 'field'   =>' count(*) ',
 												 'table'=>'entity',
-												 'manipulation'=>" WHERE 1=1 $lv[where]  "
+												 'manipulation'=>" WHERE id=$get[cid] AND sn='$get[cv]' "
 												 ]);
 							      
-							       return json_encode([['id'=>$no_row,'query_data'=>@$_GET['query'],'ele_id'=>@$_GET['ele_id'] ]]);   
-							      
-						     }
+							       return json_encode(['rows'=>$rows]); 
+								   
+								}; // end
+								
+								
+								
+								
+								// service
+								if(@$service[$service_req]){
+									
+									return $service[$service_req]($param,$get);
+									
+								} // end
+								 
+					
+						     
 						     
 						     if(@$_GET['new_entry']){
 				    
