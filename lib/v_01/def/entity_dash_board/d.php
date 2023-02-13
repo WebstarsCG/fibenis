@@ -6,7 +6,7 @@
 	
 							'data'		=> array(
 							
-												6=> array(
+												/* 6=> array(
 													   
 													   'field_composite'=> [  
 																
@@ -26,7 +26,7 @@
 																			'data-grid-y'	=> true
 																		
 																		]
-												),
+												), */
 							
 												1=> array(
 													   
@@ -76,10 +76,12 @@
 																			'data-type'  	=> 'bar',
 																			#'data-bar-width'=> 50,
 																			'data-grid-x'	=> true,
-																			'data-grid-y'	=> true]
+																			'data-grid-y'	=> true,
+																			//'data-rotate-axis'=>true
+																			]
 													   ),	
 													   
-											    4=> array(
+										/* 	    4=> array(
 													  
 													   'field_composite'=>  ['fields'=>['Users'		=> 'user_name',
 																						'Desk Engine'	=> 'desk',
@@ -119,9 +121,9 @@
 												'data-grid-y'	=> true,
 												'data-format'	=> '%d-%b-%Y'
 											]
-						       ),					
+						       ),	*/				
 						
-					), # columns
+					), # columns 
 			    			    
 			    'mode' 	=> 'graph',
 			  
