@@ -36,11 +36,13 @@
  
     # list interface
     
-    my @DIR=('../lib/v_01/def');
-        
+    #my @DIR=('../../');
+     my @DIR=('../../lib/v_01/');    
  
     # traverse each dir
-    
+    $rule->skip_git;
+	my @patterns = (qr/comp/);
+	$rule->skip_dirs( @patterns );
     for my $dir(@DIR){
     
         for my $file ( $rule->all($dir) ) {
@@ -60,7 +62,7 @@
                     $lv->{'dirs'}= $file;   
                     $lv->{'dirs'}=~s/$dir//ig;           
                     $lv->{'dirs'}=~s/^\/|\/$//ig;
-                    $lv->{'dirs'}=~s/\//__/ig;                                        
+                    #$lv->{'dirs'}=~s/\//__/ig;                                        
                     push(@{$def->{$lv->{'dirs'}}},'<b>'.$file.'</b>');   
                 
             }
