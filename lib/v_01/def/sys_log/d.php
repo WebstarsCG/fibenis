@@ -218,6 +218,8 @@
                                 
                                // 'table_attr'=>' class="table table-striped table-hover" '
                                 'table_attr'=>' class="basic" ',
-				'show_query' => 0
+				'show_query' => 0,
+				
+				'is_load_by_scroll'=>1
                             
                             );
