@@ -150,15 +150,9 @@
 	
 	if(isset($_GET['default_addon'])){
 	    
-	    $default_addon = @$_GET['default_addon'];
+	    $default_addon = @$_GET['default_addon'];	    
 	    
-	    $LAYOUT = 'layout_full';
-   
-	    $temp = explode(':',$default_addon);
-	    
-	    $status_code = @$temp[1]; //ASBK
-	    
-	    $entity_child_id=$temp[0]; //17
+	    $entity_child_id= $default_addon; //17
 	    
 	    //$entity_code = substr($temp[0],0,2); //AS
 	    

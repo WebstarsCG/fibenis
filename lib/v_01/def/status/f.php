@@ -1,12 +1,7 @@
 <?PHP
 
-    $default_addon = $_GET['default_addon'];
+   
     
-    $temp = explode(':',$default_addon);
-    
-    $status_code = $temp[0];
-    
-    $entity_child_id=$temp[1];
      
     //$entity_code = substr($temp[0],0,2);
     
@@ -37,16 +32,26 @@
 								    'field_id'=>'status_code',
                                                                
 								    'type' => 'option',
-							       
-								    'option_data'=>$G->option_builder('entity_child_base','token,sn',
-												      "WHERE token IN (SELECT status_code_end FROM status_map
-												      WHERE status_code_start='$status_code') ORDER BY sn ASC"),
+							    
 								 
 								    'is_mandatory'=>1,
                                                                
 								    'input_html'=>'class="w_200"'
 								    
-                                                               ),
+                                ),
+								
+							'3' =>array(     'field_name'=>'Status',
+                                                               
+								    'field_id'=>'parent_id',
+                                                               
+								    'type' => 'hidden',
+							       
+								 
+								   
+								   'ro'=>1
+                                  
+								    
+                                ),
 						   
 					    ),
 				
@@ -61,7 +66,7 @@
 				
 				'default_fields'    => array(
 							    'entity_code' => "'IU'",
-							    'child_comm_id' => "'$entity_child_id'",
+							    'child_comm_id' => '',
 							    ),
 				
 				# Default Additional Column
@@ -77,8 +82,48 @@
 				'show_query'    =>0,
 				
 				'after_add_update'=>1,
+				
+				'get_last_insert'=>1,
+				
+				'js'=> ['is_top'=>1],
+				
+				'is_cc'=>1,
+				
+				'is_field_id_as_token'=>1
                                 
 			);
+			
+	$F_SERIES['temp']['ec_id'] = $G->getCleanNum(@$_GET['default_addon']);
+			
+	// addon
+	if(@$F_SERIES['temp']['ec_id']){
+		
+		
+		$F_SERIES['temp']['status'] = $G->get_one_column(['table'=>'entity_child',
+														  'field'=>"get_exav_addon_exa_token(".$F_SERIES['temp']['ec_id'].",'ISST')",
+														  'manipulation'=>' WHERE id= '.$F_SERIES['temp']['ec_id']
+														]);
+														
+														
+		if(@$F_SERIES['temp']['status']){
+		
+			$F_SERIES['data'][2]['option_data']=$G->option_builder('entity_child_base',
+																   'token,sn',
+																  " WHERE token IN (SELECT 
+																						status_code_end 
+																					FROM 
+																						status_map
+																				   WHERE 
+																	status_code_start='".$F_SERIES['temp']['status']."')
+																	ORDER BY
+																		sn ASC");
+		}
+																	
+		$F_SERIES['data'][3]['attr']['value']			= 	$F_SERIES['temp']['ec_id'];
+		$F_SERIES['default_fields']['child_comm_id']	=	$F_SERIES['temp']['ec_id'];
+	
+	} // end
+			
     
      function after_add_update($key_id){
 	
@@ -95,4 +140,5 @@
 	    return null;	
 		
     } 
+	
 ?>
