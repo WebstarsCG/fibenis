@@ -4,8 +4,9 @@
 	
 	$D_SERIES['title']     = 'External Entity';  
 	
-	
 	$D_SERIES['add_button'] = array( 'is_add' =>1,'page_link'=>'f=external_entity', 'b_name' => 'Add External Entity' );
+	
+	$D_SERIES['is_load_by_scroll'] = 0;
 	
 	$D_SERIES['data'][3]['field']	= "concat(id,':',(SELECT COUNT(*) FROM entity_child_base WHERE entity_code=entity.code AND dna_code='EBAT'),':',is_lib,':',code)";
 	
