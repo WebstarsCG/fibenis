@@ -174,6 +174,8 @@
                                 
                                 'show_query'=>0,
                                 'avoid_trans_key_direct'=>0,
+								
+								'is_cc'=>1
 				
 				
                                 
