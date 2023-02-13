@@ -86,7 +86,7 @@
 								 
 								 'td_attr' => ' class="align_LM" width="10%"',
 		
-								'field'	=> "concat(id,':',get_ecb_sn_by_token(get_exav_addon_exa_token(entity_child.id,'ISST')),':',get_exav_addon_exa_token(entity_child.id,'ISST'))",
+								'field'	=> "concat(id,':',get_ecb_sn_by_token(get_exav_addon_exa_token(entity_child.id,'ISST')))",
 								
                                                                 'filter_out'=>function($data_in){
                                                                             
@@ -94,10 +94,11 @@
 									    
 													$data_out = array('id'   => $temp[0],
 												        'link_title'=>$temp[1],
+														'wl_token'=>$temp[0].'.status',
 												        'title'=>'Status View',
-													'src'=>"?f=status&menu_off=1&mode=simple&default_addon=$temp[2]:$temp[0]",
+													'src'=>"?f=status&menu_off=1&mode=simple&default_addon=$temp[0]",
 												        'style'=>"border:none;width:100%;height:600px;",
-													'refresh_on_close'=>1);
+													'refresh_on_close'=>0);
 													 return json_encode($data_out);
 												 },
                                                                         
@@ -111,7 +112,7 @@
 								 
 								 'td_attr' => ' class="align_LM" width="5%"',
 		
-								'field'	=> "concat(id,':',get_exav_addon_exa_token(entity_child.id,'ISST'))",
+								'field'	=> "id",
 								
                                                                 'filter_out'=>function($data_in){
                                                                             
@@ -121,7 +122,7 @@
 												        'link_title'=>'View Status Log',
 													 'is_fa'=>' fa fa-history clr_gray_6 fa-lg',
 												         'title'=>'Status View',
-												         'src'=>"?d=status&menu_off=1&mode=simple&default_addon=$temp[0]:$temp[1]",
+												         'src'=>"?d=status&menu_off=1&mode=simple&default_addon=$temp[0]",
 												         'style'=>"border:none;width:100%;height:600px;");
 													 return json_encode($data_out);
 												 },
@@ -148,6 +149,18 @@
 											 
 									}
 								   },
+									 
+								),
+								
+							9=>array('th'=>'Raised By',
+									 
+									'field'=>"concat(get_user_internal_name(user_id),',',date_format(timestamp_punch,'%d-%b-%y %T'))",
+																			 
+									'attr' => [ 'width'=>"12%"],
+									
+									'js_call'=> 'show_user_info_2l',
+									
+									'is_sort'=>'timestamp_punch'
 									 
 								),
 							
@@ -210,6 +223,21 @@
 										'filter_by'  => "get_exav_addon_exa_token(id,'ISPI')" // main table value
 									),
 									
+									array(  'field_name' => '<br>Raised By',
+									      
+										'field_id' => 'cf4', // 
+										
+										'filter_type' =>'multi_select', 
+												    
+										'option_value'=> $G->option_builder_cache('user_info','id,get_user_internal_name(id)'," WHERE is_active=1"),
+							    
+										'html'=>'  title="Select Type"   data-width="160px"  ',
+								    
+										'cus_default_label'=>'Show All',
+							    
+										'filter_by'  => "user_id" // main table value
+									),
+									
 									
 									
 								),    
@@ -232,10 +260,10 @@
                                 
                                     'prime_index'   => 1,
 				    
-				     'summary_data'=>array(
-							array(  'name'=>'No.','field'=>'count(id)','html'=>'class=summary'),
+			  'summary_data'=>array(
+							array(  'name'=>'No','field'=>'count(id)','html'=>'class=summary'),
 				
-				                   ),
+					   ), 
                                     			   
 				 #Search_info
 				 
@@ -279,16 +307,33 @@
 					'del_permission' => array('able_del'=>1,'user_flage'=>1), 
 								
 					'date_filter'  => array( 'is_date_filter' =>1,'date_field' =>  'timestamp_punch'),	
+					
+					'list_sort'	=> array(  'set'=>array('label'=>'Show By '),					
+										   1=>array('name'=>'Recently Added','query'=> ' timestamp_punch DESC'),						
+										   2=>array('name'=>'Earlier Added', 'query'=> ' timestamp_punch ASC' ),
+									),
 								
 				#export data
 				
-				'export_csv'   => array('is_export_file' => 0, 'button_name'=>'Create CSV','csv_file_name' => 'csv/log_'.time().'.csv'  ),
-								
-				'page_code'    => 'ISUE',
-				
 				'show_query'=>0,
+				
+				'has_cross_border_relations'=>['status'],
+				
+				'is_load_by_scroll'=>0,
+				
+				'js'=>['is_top'=>1],
+				
+				'hide_sno'=>0,
+				
+				'hide_header'=>0,
+				
+				'hide_pager'=>0,
+				
+				'export_csv'   => array('is_active' => 1, 
+										 'button_name'    => 'E',
+									) // end  
                             
-                            );
+		);
 	
 							
 ?>	
