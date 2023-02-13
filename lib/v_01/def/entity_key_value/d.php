@@ -37,18 +37,15 @@
                                                                             
 								), 
 													
-                                                        2=>array('th'	=> 'Entity Key',
+							2=>array('th'	=> 'Entity Key',
 									      
 								'field'	=> 'entity_key',
 									
 								'is_sort' => 1,
 								
-								'js_call'=>'label_father ',
 									      
-								'td_attr' => ' class="align_LM" width="15%" ',
+								'td_attr' => ' class="align_LM label_father" width="15%" ',
 								
-								#'th_attr'=>'width="20%"',
-									      
 								),
 							
 							
