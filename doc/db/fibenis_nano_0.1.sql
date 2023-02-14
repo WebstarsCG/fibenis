@@ -1,3 +1,8 @@
+--14-Feb-2022
+INSERT INTO entity_attribute (entity_code, code, sn, ln, line_order, creation, user_id, timestamp_punch) VALUES
+                             ('CH', 'CHET', 'Coach Entity', '', '8.00',now(), 2,now());
+
+
 --08NOV2022
 INSERT INTO entity_attribute (entity_code, code, sn, ln, line_order, creation, user_id, timestamp_punch) VALUES
                              ('GP', 'GPIL', 'Is Core Group', '', '2.00',now(), 2,now());
