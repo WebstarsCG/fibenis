@@ -66,7 +66,7 @@
 												  'data'=>array('id'   => $temp[0],															
 														'key'  => md5($temp[0]),															
 														'label'=> 'Entity Value',
-														'info' => htmlentities($temp[1]),
+														'info' => (preg_match("/(\{)(.*?)(\})/i",$temp[1])?json_decode($temp[1]):$temp[1]),
 														'type' => 'text',
 														'series'=>'a',
 														'action'=>'entity_key_value',
@@ -137,7 +137,7 @@
                                 
                                     # File Include
                                 
-                                    'js'            => 'm_code',
+                                   
 				    
 				    'summary_data'=>array(
 							array(  'name'=>'No.','field'=>'count(id)','html'=>'class=summary'),
