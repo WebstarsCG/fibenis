@@ -1040,7 +1040,9 @@
                                 
                                 'default_fields'=>array("dna_code"=>"'EBAT'"),
                                 
-                                'is_field_id_as_token'=>1
+                                'is_field_id_as_token'=>1,
+								
+								'is_cc'=>1
 				
 			);
     
