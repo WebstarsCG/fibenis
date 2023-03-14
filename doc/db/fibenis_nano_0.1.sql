@@ -1,13 +1,13 @@
---14-Feb-2022
+-- 14Feb2022
 INSERT INTO entity_attribute (entity_code, code, sn, ln, line_order, creation, user_id, timestamp_punch) VALUES
                              ('CH', 'CHET', 'Coach Entity', '', '8.00',now(), 2,now());
 
 
---08NOV2022
+-- 08NOV2022
 INSERT INTO entity_attribute (entity_code, code, sn, ln, line_order, creation, user_id, timestamp_punch) VALUES
                              ('GP', 'GPIL', 'Is Core Group', '', '2.00',now(), 2,now());
 							 
---12OCT2022
+-- 12OCT2022
 DROP TABLE IF EXISTS eav_addon_entity_code;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
