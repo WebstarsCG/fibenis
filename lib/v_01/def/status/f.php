@@ -83,9 +83,7 @@
 				
 				'after_add_update'=>1,
 				
-				'get_last_insert'=>1,
-				
-				'js'=> ['is_top'=>1],
+				'get_last_insert'=>1,				
 				
 				'is_cc'=>1,
 				
