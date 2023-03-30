@@ -44,7 +44,9 @@
 				'js'=> ['is_top'=>1],
 				'avoid_trans_key_direct'=>1,
 				
-				'gx'=>1,                                
+				'gx'=>1, 
+
+				'is_cc'=>1
 			);
     
 			if(isset($_GET['default_addon'])){
