@@ -1,4 +1,3 @@
-
 <?PHP
 
     //F_series definition:
