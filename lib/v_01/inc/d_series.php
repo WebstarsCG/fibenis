@@ -2037,19 +2037,21 @@
 						
 						$WHERE_FILTER='';
 						$PREE_DATA='';
-						foreach(@$D_SERIES['custom_filter'] as $filter_key => $filter_item){
-							
-							$get_value =  $G->get_cookies_ii([	'key'		=> $P_V['cookies_id'].'get_field_id'.$filter_key,
-																		'key_id'	=>  @$filter_item['field_id'],
-																		'value'		=> '',
-																		'default'	=> '']);	
-						}
 						
-			 }				 // end count
-				 
-			#	echo  $PREE_DATA; 
-				 
-			return array($WHERE_FILTER,$PREE_DATA) ; 
+						// custom filter exists
+						if(@$D_SERIES['custom_filter']){
+								foreach(@$D_SERIES['custom_filter'] as $filter_key => $filter_item){
+									
+									$get_value =  $G->get_cookies_ii([	'key'		=> $P_V['cookies_id'].'get_field_id'.$filter_key,
+																				'key_id'	=>  @$filter_item['field_id'],
+																				'value'		=> '',
+																				'default'	=> '']);	
+								} // each filter
+						} // check filter exists						
+				} // end count
+				
+				return array($WHERE_FILTER,$PREE_DATA);
+		
 	  } // end count	 
 	/*************************************************************************************************/		
 	
