@@ -1,4 +1,28 @@
--- 14Feb2022
+-- 31Mar2023
+DROP TABLE IF EXISTS ecb_av_addon_ec_id;
+CREATE TABLE ecb_av_addon_ec_id(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  parent_id int(11) DEFAULT NULL,
+  ea_code char(4) DEFAULT NULL,
+  ec_id int(11) NOT NULL,
+  user_id int(11) DEFAULT NULL,
+  timestamp_punch timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY ea_code (ea_code),
+  KEY parent_id (parent_id),
+  KEY ec_id (ec_id),
+  KEY timestamp_punch (timestamp_punch),
+  KEY user_id (user_id),
+   CONSTRAINT fk_ecb_av_addon_ec_id_ea_code FOREIGN KEY (ea_code) REFERENCES entity_attribute (code) ON DELETE CASCADE ON UPDATE NO ACTION,
+   CONSTRAINT fk_ecb_av_addon_ec_id_parent_id FOREIGN KEY (parent_id) REFERENCES entity_child_base (id) ON DELETE CASCADE ON UPDATE NO ACTION,
+   CONSTRAINT fk_ecb_av_addon_ec_id_ec_id FOREIGN KEY (ec_id) REFERENCES entity_child (id) ON DELETE CASCADE ON UPDATE NO ACTION,
+   CONSTRAINT fk_ecb_av_addon_ec_id_user_id FOREIGN KEY (user_id) REFERENCES user_info (id) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+INSERT INTO entity_attribute (entity_code, code, sn, ln, line_order, creation, user_id, timestamp_punch) VALUES
+                             ('CH', 'CHID', 'Coach ID', '', '9.00',now(), 2,now());
+                             
+-- 14Feb2023
 INSERT INTO entity_attribute (entity_code, code, sn, ln, line_order, creation, user_id, timestamp_punch) VALUES
                              ('CH', 'CHET', 'Coach Entity', '', '8.00',now(), 2,now());
 
