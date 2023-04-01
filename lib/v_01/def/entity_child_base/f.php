@@ -140,10 +140,25 @@
 						   
                                                                ),
                                                    
-                                                   
+                      '11' =>array('field_name'=>'Domain',
+							                                                                       
+                                'field_id'            => 'ec_id',				       
+                                'type' 	              => 'option',
+                            
+                                //child table
+                                  
+                                'child_table'         => 'ecb_av_addon_ec_id', // child table 
+                                'parent_field_id'     => 'parent_id',    // parent field
+                                      
+                                'child_attr_field_id' => 'ea_code',   // attribute code field
+                                'child_attr_code'     => 'CHID',           // attribute code                           
+                                'input_html'                => " class='w_200' ",
+                                'option_data'         => "<option value=$COACH[id]>$COACH[name]</option>" 
+                                    
+                                ),                              
                                                    
                                     
-                                ),
+                   ),
                                     
 				#Table Name
 				
