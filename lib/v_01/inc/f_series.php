@@ -450,6 +450,9 @@
 						
 			$T->AddParam('default_addon_var',
 						'<TMPL_IF DEFAULT_ADDON>E_V_PASS("default_addon","<TMPL_VAR DEFAULT_ADDON>");</TMPL_IF>');
+						
+			$T->AddParam('f_series_query_var',			
+						'<TMPL_IF F_SERIES_QUERY>?<TMPL_VAR F_SERIES_QUERY></TMPL_IF>');
 							
 			$T->AddParam('show_data_info_template_var',$G->getFileContent("$LIB_PATH/template/f_series_show_data.html"));
 			$T->AddParam('image_info_template_var',$G->getFileContent("$LIB_PATH/template/f_series_image_info.html"));
@@ -498,6 +501,7 @@
 		
 		// passes
 		$TFA->AddParam('default_addon',$DEFAULT_ADDON);
+		$TFA->AddParam('f_series_query',$_SERVER['QUERY_STRING']);
 		
 		// template output			
 		$PAGE_INFO = $TFA->output();

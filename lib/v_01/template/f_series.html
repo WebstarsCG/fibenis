@@ -101,9 +101,8 @@
 					
 					G.showLoader('Sending your request..');
 					
-					// default addon action
-					const da_axn = (G.$('default_addon').value.length>0)?'&default_addon='+G.$('default_addon').value:'';					
-					const url = "?<TMPL_VAR F_SERIES>=<TMPL_VAR APP_KEY>"+da_axn;
+					// given url as form action url
+					const url = "<TMPL_VAR F_SERIES_QUERY_VAR>";
 
 					// form data
 					const form_data = new FormData(document.getElementById("PUB_A"));
