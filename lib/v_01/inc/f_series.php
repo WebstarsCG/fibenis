@@ -351,7 +351,8 @@
 		} # end		
 		 		
 		// cache path		
-		$F_SERIES['temp']['cache_form'] = $COACH['terminal_path']."/cache/F_$PAGE_CODE"."_".$USER_ROLE.".html";
+		$F_SERIES['temp']['cache_key'] = md5(join("_",array_keys(@$_GET)));
+		$F_SERIES['temp']['cache_form'] = $COACH['terminal_path']."/cache/F_$PAGE_CODE"."_".$USER_ROLE.$F_SERIES['temp']['cache_key'].".html";
 		
 		if(is_file($F_SERIES['temp']['cache_form']) && (!@$F_SERIES['is_cc'])){	
 			$F_SERIES['temp']['content_form']	=$G->getFileContent($F_SERIES['temp']['cache_form']);
