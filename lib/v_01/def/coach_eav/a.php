@@ -4,45 +4,32 @@
         $A_SERIES       =   array(
 		
 		
-					'GENC'=>function($param){
+					'CODE'=>function($param){
 						
+						//print_r($param);
 								
-						                if($param['user_id']){ 
+						if($param['user_id']){ 
 						
-									global $lwp;
+								$lv = ['coach_code'=>''];
+								
+								$lv['coach_code'] = $param['data'];
+								
+								$lv['is_exist']=$param['G']->get_one_column(['table'=>'entity_child',
+																				'field'=>"id",
+																				'manipulation'=> " WHERE entity_code='CH' AND get_eav_addon_vc128uniq(id,'CHCD')='$lv[coach_code]'"
+																				]);
+								
+								
 									
-									$inline_param   = json_decode($param['data'],true);
-									
-									//echo $inline_param['coach_code'];
-									
-									$url   		= get_config('domain_name');
-									
-									//echo print_r($lwp);
-									
-									$lwp_res = 	$lwp->GET($url, ['query'=>['t' => 'mop_v2_eav',
-													           'key'=>$inline_param['coach_code'],
-														   'user_id'=> $param['user_id']
-													        ]
-												        ]
-											);
-									
-									//echo $lwp_res->getStatusCode().'-'.$_SERVER["HTTP_HOST"];
-									
-									//echo print_r($lwp_res);
-									
-									return 1;
-									
-								}else{
-									
-									return 0;			
-								}
+							return ($lv['is_exist'])?1:0;
+							
+						}else{
+							
+							return 0;			
+						}
 						
-						
-					}, // end
-					
-         
-
-                            );
+						}, // end
+					);
 	
 	
 	

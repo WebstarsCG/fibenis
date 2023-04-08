@@ -29,17 +29,8 @@
 								
 								   'child_attr_code'     => 'CHCD',
 								   
-								   'input_html'=>'onchange="check_code(this);"',
+								   'attr'=>['class'=>"w_300",'onchange'=>"check_code(this);"]
 					      
-								   
-								//   'attr'		      => ['class'=>'w_200',
-								//				      'onkeyup'=>"(function(from,to) {
-								//						
-								//				    		    to.value=from.value;
-								//				    		  })(G.$('X1'),G.$('X4'));"
-								//				  
-								//				  ],
-								 
 								   ),
 						       
 				       
@@ -59,7 +50,7 @@
 								
 								 'child_attr_code'     => 'ECSN', 
 								   
-								 'input_html'=>'class="w_150"'
+								 'attr'=>['class'=>"w_300"]
 								   
 							),
 						       
@@ -79,6 +70,8 @@
 								'child_attr_field_id' => 'ea_code',   	      // attribute code field
 								
 								'child_attr_code'     => 'CHDN',          // attribute code
+								
+								'attr'=>['class'=>"w_300"]
 								 
 							    ),	
 								
@@ -98,6 +91,8 @@
 								 'type'                => 'file',
 								 
 								 'upload_type'         => 'image',
+								 
+								  'allow_ext'  		 => array('jpg','jpeg','png'), 
 								
 								 'child_table'         => 'eav_addon_varchar', // child table 
 								 
@@ -121,6 +116,8 @@
 								 'type'                => 'file',
 								 
 								 'upload_type'         => 'image',
+								 
+							     'allow_ext'  		 => array('jpg','jpeg','png'),  
 								
 								 'child_table'         => 'eav_addon_varchar', // child table 
 								 
@@ -221,7 +218,8 @@
 							$F_SERIES['data']['7']['location'] = "$COACH[path]/".$F_SERIES['temp']['terminal']."/images/";
 							$F_SERIES['data']['9']['location'] = "$COACH[path]/".$F_SERIES['temp']['terminal']."/images/";
 							
-							$F_SERIES['data']['1']['is_ro']=1;
+							$F_SERIES['data']['1']['ro']=1;
+							$F_SERIES['data']['1']['attr']['disabled']='true';
 			  			  
 	     }
 			 
@@ -231,18 +229,6 @@
 			  
 			  global $F_SERIES,$COACH;
 			  
-		
-			  $F_SERIES['data']['7']['location'] = "$COACH[path]".$_POST['X1']."/images/";
-			  $F_SERIES['data']['9']['location'] = "$COACH[path]".$_POST['X1']."/images/";
-			 
-	     }
-	     
-	     # after add update
-	     
-	     function after_add_update($key_id){
-		 
-			  global $rdsql,$USER_ID,$G;
-		      
 			  $lv = [];
 			  
 			  $lv['theme_child_query_data'] = [];
@@ -253,6 +239,8 @@
 			  
 			  $lv['coach_code_hash']       = md5($lv['coach_code']);
 			  
+			  
+			  // folder creation during new coach addition
 			  if(!$_POST['UPDATE']){
 				       
 				       $lv['coach_path']      =get_config('coach_path');		    
@@ -272,8 +260,15 @@
 				       fclose($theme_content_file);
 			      
 			  } // end
-			     
-			  
+		
+			  $F_SERIES['data']['7']['location'] = "$COACH[path]".$_POST['X1']."/images/";
+			  $F_SERIES['data']['9']['location'] = "$COACH[path]".$_POST['X1']."/images/";
+			 
+	     }
+	     
+	     # after add update
+	     function after_add_update($key_id){
+		 
 	     } // end of after add update
 ?>
     
