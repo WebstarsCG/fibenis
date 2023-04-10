@@ -1,3 +1,53 @@
+--10Apr2023
+DROP TABLE IF EXISTS entity_child_trans_count;
+CREATE TABLE entity_child_trans_count(
+		  id int(11) NOT NULL AUTO_INCREMENT,
+		  trans_token varchar(32) NOT NULL,
+		  parent_id int(11) NOT NULL,
+		  trans_entity_code char(4) NOT NULL,	
+		  trans_id int(11) NOT NULL,		 
+		  ob decimal(14,4) DEFAULT NULL  COMMENT 'Opening Balamce',
+		  current_value decimal(14,4) DEFAULT NULL,
+		  cb decimal(14,4) DEFAULT NULL  COMMENT 'Closing Balamce',
+		  user_id int(11) NOT NULL,
+		  timestamp_punch timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+		  PRIMARY KEY (id),
+		  KEY trans_token_parent_id (trans_token,parent_id),
+		  KEY parent_id (parent_id),
+		  KEY trans_entity_code_trans_id (trans_entity_code,trans_id ),
+		  KEY trans_id (trans_id),
+		  KEY parent_trans_id (parent_id,trans_id),
+		  KEY timestamp_punch (timestamp_punch),
+		  KEY user_id (user_id),
+		  CONSTRAINT fk_entity_child_trans_count_parent_id FOREIGN KEY (parent_id) REFERENCES entity_child (id) ON DELETE CASCADE ON UPDATE RESTRICT,
+		  CONSTRAINT fk_entity_child_trans_count_trans_id FOREIGN KEY (trans_id) REFERENCES entity_child (id) ON DELETE CASCADE ON UPDATE RESTRICT,
+		  CONSTRAINT fk_entity_child_trans_count_user_id FOREIGN KEY (user_id) REFERENCES user_info (id) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+																					
+			
+DROP TRIGGER IF EXISTS ins_entity_child_trans_count;			
+delimiter //
+CREATE TRIGGER ins_entity_child_trans_count BEFORE INSERT ON entity_child_trans_count
+       FOR EACH ROW
+       BEGIN
+			DECLARE open_balance DECIMAL(14,4);
+			DECLARE closing_balance DECIMAL(14,4);
+			
+		   SET open_balance  = IFNULL((SELECT 
+										cb 
+									FROM 
+										entity_child_trans_count 
+									WHERE 
+										trans_token=NEW.trans_token AND
+										parent_id=NEW.parent_id ORDER BY ID DESC LIMIT 1),0);
+	   
+			SET NEW.ob          =  open_balance;
+			SET closing_balance = (open_balance+new.current_value);
+			SET NEW.cb          = closing_balance;
+			
+       END;//
+delimiter ;
+
 -- 31Mar2023
 DROP TABLE IF EXISTS ecb_av_addon_ec_id;
 CREATE TABLE ecb_av_addon_ec_id(
