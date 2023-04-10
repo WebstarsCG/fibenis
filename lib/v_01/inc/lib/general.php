@@ -1900,8 +1900,15 @@
 				function get_one_column($param){
 				      
 				          global $rdsql;
+						  
+						if(@$param['table']){								
+								$param['table']= " FROM $param[table] ";	
+						}else{
+								$param['table'] = '';
+								 $param['manipulation'] = '';
+						}							
 				         
-					   $select_data = "SELECT $param[field] as field_1 FROM $param[table] $param[manipulation] ";
+					   $select_data = "SELECT $param[field] as field_1 $param[table] $param[manipulation] ";
 			 
 					   $exe_select_data = $rdsql->exec_query($select_data,'select data--->');
 							 
