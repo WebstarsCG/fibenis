@@ -1022,7 +1022,9 @@
                                 
 				'is_user_id'       => 'user_id',
                                 
-                                'js' => array('is_top' => 1, 'top_js' => $LIB_PATH.'def/external_attribute/f'),
+				'js' => array('is_top' => 1, 'top_js' => $LIB_PATH.'def/external_attribute/f'),
+				
+				'css'=>1,
 								
 				# Communication
 								
@@ -1143,74 +1145,3 @@
         } // end)
     
 ?>
-<style>
-    
-    .lo_external_attribute ul li{        
-        display: inline-block;
-        float  : left;
-        height:33px;
-        width  : 48%;
-        margin:1%;
-    }
-    
-    .lo_external_attribute ul li a{        
-        border:1px solid #aaa;
-        display:block;
-        padding:5px;
-        width:100%;
-    }
-    
-    #X11_panel,
-    #X12_panel,
-    #X13_panel,
-    #X14_panel,
-    #X15_panel,
-    #X16_panel,
-    #X21_panel,
-    #X22_panel{
-       
-            display: block;
-            float: left;
-            width:50% !important;
-            
-    }
-    
-    
-    #X8_panel,
-    #X31_panel,
-    #X32_panel{   
-        display:block;
-        height:auto !important;
-        padding-top:10px;
-        width  :100% !important;
-    }
-    
-    #X8_panel .label,
-    #X31_panel .label{
-        width:20% !important;
-    }
-    
-    #X8_panel .value,
-    #X31_panel .value{        
-        width:80% !important;        
-    }
-    
-    #X9_panel .value input{
-        width:50px !important;
-        
-    }
-    
-    
-    #X32_panel .label{
-        display:none;    
-    }
-    
-    #X32_panel .value{
-        width:100% !important;
-    }
-	
-	 #X58_panel{
-		height:75px !important;	
-	}
-    
-</style>
