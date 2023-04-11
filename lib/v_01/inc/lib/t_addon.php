@@ -48,7 +48,9 @@
 											get_ecb_av_addon_varchar(id,'APTN') as tg_on_label,
 											get_ecb_av_addon_varchar(id,'APTF') as tg_off_label,
 											get_ecb_av_addon_varchar(id,'APSL') as select_option,
-											get_ecb_av_addon_varchar(id,'APFO') as grid_detail
+											get_ecb_av_addon_varchar(id,'APFO') as grid_detail,
+											get_ecb_av_addon_varchar(id,'ADXQ') as col_func
+
 								FROM
 											entity_child_base
 								WHERE
@@ -85,7 +87,7 @@
 							
 							if(@$col['template_content_text']){
 
-								$lv['col_template']="<table class=\"inner\" cellpadding=\"5px\">".
+								$lv['col_template']="<table class=\"table fbn-tbl-inner\" cellpadding=\"5px\">".
 								                            "$col[template_heading_text]".   
 															"<TMPL_LOOP $lv[token]>$col[template_content_text]</TMPL_LOOP>".
 													"</table>";
@@ -101,10 +103,11 @@
 
 																 
 					  $lv['template_col_content'] = (@$col['is_heading'])?"<tr class=\"$lv[token]\">\n".
-													 "<div class=\"template\">$lv[col_template]</div><th class=\"heading\" colspan=\"2\"><TMPL_VAR $lv[token]_label></th></tr>\n":
+													 "<!---<div class=\"template\">$lv[col_template]</div>--->".
+													 "<th  colspan=\"2\"><TMPL_VAR $lv[token]_label></th></tr>\n":
 													 "<tr class=\"$lv[token]\">\n".
-														"\t<td class=\"label\"><TMPL_VAR $lv[token]_label></td>\n".
-														"\t<td class=\"detail\">$lv[col_template]</td>\n".
+														"\t<td ><TMPL_VAR $lv[token]_label></td>\n".
+														"\t<td >$lv[col_template]</td>\n".
 													 "</tr>\n";
 							array_push($lv['template_cols'],$lv['template_col_content']);
 							$lv['counter']['row']++;
@@ -114,11 +117,15 @@
 				} // end of each field
 
 							
-				$lv['template_cols_text'] = implode('',$lv['template_cols']);			
+				$lv['template_cols_text'] = implode('',$lv['template_cols']);	
+				
+				$lv['template_content']   = ((@$lv['template_content'])?(@$lv['template_content'].$lv['template_cols_text']):
+																		$lv['template_cols_text']);
+
+				$lv['template_content']		= "<table class='table col-md-12  fbn-table-to-div table-striped ' border='0' cellpadding='5px' data-id=''>".								"$lv[template_content]</table>";																			
 							
 				return ['data'      =>$lv['data'],				
-						'template_content'=>((@$lv['template_content'])?(@$lv['template_content'].$lv['template_cols_text']):
-																		$lv['template_cols_text'])
+						'template_content'=>$lv['template_content']
 						];
 
         } // end
@@ -164,7 +171,17 @@
 			if($lv['select_option_table_lc']=='entity_child_base'){
 				$col['field']="get_ecb_sn_by_token($col[field])";
 			}else if($lv['select_option_table_lc']=='entity_child'){
+				
+				if(@$attr['col_func']){
+								
+								
+								// get_exav_addon_varchar([[this]],'FTTX') ->  get_exav_addon_varchar(<current_result>,'FTTX')			
+									$col['field']=str_replace('[[this]]',$col['field'],$attr['col_func']);									
+								
+							}																										
+
 				//$col['field']="get_ecb_sn_by_token($col[field])";
+				
 			}
 			
 			return $col;				
