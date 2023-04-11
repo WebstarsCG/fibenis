@@ -1,4 +1,12 @@
---10Apr2023
+-- 11Apr20233
+-- Adding EX entity 
+INSERT INTO entity VALUES ('','EX','External Transaction Items','External Transaction Items',now(),2,now(),0);
+
+-- Adding Coach Issue Transaction
+INSERT INTO entity_child_base VALUES ('','EX','CHIS','Coach Issue','Coach Issue','','','EBMS',2,now(),0.00,1,2,now());
+
+
+-- 10Apr2023
 DROP TABLE IF EXISTS entity_child_trans_count;
 CREATE TABLE entity_child_trans_count(
 		  id int(11) NOT NULL AUTO_INCREMENT,
