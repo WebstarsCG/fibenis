@@ -407,11 +407,11 @@
 												
 												$t_series = $param['t_series'];
 												
-												$header_info = $t_series['save_as'][$param['save_as_i']]['header'];
+												$header_info = @$t_series['save_as'][$param['save_as_i']]['header'];
 												
-												if(array_key_exists('image_path',$t_series['save_as'][$param['save_as_i']]['header'])){
+												if(array_key_exists('image_path',@$t_series['save_as'][$param['save_as_i']]['header'])){
 												
-													$logo = $header_info['image_path'];
+													$logo = @$header_info['image_path'];
 													
 													if($logo){
 														$image_file = K_PATH_IMAGES.$logo;	
@@ -484,11 +484,11 @@
 							
 							
 							// remove default header/footer
-							if($t_series['save_as'][$save_as_i]['header']['is_disable']){
+							if(@$t_series['save_as'][$save_as_i]['header']['is_disable']){
 								$pdf->setPrintHeader(false);
 							}
 							
-							if($t_series['save_as'][$save_as_i]['footer']['is_disable']){
+							if(@$t_series['save_as'][$save_as_i]['footer']['is_disable']){
 								$pdf->setPrintFooter(false);
 							}
 								
