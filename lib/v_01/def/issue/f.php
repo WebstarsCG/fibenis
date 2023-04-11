@@ -179,13 +179,13 @@
     
     if(isset($_GET['key'])){
 	
-	$F_SERIES['after_add_update'] = 0;
+		$F_SERIES['after_add_update'] = 0;
     }
     
     
     function after_add_update($key_id){
     		
-		global $rdsql,$USER_ID;
+		global $rdsql,$USER_ID,$G,$COACH;
 		
 		$Insert_status = $rdsql->exec_query("INSERT INTO exav_addon_exa_token (parent_id,exa_token,exa_value_token,user_id)
 									VALUES
@@ -194,8 +194,23 @@
 		$Insert_status_info = $rdsql->exec_query("INSERT INTO status_info (status_code,entity_code,child_comm_id,user_id)
 									VALUES
 						     ('IUOP','IU',$key_id,$USER_ID)","Insertion Of Status info Failed");
+							 
+		if(isset($_GET['key'])==false){	
+		
+		
+			$lv['trans_query'] = "INSERT 
+										INTO
+											 enity_child_trans_count
+											(trans_token,parent_id,trans_id,trans_entity_code,current_value,user_id)
+									VALUES
+											('CHIS',$COACH[id],$key_id,'IS',1,$USER_ID)";
+		
+			$lv['trans_query_exec'] = $rdsql->exec_query($lv['trans_query'],"Trans Query");
 			
-    }
+		} // end
+		
+			
+    } // end of after_add_update
     
 
 ?>	
