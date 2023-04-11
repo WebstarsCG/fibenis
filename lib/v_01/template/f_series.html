@@ -40,7 +40,11 @@
 
 	<TMPL_IF is_top_js>  
 		<script language="javascript" type="text/javascript" src="<TMPL_IF top_js_file><TMPL_VAR top_js_file><TMPL_ELSE><TMPL_VAR DEF_PATH><TMPL_VAR f_series></TMPL_IF>.js"></script>	    
-	</TMPL_IF>  
+	</TMPL_IF> 
+
+	<TMPL_IF IS_CSS>  
+		<link rel="stylesheet" href="<TMPL_IF CSS_PATH><TMPL_VAR CSS_PATH><TMPL_ELSE><TMPL_VAR DEF_PATH><TMPL_VAR F_SERIES></TMPL_IF>.css">
+	</TMPL_IF> 	
 	
 	<TMPL_IF is_title>
 		<h1><TMPL_VAR TITLE></h1>

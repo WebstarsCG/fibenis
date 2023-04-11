@@ -380,6 +380,17 @@
 			
 			$T->AddParam('add',@$F_SERIES['button_name']);
 			
+			// css
+			if(@$F_SERIES['css']){
+				
+				$T->AddParam('is_css',1);
+				
+				if(is_string($F_SERIES['css'])){
+					$F_SERIES['css']=str_replace('.css','',strtolower($F_SERIES['css']));
+					$T->AddParam('css_path',$F_SERIES['css']);
+				}
+			}// end of css
+			
 			if(@$F_SERIES['label']){
 			
 					$T->AddParam(@$F_SERIES['label']);
