@@ -1,9 +1,10 @@
 -- 11Apr20233
 -- Adding EX entity 
-INSERT INTO entity VALUES ('','EX','External Transaction Items','External Transaction Items',now(),2,now(),0);
+INSERT INTO entity (code,sn,ln,creation,user_id,timestamp_punch,is_lib) VALUES ('EX','External Transaction Items','External Transaction Items',now(),2,now(),0);
 
 -- Adding Coach Issue Transaction
-INSERT INTO entity_child_base VALUES ('','EX','CHIS','Coach Issue','Coach Issue','','','EBMS',2,now(),0.00,1,2,now());
+INSERT INTO entity_child_base (entity_code,token,sn,ln,dna_code,created_by,creation,is_active,user_id,timestamp_punch) 
+						VALUES ('EX','CHIS','Coach Issue','Coach Issue','EBMS',2,now(),1,2,now());
 
 
 -- 10Apr2023
