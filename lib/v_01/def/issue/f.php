@@ -200,7 +200,7 @@
 		
 			$lv['trans_query'] = "INSERT 
 										INTO
-											 enity_child_trans_count
+											 entity_child_trans_count
 											(trans_token,parent_id,trans_id,trans_entity_code,current_value,user_id)
 									VALUES
 											('CHIS',$COACH[id],$key_id,'IS',1,$USER_ID)";
