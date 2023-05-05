@@ -106,6 +106,8 @@
 			'back_to'  => array( 'is_back_button' =>1),
                                 
 			'prime_index'   => 1,
+			
+			'is_cc'=>1
 			      
                     );
     
