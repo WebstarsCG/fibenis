@@ -9,6 +9,8 @@
 		
 		$MENU_OFF= @$_GET['menu_off'] ?? 0;   // menu_off
 		
+		$IS_MENU_OFF = $MENU_OFF;
+		
 		$PAGE_CONTENT; // final content variable passes to main stream
 		
 		$PV;	       // page variable
@@ -193,7 +195,8 @@
 				
 				// get content
 				$APP = new Template(array("filename" => $PV['cache_coach_eng_role'],"debug"    => 0));
-				$APP->AddParam('APP_CONTENT',$L->Output());				
+				$APP->AddParam('APP_CONTENT',$L->Output());					
+				if(!$IS_MENU_OFF){ $APP->AddParam('PAGE_TITLE',@$PAGE_TITLE); } // if menu than title
 				$APP->EchoOutput();
 	
 		}else{ // open page
@@ -389,7 +392,7 @@
 									'is_page'        => $PV['is_page'],
 									'coach_name'     => $COACH['name'],
 									'coach_path'     => $COACH['path'],
-									'page_title'     => @$PV['page_title']
+									'page_title'     => '<TMPL_VAR PAGE_TITLE>'
 								)
 						    );
 						    
