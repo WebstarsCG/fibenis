@@ -1,3 +1,96 @@
+--06MAy2023
+DELIMITER $$
+DROP FUNCTION IF EXISTS get_ec_trans_count_addon_max$$
+CREATE FUNCTION get_ec_trans_count_addon_max(temp_trans_addon_token varchar(32),temp_parent_id INT,temp_trans_addon_id INT) RETURNS DECIMAL
+BEGIN
+			RETURN IFNULL((SELECT ROUND(cb,2) FROM entity_child_trans_count_addon as trans_addon WHERE trans_addon_token=temp_trans_addon_token AND 
+													ectc_parent_id = temp_parent_id AND
+													trans_addon_id=temp_trans_addon_id
+													ORDER BY id DESC LIMIT 1),0));
+END$$
+
+
+DROP FUNCTION IF EXISTS get_ec_trans_count_max$$
+CREATE FUNCTION get_ec_trans_count_max(temp_trans_token varchar(32),temp_parent_id INT) RETURNS DECIMAL
+BEGIN
+			RETURN IFNULL((SELECT cb FROM entity_child_trans_count WHERE trans_token=temp_trans_token  AND parent_id=temp_parent_id ORDER BY id DESC LIMIT 0,1),0);
+END$$
+DELIMITER;
+
+
+--26Apr2023
+DROP TABLE IF EXISTS entity_child_trans_count_addon;
+CREATE TABLE entity_child_trans_count_addon (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  ectc_parent_id int(11) NOT NULL,
+  ectc_trans_id int(11) NOT NULL,
+  trans_addon_token varchar(32) NOT NULL,
+  trans_addon_id int(11) NOT NULL,
+  ob decimal(14,4) DEFAULT NULL  COMMENT 'Opening Balamce',
+  current_value decimal(14,4) DEFAULT NULL,
+  cb decimal(14,4) DEFAULT NULL  COMMENT 'Closing Balamce',
+  user_id int(11) NOT NULL,
+  timestamp_punch timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),  
+  KEY ectc_parent_id (ectc_parent_id),
+  KEY trans_key_combo(ectc_parent_id,ectc_trans_id,trans_addon_token,trans_addon_id),
+  KEY trans_key_child (trans_addon_token,trans_addon_id ),
+  KEY parent_trans_id (ectc_parent_id,ectc_trans_id,trans_addon_id),
+  KEY timestamp_punch (timestamp_punch),
+  KEY user_id (user_id),
+  CONSTRAINT fk_ec_trans_count_addon_parent_id FOREIGN KEY (ectc_parent_id) REFERENCES entity_child (id) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT fk_ec_trans_count_addon_trans_id FOREIGN KEY (ectc_trans_id) REFERENCES entity_child (id) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT fk_ec_trans_count_addon_id FOREIGN KEY (trans_addon_id) REFERENCES entity_child (id) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT fk_ec_trans_count_addon_user_id FOREIGN KEY (user_id) REFERENCES user_info (id) ON DELETE RESTRICT ON UPDATE RESTRICT		  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TRIGGER IF EXISTS ins_entity_child_trans_count_addon;			
+delimiter $$
+CREATE TRIGGER ins_entity_child_trans_count_addon BEFORE INSERT ON entity_child_trans_count_addon
+       FOR EACH ROW
+       BEGIN
+			DECLARE open_balance DECIMAL(14,4);
+			DECLARE closing_balance DECIMAL(14,4);
+			
+		   SET open_balance  = IFNULL((SELECT 
+										cb 
+									FROM 
+										entity_child_trans_count_addon 
+									WHERE 
+										trans_addon_token=NEW.trans_addon_token AND
+										ectc_parent_id=NEW.ectc_parent_id AND
+										trans_addon_id=NEW.trans_addon_id ORDER BY ID DESC LIMIT 1),0);
+	   
+			SET NEW.ob          =  open_balance;
+			SET closing_balance = (open_balance+new.current_value);
+			SET NEW.cb          = closing_balance;
+			
+       END;$$
+delimiter ;
+
+
+DELIMITER $$
+CREATE  FUNCTION get_ectc_addon_ec_id(ectc_id INT, temp_token varchar(32)) RETURNS int
+BEGIN
+    RETURN IFNULL((SELECT
+							trans_addon_id 
+					FROM 
+							entity_child_trans_count_addon 
+					WHERE  
+							parent_id=ectc_id AND  
+							trans_addon_token=temp_token),NULL);
+END$$
+DELIMITER ;
+
+-- 12Apr2023
+DELIMITER $$
+CREATE  FUNCTION get_ecb_addon_ec_id(ecb_id INT, temp_code CHAR(4)) RETURNS int
+BEGIN
+    RETURN IFNULL((SELECT ec_id FROM ecb_av_addon_ec_id WHERE  parent_id=ecb_id AND ea_code=temp_code ORDER BY id DESC LIMIT 1),NULL);
+END$$
+DELIMITER ;
+
+
 -- 11Apr20233
 -- Adding EX entity 
 INSERT INTO entity (code,sn,ln,creation,user_id,timestamp_punch,is_lib) VALUES ('EX','External Transaction Items','External Transaction Items',now(),2,now(),0);
