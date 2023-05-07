@@ -260,8 +260,14 @@
 			<!---Support Team --->
 			<TMPL_IF USER_SUT></TMPL_IF>
 			 
+			 <!---RM Admin			 --->
+			<TMPL_IF USER_RMA></TMPL_IF>
 			 
-			 
+			 <!---RM Customer			 --->
+			<TMPL_IF USER_RMC></TMPL_IF> 
+			
+			 <!---RM Customer			 --->
+			<TMPL_IF USER_TKM></TMPL_IF> 
 			 
 		    
 		     <TMPL_UNLESS NO_USER>
@@ -615,7 +621,7 @@
       <TMPL_UNLESS IS_PAGE>
 	    <section class="fbn_page_bar">
 		  <div class="container">
-			<span class="col-md-12" id="fbn_app_page_title"><TMPL_VAR PAGE_TITLE></span>
+			<span class="col-md-12"><b>&raquo;</b>&nbsp;<TMPL_VAR PAGE_TITLE></span>
 		  </div>
 	    </section>
       </TMPL_UNLESS>
