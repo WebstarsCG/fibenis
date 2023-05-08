@@ -40,78 +40,17 @@
 //	       document.getElementById('<TMPL_VAR PAGE_ID>').className='active';
 //	    }
 //	    
-            $(function(){
+		$(function(){
 	      
 		 var lv = new Object({});
 	      
-		<TMPL_UNLESS IS_OPEN>
-		  <TMPL_IF SHOW_DOOR>
-		    $('#myModalSignIn').modal('show');
-		  </TMPL_IF>
-		</TMPL_UNLESS>
+			<TMPL_UNLESS IS_OPEN>
+			  <TMPL_IF SHOW_DOOR>
+				$('#myModalSignIn').modal('show');
+			  </TMPL_IF>
+			</TMPL_UNLESS>
 		
-		// tip
-		
-		  $('a.tip').each(function() {
-                            
-		      $(this).qtip({                                                                
-			  content: {
-			      text: $(this).next('.tooltiptext')
-			  },
-			  position: {                                    
-			      my    : 'middle left',    
-			      at    : 'right'
-			  },
-		      });                       
-		  });
-		   
-		  
-		  // tip right 
-		   
-		  $('a.tip_right').each(function() {
-	  
-		      $(this).qtip({                                                                
-			  content: {
-			      text: $(this).next('.tooltiptext')
-			  },
-			  position: {                                    
-			      my    : 'middle right',    
-			      at    : 'left'
-			  },
-		      });                       
-		  });
-		  
-		  // tip right 
-		   
-		  $('a.tip_bottom').each(function() {
-	  
-		      $(this).qtip({                                                                
-			  content: {
-			      text: $(this).next('.tooltiptext')
-			  },
-			  position: {                                    
-			      my    : 'top center',    
-			      at    : 'bottom center'
-			  },
-		      });                       
-		  });
-		  
-		  
-		  // tip bottom
-		   
-		  $('a.tip_top').each(function() {
-	  
-		      $(this).qtip({                                                                
-			  content: {
-			      text: $(this).next('.tooltiptext')
-			  },
-			  position: {                                    
-			      my    : 'bottom center',    
-			      at    : 'top center'
-			  },
-		      });                       
-		  });
-		  
+			G.parseTip();
 		
 		// check marquee
 		
