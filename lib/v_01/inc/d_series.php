@@ -2083,7 +2083,7 @@
 		$lv['mode'] = @$lv['action'][@$param['mode']]?@$param['mode']:'all';
 		
 		// check existance of summary & table name
-		if(@$param['summary'] && @$param[table_name] ){
+		if(@$param['summary'] && @$param['table_name'] ){
 		
 			// each summary
 			foreach(@$param['summary'] as $idx => $summary){
@@ -2094,7 +2094,7 @@
 								FROM 
 											$param[table_name] 
 								WHERE
-											 1=1  ".(@$param[where])."".(@$summary['manipulation'])." LIMIT 0,1";				
+											 1=1  ".(@$param['where'])."".(@$summary['manipulation'])." LIMIT 0,1";				
 
 				// result												 
 				$lv['result'] = $param['rdsql']->exec_query($lv['query'],"Error!summary");						
