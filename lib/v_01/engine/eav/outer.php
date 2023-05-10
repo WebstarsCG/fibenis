@@ -1,6 +1,10 @@
 <?PHP
     
 	$temp_start=microtime(true);
+	
+	ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 	# Var
 		$COACH=[];     // coach
@@ -117,7 +121,7 @@
 				
 				# coach/engine/role url
 				 
-				$PV['url_coach_eng_role']=$COACH['domain_name'].'_'.$PAGE.'_'.$USER_ROLE.'_'.$MENU_OFF;
+				$PV['url_coach_eng_role']=$COACH['domain_name'].'_'.$PAGE_CODE.'_'.$USER_ROLE.'_'.$MENU_OFF.'_'.$DEFAULT_ADDON.'E';
 								
 				# process series content	
 				

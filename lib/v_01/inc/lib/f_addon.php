@@ -16,7 +16,7 @@
 				if(($param['is_cache']) && 					
 				   (is_file($lv['lock_file']))
 				){						
-						
+											
 						// read data to temp
 						$fh  					= fopen($lv['lock_file'],'r') or "Error";
 						$lv['lock_content']     = fread($fh, filesize($lv['lock_file']));
@@ -28,7 +28,7 @@
 						return $lv['unlock_content'];
 				
 				}else{
-				
+			
 							$g     = $param['g'];
 							
 							$rdsql = $param['rdsql'];
@@ -177,21 +177,22 @@
 									
 									
 						//echo $temp['addon']->query;                            
-									
+										
 										$temp['addon']->result = $rdsql->exec_query($temp['addon']->query ,"UPI");
-														
-										$temp['addon']->result_rows = $rdsql->num_rows($temp['addon']->result);
+
+										//version conflict
+										//$temp['addon']->result_rows = $rdsql->num_rows($temp['addon']->result);
 														
 										if($temp['addon']->result->num_rows>0){                                        
 												   
 												if(!$param['hide_addon_tab']){   
 										
-										array_push($f_series['data'],['field_name'	=>'Addon',        
+												array_push($f_series['data'],['field_name'	=>'Addon',        
 																			  'type'		=>'heading']);
 																			
 												} //
 										}
-										
+											
 										while($get_row = $rdsql->data_fetch_object($temp['addon']->result)){
 												
 													
@@ -802,8 +803,7 @@
 																						];
 										
 										if(isset($get_row->image_size)){
-												
-												array_push($temp_input['image_size'] = $get_row->image_size);
+												$temp_input['image_size']=$get_row->image_size;
 										}
 										
 														
