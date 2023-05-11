@@ -1,0 +1,53 @@
+<TMPL_LOOP DATA_INFO>
+	<!---<TMPL_VAR HIDE_SNO>  <TMPL_VAR record_counter> <TMPL_IF able_del> <TMPL_IF is_row_able_del></TMPL_IF></TMPL_IF>
+	<TMPL_VAR del_name><TMPL_VAR key_id><TMPL_IF hidden_data><TMPL_LOOP hidden_data><TMPL_VAR h_value></TMPL_LOOP></TMPL_IF> 
+	<TMPL_IF action_type><TMPL_IF custom_action> <TMPL_LOOP custom_action>
+                             <TMPL_IF html><TMPL_VAR html></TMPL_IF>
+                             <TMPL_VAR action_name>
+                       <TMPL_VAR row_count>
+                    </TMPL_LOOP>
+            </TMPL_IF></TMPL_IF><TMPL_IF IS_ACTION></TMPL_IF>
+                <TMPL_IF is_edit><a  class="ficon"
+<TMPL_IF ACTION_NARROW_DOWN>
+href=JavaScript:d_series.call_nd({"id":"<TMPL_VAR key_id>","title":"Edit","src":"?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"})
+<TMPL_ELSE>
+href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF ACTION_MENU_OFF>&menu_off=<TMPL_VAR ACTION_MENU_OFF></TMPL_IF><TMPL_IF ACTION_DEFAULT_ADDON>&default_addon=<TMPL_VAR ACTION_DEFAULT_ADDON></TMPL_IF>"
+</TMPL_IF>
+><i class="fa fa-edit"></i>Edit</a>
+                </TMPL_IF>
+                
+                
+            <TMPL_IF is_view><a class="icon pdf" href="JavaScript:d_series_view(<TMPL_VAR __counter__>);"> View</a></TMPL_IF>
+                
+            <TMPL_IF is_add_more_info><a href="?f_series=<TMPL_VAR app_key>&key=<TMPL_VAR key_id>">Add More Info</a></TMPL_IF>
+            
+        
+            <TMPL_LOOP view>
+                <a class="icon pdf" href="<TMPL_VAR script>(<TMPL_VAR __counter__>);"></a>
+            </TMPL_LOOP> <TMPL_IF is_narrow_down><TMPL_VAR col_count></TMPL_IF><TMPL_UNLESS IS_HIDE></TMPL_UNLESS><TMPL_VAR NUM_OF_ROWS>--->				
+					
+	   <TMPL_LOOP COL_RESULT>
+            <div id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>" 
+				<TMPL_VAR TD_ATTR> 
+				<TMPL_IF JS_CALL> data-js='<TMPL_VAR JS_CALL>' data-p='<TMPL_VAR VALUE></TMPL_IF>'
+				<TMPL_IF JS_CALL_OUT> data-js-out='<TMPL_VAR JS_CALL_OUT>' data-p='<TMPL_VAR VALUE></TMPL_IF>'	>	
+					<TMPL_UNLESS JS_CALL> 
+						<TMPL_UNLESS JS_CALL_OUT> 
+							<TMPL_VAR VALUE>
+						</TMPL_UNLESS>		
+					</TMPL_UNLESS>	
+            </div>
+        </TMPL_LOOP>
+		  
+		  <TMPL_IF __LAST__>
+        <input type="hidden" name="COUNTER" id="COUNTER" value="<TMPL_VAR __COUNTER__>"  />        
+        <input type="hidden" name="D_COUNTER" id="D_COUNTER" value="<TMPL_VAR __COUNTER__>"  />
+    </TMPL_IF>
+
+</TMPL_LOOP>
+  
+  <input type="hidden" id='pager_records' data-pager='<TMPL_VAR NUM_OF_ROWS>'  />
+  <TMPL_UNLESS DATA_INFO>
+		<input type="hidden" name="COUNTER" id="COUNTER" value="0"  />        
+        <input type="hidden" name="D_COUNTER" id="D_COUNTER" value="0"  />
+  </TMPL_UNLESS>

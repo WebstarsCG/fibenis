@@ -1,7 +1,6 @@
 <?PHP
 		
 		error_reporting(E_ALL);
-		
 		ini_set("display_errors", 1);
 	
 		$D_DEFAULT 				= ['show_default_rows'   => 5];
@@ -481,17 +480,15 @@
 		
 		// page action
 		// build desk
-		$options 	= array("filename"=>"$LIB_PATH/template/d_series.desk.html", "debug"=>0,"loop_context_vars"=>1);		
-		$TBL 	 	= new Template($options);				
-
-
+		$PV['CONTAINER_DNA'] = (@$D_SERIES['is_div_of_div'])?'card':'desk';
+		$options 	= array("filename"=>"$LIB_PATH/template/d_series.".$PV['CONTAINER_DNA'].".html", "debug"=>0,"loop_context_vars"=>1);		
+		$TBL 	 	= new Template($options);	
 	
 		// get desk info
 		$DESK = build_desk();
 		$TBL->AddParam('DATA_INFO',$DESK['DATA_INFO']);
 		$TBL->AddParam('NUM_OF_ROWS',$pager_info[0]);
 	
-		
 		$PV['DESK_CONTENT'] = $TBL->Output();
 		
 		if(@$_GET['page_axn']){
@@ -680,12 +677,15 @@
 		
 		$T->AddParam('able_del',@$D_SERIES['del_permission']['able_del']);
 		
+		$T->AddParam('IS_DIV_OF_DIV',@$D_SERIES['is_div_of_div']);
 		$T->AddParam('TH_INFO',$DESK['TH_INFO']);
 		$T->AddParam('DESK_CONTENT',$PV['DESK_CONTENT']);
 		
 		$T->AddParam(((@$D_SERIES['add_button'])?@$D_SERIES['add_button']:((@$D_SERIES['add'])?@$D_SERIES['add']:[])));
 		
 		$T->AddParam('JS_CALL_INFO',$DESK['JS_CALL_INFO']);
+		$T->AddParam('JS_CALL_OUT_INFO',$DESK['JS_CALL_OUT_INFO']);
+		$T->AddParam('IS_JS_CALL_OUT_INFO',(count($DESK['JS_CALL_INFO']) || count($DESK['JS_CALL_OUT_INFO'])));
 		
 		// 16 jun 2015
 		
@@ -1358,6 +1358,9 @@
 				
 				$js_call		= [];
 				$js_call_info	= [];
+				
+				$js_call_out		= [];
+				$js_call_out_info	= [];
 								
 				//dynamic alias name for field
 		
@@ -1384,6 +1387,7 @@
 						//$temp['js_call'] =@$value['js_call'];
 						
 						if(@$value['js_call']){$js_call[@$value['js_call']]=1;}
+						if(@$value['js_call_out']){$js_call_out[@$value['js_call_out']]=1;}
 						
 						if($temp['th']){						
 								array_push($temp_info,$temp);
@@ -1430,12 +1434,18 @@
 					array_push($js_call_info,['name'=>$k]);
 				}
 				
+				foreach($js_call_out as $k=>$v){
+					array_push($js_call_out_info,['name'=>$k]);
+				}
+				
 				return array(
 							 'TH_INFO'	  => $temp_info,
 							 
 							 'DATA_INFO'  =>get_data($field_name),
 							 
-							 'JS_CALL_INFO' =>$js_call_info
+							 'JS_CALL_INFO' =>$js_call_info,
+							 
+							 'JS_CALL_OUT_INFO' =>$js_call_out_info
 							 
 						);
 		                
@@ -1554,6 +1564,7 @@
 						$temp['TD_ATTR']     = ($td_attr)?$td_attr:@$D_SERIES['data'][$key]['td_attr'];
 						
 						$temp['JS_CALL']     = @$D_SERIES['data'][$key]['js_call'];
+						$temp['JS_CALL_OUT']     = @$D_SERIES['data'][$key]['js_call_out'];
 						
 						#$temp['is_js']       = ($temp['JS_CALL'])?1:0;
 						
@@ -2325,6 +2336,8 @@
 						$d_series['layout']	        ='dashboard';
 						
 						$d_series['table_attr']         ='class="div_of_div panel col-md-12 " ';
+						
+						$d_series['is_div_of_div']  = 1;
 						
 						return $d_series;
 				};

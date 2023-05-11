@@ -33,23 +33,20 @@
             </TMPL_LOOP>	
         </TMPL_IF>
         
-        <TMPL_LOOP COL_RESULT>
-            
+        <TMPL_LOOP COL_RESULT>            
             <TMPL_UNLESS IS_HIDE>
-            
-            <td id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"  <TMPL_VAR TD_ATTR> <TMPL_IF JS_CALL> data-js='<TMPL_VAR JS_CALL>' data-p='<TMPL_VAR VALUE></TMPL_IF>'
-                 >								
-					<TMPL_UNLESS JS_CALL> 
-						<TMPL_VAR VALUE>								     
+            <td id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"  <TMPL_VAR TD_ATTR> 
+				<TMPL_IF JS_CALL> data-js='<TMPL_VAR JS_CALL>' data-p='<TMPL_VAR VALUE></TMPL_IF>'
+				<TMPL_IF JS_CALL_OUT> data-js-out='<TMPL_VAR JS_CALL_OUT>' data-p='<TMPL_VAR VALUE></TMPL_IF>' >	
+				<TMPL_UNLESS JS_CALL>
+					<TMPL_UNLESS JS_CALL_OUT> 
+						<TMPL_VAR VALUE>		
 					</TMPL_UNLESS>
-               							
+				</TMPL_UNLESS>	
             </td>
-            
             </TMPL_UNLESS>
-            
         </TMPL_LOOP>
-                                
-    
+                              
         <TMPL_IF action_type>
             <td class="align_RM no_wrap">
             <TMPL_IF custom_action>

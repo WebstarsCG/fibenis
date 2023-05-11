@@ -248,7 +248,13 @@
 
 	<form id="PUB_A" name="PUB_A" action=""  method="post"  >
 
-    		
+    	<TMPL_IF IS_DIV_OF_DIV>
+		<div id="desk_data">
+				<TMPL_VAR DESK_CONTENT>	
+				
+		</div>
+		
+		<TMPL_ELSE>
 		<table  id="primary_table" <TMPL_IF table_attr> <TMPL_VAR table_attr><TMPL_ELSE>class="basic" width="100%" cellpadding=0 cellspacing="0" </TMPL_IF>>
 			
 			<TMPL_UNLESS hide_header>
@@ -308,9 +314,13 @@
 			</TMPL_UNLESS>
 			
 			<tbody id='desk_data'>
-				<TMPL_VAR DESK_CONTENT>				
+				<TMPL_VAR DESK_CONTENT>	
 			</tbody>
 			</table>
+			</TMPL_IF>
+			
+			
+			
 				<TMPL_UNLESS DATA_INFO>
 					<script>
 						/*ELEMENT("primary_table").rows[1].cells[0].colSpan=Number(ELEMENT("primary_table").rows[0].children.length);
@@ -615,20 +625,27 @@
 			
 			
 			// js update	
-			<TMPL_IF JS_CALL_INFO>
-				
+			<TMPL_IF IS_JS_CALL_OUT_INFO>
+			
 				d_series.setJsCalls({<TMPL_LOOP JS_CALL_INFO>'<TMPL_VAR NAME>':<TMPL_VAR NAME><TMPL_UNLESS __last__>,</TMPL_UNLESS></TMPL_LOOP>});
+				d_series.setJsCallOuts({<TMPL_LOOP JS_CALL_OUT_INFO>'<TMPL_VAR NAME>':<TMPL_VAR NAME><TMPL_UNLESS __last__>,</TMPL_UNLESS></TMPL_LOOP>});
 				
 				try{
 					d_series.runJsCalls();
+					d_series.runJsCallOuts();
+					
+						// waiting list
+						wl.desk.prepare(G.$('desk_data'));
+					
 				}catch(e){
 					console.error(e);
 				}
 			
+			<TMPL_ELSE>
+				wl.desk.prepare(G.$('desk_data'));
 			</TMPL_IF>
 		
-			// wl	
-			wl.desk.prepare(G.$('desk_data'));
+			
 			
 			// counter update
 			if(G.$('COUNTER') && G.$('pager_loaded_rows')){			
