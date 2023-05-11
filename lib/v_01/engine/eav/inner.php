@@ -27,7 +27,7 @@
 						      'parent_id' => $page_info['parent_id'])
 				   );
 		
-		$page_info['side_menu'] = $temp_page_info['side_menu'];
+		$page_info['side_menu'] = @$temp_page_info['side_menu'];
 		
 	} // end of content retrieve
 	
