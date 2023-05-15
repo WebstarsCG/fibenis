@@ -25,19 +25,20 @@ href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF
             <TMPL_LOOP view>
                 <a class="icon pdf" href="<TMPL_VAR script>(<TMPL_VAR __counter__>);"></a>
             </TMPL_LOOP> <TMPL_IF is_narrow_down><TMPL_VAR col_count></TMPL_IF><TMPL_UNLESS IS_HIDE></TMPL_UNLESS><TMPL_VAR NUM_OF_ROWS>--->				
-					
-	   <TMPL_LOOP COL_RESULT>
-            <div id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>" 
-				<TMPL_VAR TD_ATTR> 
-				<TMPL_IF JS_CALL> data-js='<TMPL_VAR JS_CALL>' data-p='<TMPL_VAR VALUE></TMPL_IF>'
-				<TMPL_IF JS_CALL_OUT> data-js-out='<TMPL_VAR JS_CALL_OUT>' data-p='<TMPL_VAR VALUE></TMPL_IF>'	>	
-					<TMPL_UNLESS JS_CALL> 
-						<TMPL_UNLESS JS_CALL_OUT> 
-							<TMPL_VAR VALUE>
-						</TMPL_UNLESS>		
-					</TMPL_UNLESS>	
-            </div>
-        </TMPL_LOOP>
+		<div  id="RX_<TMPL_VAR __counter__>"  data-row="1"> 			
+		   <TMPL_LOOP COL_RESULT>
+				<div id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"   data-col="1" 
+					<TMPL_VAR TD_ATTR> 
+					<TMPL_IF JS_CALL> data-js='<TMPL_VAR JS_CALL>' data-p='<TMPL_VAR VALUE></TMPL_IF>'
+					<TMPL_IF JS_CALL_OUT> data-js-out='<TMPL_VAR JS_CALL_OUT>' data-p='<TMPL_VAR VALUE></TMPL_IF>'	>	
+						<TMPL_UNLESS JS_CALL> 
+							<TMPL_UNLESS JS_CALL_OUT> 
+								<TMPL_VAR VALUE>
+							</TMPL_UNLESS>		
+						</TMPL_UNLESS>	
+				</div>
+			</TMPL_LOOP>
+		</div>
 		  
 		  <TMPL_IF __LAST__>
         <input type="hidden" name="COUNTER" id="COUNTER" value="<TMPL_VAR __COUNTER__>"  />        
