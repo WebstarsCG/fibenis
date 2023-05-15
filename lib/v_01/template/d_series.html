@@ -249,9 +249,8 @@
 	<form id="PUB_A" name="PUB_A" action=""  method="post"  >
 
     	<TMPL_IF IS_DIV_OF_DIV>
-		<div id="desk_data">
+		<div id="desk_data" <TMPL_IF table_attr><TMPL_VAR table_attr></TMPL_IF> >
 				<TMPL_VAR DESK_CONTENT>	
-				
 		</div>
 		
 		<TMPL_ELSE>
