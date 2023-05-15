@@ -1521,6 +1521,7 @@
 					echo $SELECT;
 				  }	
 				  
+				  
 				
 				  $ex_query = $rdsql->exec_query($SELECT,"Field does not matching!");
 				  
@@ -2335,7 +2336,7 @@
 						
 						$d_series['layout']	        ='dashboard';
 						
-						$d_series['table_attr']         ='class="div_of_div panel col-md-12 " ';
+						$d_series['table_attr']         =' class="div_of_div fbn-dash" ';
 						
 						$d_series['is_div_of_div']  = 1;
 						
