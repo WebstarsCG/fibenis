@@ -33,6 +33,7 @@
 					
 		
 						include($router['action']);
+						$F_SERIES['data'] = @$F_SERIES['fields'] ?? @$F_SERIES['data'];
 						
 						# set code
 						
@@ -129,7 +130,7 @@
 											  'table_name' 	  =>$F_SERIES['table_name'],
 											  'key_id'    	  =>$F_SERIES['key_id'],
 											  'key_value'  	  =>$_POST['UPDATE'],
-											  'is_user_id'    =>$F_SERIES['is_user_id'],
+											  'is_user_id'    =>@$F_SERIES['is_user_id'],
 											  'prime_index'   =>@$F_SERIES['prime_index']));
 												
 						@$row_id		= $_POST['UPDATE'];
@@ -428,7 +429,7 @@
 			
 			// back to
 			
-			if($F_SERIES['back_to']){
+			if(@$F_SERIES['back_to']){
 					
 				$T->AddParam(@$F_SERIES['back_to']);
 			
@@ -578,6 +579,12 @@
 				foreach($data_def as $key=>$value){
 						
 						$temp 			   	= array();
+						
+						# token alias 
+						$value['field_name']		= @$value['label'] ?? @$value['field_name'];
+						$value['field_id']			= @$value['id']    ?? @$value['field_id'];
+						$value['is_mandatory']		= @$value['is_must'] ?? @$value['is_mandatory'];
+						
 						
 						$temp['field_name']  	   	= $value['field_name'];
 						
@@ -1273,7 +1280,12 @@
 				
 			 	foreach($data_def as $key=>$value){
 							
-						$temp['field_name']  	   = $value['field_name'];
+						# token alias	
+						$value['field_name']		= @$value['label'] ?? @$value['field_name'];
+						$value['field_id']			= @$value['id']    ?? @$value['field_id'];
+						$value['is_mandatory']		= @$value['is_must'] ?? @$value['is_mandatory'];
+						
+						$temp['field_name']  	   	= $value['field_name'];
 						
 						@$value['ro']              = ((@$value['type']=='heading') || (@$value['type']=='sub_heading') || (@$value['type']=='label') )?1:$_POST["X".$key."_RO"];
 						
@@ -1583,6 +1595,10 @@
 				
 				#@$value['ro']              =((@$value['type']=='heading') || (@$value['type']=='sub_heading'))?1:@$value['ro'];
 				@$value['ro']              =((@$value['type']=='heading') || (@$value['type']=='sub_heading') || (@$value['type']=='label') )?1:0;
+				
+				$value['field_name']		= @$value['label'] ?? @$value['field_name'];
+				$value['field_id']			= @$value['id']    ?? @$value['field_id'];
+			
 				
 				if(@$value['ro']!=1){	
 				
@@ -1900,7 +1916,11 @@
 				
 			 	foreach($data_def as $key=>$value){
 							
-						$temp['field_name']  	   = $value['field_name'];
+						$value['field_name']		= @$value['label'] ?? @$value['field_name'];
+						$value['field_id']			= @$value['id']    ?? @$value['field_id'];
+						$value['is_mandatory']		= @$value['is_must'] ?? @$value['is_mandatory'];
+						
+						$temp['field_name']  	   	= $value['field_name'];
 						
 						$temp['hidden_field']	   = @$value['hidden_field'];
 						
