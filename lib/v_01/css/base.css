@@ -408,8 +408,11 @@
 	    margin-bottom	: 3px; */
 	}
 
-	.clr_dark_blue  {color 	: #284a9c !important;  }
-	.clr_sky_blue   {color 	: #1C8BBF !important;  }
+	.clr_dark_blue,
+	.clr_blue  {color 	: #284a9c !important;  }
+	
+	.clr_sky_blue,
+	.clr_light_blue	{color 	: #1C8BBF !important;  }
 	
 	.clr_dark_orange{color 	: #D34526 !important;  }	
 	.clr_orange	{color 	: #d55b09 !important;  }
@@ -1624,7 +1627,7 @@
 		/*border-bottom   : 1px solid #f6f6f6;*/
 		border-right   : 1px solid #ececec;
 		color		: #181818;
-		font-size	: 12px;
+		font-size	: 1.35rem;
 		line-height	: 1.5em; 
 		padding-top	: 5px;
 		padding-bottom  : 5px;
@@ -1653,7 +1656,52 @@
 		width		: 90%; 
 	}
 	
-		
+	table.basic tr td.clr_blue a{color : #284a9c !important;}
+	table.basic tr td.clr_orange a{color : #d55b09 !important;}
+	table.basic tr td.clr_green a{color : green   !important;}
+	table.basic tr td.clr_red a{color : #d91a27 !important;}
+	
+	table.basic tr td.fbn-hx h1,
+	table.basic tr td.fbn-hx h2,
+	table.basic tr td.fbn-hx h3,
+	table.basic tr td.fbn-hx h4,
+	table.basic tr td.fbn-hx h5,
+	table.basic tr td.fbn-hx h6{
+		font-weight:normal;		
+	}
+	
+	table.basic tr td.fbn-hx h1{
+		color:#444;
+		font-size: 1.7rem;
+	}
+	
+	table.basic tr td.fbn-hx h2{
+		color:#888;
+		font-size: 1.6rem;
+	}
+	
+	table.basic tr td.fbn-hx h3{
+		color:#555;
+		font-size: 1.5rem;
+	}
+	
+	table.basic tr td.fbn-hx h4{
+		color:#999;
+		font-size: 1.4rem;
+	}
+	
+	table.basic tr td.fbn-hx h5{
+		color:#666;
+		font-size: 1.3rem;
+	}
+	
+	table.basic tr td.fbn-hx h6{
+		color:#aaa;
+		font-size: 1.2rem;
+	}
+	
+	
+	
 	table.basic tr td a.line{		
 		cursor		: pointer;		
 		font-weight     : 100 !important;
