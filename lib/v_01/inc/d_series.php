@@ -8,6 +8,32 @@
 		$D_DEFAULT['a_series']  = [	'd_series'	=> 'a_series',
 									'd'			=> 'a',
 									'dx'		=> 'ax'];
+									
+		$ALIAS		= [];
+		$ALIAS['delete']=function($is_del_permission,$is_del){
+			
+			$lv = [];
+			
+			if($is_del){
+			
+				$lv['type'] = gettype($is_del);
+				
+				if($lv['type']=='integer'){
+					return ['able_del'=>1];
+				}elseif($lv['type']=='array'){
+					$is_del['able_del'] = @$is_del['is_active'];
+					unset($is_del['is_active']);
+					return $is_del;
+				}else{
+					return ['able_del'=>1];
+				}
+			
+			}else{
+				return $is_del_permission;
+			}
+			
+		};
+		
 		
 		$P_V['f_series']['d_series'] = 'f_series';
 		$P_V['f_series']['d']	     = 'f';
@@ -120,9 +146,10 @@
 				
 		} # app key	
 
+		// alias actions		
+		$D_SERIES['del_permission'] = $ALIAS['delete'](@$D_SERIES['del_permission'],@$D_SERIES['is_del']);
 		
-		// show default
-		
+		// show default		
 		$default_rows 	   = @$D_SERIES['show_default_rows']?@$D_SERIES['show_default_rows']:@$_SESSION['show_default_rows'];		 
 		$show_default_rows =  ($default_rows)?$default_rows:$D_DEFAULT['show_default_rows'];
 		   
@@ -478,6 +505,24 @@
 				$P_V['PAGER'] = "";
 		}
 		
+		
+		
+		 /***23-sep*****To Display a  action field by--->is_edit is_view flag************/
+			
+			$action_decision = array();
+			
+			$D_SERIES['action']		= (@$D_SERIES['is_edit'])?['is_edit'=>1,'is_action'=>1]:@$D_SERIES['action'];
+			
+			$action_decision['is_edit'] = @$D_SERIES['action']['is_edit'];
+						 
+			$action_decision['is_view'] = @$D_SERIES['action']['is_view'];
+			
+			$action_decision['custom_action']=@$D_SERIES['custom_action'];
+			
+			$action_decision['action_type']=($action_decision['is_edit']||$action_decision['is_view']||$action_decision['custom_action'])?1:0;
+			
+		/********************************************************************************************/
+			
 		// page action
 		// build desk
 		$PV['CONTAINER_DNA'] = (@$D_SERIES['is_div_of_div'])?'card':'desk';
@@ -515,7 +560,7 @@
 				}else{
 				    foreach($D_SERIES['data'] as $key=>$value){
 						
-					$field_name.= $value['field']." as v$col_counter,";
+					$field_name.= (@$value['id'] ?? @$value['field'])." as v$col_counter,";
 					$col_counter++;
 				    }//end each
 				}
@@ -582,20 +627,6 @@
 				$P_V['get_header'] = 0;
 		}
 		
-		
-	 /***23-sep*****To Display a  action field by--->is_edit is_view flag************/
-		
-		$action_decision = array();
-		
-		$action_decision['is_edit'] = @$D_SERIES['action']['is_edit'];
-					 
-		$action_decision['is_view'] = @$D_SERIES['action']['is_view'];
-		
-		$action_decision['custom_action']=@$D_SERIES['custom_action'];
-		
-		$action_decision['action_type']=($action_decision['is_edit']||$action_decision['is_view']||$action_decision['custom_action'])?1:0;
-		
-	/********************************************************************************************/
 	
 	/****25--sep********To Check Table Name****************************/
 		//$P_V['table_class_set']="basic";
@@ -681,7 +712,8 @@
 		$T->AddParam('TH_INFO',$DESK['TH_INFO']);
 		$T->AddParam('DESK_CONTENT',$PV['DESK_CONTENT']);
 		
-		$T->AddParam(((@$D_SERIES['add_button'])?@$D_SERIES['add_button']:((@$D_SERIES['add'])?@$D_SERIES['add']:[])));
+		$T->AddParam(((@$D_SERIES['add_button'])?@$D_SERIES['add_button']:((@$D_SERIES['add'])?@$D_SERIES['add']:
+						((@$D_SERIES['is_add'])?['is_add'=>1]:[]))));
 		
 		$T->AddParam('JS_CALL_INFO',$DESK['JS_CALL_INFO']);
 		$T->AddParam('JS_CALL_OUT_INFO',$DESK['JS_CALL_OUT_INFO']);
@@ -747,8 +779,6 @@
 		
 		$T->AddParam('D_SERIES',$PAGE_ID);
 		$T->AddParam('F_SERIES',$P_V['f_series'][$PAGE_ID]);
-		
-		
 		
 		// bulk action
 		function get_custome_bulk_action(){
@@ -1182,6 +1212,8 @@
 				
 				global $PAGE_NAME;
 				
+				$D_SERIES['data'] = @$D_SERIES['fields'] ?? @$D_SERIES['data'];
+				
 				$WHERE_FILTER = ($P_V['WHERE_FILTER'])?$P_V['WHERE_FILTER']:'';
 				
 				$BUILD_ORDER  = ($P_V['BUILD_ORDER'])?$P_V['BUILD_ORDER']:'';
@@ -1221,7 +1253,7 @@
 				}else{
 						foreach($D_SERIES['data'] as $key=>$value){
 							    
-								$csv_heading.=$value['th'].'::';
+								$csv_heading.=(@$value['label'] ?? @$value['th']).'::';
 						}//end each
 				}
 				
@@ -1350,6 +1382,8 @@
 		
 				global $D_SERIES,$DB_ENGINE;	
 				
+				$D_SERIES['data'] = @$D_SERIES['fields'] ?? @$D_SERIES['data'];
+				
 				$data      = $D_SERIES['data'];
 				
 				$temp_info = array();
@@ -1370,7 +1404,9 @@
 				
 						$temp = array();
 						
-						$temp['th'] =  @$value['th'];
+						$temp['th'] =  @$value['label'] ?? @$value['th'];
+						
+						$D_SERIES['data'][$key]['th'] = $temp['th'];
 						
 						$temp['html'] = @$value['html'];
 						
@@ -1378,7 +1414,7 @@
 						
 						$temp['span'] = @$value['span'];
 						
-						$temp['th_attr'] = @$value['th_attr'];
+						$temp['th_attr'] = (@$value['head'] ?? @$value['th_attr']);
 						
 						$temp['is_sort'] = @$value['is_sort'];
 						
@@ -1405,7 +1441,7 @@
 								
 								$value['field']=(@$value['field_composite'])?build_field_composite(['field_composite' => @$value['field_composite'],
 																    'db_engine'       => $DB_ENGINE
-																    ]):$value['field'];
+																    ]):(@$value['id'] ?? @$value['field']);
 							
 								#echo "<br>".$value['field_temp']."<br>";
 							
@@ -1468,6 +1504,7 @@
 				 
 				 global $DEFAULT_ADDON;
 				  
+				$D_SERIES['data'] = @$D_SERIES['fields'] ?? @$D_SERIES['data'];  
 				  
 				 $WHERE_FILTER = ($P_V['WHERE_FILTER'])?$P_V['WHERE_FILTER']:'';
 				
@@ -1612,9 +1649,11 @@
 					}					 
 					  
 					 # action merge
+					 
 					 if(@$D_SERIES['action']){ 					  
-																		$temp_data=array_merge($temp_data,@$D_SERIES['action']);
+							$temp_data=array_merge($temp_data,@$D_SERIES['action']);
 					 }
+					 
 					 
 					 $temp_data['page_f_series']  =  $P_V['f_series'][$PAGE_ID];
 					 $temp_data['is_narrow_down'] = @$D_SERIES['is_narrow_down'];
@@ -2347,6 +2386,8 @@
 		}
        
     
+		
+	
        // $path = ('../../ws/step/vx/inc/export');
 	
 	//$menu_path = ('../../ws/step/vx/inc/export/left_menu');
