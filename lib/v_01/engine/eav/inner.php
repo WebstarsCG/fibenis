@@ -370,7 +370,8 @@
 					FROM
 						user_role_page_matrix
 					WHERE
-						user_role_page_id IN (SELECT id FROM user_role_page WHERE 1=1 AND user_role_id=$param[user_role_id] ORDER BY line_order) AND parent_id=$param[parent_id] ";
+						user_role_page_id IN (SELECT id FROM user_role_page WHERE 1=1 AND user_role_id=$param[user_role_id] ORDER BY line_order) AND parent_id=$param[parent_id]
+					ORDER BY (SELECT line_order FROM user_role_page WHERE 1=1 AND user_role_id=$param[user_role_id] AND user_role_page_id=id)";
 			
 			$exe_select_info = $rdsql->exec_query($select_data,'Test');
 			 
