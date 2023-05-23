@@ -17,17 +17,23 @@
                                                                      
                                                                      'field'=>'sn',
 								    
-								     'td_attr' =>  ' class="label_grand_father" '
+																	'td_attr' =>  ' class="label_grand_father" '
 								    
-							    ),
+															),
 							                                                                
                                                             2=>array(	'th'	  => 'Permission',
 								     
                                                                         'field'	  => " (SELECT ".$DC->group_concat('get_ecb_parent_child_name(id,\'-\')')." FROM ecb_parent_child_matrix WHERE id IN(SELECT user_page_id FROM user_role_page_matrix WHERE user_role_page_id=user_role_page.id) ) ",
 								    
-									'js_call' => 'tip_from_list'
-									
-									), 
+																	'js_call' => 'tip_from_list'
+																	), 
+										
+															3=>array('th'		=> 'Line Order',                                                           
+																	 'field'	=> 'line_order',								    
+																	 'td_attr' 	=> ' class="label_number align_RM" ',
+																	 'is_sort'	=> 1 )
+															
+							                                     
 						),
 				    #Sort Info
                                       
@@ -54,10 +60,8 @@
                                     # Communication
                                 
                                     'prime_index'   => 1,
+									'show_default_rows'  => 10,
                                 
-                                    # File Include
-                                
-                                    //'js'            => 'm_code',
                                 
 				
 				# Check Field
@@ -83,12 +87,15 @@
                 
                         $D_SERIES['key_filter'] = " AND user_role_id = $_GET[default_addon] ";
                       
-                        $D_SERIES['filter_off'] = 1; 
-                        
+                        $D_SERIES['filter_off'] = 0; 
+                        $D_SERIES['hide_show_all'] = 1;
+						
                         $D_SERIES['action']['action_menu_off']         = @$_GET['menu_off'];
                         $D_SERIES['action']['action_default_addon']    = @$_GET['default_addon'];
                         
                         $LAYOUT = 'layout_full';
+						
+						
                 
             }else{
                 
