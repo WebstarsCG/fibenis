@@ -168,20 +168,15 @@
 											'jpeg'=>'image',
 											'png'=>'image',
 											'html'=>'text',
-											'jpg'=>'image'];
+											'jpg'=>'image',
+											'csv'=>'text'];
 								
 								function data_uri($file, $mime){
 									
-									ob_end_clean();
-																    
-									header("content-type: $mime");
-							   
+									ob_end_clean();																    
+									header("content-type: $mime");							   
 									return file_get_contents($file);
 									
-									//readfile($file);
-									
-									//ob_start();
-							   
 							    };
 							       
 								$temp['mime_pre'] = $temp['type_temp'][$temp['ext']].'/'.$temp['ext'];
