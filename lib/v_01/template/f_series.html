@@ -1182,9 +1182,13 @@
 							    <TMPL_IF hint><div><TMPL_VAR hint></div></TMPL_IF>
 							    <span class=message id="message_X<TMPL_VAR field_id>" ></span>
 					  </span>
-					  
 					 </span>
-				       </div>
+				    </div>
+					<script>
+						if(G.isNull(G.$("X<TMPL_VAR field_id>").dataset.default,'').length>0){
+							G.$("X<TMPL_VAR field_id>").innerHTML = G.$("X<TMPL_VAR field_id>").dataset.default;
+						}
+					</script>
 				</TMPL_IF>	 
 				<!--- end of text area--->
 				 
