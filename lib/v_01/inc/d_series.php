@@ -3,7 +3,8 @@
 		error_reporting(E_ALL);
 		ini_set("display_errors", 1);
 	
-		$D_DEFAULT 				= ['show_default_rows'   => 5];
+		$D_DEFAULT 	= ['show_default_rows'   => 5,
+					   'show_all_label'		 => 'Clear <i class="fa fa-filter" aria-hidden="true"></i>'];
 		
 		$D_DEFAULT['a_series']  = [	'd_series'	=> 'a_series',
 									'd'			=> 'a',
@@ -689,7 +690,7 @@
 		$T->AddParam('is_bottom_js',@$D_SERIES['js']['is_bottom']);
 		$T->AddParam('bottom_js_file',@$D_SERIES['js']['bottom_js']);
 		
-		$show_all_label = (@$D_SERIES['show_all_label'])?$D_SERIES['show_all_label']:'Show All';
+		$show_all_label = (@$D_SERIES['show_all_label'])?$D_SERIES['show_all_label']:$D_DEFAULT['show_all_label'];
 		
 		$T->AddParam('show_all_label',$show_all_label);
 		

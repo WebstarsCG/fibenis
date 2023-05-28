@@ -32,7 +32,6 @@
 	<div class="box_right box_filter" >
 		
 			<TMPL_LOOP custom_title>
-			
 					<TMPL_VAR filter_title>
 					<TMPL_IF field_type_option>
 						<select <TMPL_VAR fun> id="<TMPL_VAR key>" name="<TMPL_VAR key>" >
@@ -40,7 +39,6 @@
 							<TMPL_VAR value>
 						</select>
 					</TMPL_IF>
-			
 			</TMPL_LOOP>
 			
 			<!--- Search Filter off --->
@@ -51,7 +49,7 @@
 				<TMPL_IF LIST_ARRAY>			
 					<label>Search by</label>								
 					<input type="text" name="s_text" id="s_text" placeholder="<TMPL_IF SEARCH_LABEL><TMPL_VAR SEARCH_LABEL><TMPL_ELSE>Search text</TMPL_IF>"  onKeyPress="JavaScript:d_series.searchAutoComplete();" value="" class="w_125" />					
-					<input type="button" onclick="JavaScript:d_series.setDeskStartAction();filter_data();" value=" Go "class="button"/>					
+					<a class="button" href="JavaScript:d_series.setDeskStartAction();filter_data();"/>Go</a>										
 				<TMPL_ELSE>
 					<input type="hidden" name="s_text" id="s_text" placeholder="Search text"   value="" class="w_125" />			
 				</TMPL_IF>	
@@ -103,7 +101,8 @@
 								<TMPL_VAR option_value>
 							</select>
 							 
-							<input class="button" type="button" id="go_multi_select"  name="go_multi_select" value="Go"  onclick="JavaScript:custom_filter();" />
+							<a 	class="button" id="go_multi_select"  name="go_multi_select"  
+								href="JavaScript:custom_filter();">Go</a>
 							<input type="hidden" name="<TMPL_VAR multi_value>" id="<TMPL_VAR multi_value>" 
 									data-filter-type='CF' value="";>
 						
@@ -144,14 +143,13 @@
 						 
 						 <span class="checkbox_wrapper"><input type="checkbox" id="is_check_date" name="is_check_date" value="1" /></span>
 						
-						<input class="button" type="button" id="go_date"  name="go_date" value="Go"  
-						onclick="JavaScript:d_series.setDeskStartAction();filter_data();" />
+						<a class="button"  id="go_date"  name="go_date"  
+					    	href="JavaScript:d_series.setDeskStartAction();filter_data();">Go</a>
+						
 						
 						
 				<TMPL_ELSE>
 					<input type="hidden" id="is_check_date" name="is_check_date" value="1"  />
-					
-					
 				</TMPL_IF>
 				
 				<TMPL_IF hide_pager>
@@ -202,15 +200,9 @@
 <!---onclick="JavaScript:show_all('<TMPL_VAR PAGE_ID>=<TMPL_VAR APP_KEY>');"--->
 							<TMPL_UNLESS HIDE_SHOW_ALL>
 							
-								<input type="button" 
-									   class="button" 
-									   name="go_date" 
-									   id="go_date" 
-									   value="<TMPL_VAR show_all_label>" 									   
-									   onclick="JavaScript:d_series.clearFilter();d_series.freshDeskLoad();"
-									   
-									   />
-									   
+								<a 	class="button tip tip_left" id="clr_filter"	   
+									href="JavaScript:d_series.clearFilter();d_series.freshDeskLoad();"
+								/><TMPL_VAR show_all_label></a><span class='tooltiptext'>Clear Filters</span>									   
 								<font class="spliter">|</font>
 								
 							</TMPL_UNLESS>
