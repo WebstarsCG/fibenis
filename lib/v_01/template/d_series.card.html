@@ -24,8 +24,31 @@ href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF
         
             <TMPL_LOOP view>
                 <a class="icon pdf" href="<TMPL_VAR script>(<TMPL_VAR __counter__>);"></a>
-            </TMPL_LOOP> <TMPL_IF is_narrow_down><TMPL_VAR col_count></TMPL_IF><TMPL_UNLESS IS_HIDE></TMPL_UNLESS><TMPL_VAR NUM_OF_ROWS>--->				
-		<div  id="RX_<TMPL_VAR __counter__>"  data-row="1"> 			
+            </TMPL_LOOP> <TMPL_IF is_narrow_down><TMPL_VAR col_count></TMPL_IF><TMPL_UNLESS IS_HIDE></TMPL_UNLESS><TMPL_VAR NUM_OF_ROWS>--->
+
+
+        					
+        
+        
+        <input type="hidden" id="d<TMPL_VAR __COUNTER__>" name="d<TMPL_VAR __COUNTER__>" value='<TMPL_VAR del_name>' />
+        
+        <!--- hidden--->
+        <input type="hidden" id="key_id_<TMPL_VAR __COUNTER__>" name="key_id_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR key_id>"/>
+        
+        <TMPL_IF hidden_data>						
+            <TMPL_LOOP hidden_data>
+                <input type="hidden" id="HX_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>" name="HX_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR h_value>"/>	
+            </TMPL_LOOP>	
+        </TMPL_IF>
+        
+		
+			<div  id="RX_<TMPL_VAR __counter__>"  data-row="1"> 
+			<TMPL_IF able_del>
+				<div class="align_CM" data-checkbox="1">						
+					<input type="checkbox" class="no_border"   <TMPL_IF is_row_able_del>disabled="disabled"</TMPL_IF>  id="c<TMPL_VAR __counter__>"   name="c<TMPL_VAR __counter__>" value="<TMPL_VAR key_id>"  />													
+				</div>
+			</TMPL_IF>	
+		
 		   <TMPL_LOOP COL_RESULT>
 				<div id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"   data-col="1" 
 					<TMPL_VAR TD_ATTR> 
@@ -38,12 +61,26 @@ href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF
 						</TMPL_UNLESS>	
 				</div>
 			</TMPL_LOOP>
+			
+			 <input type="hidden" id="row_idx_<TMPL_VAR key_id>" name="row_idx_<TMPL_VAR key_id>" value="<TMPL_VAR __COUNTER__>">
+			 <input type="hidden" id="id_<TMPL_VAR __COUNTER__>" name="id_<TMPL_VAR __COUNTER__>" value="<TMPL_VAR key_id>">
 		</div>
+		
+		
 		  
-		  <TMPL_IF __LAST__>
-        <input type="hidden" name="COUNTER" id="COUNTER" value="<TMPL_VAR __COUNTER__>"  />        
-        <input type="hidden" name="D_COUNTER" id="D_COUNTER" value="<TMPL_VAR __COUNTER__>"  />
-    </TMPL_IF>
+		<TMPL_IF __LAST__>
+			<input type="hidden" name="COUNTER" id="COUNTER" value="<TMPL_VAR __COUNTER__>"  />        
+			<input type="hidden" name="D_COUNTER" id="D_COUNTER" value="<TMPL_VAR __COUNTER__>"  />
+		</TMPL_IF>
+		
+		<TMPL_IF IS_NARROW_DOWN>		
+			<div class="row_even" style="display:none;" id="nd_wall_<TMPL_VAR key_id>" data-nd-wall="1" ><!--<TMPL_VAR col_count>-->
+				
+					<div  id="nd_ground_<TMPL_VAR key_id>" data-nd-ground="1" 
+					class="align_RM" colspan="<TMPL_VAR col_count>" style="padding:0px !important"></div>
+					
+			</div>	
+		</TMPL_IF>
 
 </TMPL_LOOP>
   

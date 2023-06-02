@@ -1649,6 +1649,11 @@
 	table.basic tr td.clr_green a{color : green   !important;}
 	table.basic tr td.clr_red a{color : #d91a27 !important;}
 	
+	div[data-row="1"] div.clr_blue a{color : #284a9c !important;}
+	div[data-row="1"] div.clr_orange a{color : #d55b09 !important;}
+	div[data-row="1"] div.clr_green a{color : green   !important;}
+	div[data-row="1"] div.clr_red a{color : #d91a27 !important;}
+	
 	table.basic tr td.fbn-hx h1,
 	table.basic tr td.fbn-hx h2,
 	table.basic tr td.fbn-hx h3,
