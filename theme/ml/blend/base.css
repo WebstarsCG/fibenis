@@ -1,8 +1,7 @@
 /* === === = === ===== */
 /* nav bar - css Start */
 /* === === = === ===== */
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
 .slicknav_menu{
 	display: none;
 	
@@ -907,18 +906,29 @@ ul.post-meta li a:hover {
     .frame_gray_1{
 	border : 1px solid #dadada;
     }
+	
+	#pager_area a {
+		border: 1px solid #285BBA;
+		border-radius: 5px;
+		font-family: 'open_sans_400_normal', sans-serif !important;
+		font-size: 1.35rem !important;
+		padding: 0.6rem 0.9rem !important;
+	}	
+	
+	#pager_area a:hover{
+		background-color : #285BBA;
+		color			 : #ffffff;
+	}
       
     .panel-title{
-	  
 	    text-align: left !important;
-	    
     }
   
 	.page-banner{
 		padding:15px 0 !important;
 	}
+	
 	.polaroid span.primary{
-		
 		color       :#f6ffef;
 		display     : block;
 		font-size   : 15px;
@@ -1158,14 +1168,27 @@ ul.post-meta li a:hover {
 			margin-top	: -180px !important;
 		}
 		
-		
-		
 		.navbar-brand img{			
 			margin-top		: -24px !important;	
 		}
 		
+		#pager_area {
+			margin: 2rem 0;
+			text-align: center;
+		}
+				
+		#pager_area a {
+			font-weight:bold;
+			margin-right: 0.75rem;
+			padding: 0.75rem 2rem !important;
+		}
+		
 		.slicknav_btn{
-			background-color : #aaa;
+			background-color : #285BBA;
+		}
+		
+		.slicknav_btn:hover{
+			background-color : #666;
 		}
 		
 	}

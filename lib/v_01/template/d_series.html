@@ -444,7 +444,7 @@
 			
 	<TMPL_UNLESS SHOW_ALL_ROWS>		
 		<TMPL_UNLESS hide_pager>
-			<div class="box_filter a_block box_right" id="pager_area">
+			<div class="box_filter  box_right" id="pager_area">
 				<TMPL_IF is_load_by_scroll>
 					<input type='hidden' id='pager_start' data-pager='0'>
 					<input type='hidden' id='pager_prev'  data-pager='<TMPL_VAR pager_prev>'>
@@ -457,11 +457,11 @@
 				
 				<TMPL_ELSE>	
 					<a id='pager_start' data-pager='0' onclick='JavaScript:d_series.pagerAction(this,0);'>First</a>				
-					<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:d_series.pagerAction(this,0);'>&nbsp;&laquo;&nbsp;</a>
-					<span id='pager_current' data-pager="<TMPL_VAR pager_current>"><TMPL_VAR pager_current></span> of
-					<span id='pager_total' data-pager="<TMPL_VAR pager_total>"><TMPL_VAR pager_total></span>											
+					<a id='pager_prev' data-pager='<TMPL_VAR pager_prev>'  onclick='JavaScript:d_series.pagerAction(this,0);'>
+					<i aria-hidden="true" class="fa fa-angle-double-left  "></i></a>&nbsp;<span id='pager_current' data-pager="<TMPL_VAR pager_current>"><TMPL_VAR pager_current></span> of <span id='pager_total' data-pager="<TMPL_VAR pager_total>"><TMPL_VAR pager_total></span>&nbsp;
 					<a id='pager_next' data-pager='<TMPL_VAR pager_next>' 
-					<TMPL_IF pager_has_next>onclick='JavaScript:d_series.pagerAction(this,0);'</TMPL_IF>>&nbsp;&raquo;&nbsp;</a>						
+					<TMPL_IF pager_has_next>onclick='JavaScript:d_series.pagerAction(this,0);'</TMPL_IF>>
+					<i aria-hidden="true" class="fa fa-angle-double-right"></i></a>						
 					<a id='pager_last' data-pager='<TMPL_VAR pager_last>' onclick='JavaScript:d_series.pagerAction(this,0);'>Last</a>
 				</TMPL_IF>
 			</div>				
