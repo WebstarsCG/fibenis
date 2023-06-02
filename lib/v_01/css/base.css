@@ -1208,6 +1208,15 @@
 	
 	.normal{ font-weight:normal !important;	}
 	
+	.narrow_down_open{
+		display:table-row;
+		width:100%;
+	}
+	
+	.narrow_down_close{
+		display:none;
+	}
+	
 	
 	ol.decimal li{
 		list-style:decimal !important;
@@ -1557,7 +1566,6 @@
 		padding-left		: 5px;
 		padding-right		: 5px;
 	}
-		
 	
 	table.basic{
 		/*     background-color	: #a8c5c9;*/
@@ -1990,5 +1998,13 @@
 	.w_90_pr{	width		: 90% !important;   }
 	.w_100_pr{	width		: 100% !important;  }
 	
-
+	/*mobile*/
+	
+	@media only screen and (max-width: 768px){
+		
+		.narrow_down_open{
+			display:table-caption;
+		}	
+		
+	}
 	
