@@ -31,15 +31,15 @@
 						}else{
 							if(!$USER_ID && !$T_SERIES['session_off']){					
 									$SG->s_destroy('index.php');		
-							}else if($USER_ID){										
-									
-									
-									//$SG->check_entry($SG->get_permission($PAGE_CODE_HASH));
-									$SG->check_entry($SG->get_permission_direct($PAGE_CODE_HASH));	
+							}else if($USER_ID){		
+								$SG->check_entry($SG->get_permission_direct($PAGE_CODE_HASH));	
 							}
 						}
 						
-						$T_SERIES['page_code'] = $PAGE_CODE_HASH;						
+						$T_SERIES['page_code'] = $PAGE_CODE_HASH;	
+						
+						// key optimization
+						$T_SERIES['data']	   = @$T_SERIES['fields'] ?? $T_SERIES['data'];		
 		
 				}else{
 						http_response_code(404);
@@ -62,7 +62,8 @@
 				$T_SERIES['temp']['key']  = @$_GET['key'];
 				$T_SERIES['temp']['file'] = $COACH['terminal_path']."/cache/$PAGE_CODE"."_".$T_SERIES['temp']['key'].".html";	
 				
-				if(is_file($T_SERIES['temp']['file']) && (@$_GET['clear_cache']!=1)){					
+				if(is_file($T_SERIES['temp']['file']) && 
+					((@$_GET['clear_cache']!=1) && (@$T_SERIES['is_cc']!=1))){					
 				
 					$fh  							= fopen($T_SERIES['temp']['file'],'r') or "Error";
 					$T_SERIES['temp']['content']    = fread($fh, filesize($T_SERIES['temp']['file']));
@@ -89,7 +90,8 @@
 								
 					$T 	 	= new Template($options);
 					
-					$T->AddParam('DATA_INFO',build_template());
+					$T->AddParam((@$T_SERIES['fields']?'CONTENT':'DATA_INFO'),
+								  build_template());
 					
 					# output to global var
 					
@@ -156,7 +158,7 @@
 				   $is_child_addon =@$value['is_child_addon'];
 				   
 				   if(!$is_child_addon){
-						$field_name.=$value['field'].' as '.$key.',';
+						$field_name.=(@$value['id'] ?? @$value['field']).' as '.$key.',';
 				   }
 				    
 				} // for each column
@@ -180,6 +182,8 @@
 				   
 				  
 						foreach($T_SERIES['data'] as $key => $value){
+							
+								@$value['data'] = @$value['cols'] ?? @$value['data'];
 							   
 								$is_child_addon = @$value['is_child_addon'];
 								
