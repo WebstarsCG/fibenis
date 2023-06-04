@@ -430,9 +430,7 @@
 			// back to
 			
 			if(@$F_SERIES['back_to']){
-					
-				$T->AddParam(@$F_SERIES['back_to']);
-			
+				$T->AddParam(get_back_action(@$F_SERIES['back_to']));
 			} // end
 			
 			// last_insert
@@ -2284,6 +2282,33 @@
 				
 				
 		} // end
+		
+	// f_series back normalization
+	function get_back_action($back){
+		
+		$lv=['back_keys'=>['is_active'	   => 'is_back_button',
+						   'url'	  	   => 'back_link',
+						   'label'	  	   => 'back_name',
+						   'menu_off' 	   => 'back_menu_off',
+						   'default_addon' => 'back_default_addon']
+			];
+		
+		if(gettype($back)=='integer'){			
+			return ['is_back_button' => 1];			
+		}elseif(gettype($back)=='array'){
+			
+			foreach($lv['back_keys'] as $new_key => $old_key){
+			
+				if(array_key_exists($new_key,$back)){
+					$back[$old_key]=$back[$new_key];
+					unset($back[$new_key]);
+				}
+			}
+			
+			return $back;
+		}
+		
+	} // end
 
 ////////////////////////////////////////////////////////////////////////
 // 07-Aug-2015 addition to cascade before_add_update and after_add_update added for inclding action file
