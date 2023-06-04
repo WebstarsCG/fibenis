@@ -1011,22 +1011,76 @@
 
 	// object 
 	
-	class FormAddon
-	{
-		private $def=[];
+	class FormAddon{
+		
+		private $def	   = [];
+		private $temp	   = ['field'=>'','key'=>''];
+		private $default__ = ['field_prefix'=>'X'];
+		
 	
-		public function __construct($def)
-		{
-			$this->def =$def;
-			
+		public function __construct($def){
+			$this->def =$def;			
 		}	
 		
 		//get field
-		public function getFieldByToken($token)
-		{
-			return $this->def['data'][@$this->def['data_map'][$token]] ?? die("Undefined Key:$token");
+		public function getFieldMap($token){			
+			return @$this->def['data_map'][$token] ?? die("Undefined Key:$token");			
 		}
-	}
+		
+		//get field
+		public function getFieldKey($token){			
+			return @$this->default__['field_prefix'].$this->getFieldMap($token);			
+		}
+		
+		//get field
+		public function getFieldByToken($token){
+			$this->temp['field'] = $token;
+			@$this->def['data'][$this->getFieldMap($token)] ?? die("Undefined Key:$token");
+			return $this;
+		}
+		
+		public function getKey($key){
+			$this->temp['key'] = $key;
+			return $this; 
+		}
+	
+		public function setValue($value){
+			return $this->def['data'][@$this->def['data_map'][$this->temp['field']]][$this->temp['key']]=$value; 
+		}
+		
+		public function setKeyValues($key_values){
+			
+			$temp_field = $this->def['data'][@$this->def['data_map'][$this->temp['field']]];
+			
+			foreach($key_values as $k => $v){
+					 $temp_field[$k]=$v; 
+			}	
+			
+			$this->def['data'][@$this->def['data_map'][$this->temp['field']]] = $temp_field;	
+			
+		} // end
+		
+		
+		public function unsetFields($fields){
+			foreach($fields as $k => $v){
+				unset($this->def['data'][@$this->def['data_map'][$v]]);
+			}	
+		} // end
+		
+		public function removeDefaultHeading(){
+			unset($this->def['data'][0]);
+		}
+		
+		public function getFields(){
+			return $this->def['data']; 
+		}
+		
+		public function getPostByToken($token){
+			return $_POST[$this->getFieldKey($token)];
+		}
+		
+	 
+	} // addon
 	
 	
 
