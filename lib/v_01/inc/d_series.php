@@ -775,6 +775,7 @@
 		$T->AddParam('DEFAULT_ADDON',urlencode($DEFAULT_ADDON));
 		
 		$T->AddParam('LAYOUT',@$D_SERIES['layout']);
+		$T->AddParam('IS_CSS',@$D_SERIES['is_css']);
 		
 		$T->AddParam('NO_DATA',@$D_SERIES['no_data_message']);
 		
