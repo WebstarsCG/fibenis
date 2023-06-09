@@ -2003,7 +2003,7 @@
 	@media only screen and (max-width: 768px){
 		
 		.narrow_down_open{
-			display:table-caption;
+			display:block;
 		}	
 		
 	}
