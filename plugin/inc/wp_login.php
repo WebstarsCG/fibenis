@@ -75,7 +75,7 @@
 				
 				$PV['login_name']  		=  "get_eav_addon_varchar(is_internal,'COFN')";
 				
-				$SG->set_get_master_session($COACH['id']);				
+				$PV['temp_session'] = $SG->set_get_master_session($COACH['name_hash']);				
 		
 		} // end	
 		

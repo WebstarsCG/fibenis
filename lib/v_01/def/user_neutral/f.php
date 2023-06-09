@@ -97,7 +97,7 @@
 		'cascade_action' => 0,
 	
 		'after_add_update' => 1,
-	
+		'is_cc'=>1
 		
 	);
 	
