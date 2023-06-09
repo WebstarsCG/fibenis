@@ -55,7 +55,7 @@
 						  
 		}elseif(get_config('to_admin')){
 			
-			$mail->setFrom(get_config('to_admin'),
+			$mail->setFrom(get_config('smpt_mail'),
 			              (@$param['from'] ?? get_config('title')));
 						  
 		}
