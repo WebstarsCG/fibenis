@@ -82,7 +82,7 @@
 								
 								'js_call'=> 'show_user_info',
 								
-								'is_sort' => 1
+								'is_sort' => 'timestamp_punch'
 									 
 								),
 							
