@@ -647,6 +647,14 @@
 			if(G.$('COUNTER') && G.$('pager_loaded_rows')){			
 				G.$('pager_loaded_rows').dataset.pager=Number(G.$('pager_loaded_rows').dataset.pager)+Number(G.$('COUNTER').value);
 			}
+			
+			// pager
+			if(d_series.getDeskConfig('hide-pager')!=1 && d_series.getDeskConfig('show-all-rows')!=1){	
+			
+				d_series.setPagerStatus(Number(G.$('pager_records').dataset.pager),
+										G.$('page').value,
+										G.$('pager_action').dataset.pager);
+			}
 							
 		}); // preload 
 			
