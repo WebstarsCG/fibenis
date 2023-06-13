@@ -263,7 +263,7 @@
 					<th width="5%">S.No</th>
 					</TMPL_UNLESS>
 				
-					<TMPL_IF able_del>
+					<TMPL_IF net_del_flag>
 						<th width="5%"><input id="master_check_box" name="master_check_box"  type="checkbox" onclick="JavaScript:check_box_action(this,ELEMENT('COUNTER').value);">
 						</th>
 					</TMPL_IF>
@@ -324,11 +324,8 @@
 					</script>		
 				</TMPL_UNLESS>
 			
-				<TMPL_IF able_del>			
-				<table align="center" width="95%" border="0" >
-					<tr>
-						<td align="left">
-							 <div class="box_filter a_block box_left" id="bulk_action_area">
+				<TMPL_IF net_del_flag>			
+				<div class="box_filter box_left" id="bulk_action_area">
 								<TMPL_IF DESK_CONTENT>
 									<TMPL_IF DEL_BUTTON>
 										<button type="button" class="btn btn-danger"   value='Delete' onclick="d_series.check_delete();" >Delete</button>
@@ -427,11 +424,8 @@
 								</TMPL_IF>
 							</TMPL_LOOP>	
 						</TMPL_IF>
-							</div>
-						</td>
-					       
-					</tr>
-				</table>
+				</div>
+					
 				</TMPL_IF>
 			
 		
@@ -655,6 +649,9 @@
 										G.$('page').value,
 										G.$('pager_action').dataset.pager);
 			}
+			
+			// bulk action area
+			d_series.setBulkActionArea({'rows':Number(G.$('pager_records').dataset.pager)});
 							
 		}); // preload 
 			

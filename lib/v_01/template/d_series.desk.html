@@ -14,7 +14,7 @@
         </TMPL_IF>
         
         
-        <TMPL_IF able_del>
+        <TMPL_IF net_del_flag>
             <td class="align_CM">						
                 <input type="checkbox" class="no_border"   <TMPL_IF is_row_able_del>disabled="disabled"</TMPL_IF>  id="c<TMPL_VAR __counter__>"   name="c<TMPL_VAR __counter__>" value="<TMPL_VAR key_id>"  />													
             </td>
@@ -114,6 +114,6 @@
   <input type="hidden" id='pager_records' data-pager='<TMPL_VAR NUM_OF_ROWS>'  />
   
   <TMPL_UNLESS DATA_INFO>
-		<input type="hidden" name="COUNTER" id="COUNTER" value="0"  />        
-        <input type="hidden" name="D_COUNTER" id="D_COUNTER" value="0"  />
+	<input type="hidden" name="COUNTER" id="COUNTER" value="0"  />        
+	<input type="hidden" name="D_COUNTER" id="D_COUNTER" value="0"  />
   </TMPL_UNLESS>

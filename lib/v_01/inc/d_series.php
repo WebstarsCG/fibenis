@@ -526,8 +526,12 @@
 			
 		// page action
 		// build desk
-		$PV['CONTAINER_DNA'] = (@$D_SERIES['is_div_of_div'])?'card':'desk';
-		$options 	= array("filename"=>"$LIB_PATH/template/d_series.".$PV['CONTAINER_DNA'].".html", "debug"=>0,"loop_context_vars"=>1);		
+		$PV['CONTAINER_DNA'] 		= (@$D_SERIES['is_div_of_div'])?'card':'desk';
+		$D_SERIES['net_del_flag']   = (@$D_SERIES['del_permission']['able_del']+count(@$D_SERIES['bulk_action'] ?? []));
+		
+		$options 	= array("filename"=> "$LIB_PATH/template/d_series.".$PV['CONTAINER_DNA'].".html", 
+							"debug"	  =>0,
+							"loop_context_vars"=>1);
 		$TBL 	 	= new Template($options);	
 	
 		// get desk info
@@ -703,11 +707,10 @@
 		}
 		
 		//$T->AddParam('default_option_value',@$D_SERIES['default_option_value']);
-		$T->AddParam('del_button',@$D_SERIES['del_permission']['able_del']);
-		
-		$T->AddParam('cus_bulk_action',get_custome_bulk_action());
-		
-		$T->AddParam('able_del',@$D_SERIES['del_permission']['able_del']);
+		//$T->AddParam('able_del',@$D_SERIES['del_permission']['able_del']); 		// check del flag
+		$T->AddParam('net_del_flag',@$D_SERIES['net_del_flag']); 
+		$T->AddParam('del_button',@$D_SERIES['del_permission']['able_del']);	// secondary flag for inside bulk area. Optimization need
+		$T->AddParam('cus_bulk_action',get_custome_bulk_action());				// custom action loop
 		
 		$T->AddParam('IS_DIV_OF_DIV',@$D_SERIES['is_div_of_div']);
 		$T->AddParam('TH_INFO',$DESK['TH_INFO']);
@@ -720,8 +723,7 @@
 		$T->AddParam('JS_CALL_OUT_INFO',$DESK['JS_CALL_OUT_INFO']);
 		$T->AddParam('IS_JS_CALL_OUT_INFO',(count($DESK['JS_CALL_INFO']) || count($DESK['JS_CALL_OUT_INFO'])));
 		
-		// 16 jun 2015
-		
+		// 16 jun 2015		
 		$search_filter_off = (@$D_SERIES['search_filter_off'])?$D_SERIES['search_filter_off']:0;
 		
 		$T->AddParam('search_filter_off',$search_filter_off);
@@ -1672,7 +1674,7 @@
 					 
 					 $temp_data['col_count']=$count;
 					 
-					 $temp_data['able_del'] = $D_SERIES['del_permission']['able_del'];
+					 $temp_data['net_del_flag'] = $D_SERIES['net_del_flag'];
 					 
 					 if(@$D_SERIES['del_permission']['avoid_del_field']){
 						
