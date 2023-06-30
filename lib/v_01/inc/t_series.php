@@ -297,6 +297,7 @@
 		function get_data_addon($param){
 				
 				$lv = [];
+				global $rdsql;
 				
 				$lv['temp_info'] = [];
 				$db_json_data = json_decode(json_encode($param['field']),true);				
@@ -305,30 +306,47 @@
 				$define_data = $param['data'];
 				
 				if($db_json_data){
+					
 						for($data_i=0;$data_i<count($db_json_data);$data_i++ ){
 								
 								$temp = array();
+								$col  = array();
 								
 								for($data_value_i=0;$data_value_i<count($define_data);$data_value_i++){
 									
 									$temp_i      = $data_value_i+1;
-									
-									
 																
 									$filter_out  = @$define_data[$temp_i]['filter_out'];
+									
+									$col['value'] = $db_json_data[$data_i][$data_value_i];
+									$col['attr']  = $define_data[$temp_i];
+									
 									  
-									if(@$define_data[$temp_i]['child_field']){
+									if(@$col['attr']['field']){									
+      
+										// passing current value
+										$col['field_neutral']     = preg_replace('/(\[\[)(this)(\]\])/i',
+																						 $col['value'],
+																						 $col['attr']['field']);
 										
-									    $value = $db_json_data[$data_i][$data_value_i];
-									    									    $value = $db_json_data[$data_i][$data_value_i];
+										$temp[$col['attr']['key']] = get_field_value(['rdsql'=>$rdsql,
+																					  'field'=>$col['field_neutral']]);
+										
+									}else if(@$col['attr']['child_field']){
+										
+										$temp['param'] = array('key'		 => $col['value'], 
+															   'child_field' => $col['attr']['child_field'], 
+															   'child_key_id'=> $col['attr']['child_key_id'], 
+															   'child_table' => $col['attr']['child_table'], 
+															   'is_text'     => $col['attr']['is_text']);
 
-										$temp[$define_data[$temp_i]['key']] = get_entity_name(array('key'=>$value, 'child_field'=>$define_data[$temp_i]['child_field'], "child_key_id"=>$define_data[$temp_i]['child_key_id'], 'child_table'=>$define_data[$temp_i]['child_table'], "is_text"=>$define_data[$temp_i]['is_text'], ));
+										$temp[$col['attr']['key']] = get_entity_name($temp['param']);
 									}	
 										
 									else{							
-									    $temp[$define_data[$temp_i]['key']]= ($filter_out)?$filter_out($db_json_data[$data_i][$data_value_i]):$db_json_data[$data_i][$data_value_i];
+									    $temp[$col['attr']['key']]= ($filter_out)?$filter_out($col['value']):$col['value'];
 									} 
-								}
+								} // each inner column
 								
 								array_push($lv['temp_info'],$temp);	
 						
@@ -345,28 +363,36 @@
 				
 				global $rdsql;
 				
-				
-			if($param['is_text']){
-						
+				if($param['is_text']){
 					$child_where = " AND  $param[child_key_id] like '%$param[key]%' ";		
-				}
-				
-				else{
+				}else{
 					$child_where = " AND  $param[child_key_id]= $param[key]";										
 				}
 				
-				
-				 $lv['select_child_query'] = "SELECT $param[child_field] as child_value FROM $param[child_table] WHERE 1=1 $child_where ";
+				$lv['select_child_query'] = "SELECT $param[child_field] as child_value FROM $param[child_table] WHERE 1=1 $child_where ";
 															
 				$child_ex_query = $rdsql->exec_query($lv['select_child_query'],"Field does not matching!");
 				
 				$get_row = $rdsql->data_fetch_object($child_ex_query);
 				
-				
-				
 				return @$get_row->child_value; 
 
-		}
+		} // entity name
+		
+		// get field value
+		function get_field_value($param){
+				
+				$lv = [];
+			
+				$lv['field_query'] 		  = "SELECT $param[field] as field_value";
+															
+				$lv['field_query_result'] = $param['rdsql']->exec_query($lv['field_query'],"Field does not matching!");
+				
+				$lv['row'] 				  = $param['rdsql']->data_fetch_object($lv['field_query_result']);
+				
+				return @$lv['row']->field_value; 
+
+		} // entity name
 		
 		
 		
