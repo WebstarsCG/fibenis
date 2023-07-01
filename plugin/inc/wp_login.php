@@ -419,40 +419,46 @@
 					 
 					echo '{"status":"1","message":"Sign In "}';
 					
-				}else if($no_row[0]==0){					
+				}else if($no_row[0]==0){	
+
+					if($SG->get_session('is_open')==1){
 					
-					$new_user_id = add_new_user([  'user_email'	=> $user_email,								   
-												   'user_role_code' => (get_config('signup_user_role') ?? 'BAS'),
-												   'rdsql'		=> $rdsql,
-												   'g'			=> $G,
-												   'password'	=> $password]);							
-					$msg		 = custom_mail_message(['user_key'   => $new_key]);
-				
-					$MAIL_OTP=array(
-								'from'    => $SG->get_session('mail_send_by').' Admin ',					
-								'to'      => $user_email, //'ratbew@gmail.com',
-								
-								'cc'	  =>  get_config('cc_mail'),
-								'bcc'	  => get_config('bcc_mail'),
-								
-								'subject' =>  $SG->get_session('mail_send_by').' | OTP for Sign In',
-								'message' => $msg['OTP_MSG'],
-							);
+						$new_user_id = add_new_user([  'user_email'	=> $user_email,								   
+													   'user_role_code' => (get_config('signup_user_role') ?? 'BAS'),
+													   'rdsql'		=> $rdsql,
+													   'g'			=> $G,
+													   'password'	=> $password]);							
+						$msg		 = custom_mail_message(['user_key'   => $new_key]);
 					
-					if($PV['is_smtp_mail']){						
-						mail_send_smtp($MAIL_OTP);
-					}else{
-						$send = $G->mail_send($MAIL_OTP);
+						$MAIL_OTP=array(
+									'from'    => $SG->get_session('mail_send_by').' Admin ',					
+									'to'      => $user_email, //'ratbew@gmail.com',
+									
+									'cc'	  =>  get_config('cc_mail'),
+									'bcc'	  => get_config('bcc_mail'),
+									
+									'subject' =>  $SG->get_session('mail_send_by').' | OTP for Sign In',
+									'message' => $msg['OTP_MSG'],
+								);
+						
+						if($PV['is_smtp_mail']){						
+							mail_send_smtp($MAIL_OTP);
+						}else{
+							$send = $G->mail_send($MAIL_OTP);
+						}
+						
+						$otp_signup_log = array('user_id'		=> $new_user_id,
+												  'page_code'	=> $page_code,
+												  'action_type'	=>  $action_type,
+												  'action'		=> 'Sign Up by '.$user_email);
+						
+						$G->set_system_log($otp_signup_log);
+						
+						echo '{"status":"1","message":"Sign Up"}';
+						
+					}else{						
+						echo '{"status":"0","message":"Sorry, it seems the user email is invalid"}';
 					}
-					
-					$otp_signup_log = array('user_id'		=> $new_user_id,
-											  'page_code'	=> $page_code,
-											  'action_type'	=>  $action_type,
-											  'action'		=> 'Sign Up by '.$user_email);
-					
-					$G->set_system_log($otp_signup_log);
-					
-					echo '{"status":"1","message":"Sign Up"}';
 							
 								   
 				} // new user					

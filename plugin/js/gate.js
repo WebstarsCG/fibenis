@@ -867,6 +867,18 @@
 				
 				$('#buttonChangeEmail').removeClass('hide');	
 				
+			}else if(response.status==0){	
+					
+				// warn style
+				G.$('inputEmail_area').className='form-group has-error has-feedback';
+				
+				// warn message			
+				G.$('inputEmail_warn').innerHTML = response.message;
+				
+				// icon			
+				//ele_icon.className = 'glyphicon glyphicon glyphicon-alert clr_red form-control-feedback';
+				
+				//setTimeout(set_element_focus,100);	
 			}
 		
 	} // end
