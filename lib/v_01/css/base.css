@@ -434,6 +434,10 @@
 		top: 2px;
 	}
 	
+	.cursor_help{
+		cursor:help !important;
+	}
+	
 	table.div_of_div,
 	.div_of_div tr,
 	.div_of_div table tr td{
