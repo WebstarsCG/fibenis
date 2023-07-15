@@ -816,10 +816,10 @@
 											</TMPL_IF>
 										
 											<input type=button  class="button" value=">>"
-											       onClick="JavaScript:left_right_action('<TMPL_VAR field_id>',G.$('X<TMPL_VAR field_id>').dataset.rightOptionLimit);<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
+											       onClick="JavaScript:left_right_action('<TMPL_VAR field_id>',G.$('X<TMPL_VAR field_id>').dataset.rightOptionLimit);<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>({'is_left':true,'id':'<TMPL_VAR field_id>'});</TMPL_IF>">
 											<br>	<br>							
 											<input type=button class="button"  value="<<"
-											       onClick="JavaScript:parent_to_child(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_LEFT'));selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');selectbox_capture_text(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_RIGHT_TEXT'),'#');<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>();</TMPL_IF>">
+											       onClick="JavaScript:parent_to_child(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_LEFT'));selectbox_capture_value(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>'),',');selectbox_capture_text(G.$('X<TMPL_VAR field_id>_RIGHT'),G.$('X<TMPL_VAR field_id>_RIGHT_TEXT'),'#');<TMPL_IF IS_LEFT_RIGHT_ACTION>left_right_action_<TMPL_VAR field_id>({'is_left':true,'id':'<TMPL_VAR field_id>'});</TMPL_IF>">
                             	                                 
 		                          
 										</td>
