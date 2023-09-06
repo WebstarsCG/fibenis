@@ -6,7 +6,7 @@ BEGIN
 			RETURN IFNULL((SELECT ROUND(cb,2) FROM entity_child_trans_count_addon as trans_addon WHERE trans_addon_token=temp_trans_addon_token AND 
 													ectc_parent_id = temp_parent_id AND
 													trans_addon_id=temp_trans_addon_id
-													ORDER BY id DESC LIMIT 1),0));
+													ORDER BY id DESC LIMIT 1),0);
 END$$
 
 
@@ -15,10 +15,10 @@ CREATE FUNCTION get_ec_trans_count_max(temp_trans_token varchar(32),temp_parent_
 BEGIN
 			RETURN IFNULL((SELECT cb FROM entity_child_trans_count WHERE trans_token=temp_trans_token  AND parent_id=temp_parent_id ORDER BY id DESC LIMIT 0,1),0);
 END$$
-DELIMITER;
+DELIMITER ;
 
 
---26Apr2023
+-- 26Apr2023
 DROP TABLE IF EXISTS entity_child_trans_count_addon;
 CREATE TABLE entity_child_trans_count_addon (
   id int(11) NOT NULL AUTO_INCREMENT,
