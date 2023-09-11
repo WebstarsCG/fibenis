@@ -1762,7 +1762,9 @@
 					
 					
 						$key               = strtoupper($key);
-						
+
+						$value   	   = (@$value ?? '');
+
 						$temp_type         = '';
 						
 						$temp_remote_link  = '';
@@ -1809,7 +1811,7 @@
 								}elseif($file_type[$key] == 'image'){
 									
 										// image path split
-										$temp_images = explode(",",$value);
+										$temp_images = explode(",",(@$value ?? ''));
 								
 										if(is_file($temp_images[0])){								
 																		    
