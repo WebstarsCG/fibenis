@@ -378,7 +378,7 @@
 						'filter_by'        => 'code',
 						'filter_out'	   =>function($in){										  
 													$temp=[];
-													$temp=explode(',',@$in);
+											$temp=explode(',',(@$in ?? ''));
 													return implode(',',array_map(function($in){return "'$in'";},$temp));
 											},
 						'is_many_to_one'=>1

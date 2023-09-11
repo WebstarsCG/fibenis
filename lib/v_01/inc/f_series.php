@@ -215,7 +215,7 @@
 														];
 							}else{
 									
-									$custom_message  = @$F_SERIES['message'];  	
+									$custom_message  = @$F_SERIES['message'] ?? '';  	
 												
 									if(strlen(@$custom_message)>0 && $row_id){
 										

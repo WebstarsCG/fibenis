@@ -78,7 +78,7 @@
 			 
 			   function escape_string($string){
 			      		$conn = $this->CONN;
-					  $escape_string = mysqli_real_escape_string($conn,$string);
+					  $escape_string = mysqli_real_escape_string($conn,($string ?? ''));
 					  
 					  //$escape_string = pg_escape_string($string);
 					  
