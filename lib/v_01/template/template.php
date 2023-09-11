@@ -320,7 +320,8 @@ class Template {
 
                 // NAME
                 // Allow mixed case in filenames, otherwise flatten
-                if ($which != 'TMPL_INCLUDE' && !$this->options['case_sensitive']) {
+		if( ($which != 'TMPL_INCLUDE' && !$this->options['case_sensitive']) &&
+		    (@$name)){
                     $name = strtolower($name);
                 }
 
@@ -335,11 +336,12 @@ class Template {
                 }
                 // END DEBUG
 
-                // Die if name contains invalid characters
-                if (!preg_match("/^[-\w\/+_\.]*$/", $name)) {
-                    trigger_error("Template::Parse() : Invalid character(s) in NAME attribute (".htmlentities($name).") for ".$which." tag, found at ".$this->options['filename'].", line ".$lineNumber, E_USER_ERROR);
-                }
-
+		// Die if name contains invalid characters
+		if(@$name){
+                	if (!preg_match("/^[-\w\/+_\.]*$/", $name)) {
+				trigger_error("Template::Parse() : Invalid character(s) in NAME attribute (".htmlentities($name).") for ".$which." tag, found at ".$this->options['filename'].", line ".$lineNumber, E_USER_ERROR);
+                	}
+		}
                 // Die if we need a name and didn't get one
                 if (empty($name) && isset($this->need_names[$which])) {
                     trigger_error("Template::Parse() : No NAME given to a ".$which." tag at ".$this->options['filename']." : line ".$lineNumber, E_USER_ERROR);
