@@ -36,9 +36,9 @@
 								       
 									    'child_attr_code'     	=> 'IMFL',
 									       
-									    'is_mandatory'		=>0,
+									   
 									       
-									    'is_mandatory'=>0,
+									    'is_mandatory'=>1,
 									       
 									    'input_html'=>'class="w_200"',
 															
@@ -58,6 +58,7 @@
 				'after_add_update' =>1,
 				
 				'avoid_trans_key_direct'=>1,
+
 				
                                 
 			);

@@ -36,9 +36,9 @@
 								       
 									    'child_attr_code'     	=> 'IMFL',
 									       
-									    'is_mandatory'		=>0,
+									   
 									       
-									    'is_mandatory'=>0,
+									    'is_mandatory'=>1,
 									       
 									    'input_html'=>'class="w_200"',
 															
@@ -53,11 +53,13 @@
                                 
 				'flat_message'	=> 'Successfully Added',
 				
-				'show_query'  => 1,
+				'show_query'  => 0,
 				
 				'after_add_update' =>1,
 				
-				'avoid_trans_key_direct'=>1,
+				'avoid_trans_key_direct'=>0,
+
+				'is_cc'=>0
 								
                                 
 			);
