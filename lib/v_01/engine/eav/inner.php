@@ -384,6 +384,8 @@
 				if($get_row->code_sn){
 				
 					list($temp['menu_title'],$temp['menu_href'])  = explode('[C]',$get_row->code_sn);
+
+					$temp['menu_code'] = str_replace('=','___',$temp['menu_href']);
 					 
 					$temp['menu_href']="?".$temp['menu_href'];
 					

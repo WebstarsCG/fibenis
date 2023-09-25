@@ -118,6 +118,7 @@ error_reporting(E_ALL);
 				# page code
 				
 				$PAGE_CODE = $PAGE_NAME.'__'.$PAGE;
+				$APP_PAGE_MENU_CODE=$PAGE.'___'. $PAGE_NAME;
 				
 				# coach/engine/role url
 				 
@@ -259,7 +260,7 @@ error_reporting(E_ALL);
 		// outer action
 		function outer_action(){
 		    
-			global $PV,$THEME_ROUTE,$COACH,$IS_HOME,$LIB_PATH,
+			global $PV,$THEME_ROUTE,$COACH,$IS_HOME,$IS_APP,$APP_PAGE_MENU_CODE,$LIB_PATH,
 			       $CONTENT,$MENU_OFF,$G,$PAGE,$PAGE_CODE,$PAGE_CONTENT,$SG,$PASS_ID,
 			       $DEFAULT_ADDON,$SHOW_DOOR,$USER_ROLE,$USER_ID,$USER_NAME,$USER_EMAIL;
 			
@@ -324,7 +325,7 @@ error_reporting(E_ALL);
                                 
                          
 				
-				$F->AddParam(array('PAGE_ID'        	=> $PAGE,
+				$F->AddParam(array('PAGE_ID'        	=> (($IS_APP)?$APP_PAGE_MENU_CODE:$PAGE),
 								   'default_footer' 	=> @$PV['MASTER']['default_footer'],
 								   'org_name' 			=> @$PV['MASTER']['org_name'],
 								   'IS_USER'      		=> (($USER_ID)?1:0),	
