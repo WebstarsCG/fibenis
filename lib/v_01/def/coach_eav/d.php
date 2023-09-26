@@ -70,16 +70,18 @@
 	  
         $D_SERIES['data'][9] = array(   'th'        =>  'Content',
 									 
-                                        'field'     =>  "concat(get_eav_addon_varchar(id,'ECSN'),',',lower(get_eav_addon_vc128uniq(id,'CHCD')))",
+                                        'field'     =>  "JSON_OBJECT('code',get_eav_addon_varchar(id,'CHDN'),
+                                                                     'name',lower(get_eav_addon_vc128uniq(id,'CHCD'))
+                                                                )",
                                                  
                                         'td_attr'   =>  ' class="clr_gray_c align_CM" width="20%"',
                                                                                  
                                         'filter_out'=> function($data_in){
 							
-								list($coach_code,$domain_name) = explode(',',strtolower($data_in));
+                                                                $lo = json_decode($data_in);
                                                                             
-								return  "<a target='_blank' class='ficon' href='?d=one_page_eav&default_addon=$coach_code'><i class='fa fa-file-text-o'></i>Sections</a>&nbsp;|".
-								        "<a class='ficon'  href='JavaScript:coach_content(\"$coach_code\",\"$domain_name\");'><i class='fa fa-send'></i>Publish</a>";
+								return  "<a target='_blank' class='ficon' href='?d=one_page_eav&default_addon=$lo->code'><i class='fa fa-file-text-o'></i>Sections</a>&nbsp;|".
+								        "<a class='ficon'  href='JavaScript:coach_content(\"$lo->code\",\"$lo->name\");'><i class='fa fa-send'></i>Publish</a>";
                         
                                         }, // end of function
                                                                               

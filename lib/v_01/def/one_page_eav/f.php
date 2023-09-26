@@ -232,7 +232,7 @@
 	    
 		$coach_id = $G->get_one_column([    'field'        => 'parent_id',
 						    'table'        => 'eav_addon_vc128uniq',
-						    'manipulation' => " WHERE ea_code='CHCD' AND  ea_value='$coach_code'"
+						    'manipulation' => " WHERE ea_code='CHCD' AND  md5(ea_value)=md5('$coach_code')"
 		]);
 	
 		
