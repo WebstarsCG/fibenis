@@ -4,7 +4,7 @@
 	    
 	$PARAM         = @$_GET;
     
-	$PARAM['code'] = (($PARAM['code'])?$PARAM['code']:'CX');
+	$PARAM['code'] = ((@$PARAM['code'])?@$PARAM['code']:'CX');
 	
         $LAYOUT	    	= 'layout_basic';
                

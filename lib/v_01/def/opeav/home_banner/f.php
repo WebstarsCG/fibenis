@@ -8,15 +8,15 @@
 	
 	// Start Coach //////////////////////////////////////////////////////
 	
-	$temp_coach_id	= 0;	
+
 
 	if(@$_GET['default_addon']){
 		
-		$temp_coach_id=$_GET['default_addon'];
+		$temp_ec_id=$_GET['default_addon'];
 		
 		$temp_coach_name = $G->get_one_column(['field'=>"get_eav_addon_vc128uniq(id,'CHCD')",
 						       'table'=>'entity_child',
-						       'manipulation'=>" WHERE id=$temp_coach_id and entity_code='CH' "
+						       'manipulation'=>" WHERE id=get_ec_parent_id_eav($temp_ec_id) AND entity_code='CH' "
 						      ]);
 	} # 
 	
@@ -34,7 +34,7 @@
 	// Start Coach //////////////////////////////////////////////////////
 	
 	$F_SERIES['data'][2]['option_data']          = $G->option_builder('entity_child',"id,get_eav_addon_varchar(id,'ECSN') as sn",
-								          " WHERE entity_code='HB' AND get_ec_parent_id_eav(id)=$temp_coach_id");
+								        							  " WHERE id=$temp_ec_id AND entity_code='HB'");
 	$F_SERIES['data'][2]['avoid_default_option'] = 1;  
 	
 	////////////////////////////////////////////////////// End Coach //

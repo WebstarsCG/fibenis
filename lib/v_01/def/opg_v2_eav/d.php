@@ -112,7 +112,7 @@
 							 
 							 9=>array(	'th'=>'Edit',
 									 
-									'field'=>"concat(id,':',(SELECT get_ec_parent_id_eav(ec.id) as parent_id FROM entity_child  as ec WHERE ec.id=get_ec_parent_id_eav(entity_child.id)))",
+									'field'=>"concat(id,':',(SELECT id as parent_id FROM entity_child  as ec WHERE ec.id=get_ec_parent_id_eav(entity_child.id)))",
 										 
 									'td_attr' => 'width="5%"',
 									

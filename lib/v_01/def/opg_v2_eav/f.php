@@ -223,7 +223,10 @@
 				# File Include
                                 'after_add_update'	=>0,
 				
-				'page_code'	=> 'FECA',                                
+				'page_code'	=> 'FECA',       
+				
+				'is_cc'=>1
+				
 				
                                 
 			);

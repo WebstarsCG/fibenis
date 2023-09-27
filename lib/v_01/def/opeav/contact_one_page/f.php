@@ -13,7 +13,7 @@
     
     $PARAM      = @$_GET;
     
-    $PARAM['code'] = (($PARAM['code'])?$PARAM['code']:'CX');
+    $PARAM['code'] = ((@$PARAM['code'])?@$PARAM['code']:'CX');
     
     
     $F_SERIES	=	array(
@@ -260,7 +260,9 @@
 				
 				'show_query'    =>0,
 				
-				'divider'       => 'tab'
+				'divider'       => 'tab',
+
+				'is_cc'			=>1,
 				
                                 
 			);
@@ -282,7 +284,7 @@
     
 	$F_SERIES['data'][8]['option_data'] 	=   $G->option_builder( 'entity_child',
 								        "id,get_eav_addon_varchar(id,'ECSN') as sn",
-									" WHERE entity_code='$PARAM[code]' AND get_ec_parent_id_eav(id)=$default_addon"
+									" WHERE id=$default_addon AND  entity_code='$PARAM[code]'"
 								    );
     } // end
 							                           

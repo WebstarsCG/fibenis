@@ -161,7 +161,7 @@
 							
 							8=>array('th'	=> 'View',
 								     
-								'field'	=> "concat((SELECT ln FROM entity WHERE code=entity_child.entity_code),':',id,':',entity_code)",
+								'field'	=> "concat((SELECT ln FROM entity WHERE code=entity_child.entity_code),':',id)",
 								
 								'td_attr' => ' width="5%" ',
 								
@@ -174,7 +174,7 @@
 															  'is_fa_btn' => 'btn-default',
 												        'link_title'=>'',
 													'title'	=> 'View',
-												         'src'=>"?d$temp[0]&menu_off=1&mode=simple&default_addon=$temp[1]&code=$temp[2]",
+												         'src'=>"?d$temp[0]&menu_off=1&mode=simple&default_addon=$temp[1]",
 													 'style'=>"border:none;width:100%;height:600px;");
 													 return json_encode($data_out);
 												 },
@@ -185,7 +185,7 @@
 							
 							9=>array('th'	=> 'Add',
 								     
-								'field'	=> "concat((SELECT ln FROM entity WHERE code=entity_child.entity_code),':',id,':',get_ec_parent_id_eav(id),':',entity_code)",
+								'field'	=> "concat((SELECT ln FROM entity WHERE code=entity_child.entity_code),':',id)",
 								
 								'td_attr' => ' width="5%" ',
 								
@@ -197,7 +197,7 @@
 													'is_fa' => 'fa-plus-square-o',
 												        'link_title'=>'Add',
 													'title' => 'Add',
-												         'src'=>"?f$temp[0]&menu_off=1&mode=simple&default_addon=$temp[2]&code=$temp[3]",
+												         'src'=>"?f$temp[0]&menu_off=1&mode=simple&default_addon=$temp[1]",
 													 'style'=>"border:none;width:100%;height:600px;");
 													 return json_encode($data_out);
 												 },
