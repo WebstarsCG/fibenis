@@ -447,7 +447,7 @@
 														
 									$min_max_date_year = null;
 														
-														}elseif($get_row->exa_type=="ITFT"){
+						}elseif($get_row->exa_type=="ITFT"){
 									
 									global $G,$rdsql;
 									
@@ -482,23 +482,13 @@
 												
 												if($value[9]=='yes'){
 													
-													$ecb_id = $rdsql->exec_query("SELECT ln FROM entity_child_base
-																	 WHERE
-																	 entity_code= '$entity_code[0]' AND dna_code='EBMS'
-																	 ORDER BY id ASC","query failed");
-													
-													while($ecb_id_val = $rdsql->data_fetch_row($ecb_id)){
-														
-														array_push($dd,$ecb_id_val[0]);
-														
-													};
-													
-													for ($i = 0 ; $i < count($dd) ; $i++) {
-															
-															$list_dd[][] = $dd[$i];
-													}
-
-													$dd_val = json_encode($list_dd);
+													$dd_info =	 prefill_grid(['table'=>$value[3],
+																				'field'=>$value[5],
+																				'code'=>$entity_code[0],
+																				'rdsql'=>$rdsql]);
+																
+													$dd = count($dd_info);
+													$dd_val  = json_encode($dd_info);
 													
 												}
 												
@@ -541,23 +531,13 @@
 												
 												if($value[9]=='yes'){
 												
-														$ecb_id = $rdsql->exec_query("SELECT id FROM entity_child_base
-																			WHERE
-																		 entity_code= '$entity_code[0]' AND dna_code='EBMS'
-																		 ORDER BY id ASC","query failed");
-														
-														while($ecb_id_val = $rdsql->data_fetch_row($ecb_id)){
-															
-															array_push($dd,$ecb_id_val[0]);
-															
-														};
-														
-														for ($i = 0 ; $i < count($dd) ; $i++) {
-																
-																$list_dd[][] = $dd[$i];
-														}
-			
-														$dd_val = json_encode($list_dd);
+													$dd_info =	 prefill_grid(['table'=>$value[3],
+																				'field'=>$value[4],
+																				'code'=>$entity_code[0],
+																				'rdsql'=>$rdsql]);
+									
+													$dd = count($dd_info);
+													$dd_val  = json_encode($dd_info);
 														
 												}
 												
@@ -604,8 +584,8 @@
 											$min_row	= empty($get_row->fiben_table_row)? 4 : $get_row->fiben_table_row;
 											$max_row	= empty($get_row->fiben_table_row_max)? 10 : $get_row->fiben_table_row_max;
 									}else{
-											$min_row = count($dd);
-											$max_row = count($dd);
+											$min_row = $dd;
+											$max_row = $dd;
 									}
 									 
 									 
@@ -1006,6 +986,36 @@
 			
 			return $param; 
 			
+	} // end
+
+	//prefill grid
+	// param-> field,table,code,rdsql
+	function prefill_grid($param){
+
+		$po = (object)$param;
+
+		$lv = ['prefill_data'=>'','prefill_info'=>[]];
+		$lv['entity_child_base'] = ['where'=>function(){ return " AND dna_code='EBMS' ";  }];
+		$lv['entity_child']		 = ['where'=>function(){ return " ";  }];
+		$lv['where_addon']		 = $lv[$po->table]['where'](); 
+
+		$lv['prefill_data']  = $po->rdsql->exec_query("	SELECT 
+												$po->field 
+										  	FROM 
+												$po->table 
+											WHERE 
+												entity_code= '$po->code' 
+												$lv[where_addon]
+											ORDER BY
+												id ASC","Failed prefill selection");
+		
+
+		while($prefill_item = $po->rdsql->data_fetch_row($lv['prefill_data'])){	
+				array_push($lv['prefill_info'],[$prefill_item[0]]);														
+		};
+
+		return $lv['prefill_info'];
+
 	} // end
 
 
