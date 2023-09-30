@@ -1,132 +1,91 @@
-
-	      <style>
-		     header{display: none;}
-		     footer{display: none;}
-			   .login_panel .close, .hidden-header {display: none;}
-			   
-			   
-		    .login_panel {
-				position: fixed;
-				left:50%;
-				top: 50%;
-				margin-left:-158px;
-				margin-top: -280px !important;
-			 }
-			 
-			 #loader{
-				position: fixed;
-				top: 50%;					
-				margin-top: -50px;	
-			}
-			
-			#myModal_signUp{				
-							
-				margin-top	: -190px;	
-				position	: fixed;
-				top			: 50%;
-			}
-			
-			#myModalForgetPassword{
-							
-				margin-top	: -116px;	
-				position	: fixed;
-				top			: 50%;
-			}
-			
-			 .modal-footer button,
-			.modal-footer .btn{
-						font-size		: 14px !important;
-						margin-bottom	: 10px !important;
-						padding			: 7px 0px !important;
-						width			: 100% !important;
-			}
-			
+<style>
+	.container {
+	  height: 100vh;
+	}
+  
+	header {
+	  display: none;
+	}
+  
+	footer {
+	  display: none;
+	}
+  
+	.login_panel .close,
+	.hidden-header {
+	  display: none;
+	}
+  
+	.login_panel_area {
+	  align-items: center;
+	  display: flex;
+	  flex-direction: row;
+	  height: 100%;
+	  justify-content: center;
+	}
+  
+	#loader {
+	  position: fixed;
+	  top: 50%;
+	  margin-top: -50px;
+	}
+   
+	.modal-footer button,
+	.modal-footer .btn {
+	  font-size: 14px !important;
+	  margin-bottom: 10px !important;
+	  padding: 7px 0px !important;
+	  width: 100% !important;
+	}
+  
+	.modal-footer .btn + .btn {
+	  margin-left: 0px !important;
+	}
+  
+	@media only screen and (max-width: 768px) {
+	  body {
+		background-color: #f9f9f9 !important;
+	  }
+  
+	  .login_panel_area .modal-content {
+		box-shadow: none !important;
+  
+	  .login_panel {
+		margin-top: unset !important;
+	  }
+  
+	  input[type="text"],
+	  input[type="email"],
+	  input[type="password"] {
+		font-size: 15px !important;
+		height: 40px;
+	  }
+  
+	  .modal-content {
+		border: 3px solid #eaeaea !important;
+	  }
+  
+	  .modal-footer {
+		padding: 15px 0px;
+		text-align: center !important;
+	  }
+   
+	  .modal-footer button,
+	  .modal-footer .btn {
+		font-size: 15px !important;
+		margin-bottom: 12px !important;
+		padding: 9px 0px !important;
+	  }
+  
+	  .fbn-app-intro {
+		padding-left: 5%;
+		padding-right: 5%;
+	  }
+	}
+  </style>
 				
-			.modal-footer .btn + .btn{
-				margin-left:0px !important;
-			}
-					
-					
-			
-			 
-			 @media only screen and (max-width: 768px){
-			 
-			 
-					body{
-						background-color:#f9f9f9 !important;
-					}
-			 
-					 .login_panel_area .modal-content{
-						box-shadow : none !important;
-						webkit-box-shadow: none !important;
-					 }
-			 
-					 .login_panel {
-						
-						margin-top: -70% !important;
-					 }
-			 
-					
-					input[type="text"],
-					input[type="email"],
-					input[type="password"]{
-						font-size	: 15px !important;
-						height		: 40px;
-					}
-					
-					
-					.modal-content{
-						border			: 3px solid #eaeaea !important;
-					}
-					
-					.modal-footer{
-						padding:15px 0px;
-						text-align: centre !important;
-					}
-				
-					 
-					 #loader{
-						position: fixed;
-						left:50%;
-						top: 50%;
-						margin-left:-158px;
-						margin-top: -50px;	
-					}
-					
-					#myModal_signUp{				
-						left		: 50%;				
-						margin-left	:-158px;				
-						margin-top	: -190px;	
-						position	: fixed;
-						top			: 50%;
-					}
-					
-					#myModalForgetPassword{
-						left		: 50%;				
-						margin-left	:-158px;				
-						margin-top	: -116px;	
-						position	: fixed;
-						top			: 50%;
-					}
-					
-					 .modal-footer button,
-					.modal-footer .btn{
-								font-size		: 15px !important;
-								margin-bottom	: 12px !important;
-								padding			: 9px 0px !important;
-					}
-					
-					
-					.fbn-app-intro{
-						padding-left:5%;
-						padding-right:5%;
-					}
-			 }
-			 
-		   <!--.login_panel_area{ margin-top:10%; position:relative;} -->
-	      </style>		      
 
-	      <div class="container" id="content ">
+	<div class="container" id="content ">
 
 		     <div class="col-md-4"></div>		   
 		     <div class="col-md-4 col-xs-12 login_panel_area">
