@@ -201,7 +201,7 @@ error_reporting(E_ALL);
 				// get content
 				$APP = new Template(array("filename" => $PV['cache_coach_eng_role'],"debug"    => 0));
 				$APP->AddParam('APP_CONTENT',$L->Output());					
-				if(!$IS_MENU_OFF){ $APP->AddParam('PAGE_TITLE',@$PAGE_TITLE); } // if menu than title
+				if(!$MENU_OFF){ $APP->AddParam('PAGE_TITLE',@$PAGE_TITLE); } // if menu than title
 				$APP->EchoOutput();
 	
 		}else{ // open page
