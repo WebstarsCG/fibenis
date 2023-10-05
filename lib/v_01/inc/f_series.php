@@ -3,8 +3,6 @@
 				
 		include($LIB_PATH."/inc/lib/upload.php");		
 		
-		$MENU_OFF   = 0;
-		
 		$PAGE_ID = $PAGE;
 
 		$F_DEFAULT = ['user_id'   	=> 'user_id',
