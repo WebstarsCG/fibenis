@@ -681,7 +681,7 @@
 																				];
 														
 												if($get_row->list_default_option_label){													
-													$temp_input['option_default']	=   array('label'=>'Select '.$get_row->list_default_option_label,
+													$temp_input['option_default']	=   array('label'=>$get_row->list_default_option_label ?? 'Select',
 																							  'value'=>'');
 												} // end
 														
