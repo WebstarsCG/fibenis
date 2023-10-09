@@ -93,6 +93,8 @@
                      'back_to'  =>array('is_back_button'=>1,'back_link'=>'?d=entity_attribute', 'BACK_NAME'=>'Back'),
                      
                      'message'=> " concat((SELECT sn FROM entity WHERE code=entity_code),' - ',sn) ",
+                 
+                     'is_cc'=>1,
                      
                                    
                     );
