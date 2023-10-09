@@ -378,6 +378,16 @@
 					array_push($lv['contact_detail_values'],"($lv[ec_id],'$contact_code','$lv[contact_eav]',1)");				
 				} // check key exists
 			} // end
+
+			// addon
+			if(@$param['contact_addon']){
+
+					// each addon $a -> $addon
+					foreach($param['contact_addon'] as $a_key => $a_val){
+						array_push($lv['contact_detail_values'],"($lv[ec_id],'$a_key','$a_val',1)");
+					} // traverse
+
+			} // contact addon
 				
 			$lv['contact_detail_query']="INSERT INTO
 										eav_addon_varchar(parent_id,ea_code,ea_value,user_id)
