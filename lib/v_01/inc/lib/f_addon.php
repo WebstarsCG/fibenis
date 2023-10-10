@@ -56,6 +56,7 @@
 								'ITFD'=>['table'=>'varchar'],
 								'ITFI'=>['table'=>'varchar'],
 								'ITDT'=>['table'=>'date'],
+								'ITTI'=>['table'=>'time'],
 													'ITRG'=>['table'=>'varchar','action'=>function($data_in){return $data_in;}],
 													'ITTB'=>['table'=>'varchar','action'=>function($data_in){  $data_in['end_label']='';
 																											   $data_in['attr']['class']="w_50"; 
@@ -787,37 +788,36 @@
 										}
 										
 														
-								}
-								 
-								 else{
-																				
-												
-																$temp_input = [
-																							   'field_name'=>$get_row->title,
-																							   
-																							   'field_id'=>'exa_value',
-																							   
-																							   'type'=>'text',
-																							   
-																							   'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],      // child table 
-																							   
-																							   'parent_field_id'     => 'parent_id',              // parent field
-																													   
-																							   'child_attr_field_id' => 'exa_token',                // attribute code field
-																							   
-																							   'child_attr_code'     => $get_row->token,           // attribute code
-																							   
-																							   'is_mandatory'	     => 0,
-																							   
-																							   'allow'               => 'x128',  
-																							   
-																							   'attr'           => [ 'class' => "w_200"]
-																							   
-																							 ];
+							}elseif($get_row->exa_type=="ITTI"){			
+									$temp_input = [
+													'field_name'=>$get_row->title,																		
+													'field_id'=>'exa_value',																		
+													'type'=>'hms',																		
+													'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],    // child table 
+													'parent_field_id'     => 'parent_id',              // parent field																			
+													'child_attr_field_id' => 'exa_token',                // attribute code field													
+													'child_attr_code'     => $get_row->token,           // attribute code													
+													'is_mandatory'	     => 0,														
+												];													
+													
+
+							}else{			
+										$temp_input = [
+														'field_name'=>$get_row->title,																		
+														'field_id'=>'exa_value',																		
+														'type'=>'text',																		
+														'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],    // child table 
+														'parent_field_id'     => 'parent_id',              // parent field																			
+														'child_attr_field_id' => 'exa_token',                // attribute code field													
+														'child_attr_code'     => $get_row->token,           // attribute code													
+														'is_mandatory'	     => 0,													
+														'allow'               => 'x128',  													
+														'attr'           => [ 'class' => "w_200"]													
+													];													
 														
-														
-																		$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
-														}
+										$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
+
+								} // end
 								
 								
 								if($get_row->class_attr!=null){
