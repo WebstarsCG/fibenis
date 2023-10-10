@@ -1,3 +1,78 @@
+-- 10OCT2023
+-- time
+INSERT INTO 
+            entity_child_base(entity_code,token,sn,ln,dna_code,line_order,created_by,user_id)
+        VALUES
+            ('IT','ITTI','Time','Time','EBMS',18,2,2);
+
+DROP TABLE IF EXISTS exav_addon_time;
+CREATE TABLE exav_addon_time (
+  id int NOT NULL AUTO_INCREMENT,
+  parent_id int DEFAULT NULL,
+  exa_token varchar(32) NOT NULL,
+  exa_value TIME DEFAULT NULL,
+  user_id int DEFAULT NULL,
+  timestamp_punch timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY (parent_id,exa_token,exa_value),
+  KEY (exa_token,exa_value),
+  KEY (timestamp_punch)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3; 
+ALTER TABLE exav_addon_time ADD FOREIGN KEY (parent_id) REFERENCES entity_child(id) ON DELETE CASCADE ON UPDATE RESTRICT; 
+ALTER TABLE exav_addon_time ADD FOREIGN KEY (exa_token) REFERENCES entity_child_base(token) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+ALTER TABLE exav_addon_time ADD FOREIGN KEY (user_id) REFERENCES user_info(id) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+
+DROP FUNCTION IF EXISTS get_exav_addon_time;
+DELIMITER $$
+CREATE  FUNCTION get_exav_addon_time(ec_id INT, token VARCHAR(32)) RETURNS TEXT
+BEGIN
+    return IFNULL((SELECT exa_value FROM exav_addon_time WHERE  parent_id=ec_id AND exa_token=token),NULL);
+END$$
+DELIMITER ;
+
+
+-- 07OCT2023
+-- entity_child_temp
+DROP TABLE IF EXISTS entity_child_temp;
+CREATE TABLE entity_child_temp(
+  id int NOT NULL AUTO_INCREMENT,
+  entity_code varchar(4) NOT NULL,
+  created_by int DEFAULT NULL,
+  creation datetime DEFAULT CURRENT_TIMESTAMP,
+  user_id int DEFAULT NULL,
+  timestamp_punch timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id), 
+  KEY(entity_code) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3; 
+
+ALTER TABLE entity_child_temp ADD FOREIGN KEY (entity_code) REFERENCES entity(code) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+ALTER TABLE entity_child_temp ADD FOREIGN KEY (user_id) REFERENCES user_info(id) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+
+DROP TABLE IF EXISTS ectv_addon_vc32;
+CREATE TABLE ectv_addon_vc32 (
+  id int NOT NULL AUTO_INCREMENT,
+  parent_id int DEFAULT NULL,
+  ect_token varchar(32) NOT NULL,
+  ect_value varchar(32) DEFAULT NULL,
+  user_id int DEFAULT NULL,
+  timestamp_punch timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY (parent_id,ect_token,ect_value),
+  KEY (timestamp_punch)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3; 
+
+ALTER TABLE ectv_addon_vc32 ADD FOREIGN KEY (parent_id) REFERENCES entity_child_temp(id) ON DELETE CASCADE ON UPDATE RESTRICT; 
+ALTER TABLE ectv_addon_vc32 ADD FOREIGN KEY (ect_token) REFERENCES entity_child_base(token) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+ALTER TABLE ectv_addon_vc32 ADD FOREIGN KEY (user_id) REFERENCES user_info(id) ON DELETE RESTRICT ON UPDATE RESTRICT; 
+
+DROP FUNCTION IF EXISTS get_ectv_addon_vc32;
+DELIMITER $$
+CREATE  FUNCTION get_ectv_addon_vc32(ec_id INT, token VARCHAR(32)) RETURNS TEXT
+BEGIN
+    return IFNULL((SELECT ect_value FROM ectv_addon_vc32 WHERE  parent_id=ec_id AND ect_token=token),NULL);
+END$$
+DELIMITER ;
+
 -- 06MAy2023
 DELIMITER $$
 DROP FUNCTION IF EXISTS get_ec_trans_count_addon_max$$
