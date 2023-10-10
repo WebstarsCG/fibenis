@@ -118,17 +118,26 @@
 						response => response.json() // 
 					).then(
 						(html)=>{
-							ELEMENT('inpage_message').className=`block_${html.status}`;				    
-							fade_in_out('#inpage_message',5000,html.message);
-							
-							if(html.last_insert){
-									const child_to_parent = html.last_insert;
-									window.parent.postMessage(JSON.stringify(child_to_parent));
+
+							console.log(html.redirect);
+							if(html.hasOwnProperty('redirect')){
+									document.location.href=html.redirect;
+							}else{
+
+								ELEMENT('inpage_message').className=`block_${html.status}`;				    
+								fade_in_out('#inpage_message',5000,html.message);
+								
+								if(html.last_insert){
+										const child_to_parent = html.last_insert;
+										window.parent.postMessage(JSON.stringify(child_to_parent));
+								}
+								
+								G.hideLoader();
+
 							}
-							
-							G.hideLoader();
-							
-						}
+
+						} // end of html call							
+						
 					);
 					
 					if(G.$('primary_id').value.length==0){

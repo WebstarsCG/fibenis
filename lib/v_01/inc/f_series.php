@@ -297,8 +297,12 @@
 				// get_last_insert
 				if(is_int(@$F_SERIES['get_last_insert'])){	
 					$F_MESSAGE['last_insert'] = array_merge($_POST,['id'=>$row_id,
-															'default_addon'=>@$_GET['default_addon']]);
-				
+															'default_addon'=>@$_GET['default_addon']]);				
+				}
+
+				// redirect
+				if(@$F_SERIES['redirect']){
+					$F_MESSAGE['redirect'] = $F_SERIES['redirect'];
 				}
 				
 				http_response_code(200);
