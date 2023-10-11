@@ -20,10 +20,12 @@
     //
     $F_SERIES['data'][9] = ['type'         => 'option',
                             'field_name'   => 'Definition creation from entity',
-                            'field_id'     =>"parent_id",								                                
+                            'field_id'     => "parent_id",								                                
                             'option_data'  => $G->option_builder("entity","code,sn","WHERE is_lib=0 ORDER BY sn ASC"),                            
                             'input_html'   => ' class="w_200" rows="2"   ',
                             'ro'        => 1
                         ]; 
+
+    $F_SERIES['is_cc'] = 1;
     
 ?>
