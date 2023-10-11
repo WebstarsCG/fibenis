@@ -700,8 +700,8 @@
 								
 								if(@$value['is_line_order']){
 										@$value['attr']['value'] = (($G->get_one_cell(['table'=>$F_SERIES['table_name'],
-															     'field'=>'IFNULL(line_order,0)',
-															     'manipulation'=>" ORDER BY line_order DESC LIMIT 1  "]))+1);
+															   						  'field'=>'IFNULL(line_order,0)',
+															    		 'manipulation'=>" ORDER BY line_order DESC LIMIT 1  "])));
 								}
 						
 						}
