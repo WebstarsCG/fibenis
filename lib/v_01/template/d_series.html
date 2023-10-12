@@ -7,12 +7,14 @@
 		<link rel="stylesheet" href="<TMPL_VAR LIB_PATH>/css/<TMPL_VAR LAYOUT>.css">
 	</TMPL_IF>
 	
-	<TMPL_IF IS_CSS>
+	<TMPL_IF IS_CSS_OLD>
 		<link rel="stylesheet" href="<TMPL_VAR DEF_PATH><TMPL_VAR d_series>.css">
 	</TMPL_IF>
-	
-	
-	
+
+	<TMPL_IF IS_CSS>  
+		<link rel="stylesheet" href="<TMPL_IF CSS_PATH><TMPL_VAR CSS_PATH><TMPL_ELSE><TMPL_VAR DEF_PATH><TMPL_VAR D_SERIES></TMPL_IF>.css">
+	</TMPL_IF> 	
+		
 	<TMPL_IF is_top_js>  
 		<script language="javascript" type="text/javascript" src="<TMPL_IF top_js_file><TMPL_VAR top_js_file><TMPL_ELSE><TMPL_VAR DEF_PATH><TMPL_VAR d_series></TMPL_IF>.js"></script>	    
 	</TMPL_IF>  

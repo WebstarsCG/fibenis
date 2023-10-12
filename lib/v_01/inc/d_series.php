@@ -777,7 +777,18 @@
 		$T->AddParam('DEFAULT_ADDON',urlencode($DEFAULT_ADDON));
 		
 		$T->AddParam('LAYOUT',@$D_SERIES['layout']);
-		$T->AddParam('IS_CSS',@$D_SERIES['is_css']);
+		$T->AddParam('IS_CSS_OLD',@$D_SERIES['is_css']);
+
+		// css
+		if(@$D_SERIES['css']){
+				
+			$T->AddParam('is_css',1);
+			
+			if(is_string($D_SERIES['css'])){
+				$D_SERIES['css']=str_replace('.css','',strtolower($D_SERIES['css']));
+				$T->AddParam('css_path',$D_SERIES['css']);
+			}
+		}// end of css
 		
 		$T->AddParam('NO_DATA',@$D_SERIES['no_data_message']);
 		
