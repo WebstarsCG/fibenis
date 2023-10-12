@@ -54,7 +54,8 @@
                                 
 			'prime_index'   => 1,
 			
-			'page_code'	=> 'FURP',
+			
+		'is_cc'			=>1
 			
                              
                     );
