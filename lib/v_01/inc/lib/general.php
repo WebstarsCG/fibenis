@@ -42,7 +42,6 @@
 								     'dec' =>12);
 									 
 						$this->rdsql = new rdsql();	
-									
 					
 				} // end
 				
@@ -2027,6 +2026,27 @@ function getEKV($entity_code,$key){
 	function getCleanNum($in){
 		return strtolower(preg_replace('/\D/i','',$in));
 	} // end	
+
+	//////////////////////////////////////////
+	/// i/p -> string
+	//////////////////////////////////////////
+	function setHeaderContentType($content_type){
+		
+		$content_type_list = ['json'=>"application/json; charset=UTF-8"];		
+		return @$content_type_list[$content_type] ?? throw new Exception("Undefined Type $content_type given");
+
+	} // end
+
+	//////////////////////////////////////////
+	/// i/p -> associatve array key & values level 1
+	//////////////////////////////////////////
+	function sendContentTypeJSON(array $key_values){
+
+		$header = $this->setHeaderContentType('json');		
+		header("Content-Type: $header");		
+		return json_encode($key_values);
+
+	} // end
 	
 } // end of class
     
