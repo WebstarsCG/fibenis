@@ -214,7 +214,7 @@
 									
 						$lv['permission'] = $this->rdsql->data_fetch_assoc($lv['exec_query']);
 									  							
-						return ($lv['permission']['id'])?1:0;
+						return (@$lv['permission']['id'])?1:0;
 						
 			} // code
 
