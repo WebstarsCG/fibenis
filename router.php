@@ -29,6 +29,28 @@
 		]);
 				
 		@$session_off = 0;
+
+		$COACH = [];
+
+		$COACH['domain_name']	=   (get_config('is_multiple')==1)?str_replace("www.","",$_SERVER['HTTP_HOST']):'default';
+		 
+		if(!isset($_SESSION['COACH_ID_'.$COACH['domain_name']])){
+		    
+		    list($COACH['id'],
+			 $COACH['name']) =    explode('[C]',$G->get_one_cell(['table'        => 'entity_child',
+							  'field'        => "concat(id,'[C]',get_eav_addon_vc128uniq(id,'CHCD'))",
+							  'manipulation' => " WHERE entity_code='CH' AND get_eav_addon_varchar(id,'CHDN') ='$COACH[domain_name]' ",
+		 		        ]));
+		    
+		    $_SESSION['COACH_ID_'.$COACH['domain_name']]       = $COACH['id'];
+		    $_SESSION['COACH_NAME_'.$COACH['domain_name']]     = $COACH['name'];
+		    
+		}else{		    
+		    $COACH['name'] = $_SESSION['COACH_NAME_'.$COACH['domain_name']];
+		    $COACH['id'] = $_SESSION['COACH_ID_'.$COACH['domain_name']];
+		} 
+				
+		$COACH['name_hash']     =   md5($COACH['name']);
 	
 		
 		# actions
