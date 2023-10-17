@@ -42,6 +42,7 @@
 							$temp_input_to_table = ['ITTX'=>['table'=>'varchar','action'=>function($data_in){  $data_in['allow']='x128';$data_in['maxlength']='128'; $data_in['attr']['class']="w_250"; return $data_in; }],
 													'ITNM'=>['table'=>'decimal','action'=>function($data_in){  $data_in['allow']='d14[.]';$data_in['maxlength']='15';$data_in['attr']['class']="w_150"; return $data_in; }],
 													'ITHD'=>['table'=>''],
+								'ITHN'=>['table'=>'varchar'],
 								'ITLA'=>['table'=>''],
 								'ITIG'=>['table'=>'num'],
 													'ITTA'=>['table'=>'text'],
@@ -800,7 +801,20 @@
 													'is_mandatory'	     => 0,														
 												];													
 													
+							}elseif($get_row->exa_type=="ITHN"){	
 
+								$temp_input = [
+									'field_name'=>$get_row->title,																		
+									'field_id'=>'exa_value',																		
+									'type'=>'hidden',																		
+									'child_table'         => 'exav_addon_'.$temp_input_to_table[$get_row->exa_type]['table'],    // child table 
+									'parent_field_id'     => 'parent_id',              // parent field																			
+									'child_attr_field_id' => 'exa_token',                // attribute code field													
+									'child_attr_code'     => $get_row->token,           // attribute code													
+									'is_mandatory'	     => 0,														
+								];	
+							
+			
 							}else{			
 										$temp_input = [
 														'field_name'=>$get_row->title,																		
@@ -813,9 +827,11 @@
 														'is_mandatory'	     => 0,													
 														'allow'               => 'x128',  													
 														'attr'           => [ 'class' => "w_200"]													
-													];													
-														
-										$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
+													];		
+													
+										if(@$temp_input_to_table[$get_row->exa_type]['action']){														
+											$temp_input= $temp_input_to_table[$get_row->exa_type]['action']($temp_input);
+										}
 
 								} // end
 								

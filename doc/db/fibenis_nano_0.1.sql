@@ -1,4 +1,9 @@
 -- 17OCT2023
+INSERT INTO 
+            entity_child_base(entity_code,token,sn,ln,dna_code,line_order,created_by,user_id)
+        VALUES
+            ('IT','ITHN','Hidden','Hidden','EBMS',18,2,2);
+
 DELIMITER $$
 CREATE FUNCTION get_user_internal(temp_user_id int,temp_ea_code varchar(32)) RETURNS text CHARSET utf8mb3
 BEGIN
