@@ -1,3 +1,11 @@
+-- 17OCT2023
+DELIMITER $$
+CREATE FUNCTION get_user_internal(temp_user_id int,temp_ea_code varchar(32)) RETURNS text CHARSET utf8mb3
+BEGIN
+            return get_eav_addon_varchar((SELECT is_internal FROM user_info WHERE user_info.id=temp_user_id),temp_ea_code);
+        END$$
+DELIMITER ;
+
 -- 10OCT2023
 -- time
 INSERT INTO 
