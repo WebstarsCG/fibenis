@@ -16,12 +16,12 @@
 						
 						),
 				   
-				    '2' => array( 'field_name'=> 'Domain Hash',
+				    '2' => array( 'field_name'=> 'Coach Name',
 						
-						'field_id' => 'domain_hash',
-						
-						'option_data'=>$G->option_builder('entity_child',"md5(get_eav_addon_vc128uniq(id,'CHCD')),get_eav_addon_varchar(id,'ECSN')","
-										  WHERE entity_code='CH' ORDER BY get_eav_addon_varchar(id,'ECSN') ASC"),
+						'field_id' => 'coach_id',
+						//get_eav_addon_vc128uniq(id,'CHCD')
+						'option_data'=>$G->option_builder('entity_child',"id,get_eav_addon_varchar(id,'ECSN')",
+										" WHERE entity_code='CH' ORDER BY get_eav_addon_varchar(id,'ECSN') ASC"),
 						
 						'type' => 'option',
 						
@@ -67,8 +67,15 @@
 						
 						),
 				   
-				    ),
-		     
+					'5' => array( 'field_name'=> 'Domain Hash',
+						
+									'field_id' => 'domain_hash',
+									
+									'type' => 'hidden'
+									
+									)
+			   
+				),
                     'table_name'    => 'entity_key_value',
                                 
                     'key_id'        => 'id',
@@ -98,5 +105,22 @@
                 $F_SERIES['add_button']['is_add'] = 0;
 		$LAYOUT	    = 'layout_full';
 	}
+
+
+
+	// before addupdte
+
+	$F_SERIES['before_add_update'] = function(){
+
+			global $G;
+
+			$lv 			= 	(object)['coach_id'=>@$_POST['X2'],'coach_hash'=>''];
+			$lv->coach_hash = 	$G->get_one_column(['table'=>'entity_child',
+												  'field'=>"md5(get_eav_addon_vc128uniq(id,'CHCD'))",
+												  'manipulation'=>" WHERE md5(id)=md5($lv->coach_id)"
+								]);
+			$_POST['X5'] 	= 	$lv->coach_hash;
+
+	} // end
 
 ?>
