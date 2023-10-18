@@ -98,7 +98,8 @@
 				if(refill_elements.length>=1){
 				 
 					ELEMENT('inpage_message').className='block_fail';				    
-					fade_in_out('#inpage_message',5000,'Please Fill the Marked Details');					   
+					fade_in_out('#inpage_message',5000,'Please Fill the Marked Details');
+					window.scrollTo(0, 0);			   
 					return false;
 				      
 				}else{

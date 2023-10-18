@@ -767,6 +767,10 @@
 	.hide{
 		display		: none !important;
 	}
+
+	html {
+		scroll-behavior: smooth;
+	}
 	
 	#inpage_message{
 		display			: none;
