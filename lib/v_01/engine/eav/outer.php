@@ -108,6 +108,11 @@ error_reporting(E_ALL);
 				
 		# checking for series content
 		if($IS_APP){
+
+				# set user id
+				if(@$USER_ID){
+					$G->setUserId($USER_ID);
+				}
 									
 				include($LIB_PATH.'/engine/'.$ENGINE.'/inner.php');
 		    
@@ -341,7 +346,6 @@ error_reporting(E_ALL);
 						$F->AddParam('SIGNUP_EMAIL',base64_decode($_GET['e_mail_su']));                
 				}
 
-		
 		// 	Template
 				
 				$TD =   new Template(array(	"filename"          => $LIB_PATH."/template/index.html",
