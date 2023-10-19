@@ -11,7 +11,7 @@
 		   $G = new General();
 		  
 		   
-		   class General{
+			class General{
 				
 			//  file location
 				
@@ -19,7 +19,7 @@
 			  
 			  protected $rdsql;	 
 			  protected $coach=array();
-			  
+			  protected $user_id;
 			  
 				
 		// 1. create construct for db
@@ -47,6 +47,14 @@
 				
 				function set_coach($coach){				
 						$this->coach = $coach;
+				}
+
+				function setUserId($user_id){				
+					$this->user_id = $user_id;
+				}
+
+				public function getUserId(){				
+					return $this->user_id;
 				}
 	
 	/***************************************************************************************************************/			
@@ -1997,8 +2005,73 @@ function getEKV($entity_code,$key){
 									   'entity_value',
 									   " WHERE coach_id=$coach AND entity_code='$entity_code' AND entity_key='$key' ");
 	}
-	
+
 } // end
+
+///// set CEKV/////////////////////////////////////////////////////
+// i/p -> entity_code,entity_key,entity_value
+// o/p -> successfull update -> true, not logged user -> false
+/////////////////////////////////////////////////////////////////
+function setCEKV($coach,$entity_code,$key,$val){
+
+	$lv = (object)['query'=>'','coach_id'=>'','coach_hash'=>'','is_exist'=>'','user_id'=>''];
+
+	$lv->coach_id 	= @$coach ?? $this->coach['id'];
+	$lv->coach_hash	= $this->get_one_column([	'table'			=> 'entity_child',
+												'field'			=> "md5(get_eav_addon_vc128uniq(id,'CHCD'))",
+												'manipulation'  => " WHERE id=$lv->coach_id" ]);
+	$lv->user_id = $this->getUserId();
+
+	if(@$lv->user_id){
+
+		
+			$lv->is_exist = $this->get_one_column(['table'=>'entity_key_value',
+												'field'=>'count(*)',
+												'manipulation'=> " WHERE domain_hash='$lv->coach_hash' 
+																	 AND entity_code='$entity_code'
+																	 AND entity_key='$key' "
+												]);
+
+		if($lv->is_exist==0){
+
+			$lv->query = "INSERT INTO 
+										entity_key_value(coach_id,domain_hash,entity_code,entity_key,entity_value,user_id)
+								VALUES
+										($lv->coach_id,md5(get_eav_addon_vc128uniq($lv->coach_id,'CHCD')),
+										'$entity_code','$key','$val',$lv->user_id)";
+
+		}else if($lv->is_exist>0){
+
+			$lv->query =" UPDATE 
+								entity_key_value
+							SET
+								entity_value='$val',
+								user_id		= $lv->user_id
+							WHERE 
+									domain_hash='$lv->coach_hash' 
+									AND entity_code='$entity_code'
+									AND entity_key='$key' ";			
+						
+
+		} // is exists
+
+			$this->rdsql->exec_query($lv->query," Set EKV Failed");
+			return true;
+
+	} // userid
+
+	return false;
+
+} // end
+
+
+///set EKV
+function setEKV($entity_code,$key,$val){
+
+	$this->setCEKV($this->coach['id'],$entity_code,$key,$val);
+
+} // end
+
 
 /**********************************************************************************************************************************************************************************************************/		
 	
