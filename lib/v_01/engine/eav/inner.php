@@ -1,11 +1,15 @@
 <?PHP
 		
 	$CONTENT      = array();
+	$PV['EKV_SESSION'] = $G->getEKV('CH','ekv_session');
 	
 	# if cookie not there	
-
-	$PV['MASTER']   = (!@$_SESSION['meta_title'])?$SG->set_get_master_session($COACH['name_hash']):$_SESSION;
-	
+	if(@$_SESSION['ekv_session']!=$PV['EKV_SESSION']){
+		$G->setEKV('MP','ekv_session',$PV['EKV_SESSION']);
+		$PV['MASTER'] = $SG->set_get_master_session($COACH['name_hash']);
+	}else{
+		$PV['MASTER'] = $_SESSION;
+	}
 
 	if(is_file($LIB_PATH."/inc/".$PAGE.".php")){
 		
