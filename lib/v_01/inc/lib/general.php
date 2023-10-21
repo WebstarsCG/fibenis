@@ -1817,25 +1817,27 @@
 	//Column Value
 	//input: Table Name, Field, Where Filter
 	//return single colum value
-	  function get_column_value($table_name,$field,$manupulation){
+	function get_column_value($table_name,$field,$manupulation){
 		   
-		   global $rdsql;
-		   
-		   $column_value_query = "SELECT
-		                              $field
-				          FROM
-					      $table_name
-				              $manupulation";
+		global $rdsql;
+		
+		$column_value_query = "SELECT
+									$field
+						FROM
+						$table_name
+							$manupulation";
 
-		   $column_value_query_exec = $rdsql->exec_query($column_value_query,"ERROR");
+		$column_value_query_exec = $rdsql->exec_query($column_value_query,"ERROR");		   
+		$get_row = $rdsql->data_fetch_array($column_value_query_exec);
+
+		if(@$get_row[$field]){		   
+			$temp[$field] = $get_row[$field];			
+			return $temp[$field];
+		}else{
+			return false;
+		}
 		   
-		   $get_row = $rdsql->data_fetch_array($column_value_query_exec);
-		   
-		   $temp[$field] = $get_row[$field];
-		   
-		   return $temp[$field];
-		   
-	  }//end  
+	} //end  
 	  
 	  
 	  
