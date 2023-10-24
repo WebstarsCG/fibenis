@@ -68,18 +68,46 @@
 							$temp['field']="get_exav_addon_".$lv['input_type'][$desk_col['input_type']]['table'].
 								"(id,'".$lv['d_query_info']['token']."')";
 								
-							if(@$desk_col['col_func']){
-								
+							if(@$desk_col['col_func']){								
 								if(preg_match('/(this)/',$desk_col['col_func'])==0){  // get_ecb_sn_by_token ->  get_ecb_sn_by_token(<current result>)											
-									$temp['field']=	$desk_col['col_func'].'('.$temp['field'].')';
-								
+									$temp['field']=$desk_col['col_func'].'('.$temp['field'].')';
 								}else{ // get_exav_addon_varchar([[this]],'FTTX') ->  get_exav_addon_varchar(<current_result>,'FTTX')			
 									$temp['field']=str_replace('[[this]]',$temp['field'],$desk_col['col_func']);									
 								}
-							}																										
+							}
+							
+							// actions
+							if($desk_col['input_type']=='ITTG'){
 
-							$lv['data'][$lv['counter']['row']]=$temp;
-														
+								$temp['field']="concat(entity_child.id,'[C]',IFNULL($temp[field],0),'[C]','$desk_col[th]','[C]','$desk_col[token]')";	
+
+								$temp['filter_out'] = function($data_in){
+								
+															$temp     = explode('[C]',$data_in);
+															
+															$flag     = [1,0];
+															
+															$data_out = array(
+																	'data'=>array('id'   => $temp[0],
+																			'key'  => md5($temp[0]),
+																			'label'=> $temp[2],
+																			'cv'   => $temp[1],
+																			'fv'   => $flag[$temp[1]],
+																			'action'=>'entity_child',
+																			'series'=>'a',
+																			'token' =>'ECAIADDON',
+																			'addon' => $temp[3]
+																			)
+																	);
+															
+															return json_encode($data_out);
+														};
+									
+									$temp['js_call'] = 'd_series.inline_on_off';
+
+							} // in line
+
+							$lv['data'][$lv['counter']['row']]=$temp;														
 							$lv['counter']['row']++;
 						}
 					

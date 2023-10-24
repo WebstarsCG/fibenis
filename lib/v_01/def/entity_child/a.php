@@ -193,10 +193,51 @@
 							
 						      
 					     },
-         
-         
 
-                            );
+			'ECAIADDON'=>function($param){
+						
+								
+				if($param['user_id']){ 
+			
+						$inline_param     = json_decode($param['data']);
+						
+						$inline_value     = $param['sv'];			
+						
+						$is_exist         = $param['G']->get_one_column(['table'=>'exav_addon_bool',
+																		 'field'=> "count(*)",
+																		 'manipulation'=> " WHERE parent_id=$inline_param->id   
+																		                          AND exa_token='$inline_param->addon' "
+																	]);
+						
+																		
+						if($is_exist==0){
+																	
+							$param['rdsql']->exec_query("INSERT INTO
+															exav_addon_bool(parent_id,exa_token,exa_value,user_id)
+														VALUES
+															($inline_param->id,'$inline_param->addon',$inline_param->fv,$param[user_id])",
+														'0');
+
+						}else{																				
+							$param['rdsql']->exec_query("UPDATE
+														exav_addon_bool
+													SET
+														exa_value=$inline_param->fv
+													WHERE
+														parent_id=$inline_param->id  AND exa_token='$inline_param->addon'",
+													'0');
+						}
+						
+						
+						# one column						
+						return $param['data'];
+						
+					}else{						
+						return 0;			
+					}
+			
+			}, // end
+	);
 	
 	
 	
