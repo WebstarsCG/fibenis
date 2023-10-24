@@ -1156,6 +1156,7 @@ ul.post-meta li a:hover {
 		fieldset .value input[type="text"],
 		fieldset .value input[type="number"],
 		fieldset .value input[type="file"],
+		fieldset .value input[type="number"],
 		fieldset .value textarea,
 		fieldset .value select,
 		fieldset .value .bootstrap-select{			
@@ -1167,9 +1168,16 @@ ul.post-meta li a:hover {
 		.login_panel{
 			margin-top	: -180px !important;
 		}
-		
-		.navbar-brand img{			
-			margin-top		: -24px !important;	
+
+		.loader_on{
+			display:flex;
+			justify-content: center;
+			align-items: center;
+			height:100vh;
+		}
+
+		.modal-backdrop{
+			height:100ch !important;
 		}
 		
 		#pager_area {
