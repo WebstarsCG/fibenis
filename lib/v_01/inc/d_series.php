@@ -96,17 +96,18 @@
 						// commented for session implementaion by R		
 						if(@$_GET['session']=='off'){
 								
-								if(!$D_SERIES['session_off']){					
+								if(array_key_exists('session_off',$D_SERIES)==false){					
 								        $SG->s_destroy('index.php');
 								}
 							
 						}else{
 								
-								if(!$USER_ID && !$D_SERIES['session_off']){					
+								if(!$USER_ID && array_key_exists('session_off',$D_SERIES)==false){					
 										$SG->s_destroy('index.php');		
-								}else if($USER_ID){										
-										//$SG->check_entry($SG->get_permission($D_SERIES['page_code']));
+								}else if($USER_ID){	
+									if(array_key_exists('session_off',$D_SERIES)==false){
 										$SG->check_entry($SG->get_permission_direct($D_SERIES['page_code']));	
+									}
 								}
 						}
 							
