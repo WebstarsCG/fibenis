@@ -1977,11 +1977,16 @@
 				      $sBase64 = base64_encode($sData);
 				      return str_replace('=', '', strtr($sBase64, '+/', '-_'));
 			      }
+
+				  
 			      
 			      function decode_base64($sData){
 				      $sBase64 = strtr($sData, '-_', '+/');
 				      return base64_decode($sBase64.'==');
 			      }
+
+				function encodeBase64($content){ return $this->encode_base64($content);        } // end
+				function decodeBase64($enc_content){ return $this->decode_base64($enc_content);} // end
 				  
 				  // key generator
 				  function hashKeyGenerator($starter,$tailend){
@@ -2094,12 +2099,12 @@ function setEKV($entity_code,$key,$val){
 	
 	//getClean
 	function getCleanAlphaNum($in){
-		return strtolower(preg_replace('/\W/i','',$in));
+		return preg_replace('/\W/i','',$in);
 	} // end
 
 	//get number only
 	function getCleanNum($in){
-		return strtolower(preg_replace('/\D/i','',$in));
+		return preg_replace('/\D/i','',$in);
 	} // end	
 
 	//////////////////////////////////////////
