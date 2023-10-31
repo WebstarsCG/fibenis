@@ -50,7 +50,7 @@ href="?<TMPL_VAR PAGE_F_SERIES>=<TMPL_VAR app_key>&key=<TMPL_VAR key_id><TMPL_IF
 			</TMPL_IF>	
 		
 		   <TMPL_LOOP COL_RESULT>
-				<div id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"   data-col="1" 
+				<div id="row_id_<TMPL_VAR row_counter>_<TMPL_VAR __COUNTER__>"   data-col="1" data-col-cnr="<TMPL_VAR __COUNTER__>"
 					<TMPL_VAR TD_ATTR> 
 					<TMPL_IF JS_CALL> data-js='<TMPL_VAR JS_CALL>' data-p='<TMPL_VAR VALUE></TMPL_IF>'
 					<TMPL_IF JS_CALL_OUT> data-js-out='<TMPL_VAR JS_CALL_OUT>' data-p='<TMPL_VAR VALUE></TMPL_IF>'	>	
