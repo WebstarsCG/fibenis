@@ -2009,6 +2009,21 @@
 	/*mobile*/
 	
 	@media only screen and (max-width: 768px){
+
+		.box_gate div:nth-child(1){
+			width			: 90%;
+		}
+		
+		.box_gate div:nth-child(2){		
+			display			: block;
+			float			: right;
+			text-align		: center;
+			width			: 10%;
+		}
+
+		.box_gate div:nth-child(2):hover{
+			color:#ffffff !important;
+		}
 		
 		.narrow_down_open{
 			display:block;
