@@ -3,8 +3,8 @@
 	$temp_start=microtime(true);
 	
 	ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
 
 	# Var
 		$COACH=[];     // coach
@@ -22,6 +22,8 @@ error_reporting(E_ALL);
 		$SHOW_DOOR;    // closed access
 		
 		$THEME_ROUTE;  // Theme Route		
+
+		$THEME_BLEND;
 
 	# Config & Header
 		
@@ -115,9 +117,9 @@ error_reporting(E_ALL);
 				}
 									
 				include($LIB_PATH.'/engine/'.$ENGINE.'/inner.php');
-		    
+
 				# flag
-				
+				$THEME_ROUTE = $THM->getThemeRoute();
 				$PV['is_page'] = 0;
 		
 				# page code
@@ -216,9 +218,10 @@ error_reporting(E_ALL);
 					if(is_file($PV['cache_page_info'])){		
 						$PV['temp_content']	=$G->getFileContent($PV['cache_page_info']);
 					}else{					
-					
-							
+												
 						include($LIB_PATH.'/engine/'.$ENGINE.'/inner.php');
+
+						call_page_content();
 					
 						$PV['is_page']  = 1;
 									   
@@ -265,7 +268,7 @@ error_reporting(E_ALL);
 		// outer action
 		function outer_action(){
 		    
-			global $PV,$THEME_ROUTE,$COACH,$IS_HOME,$IS_APP,$APP_PAGE_MENU_CODE,$LIB_PATH,
+			global $PV,$THEME_ROUTE,$THM,$COACH,$IS_HOME,$IS_APP,$APP_PAGE_MENU_CODE,$LIB_PATH,
 			       $CONTENT,$MENU_OFF,$G,$PAGE,$PAGE_CODE,$PAGE_CONTENT,$SG,$PASS_ID,
 			       $DEFAULT_ADDON,$SHOW_DOOR,$USER_ROLE,$USER_ID,$USER_NAME,$USER_EMAIL;
 			
@@ -358,7 +361,7 @@ error_reporting(E_ALL);
 				
 				if(!$MENU_OFF){
 							    
-						    $M 	= new Template(array("filename" => $THEME_ROUTE."/template/menu.html",
+						    $M 	= new Template(array("filename" => $THM->getThemeBlendMenu()."menu.html",
 													 "debug"    => 0));						
 											    
 						    // User Role

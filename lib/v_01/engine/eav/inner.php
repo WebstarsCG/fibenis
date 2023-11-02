@@ -11,6 +11,18 @@
 		$PV['MASTER'] = $_SESSION;
 	}
 
+	// set theme
+	$THM = new Theme(array_filter($PV['MASTER'],
+									function($k) {
+										return in_array($k,['theme_blend_has_gate','theme_blend_has_menu',
+															'theme_blend_has_header','theme_blend_has_footer',
+															'theme_blend','theme']);
+									},ARRAY_FILTER_USE_KEY));
+				
+	$THM->setTheme(['theme'=>get_config('theme'),
+					  'blend'=>get_config('theme_blend'),
+					  'path' =>get_config('theme_path')]);
+
 	if(is_file($LIB_PATH."/inc/".$PAGE.".php")){
 		
 		$PAGE_NAME 	= $_GET[$PAGE];
@@ -68,8 +80,15 @@
 							'side_menu'     => @$page_info['side_menu']														
 					);
 	
+					
 	
-	$CONTENT[@$PAGE]['page_content']  = page_content($CONTENT[@$PAGE]);
+	//$CONTENT[@$PAGE]['page_content']  = page_content($CONTENT[@$PAGE]);
+
+    function call_page_content(){
+			global $CONTENT,$PAGE;
+			$CONTENT[@$PAGE]['page_content']  = page_content($CONTENT[@$PAGE]);
+	}					
+
 	
 	function page_setup($param){
 				
@@ -109,7 +128,8 @@
 	
 	function page_content($content){
 		
-		global $COACH,$LIB_PATH,$PV;
+		global $COACH,$LIB_PATH,$PV,$THM;
+
 				
 		$page = $content['page'];
 		
@@ -119,7 +139,7 @@
 					$page		= (is_file("$COACH[path]$COACH[name]/content/$page.html"))?$page:$COACH['step_in'];
 					
 					$lv 		= ['home'=>"$COACH[path]$COACH[name]/content/$page.html",
-								   'gate'=>"$COACH[theme_route]/template/$COACH[step_in].html"
+								   'gate'=>$THM->getThemeBlendGate()."$COACH[step_in].html"
 								  ];
 								  								  
 					// config keys			  

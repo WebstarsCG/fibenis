@@ -27,7 +27,11 @@
 		# filter
 		
 		include($LIB_PATH."/inc/lib/filter.php");
+
+		# theme
 		
+		include($LIB_PATH."/inc/lib/theme.php");
+
 		list($USER_ID,$USER_NAME,$USER_EMAIL,$PASS_ID,$USER_ROLE ) = $SG->get_user_detail();
 		
 		#
