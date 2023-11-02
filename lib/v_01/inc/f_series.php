@@ -46,12 +46,13 @@
 										$SG->s_destroy('index.php');
 								}							
 						}else{								
-								if(!$USER_ID && !$F_SERIES['session_off']){					
-									 $SG->s_destroy('index.php');		
-								}else if($USER_ID){										
-										//$SG->check_entry($SG->get_permission($F_SERIES['page_code']));
-										$SG->check_entry($SG->get_permission_direct($F_SERIES['page_code']));	
+							if(!$USER_ID && array_key_exists('session_off',$F_SERIES)==false){					
+									$SG->s_destroy('index.php');		
+							}else if($USER_ID){	
+								if(array_key_exists('session_off',$F_SERIES)==false){
+									$SG->check_entry($SG->get_permission_direct($F_SERIES['page_code']));	
 								}
+							}
 						}
 						 
 						# if custom lib
