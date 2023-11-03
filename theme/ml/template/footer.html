@@ -120,13 +120,13 @@
 
 					// check marquee
 		
-					lv.marquee_elements=document.getElementsByName('fn-marquee');
+					const marquee_elements=document.getElementsByName('fn-marquee');
 					
-					for(var e_idx=0;e_idx<lv.marquee_elements.length;e_idx++){
+					for(var e_idx=0;e_idx<marquee_elements.length;e_idx++){
 					
-						lv.marquee_elements[e_idx].id="fn-marquee-"+e_idx;
+						marquee_elements[e_idx].id="fn-marquee-"+e_idx;
 						
-						$('#'+lv.marquee_elements[e_idx].id).marquee({  
+						$('#'+marquee_elements[e_idx].id).marquee({  
 							//speed in milliseconds of the marquee  
 							speed: (10000*2),  
 							//gap in pixels between the tickers  
@@ -141,16 +141,8 @@
 							pauseOnHover:true
 							
 						});
-						
-		   
+					}	
 		});
    
-		function modal_signup(){
-				
-				$('#myModal_signUp').modal();
-				
-		}	
+		function modal_signup(){ $('#myModal_signUp').modal();}	
 </script>
-
-
-
