@@ -415,35 +415,37 @@
 				} // end
 		
 	
-		    // Login Page Content
-		    
-				    $LOGIN 	= new Template(array("filename" => $LIB_PATH."/template/login.html",
-								 "debug"    => 0));
-				    
-				    $LOGIN->AddParam('IS_OPEN',$PV['is_open']);
-					$LOGIN->AddParam('IS_OTP',get_config('is_otp'));
-				    
-		    
-		    
+		    // Login Page Content if tunnel did n't exist
+			if(!$SG->get_Session('has_fx_gate')){		    
+				$LOGIN 	= new Template(array("filename" => $LIB_PATH."/template/login.html",
+								"debug"    => 0));			
+				$LOGIN->AddParam('IS_OPEN',$PV['is_open']);
+				$LOGIN->AddParam('IS_OTP',get_config('is_otp'));
+			}
+
+			// Modal Content
+			$MODAL	= new Template(array("filename" => $LIB_PATH."/template/modal.html",
+			"debug"    => 0));
+		    	    
 		    $TD->AddParam(array(
 					'default_addon'=> urlencode($DEFAULT_ADDON),
 					'footer'       => $F->Output(),
 					'header'       => $H->Output(),
 					'is_open'      => $PV['is_open'],				    
-					'login'        => $LOGIN->Output(),
+					'login'        => ((@$LOGIN)?$LOGIN->Output():''),
 					'menu_off'	   => $MENU_OFF,
+					'modal'		   => $MODAL->Output(),
 					'pass_id'      => $PASS_ID,
 					'page_content' => @$PAGE_CONTENT,
 					'show_door'    => $SHOW_DOOR,
 					'page_code'	   => $PAGE_CODE
 		    ));
 						       
-		    if($USER_ID){
-				    
-			$TD->AddParam(array('USER_ID'   =>@$USER_ID,
-					    'USER_NAME' =>@$USER_NAME,
-					    'USER_EMAIL'=>@$USER_EMAIL,
-					    ));                        
+		    if($USER_ID){				    
+				$TD->AddParam(array('USER_ID'   =>@$USER_ID,
+							'USER_NAME' =>@$USER_NAME,
+							'USER_EMAIL'=>@$USER_EMAIL,
+							));                        
 		    } // user id
 				    
 		    #$TD->EchoOutput();

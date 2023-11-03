@@ -28,70 +28,23 @@
     <input type="hidden" name="menu_off" id="menu_off" value="<TMPL_VAR MENU_OFF>" >
     <input type="hidden" name="default_addon" id="default_addon" value="<TMPL_VAR DEFAULT_ADDON>" >
     
-    <!---LoginContent--->
-    
-    <TMPL_IF LOGIN>    
-	  <TMPL_VAR LOGIN>	    
-    </TMPL_IF>
+    <!---LoginContent--->    
+    <TMPL_IF LOGIN><TMPL_VAR LOGIN></TMPL_IF>
+
+    <!---modal content---> 
+    <TMPL_IF MODAL><TMPL_VAR MODAL></TMPL_IF>   
     
     <script language="JavaScript" type="text/javascript">
-            
-//	    if(document.getElementById('<TMPL_VAR PAGE_ID>')!=undefined){            
-//	       document.getElementById('<TMPL_VAR PAGE_ID>').className='active';
-//	    }
-//	    
 		$(function(){
-	      
-		 var lv = new Object({});
-	      
 			<TMPL_UNLESS IS_OPEN>
 			  <TMPL_IF SHOW_DOOR>
 				$('#myModalSignIn').modal('show');
 			  </TMPL_IF>
 			</TMPL_UNLESS>
-		
 			G.parseTip();
-		
-		// check marquee
-		
-		lv.marquee_elements=document.getElementsByName('fn-marquee');
-		
-		for(var e_idx=0;e_idx<lv.marquee_elements.length;e_idx++){
-		  
-		    lv.marquee_elements[e_idx].id="fn-marquee-"+e_idx;
-		    
-		    $('#'+lv.marquee_elements[e_idx].id).marquee({  
-			    //speed in milliseconds of the marquee  
-			    speed: (10000*2),  
-			    //gap in pixels between the tickers  
-			    gap: 4,  
-			    //gap in pixels between the tickers  
-			    delayBeforeStart: 2000,  
-			    //'left' or 'right'  
-			    direction: 'left' ,
-			    
-			    duplicated:true,
-			    
-			    pauseOnHover:true
-			    
-		    });
-			
-		}
-		
-		
-									
-			//var a =window.top;
-			//a.document.getElementById('s_text').value=Math.floor((Math.random()*100));
-			//alert('--');
-			//G.showTopLoader("--Message---------------------------------");
-			//G.bs_alert_success('M','','T');
-			//G.hideLoader('--');
-		
 	    });
-	    
     </script>
-    
     </body>
-  </html>
+</html>
 
 
