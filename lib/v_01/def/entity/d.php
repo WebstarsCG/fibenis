@@ -315,7 +315,7 @@
 
 					   'summary_data'=>array(
 							array(  'name'=>'Entities:',
-									'field'=>'(SELECT count(id) FROM entity as en WHERE en.is_lib=1)',
+									'field'=>'count(id)',
 									'html'=>'class=summary'
 							)								
 						),
@@ -392,7 +392,7 @@
 	$D_SERIES['search'][0]['data']['filter'] =' AND is_lib='.$D_SERIES['temp']['is_lib']; 
 
 	// summary data
-	$D_SERIES['summary_data'][0]['field']= "(SELECT count(id) FROM entity as en WHERE en.is_lib=".$D_SERIES['temp']['is_lib'].")";
+	//$D_SERIES['summary_data'][0]['field']= "(SELECT count(id) FROM entity as en WHERE en.is_lib=".$D_SERIES['temp']['is_lib'].")";
 		
 	# entity group filter
 	if(@$_GET['cf1']){		
