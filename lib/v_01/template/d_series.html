@@ -337,6 +337,18 @@
 						
 						
 								<TMPL_IF cus_bulk_action>
+									
+									<script>
+									var update_action = function(response){
+															G.hideLoader();
+															if (response == 1) {           
+																G.bs_alert_success('Successfully updated');
+															}else{                
+																G.bs_alert_error("Sorry, something went wrong");
+															}
+														};
+									</script>
+
 								<TMPL_LOOP cus_bulk_action>
 								<TMPL_IF is_bulk_button>
 									&nbsp;
@@ -355,14 +367,6 @@
 											
 												const page_ids = d_series.getDeskCheckboxSelectedIds();
 												
-												var update_action = function(response){
-																				G.hideLoader();
-																				if (response == 1) {           
-																					G.bs_alert_success('Successfully updated');
-																				}else{                
-																				   G.bs_alert_error("Sorry, something went wrong");
-																				}
-																			};
 																												
 												if(page_ids.length==0){
 													bootbox.alert({"size":"small",
@@ -425,6 +429,7 @@
 									</TMPL_IF>	
 								</TMPL_IF>
 							</TMPL_LOOP>	
+							
 						</TMPL_IF>
 				</div>
 					
