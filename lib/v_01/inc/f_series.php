@@ -426,7 +426,12 @@
 			
 			$T->AddParam('gx',@$F_SERIES['gx']); // generation
 			
-			$T->AddParam('is_field_id_as_token',@$F_SERIES['is_field_id_as_token']); // generation
+			$T->AddParam('is_field_id_as_token',@$F_SERIES['is_field_id_as_token']); // field_to_token_map
+
+			if(@$F_SERIES['on_submit']){
+				$T->AddParam(@$F_SERIES['on_submit']);
+			}
+			//$T->AddParam('ask_once_')
 			
 			# header & footer
 			

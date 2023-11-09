@@ -104,46 +104,42 @@
 				      
 				}else{
 					
-					G.showLoader('Sending your request..');
+					
 					
 					// given url as form action url
-					const url = "<TMPL_VAR F_SERIES_QUERY_VAR>";
-
-					// form data
-					const form_data = new FormData(document.getElementById("PUB_A"));
-					fetch(url, {
-						method : "POST",
-						body: form_data,
-						
-					}).then(
-						response => response.json() // 
-					).then(
-						(html)=>{
-
-							console.log(html.redirect);
-							if(html.hasOwnProperty('redirect')){
-									document.location.href=html.redirect;
-							}else{
-
-								ELEMENT('inpage_message').className=`block_${html.status}`;				    
-								fade_in_out('#inpage_message',5000,html.message);
-								
-								if(html.last_insert){
-										const child_to_parent = html.last_insert;
-										window.parent.postMessage(JSON.stringify(child_to_parent));
-								}
-								
-								G.hideLoader();
-
-							}
-
-						} // end of html call							
-						
-					);
+					const url       = "<TMPL_VAR F_SERIES_QUERY_VAR>";
+                    const form_data = new FormData(document.getElementById("PUB_A"));
 					
-					if(G.$('primary_id').value.length==0){
-						document.getElementById("PUB_A").reset();
-					}
+
+					<TMPL_IF ASK_ONCE>
+						
+						bootbox.confirm({					
+							message: "<TMPL_IF ASK><TMPL_VAR ASK><TMPL_ELSE>Are you sure to submit?</TMPL_IF>",
+												
+							buttons: {
+							    confirm: {
+									label: '<TMPL_IF ASK_YES><TMPL_VAR ASK_YES><TMPL_ELSE>Yes</TMPL_IF>',
+									className: 'btn-success'
+							    },
+							    cancel: {
+									label: '<TMPL_IF ASK_NO><TMPL_VAR ASK_NO><TMPL_ELSE>No</TMPL_IF>',
+									className: 'btn-danger'
+							    }
+							},
+							
+							callback: function (result) {
+								
+								if(result==true){
+									G.showLoader('Sending your request..');
+									form_submit(url,form_data);
+								}
+							}
+						});
+
+					<TMPL_ELSE>
+						G.showLoader('Sending your request..');
+						form_submit(url,form_data);
+					</TMPL_IF>
 					
 					return false;				
 				}
@@ -151,8 +147,44 @@
 			} // end
 			     
 		 } // validate end
+
+
+		// form submit
+		function form_submit(url,form_data){
+
+			fetch(url, {
+				method : "POST",
+				body: form_data,
+				
+			}).then(
+				response => response.json() // 
+			).then(
+				(html)=>{
+
+					if(html.hasOwnProperty('redirect')){
+							document.location.href=html.redirect;
+					}else{
+
+						ELEMENT('inpage_message').className=`block_${html.status}`;				    
+						fade_in_out('#inpage_message',5000,html.message);
+						
+						if(html.last_insert){
+								const child_to_parent = html.last_insert;
+								window.parent.postMessage(JSON.stringify(child_to_parent));
+						}
+
+						if(G.$('primary_id').value.length==0){
+							document.getElementById("PUB_A").reset();
+						}
+						
+						G.hideLoader();
+					} // end of call
+				} // end of html call		
+			); // fetch html response
+
+		} // function end
 	
-	          </TMPL_IF>	  
+		</TMPL_IF>	  
 	 
 	 </script>
 		
