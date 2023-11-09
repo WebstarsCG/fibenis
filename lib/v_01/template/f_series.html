@@ -1425,9 +1425,12 @@
 											 <TMPL_IF is_text>
 												<td data-ft-type="fttext" data-eid="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  width="<TMPL_VAR WIDTH>">
 												
-												<input  type="text"  onkeyup="JavaScript:<TMPL_IF KEY_UP_ADDON><TMPL_VAR KEY_UP_ADDON>;</TMPL_IF>getfibenisTableData(this,<TMPL_VAR field_id>,'<TMPL_VAR is_update_route_point>','<TMPL_VAR route_url>');<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  <TMPL_VAR input_html>
+												<input    onkeyup="JavaScript:<TMPL_IF KEY_UP_ADDON><TMPL_VAR KEY_UP_ADDON>;</TMPL_IF>getfibenisTableData(this,<TMPL_VAR field_id>,'<TMPL_VAR is_update_route_point>','<TMPL_VAR route_url>');<TMPL_VAR entry_new_row>(this,<TMPL_VAR field_id>,<TMPL_VAR max_no_rows>);" name="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>" id="<TMPL_VAR row_counter>_ft_<TMPL_VAR col_counter>_<TMPL_VAR field_id>"  <TMPL_VAR input_html>
 													<TMPL_IF IS_INTEGER>
-														onkeypress  = "return PR_All_Numeric(event<TMPL_IF SPECIAL_IN>,'<TMPL_VAR SPECIAL_IN>'</TMPL_IF>);"
+														onkeypress  = "return PR_All_Numeric(event,'<TMPL_VAR SPECIAL_IN>',this);"
+														type="number"
+													<TMPL_ELSE>
+														type="text"  
 													</TMPL_IF>
 													
 													<TMPL_IF IS_ATOZ>
