@@ -14,6 +14,7 @@
 		$F_MESSAGE 		  					= '';
 		$F_SERIES['temp']['last_insert'] 	= '';
 		
+		
 		# Check for app key
 		
 		if(($PAGE_ID=='f_series') || ($PAGE_ID=='f') || ($PAGE_ID=='fx') ){
@@ -465,7 +466,7 @@
 						'</TMPL_IF></TMPL_IF>');
 							
 			$T->AddParam('after_prefill_action_template_var',
-						'<TMPL_IF KEY><TMPL_IF AFTER_PREFILL_ACTION>after_prefill_action("<TMPL_VAR KEY>");</TMPL_IF></TMPL_IF>');
+						'<TMPL_IF AFTER_PREFILL_ACTION>after_prefill_action(<TMPL_IF KEY>"<TMPL_VAR KEY>"</TMPL_IF>);</TMPL_IF>');
 						
 			$T->AddParam('default_addon_var',
 						'<TMPL_IF DEFAULT_ADDON>E_V_PASS("default_addon","<TMPL_VAR DEFAULT_ADDON>");</TMPL_IF>');
@@ -489,26 +490,50 @@
 		
 		# show data
 		
-		if(@$_GET['key']){
+		if(@$_GET['key'] || ( @$F_SERIES['is_clone'] && @$_GET['clone'])){
 			
 			$TFA->AddParam('title',@$F_SERIES['title']);
-			$TFA->AddParam('key',@$_GET['key']);
+		
 			$TFA->AddParam('add',@$F_SERIES['button_name']);		
 			$TFA->AddParam('is_save_form',@$F_SERIES['is_save_form']);			
 			$TFA->AddParam('after_prefill_action',@$F_SERIES['after_prefill_action']);
-			
-			
-			$TFA->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['key']));
-			
+
 			#set_system_log:
 			$param = array(	'user_id'=>$USER_ID,
 					        'page_code'=>$F_SERIES['page_code'],
-							'action_type'=>'PSDT',					   
-							'action'=>'View the information by using '.$_GET['key'].'');
+							'action_type'=>'PSDT'
+						);
+			
+			if(@$_GET['key']){
+				
+				$TFA->AddParam('key',@$_GET['key']);
+				$TFA->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['key']));
+				
+				// log
+				$param['action'] = 'View the information by using '.$_GET['key'];
+
+			}else if(@$_GET['clone']){ // if
+
+				if(check_key_clone_in(['f_series'=>$F_SERIES,
+									'g'		  => $G,
+									'id' => $_GET['clone']
+									])==1){
+
+					$TFA->AddParam('after_prefill_action',@$F_SERIES['after_prefill_action']);
+					$TFA->AddParam(show_data($F_SERIES['data'],$F_SERIES['table_name'],$F_SERIES['key_id'],$_GET['clone']));					
+					$param['action'] = 'Clone the entry with'.$_GET['clone']; // log						
+
+				}else{
+					$param['action'] = 'Invalid cloning of '.$_GET['clone'];		
+				} // clone 
+			
+			} // end of if
 			
 			$G->set_system_log($param);
 						
 		} # app key
+
+		
 		
 		// transkey message
 		if(@$_COOKIE[@$_GET['trans_key']]){
@@ -2318,6 +2343,32 @@
 			return $back;
 		}
 		
+	} // end
+
+	// function gey_key_cloneid_check
+	function check_key_clone_in($param){
+
+		$lv = (object)['match_count'=>0,'where'=>[],'key_clone_id' ];
+
+		// context var
+		$f_series 		  = $param['f_series'];
+		$lv->key_clone_id = $param['id'];
+
+		// default_fields to prepare
+		if(@$f_series['default_fields']){			
+			foreach($f_series['default_fields'] as $df_key => $df_val){
+				array_push($lv->where," AND $df_key=$df_val");
+			}
+		} // end
+				
+		$lv->match_count = $param['g']->get_one_column(['table'=>$f_series['table_name'],
+														'field' => 'count(*)',
+														'manipulation'=> " WHERE 1=1  AND $f_series[key_id]=$lv->key_clone_id".
+																		   implode('',$lv->where)
+										]);
+
+		return $lv->match_count;
+
 	} // end
 
 ////////////////////////////////////////////////////////////////////////
