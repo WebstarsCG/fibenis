@@ -1,5 +1,39 @@
 <?PHP
 
+$ECB_ATTR_ARRAY_TO_TEXT = function($data_in) {
+    $lv = (object)[
+        'option_data' => '',
+        'grid_data' => '',
+        'out_text' => ''
+    ];
+
+    if ($data_in !== null) {
+        $lv->option_data = json_decode($data_in, true);
+
+        foreach ($lv->option_data as $index => $option_item) {
+
+			if(!empty($option_item[0])){
+
+				$cleaned_data = implode(',', array_map(function ($value) {
+					return ($value !== "") ? $value : '';
+				}, $option_item));   // End of implode
+	
+				if (!empty($cleaned_data)) {
+					if ($index > 0) {
+						$lv->out_text .= "[C]";
+					}
+				
+					$lv->out_text .= $cleaned_data;
+				} // end of if
+			}
+
+        } // end of foreach 
+
+        return $lv->out_text;
+    } else {
+        return $data_in;
+    }
+};
                
         $D_SERIES       =   array(
 					'title'=>'Entity Child Base',
@@ -172,6 +206,137 @@
 					
 				                            
                             );
+
+
+	$D_SERIES['export_csv'] =  array(
+		
+		'is_active' => 1,
+		'export_csv_data' => array(
+				array(
+					'th' => 'Short Name',	
+					'field' => 'sn'
+				),
+				array(
+					'th' => 'Token', 
+					'field' => 'token'
+				),
+				// array(
+				// 	'th' => 'Long Name',	
+				// 	'field' => 'ln'
+				// ),
+				array(
+					'th' => 'Line Order',
+					'field' => 'line_order'
+				),
+				array(
+					'th' =>'Is Active',
+					'field'=>'is_active'
+				),
+				array(
+					'th' => 'Label Content',
+					'field' => 'note'
+				),
+				array(
+					'th' => 'APIT',
+					'field' => "get_ecb_av_addon_varchar(id, 'APIT')"
+				),
+				array(
+					'th' => 'APAL',
+					'field' => "get_ecb_av_addon_varchar(id, 'APAL')"
+				),
+				array(
+					'th' => 'APMA',
+					'field' => "get_ecb_av_addon_varchar(id, 'APMA')"
+				),
+				array(
+					'th' => 'APHT',
+					'field' => "get_ecb_av_addon_varchar(id, 'APHT')"
+				),
+				array(
+					'th' => 'APCL',
+					'field' => "get_ecb_av_addon_varchar(id, 'APCL')"
+				),
+				array(
+					'th' => 'APIH',
+					'field' => "get_ecb_av_addon_varchar(id, 'APIH')"
+				),
+				array(
+					'th'=>'APHD',
+					'field' => "get_ecb_av_addon_varchar(id, 'APHD')"
+				),
+				array(
+					'th' => 'APSL',
+					'field' => "get_ecb_av_addon_varchar(id, 'APSL')",
+					'fun' =>$ECB_ATTR_ARRAY_TO_TEXT
+				),
+				array(
+					'th' => 'APLL',
+					'field' => "get_ecb_av_addon_varchar(id, 'APLL')"
+				),
+				array(
+					'th' => 'APOL',
+					'field' => "get_ecb_av_addon_varchar(id, 'APOL')"
+				),
+				array(
+					'th' => 'APAD',
+					'field' => "get_ecb_av_addon_varchar(id, 'APAD')"
+				),
+				array(
+					'th' => 'APTS',
+					'field' => "get_ecb_av_addon_varchar(id, 'APTS')"
+				),
+				array(
+					'th' => 'APTN',
+					'field' => "get_ecb_av_addon_varchar(id, 'APTN')"
+				),
+				array(
+					'th' => 'APTF',
+					'field' => "get_ecb_av_addon_varchar(id, 'APTF')"
+				),
+				array(
+					'th' => 'APTD',
+					'field' => "get_ecb_av_addon_varchar(id, 'APTD')"
+				),
+				array(
+					'th' => 'APFR',
+					'field' => "get_ecb_av_addon_varchar(id, 'APFR')"
+				),
+				array(
+					'th' => 'APMR',
+					'field' => "get_ecb_av_addon_varchar(id, 'APMR')"
+				),
+				array(
+					'th' => 'APGR',
+					'field' => "get_ecb_av_addon_varchar(id, 'APGR')"
+				),
+				array(
+					'th' => 'APFO',
+					'field' => "get_ecb_av_addon_varchar(id, 'APFO')",
+					'fun'=>$ECB_ATTR_ARRAY_TO_TEXT				
+				),
+				array(
+					'th' => 'APMD',
+					'field' => "get_ecb_av_addon_varchar(id, 'APMD')"
+				),
+				array(
+					'th' => 'APXD',
+					'field' => "get_ecb_av_addon_varchar(id, 'APXD')"
+				),
+				array(
+					'th' => 'APMY',
+					'field' => "get_ecb_av_addon_varchar(id, 'APMY')"
+				),
+				array(
+					'th' => 'APXY',
+					'field' => "get_ecb_av_addon_varchar(id, 'APXY')"
+				),
+				array(
+					'th' => 'APDD',
+					'field' => "get_ecb_av_addon_varchar(id, 'APDD')"
+				)
+			)
+				);
+	
 	
 	if(@$_GET['default_addon']){
 		
