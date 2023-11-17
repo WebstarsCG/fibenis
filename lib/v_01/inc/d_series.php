@@ -792,6 +792,10 @@
 		}// end of css
 		
 		$T->AddParam('NO_DATA',@$D_SERIES['no_data_message']);
+
+		if(array_key_exists('header',$D_SERIES)){
+			$T->AddParam($D_SERIES['header']);
+		}
 		
 		$T->AddParam('D_SERIES',$PAGE_ID);
 		$T->AddParam('F_SERIES',$P_V['f_series'][$PAGE_ID]);
