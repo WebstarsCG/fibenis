@@ -270,7 +270,7 @@
 		    
 			global $PV,$THEME_ROUTE,$THM,$COACH,$IS_HOME,$IS_APP,$APP_PAGE_MENU_CODE,$LIB_PATH,
 			       $CONTENT,$MENU_OFF,$G,$PAGE,$PAGE_CODE,$PAGE_CONTENT,$SG,$PASS_ID,
-			       $DEFAULT_ADDON,$SHOW_DOOR,$USER_ROLE,$USER_ID,$USER_NAME,$USER_EMAIL;
+			       $DEFAULT_ADDON,$SHOW_DOOR,$USER_ROLE,$USER_ID,$USER_NAME,$USER_EMAIL,$USER_ROLE;
 			
 
 			    // Header & footer		
@@ -445,6 +445,7 @@
 				$TD->AddParam(array('USER_ID'   =>@$USER_ID,
 							'USER_NAME' =>@$USER_NAME,
 							'USER_EMAIL'=>@$USER_EMAIL,
+							'USER_ROLE_CODE'=>@$USER_ROLE,
 							));                        
 		    } // user id
 				    
