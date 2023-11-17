@@ -81,9 +81,11 @@
 			'back_to'  => array( 'is_back_button' =>0, 'back_link'=>'?d=user_role_page'),
                                 
 			'prime_index'   => 1,
+
+			'is_cc'			=> 1
 			
                              
-                    );
+	);
     
     # Edit
 
