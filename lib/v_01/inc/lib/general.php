@@ -2127,6 +2127,19 @@ function setEKV($entity_code,$key,$val){
 		return json_encode($key_values);
 
 	} // end
+
+	////////////////////////////////////////////
+	/// i/p -> ecb's token
+	/////////////////////////////////////////////
+	function getEcbShortNameByToken($token){
+		$token=$this->getCleanAlphaNum($token);
+		return $this->rdsql->data_fetch_array($this->rdsql->exec_query("SELECT sn FROM entity_child_base WHERE token='$token'","ECB query"))[0];
+	}
+
+	function getEcbShortNameByTokenCache($token){
+		$token=$this->getCleanAlphaNum($token);
+		return $this->rdsql->data_fetch_array($this->rdsql->exec_query("SELECT sn FROM entity_child_base WHERE token='$token'","ECB query"))[0];
+	}
 	
 } // end of class
     
