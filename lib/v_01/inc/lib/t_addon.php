@@ -29,7 +29,8 @@
 															'ITFI'=>['table'=>'varchar'],
 															'ITDT'=>['table'=>'date'],
 															'ITRG'=>['table'=>'varchar'],
-															'ITTB'=>['table'=>'varchar']],
+															'ITTB'=>['table'=>'varchar'],
+															'ITCB'=>['table'=>'text']],
 					'key_filter'						=> ''
 				];
 																
@@ -95,6 +96,15 @@
 								unset($col['template_heading_text']);
 								unset($col['template_content_text']);
 																
+							}else if(@$col['check_box']){
+								$lv['col_template'] = "<div id='element_area_$lv[token]'></div><input type='hidden' id='X$lv[token]_multistate' name='X$lv[token]_multistate' value='1'>
+															<input type='hidden' id='X$lv[token]_maxstate' name='X$lv[token]_maxstate' value='3'>	
+														<script>f_series.setCheckbox('$lv[token]');
+															$(document).ready(function(){	
+																f_series.setCheckboxRadioValue('$lv[token]','<TMPL_VAR $lv[token]>');
+															});
+														</script>";
+								unset($col['check_box']);
 							}else{
 								$lv['col_template']="<TMPL_IF $lv[token]><TMPL_VAR $lv[token]><TMPL_ELSE><span class=\"na\">NA</span></TMPL_IF>";
 							}
@@ -288,5 +298,12 @@
 			
 		}; // end
 	
+
+		$T_ADDON_ACTION['ITCB'] = function($col,$attr){		
+		
+			$col['check_box']=1;
+			return $col;				
+			
+		}; // end
 
 ?>	

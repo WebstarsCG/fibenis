@@ -46,6 +46,7 @@
 								'ITLA'=>['table'=>''],
 								'ITIG'=>['table'=>'num'],
 													'ITTA'=>['table'=>'text'],
+								'ITCB'=>['table'=>'text'],
 								'ITCE'=>['table'=>'text'],
 								'ITTG'=>['table'=>'bool'],
 													'ITTE'=>['table'=>'text'],

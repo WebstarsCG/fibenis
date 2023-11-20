@@ -1,3 +1,17 @@
+-- 17NOV2023
+DROP FUNCTION IF EXISTS get_IST
+DELIMITER $$
+CREATE FUNCTION get_IST(temp_time datetime) RETURNS datetime
+BEGIN
+    return DATE_ADD(temp_time, INTERVAL '+9 30' HOUR_MINUTE);
+END$$
+DELIMITER ;
+
+INSERT INTO 
+            entity_child_base(entity_code,token,sn,ln,dna_code,line_order,created_by,user_id)
+        VALUES
+            ('IT','ITCB','Check Box','Check Box','EBMS',19,2,2);
+
 -- 17OCT2023
 INSERT INTO 
             entity_child_base(entity_code,token,sn,ln,dna_code,line_order,created_by,user_id)
