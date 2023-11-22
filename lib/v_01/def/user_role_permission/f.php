@@ -55,10 +55,9 @@
 			'prime_index'   => 1,
 			
 			
-		'is_cc'			=>1
-			
+		'is_cc'			=>1,
                              
-                    );
+	);
     
     # Edit
 
