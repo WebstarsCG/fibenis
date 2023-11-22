@@ -11,6 +11,8 @@ $F_SERIES = array(
 
     'gx' => 1,
 
+    'is_clone'=>1,
+
     'data' => array(
 
         '1' => array(

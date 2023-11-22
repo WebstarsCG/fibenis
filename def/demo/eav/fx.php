@@ -10,6 +10,8 @@
 				'key_id'        => 'id',
 				
 				'gx'=>1,
+
+				'is_clone'=>1,
 				
 				'default_fields'    => array('entity_code' => "'DE'"),
 				
