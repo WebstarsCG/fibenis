@@ -62,7 +62,7 @@
                                                                
        'input_html'=>'class="w_150"  onkeyup="(function(){G.$(\'X49\').value=G.$(\'X4\').value=G.$(\'X3\').value})();"',
 	   
-																'allow'=>'x50'
+                                                'allow'=>'x100'
                                                                
                                                                ),
 					
