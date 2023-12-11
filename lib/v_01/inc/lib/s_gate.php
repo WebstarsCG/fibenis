@@ -7,6 +7,7 @@
 	class Session_Gate{
 				
 				protected $rdsql;	 
+				protected $g;
 				 				
 				function __construct(){	
 				
