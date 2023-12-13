@@ -11,7 +11,7 @@
         "title"         =>  "Fibenis - An Adaptive Web Framework based on Communiction Patterns & Natural Language Principles",
         "lib_path"      =>  "lib/v_01/",
 
-        "auth_type"		=> 'base',
+        "auth_type"		=> 'base', #base/ldap
         "is_open"       => 0,
         'avoid_gate'    => 0,
         'entry_gates'	=> '',
@@ -24,7 +24,7 @@
                             'port'			=>	'<ldap_port>',
                             'basedn'		=> 'dc=<domain_name>,dc=com',
                             'usersdn'		=> 'ou=users',
-                            'exclude_users'	=> []											
+                            'exclude_users'	=> [] # allow the user in base security											
                             ],	
 
         "is_smtp_mail"  =>  1, #0 for default PHP send_mail                           
