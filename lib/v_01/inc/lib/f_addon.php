@@ -566,11 +566,11 @@
 												$temp_grid_prop['key_up_addon']  = ($value[11])?$value[11]:'';						 
 																		 
 												if(strlen(@$entity_code[0])>0){
-												
-													$temp_grid_prop['data'] = $G->ft_option_builder(''.$table.'',''.$option_id.','.$option_data.'',"WHERE 1=1 AND dna_code = 'EBMS' AND entity_code = '".$ec_code." ' ORDER BY line_order,".$option_id." ASC");
-																						}
-												else{
-													$temp_grid_prop['data'] = $G->ft_option_builder(''.$table.'',''.$option_id.','.$option_data.''," ORDER BY ".$option_id.",line_order ASC");
+													if(@$value[3]=='entity_child_base'){												
+														$temp_grid_prop['data'] = $G->ft_option_builder(''.$table.'',''.$option_id.','.$option_data.'',"WHERE 1=1 AND dna_code = 'EBMS' AND entity_code = '".$ec_code." ' ORDER BY line_order,".$option_id." ASC");																						}
+													else if(@$value[3]=='entity_child'){
+														$temp_grid_prop['data'] = $G->ft_option_builder(''.$table.'',''.$option_id.','.$option_data.'',"WHERE entity_code='$ec_code' ORDER BY ".$option_id.",line_order ASC");
+													}
 												}
 												
 												
