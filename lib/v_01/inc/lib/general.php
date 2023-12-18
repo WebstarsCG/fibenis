@@ -20,6 +20,7 @@
 			  protected $rdsql;	 
 			  protected $coach=array();
 			  protected $user_id;
+			  protected $month_short;
 			  
 				
 		// 1. create construct for db

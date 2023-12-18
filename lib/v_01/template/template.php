@@ -47,6 +47,7 @@ class Template {
     var $depth        = 0;       // the inclusion depth of this template
 
     // Vars for AddParam phase
+    var $defScope     = array();
     var $paramScope   = array(); // enclosing scopes of variable value as we add parameters    
     var $param        = NULL;    // the variables values assigned by the user
 
