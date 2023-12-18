@@ -43,5 +43,22 @@
 		$D_SERIES['action']['action_menu_off']    	= 1;
 		$D_SERIES['action']['action_narrow_down'] 	= 1;
 	}
+
+	$D_SERIES['bulk_action'] = array(
+										array('is_bulk_button' => 1,
+										'button_name'    => 'Set Active ',
+										//'js_call'        => 'update_action',
+
+													'prompt'	       => ['is_active'  =>1,
+											'title'      =>'Select Parent',
+											'input_type' => 'select',
+																		'options'    =>$G->get_id_name('entity','code,sn', 
+															'WHERE is_lib=0') ],
+													// additional action column
+													'action'		   => [ 'series'    => 'ax',          // optional, based on series it will be taken (dx=>ax,d=>a)
+																				'def'  	    => 'demo__flat',  // optional, it will take the current def
+												'token'	    => 'OPT_UPD']
+												)
+	); 
 	
 ?>
