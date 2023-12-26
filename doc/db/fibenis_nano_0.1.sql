@@ -1,3 +1,12 @@
+-- 26DEC2023
+DROP FUNCTION IF EXISTS get_user_internal_id;
+DELIMITER $$
+CREATE  FUNCTION get_user_internal_id(temp_id INT(11)) RETURNS int(11)
+BEGIN
+    RETURN IFNULL((SELECT is_internal FROM user_info WHERE id=temp_id),NULL);
+END$$
+DELIMITER ;
+
 -- 30NOV2023
 ALTER TABLE entity_child_base CHANGE sn sn VARCHAR(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL; 
 
