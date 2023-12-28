@@ -10,6 +10,7 @@
 
 	// master
 	public function __construct($master){
+		$this->masterAA = $master;
 		$this->master =(object) $master;	
 		$this->config=(object) $this->config;	
 		$this->theme=(object) $this->theme;		
