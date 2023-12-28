@@ -90,7 +90,7 @@
 
 								$lv['col_template']="<table class=\"table fbn-tbl-inner\" cellpadding=\"5px\">".
 								                            "$col[template_heading_text]".   
-															"<TMPL_LOOP $lv[token]>$col[template_content_text]</TMPL_LOOP>".
+															"<TMPL_IF $lv[token]><TMPL_LOOP $lv[token]>$col[template_content_text]</TMPL_LOOP></TMPL_IF>".
 													"</table>";
 								
 								unset($col['template_heading_text']);
