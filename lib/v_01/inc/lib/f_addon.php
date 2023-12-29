@@ -894,11 +894,11 @@
 								}
 								
 								
-								if(($get_row->min_year_date!=null)||($get_row->max_year_date!=null)){
+								if(($get_row->min_year_date!=null) || ($get_row->max_year_date!=null)){
 									
 									if($get_row->min_year_date==null){
 									
-										$get_row->min_year_date = '1950'; 
+										$get_row->min_year_date = ($year-75); 
 									
 									}
 									
@@ -906,7 +906,7 @@
 											
 											$year = date("Y");
 											
-											$get_row->max_year_date = $year;
+											$get_row->max_year_date = ($year+1);
 											
 									}
 									
