@@ -3,6 +3,7 @@
  class Theme{
 		
 	private $master	   	= [];
+	private $masterAA	= [];
 	private $config		= ['blend'=>'','path'=>'','theme'=>''];
 							
 	private $theme	   	= ['blend'=>'',	'gate'	=> '', 'menu'=>'', 'route'=>''];
