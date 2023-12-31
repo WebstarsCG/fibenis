@@ -34,7 +34,7 @@
 					
 				];
 			 
-				$lv['user_id'] = ($this->getUserId() ?? 1);
+				$lv['user_id'] = @$param['user_id'] ?? ($this->getUserId() ?? 1);
 
 				$lv['table']	   =  (@$param['table']) ?? 'entity_child';
 
@@ -55,8 +55,8 @@
 				
 					
 					// insert entity code
-					$lv['ins_ec_query'] ="INSERT INTO $lv[table](entity_code,user_id)
-																	  VALUES('$param[entity_code]',$lv[user_id])";
+					$lv['ins_ec_query'] ="INSERT INTO $lv[table](entity_code,created_by,user_id)
+																	  VALUES('$param[entity_code]',$lv[user_id],$lv[user_id])";
 																		  
 					$this->rdsql->exec_query($lv['ins_ec_query'],"Error in ec insertion ".$lv['ins_ec_query']);
 									
