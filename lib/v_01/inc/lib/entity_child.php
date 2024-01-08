@@ -6,7 +6,8 @@
 			 
 			 $lv =[
 			        'ent_child_id'=>[],
-					'table_type'=> [														
+					'table_type'=> [	
+									'bool'=>['data'=>['exav'=>[],'eav'=>[]]],													
 									'date'=>['data'=>['exav'=>[]]],
 									'decimal'=>['data'=>['exav'=>[]]],
 									'ec_id'=>['data'=>['exav'=>[],
