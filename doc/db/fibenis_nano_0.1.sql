@@ -1,3 +1,24 @@
+
+-- 10JAN2024
+DROP FUNCTION IF EXISTS get_exav_addon_vc128uniq_match; 
+DELIMITER $$
+CREATE  FUNCTION get_exav_addon_vc128uniq_match(ec_id INT, token VARCHAR(32),token_value VARCHAR(128)) RETURNS tinyint(1)
+BEGIN
+    return IFNULL((SELECT count(*) FROM exav_addon_vc128uniq WHERE  parent_id=ec_id AND exa_token=token AND exa_value=token_value),0);     
+END$$
+DELIMITER ;
+
+DROP FUNCTION IF EXISTS get_exav_addon_vc128uniq; 
+DELIMITER $$
+CREATE  FUNCTION get_exav_addon_vc128uniq(ec_id INT, token VARCHAR(32)) RETURNS text CHARSET utf8mb3
+BEGIN
+    return IFNULL((SELECT exa_value FROM exav_addon_vc128uniq WHERE  parent_id=ec_id AND exa_token=token),NULL);     
+END$$
+DELIMITER ;
+
+ALTER TABLE exav_addon_vc128uniq ADD CONSTRAINT exav_vc128uniq_hash UNIQUE(exa_token,exa_value_hash); 
+ALTER TABLE exav_addon_vc128uniq ADD INDEX exav_addon_vc128uniq_token_value(exa_token, exa_value(32));
+
 -- 26DEC2023
 DROP FUNCTION IF EXISTS get_user_internal_id;
 DELIMITER $$
