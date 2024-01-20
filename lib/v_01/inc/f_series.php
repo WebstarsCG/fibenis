@@ -1959,9 +1959,8 @@
 						
 						@$value['ro']              = ((@$value['type']=='heading') || (@$value['type']=='sub_heading') || (@$value['type']=='label'))?1:$_POST["X".$key."_RO"];
 						
-						if($value['type']=='checkbox'){
-							
-							@$_POST["X".$key]=implode(',',@$_POST["X".$key]);
+						if($value['type']=='checkbox'){							
+							@$_POST["X".$key]=is_array(@$_POST["X".$key])?implode(',',@$_POST["X".$key]):'';
 						}
 						
 						# avoid read only
