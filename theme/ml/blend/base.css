@@ -852,6 +852,14 @@ ul.post-meta li a:hover {
 	    text-decoration: none; 
 	}
 	    
+	#my-message-box[style*='block'],
+	#my-message-box[style*='flex'],
+	#my-message-box[style*='flex'] div.modal-sm{
+		display:flex !important;
+		align-items: center;
+		justify-content: center;
+	}
+
 	/* Home Scroller Control Css end*/
 	/*===== ====== ===== ======*/
    
@@ -1165,7 +1173,7 @@ ul.post-meta li a:hover {
 			width		: 90% !important;
 		}
 		
-		.login_panel{
+		.login_panel{`
 			margin-top	: -180px !important;
 		}
 
