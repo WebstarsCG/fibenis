@@ -324,23 +324,6 @@
 				$uniq_trans_key     = md5($row_id.$USER_ID.$PASS_ID.time().rand());
 				setcookie($uniq_trans_key,$F_MESSAGE,(time()+360));				
 				
-				if(@$F_SERIES['get_last_insert']){
-					
-					// last insert data
-				
-					if(is_int($F_SERIES['get_last_insert'])){						
-						$F_SERIES['temp']['last_insert'] =  json_encode(array_merge($_POST,['id'=>$row_id,
-																							'default_addon'=>json_decode(@$_GET['default_addon'],true)]));							
-						
-					} // end
-					
-					//setcookie($uniq_trans_key."_last_insert",$F_SERIES['temp']['last_insert'],(time()+360));
-				
-				} // last insert
-				
-				
-				
-				
 				$update_trans_query  = (@$_POST['UPDATE'])?"&key=".@$_POST['UPDATE']:'';
 				$temp_req_query      = $_SERVER['QUERY_STRING'];
 				$temp_req_query_trim = preg_replace('/(\&trans_key\s*=\s*[0-9a-fA-F]{32})/i','',$temp_req_query);
@@ -442,14 +425,7 @@
 				$T->AddParam(get_back_action(@$F_SERIES['back_to']));
 			} // end
 			
-			// last_insert
-			if(@$F_SERIES['get_last_insert']){
-				$T->AddParam('last_insert',@$F_SERIES['temp']['last_insert']);
-			}
-			
-			$T->AddParam('addon_actions',@$F_SERIES['addon_actions']);		
-			
-			
+			$T->AddParam('addon_actions',@$F_SERIES['addon_actions']);				
 			$T->AddParam(build_form_data(@$F_SERIES['data']));
 			
 			// addon message			
@@ -1113,7 +1089,7 @@
 				// result
 				
 				$lv['result'] = array('FIELD_INFO'	=>$temp_info,
-						      'FIELD_CSV'	=>$field_name_csv_trimmed,
+						      //'FIELD_CSV'	=>$field_name_csv_trimmed,
 						      'VALIDATE_INFO'    =>$mandatory_fields
 					    );
 				

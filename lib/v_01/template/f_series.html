@@ -1925,21 +1925,7 @@
 
 			// default addon
 			<TMPL_VAR DEFAULT_ADDON_VAR>			
-						
-			// focusing						
-			//add_focus_style_object({elements:[<TMPL_VAR FIELD_CSV>],
-			//		 
-			//		 on     : { 'border'    : '1px solid #6cac51',
-			//		            'boxShadow': '1px 1px 4px #dadada'
-			//			    },
-			//			    
-			//		 off    : {'background-color'  : '#ffffff',
-			//		           'boxShadow'         : 'none',
-			//		           'border'            : '1px solid #ababab' 
-			//		 }
-			//		
-			//		});
-			
+					
 			<TMPL_IF message>
 			   
 				var message = new String('<TMPL_VAR message>');
@@ -1952,11 +1938,6 @@
 				
 			</TMPL_IF>	
 
-			<TMPL_IF last_insert>					
-				    last_insert_action('<TMPL_VAR last_insert>');			
-			</TMPL_IF>
-			
-				
 			$(window).keydown(function(event){
 			    if(event.keyCode == 13) {
 				 return false;
