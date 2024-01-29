@@ -97,8 +97,11 @@
 				   									   
 				if(refill_elements.length>=1){
 				 
-					ELEMENT('inpage_message').className='block_fail';				    
-					fade_in_out('#inpage_message',5000,'Please Fill the Marked Details');
+					// ELEMENT('inpage_message').className='block_fail';				    
+					// fade_in_out('#inpage_message',5000,'Please Fill the Marked Details');
+
+					G.bs_alert_error('Please Fill the Marked Details','ADD','<TMPL_VAR TITLE>');
+
 					window.scrollTo(0, 0);			   
 					return false;
 				      
@@ -165,8 +168,10 @@
 							document.location.href=html.redirect;
 					}else{
 
-						ELEMENT('inpage_message').className=`block_${html.status}`;				    
-						fade_in_out('#inpage_message',5000,html.message);
+						// ELEMENT('inpage_message').className=`block_${html.status}`;				    
+						// fade_in_out('#inpage_message',5000,html.message);
+
+						G.bs_alert_success(html.message,'ADD','<TMPL_VAR TITLE>');
 						
 						if(html.last_insert){
 								const child_to_parent = html.last_insert;
