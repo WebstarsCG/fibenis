@@ -11,9 +11,7 @@
 					  'any_user_id' => 1 // anonymous user id
 				  ];
               		
-		$F_MESSAGE 		  					= '';
-		$F_SERIES['temp']['last_insert'] 	= '';
-		
+		$F_MESSAGE 		  					= '';		
 		
 		# Check for app key
 		
@@ -298,9 +296,11 @@
 				
 				// get_last_insert
 				if(is_int(@$F_SERIES['get_last_insert'])){	
-					$F_MESSAGE['last_insert'] = array_merge($_POST,['id'=>$row_id,
-															'default_addon'=>@$_GET['default_addon']]);				
-				}
+					$F_MESSAGE['last_insert'] = get_last_insert((object) ['post' => $_POST,
+																		'id'	=> $row_id,
+																		'da'	=> @$_GET['default_addon'] // default addon
+																]);				
+				} // end
 
 				// redirect
 				if(@$F_SERIES['redirect']){
@@ -2344,6 +2344,12 @@
 
 		return $lv->match_count;
 
+	} // end
+
+	// get_last_insert
+	function get_last_insert($param){
+			return array_merge($param->post,['id'=>$param->id,
+									 		 'default_addon'=>$param->da]);
 	} // end
 
 ////////////////////////////////////////////////////////////////////////
