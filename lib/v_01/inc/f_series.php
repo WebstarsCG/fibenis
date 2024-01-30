@@ -8,10 +8,11 @@
 		$F_DEFAULT = ['user_id'   	=> 'user_id',
 			          'created_by'	=> 'created_by',
 					  'f_series'  	=> array('f_series'=>'d_series','f'=>'d','fx'=>'dx'),
-					  'any_user_id' => 1 // anonymous user id
+					  'any_user_id' => 1, // anonymous user id
+					  'last_insert_action_type' => ['1'=>'post_to_parent','2'=>'call_last_insert_action']
 				  ];
               		
-		$F_MESSAGE 		  					= '';		
+		$F_MESSAGE = '';		
 		
 		# Check for app key
 		
@@ -98,7 +99,9 @@
 		
 		/*******************************************************************************************************************************************/
 		
-			 $PAGE_TITLE = $F_SERIES['title'];
+			$PAGE_TITLE = $F_SERIES['title'];
+
+			
 			 
 		/*******************************************************************************************************************************************/	 
 	 
@@ -295,11 +298,13 @@
 				} // end
 				
 				// get_last_insert
-				if(is_int(@$F_SERIES['get_last_insert'])){	
-					$F_MESSAGE['last_insert'] = get_last_insert((object) ['post' => $_POST,
+				if(in_array(is_int(@$F_SERIES['get_last_insert']),
+							[1,2])
+				){	
+					$F_MESSAGE[$F_DEFAULT['last_insert_action_type'][@$F_SERIES['get_last_insert']]] = get_last_insert((object) ['post' => $_POST,
 																		'id'	=> $row_id,
 																		'da'	=> @$_GET['default_addon'] // default addon
-																]);				
+																		]);				
 				} // end
 
 				// redirect

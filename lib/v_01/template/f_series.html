@@ -173,9 +173,13 @@
 
 						G.bs_alert_success(html.message,'ADD','<TMPL_VAR TITLE>');
 						
-						if(html.last_insert){
-								const child_to_parent = html.last_insert;
-								window.parent.postMessage(JSON.stringify(child_to_parent));
+						// post to parent
+						if(html.post_to_parent){
+								window.parent.postMessage(JSON.stringify(html.post_to_parent));
+						} // posts tp parent
+
+						if(html.call_last_insert_action){
+								f_series.lastInsertAction(html.call_last_insert_action);
 						}
 
 						if(G.$('primary_id').value.length==0){
