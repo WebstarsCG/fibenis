@@ -86,6 +86,8 @@
 				'get_last_insert'=>1,				
 				
 				'is_cc'=>1,
+
+				'js'=>['is_top'=>1],
 				
 				'is_field_id_as_token'=>1
                                 
