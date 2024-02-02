@@ -1972,7 +1972,23 @@
 				      }
 				     return $sResult;
 			      }
+
+				  // encrypt reverse mix
+				  function encryptRMIX($content,$key){
+
+						return $this->encrypt($this->encrypt($content,$key),
+														   strrev((string) $key)
+								);
+
+				  } // end of reverse mix
 				      
+				// derypt rmix
+				function decryptRMIX($content,$key){
+					return $this->decrypt($this->decrypt($content,strrev((string) $key)),
+										  $key);
+				} // decrypt remix
+
+				 
 				      
 			       function encode_base64($sData){
 				      $sBase64 = base64_encode($sData);
