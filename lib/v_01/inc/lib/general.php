@@ -15,13 +15,12 @@
 				
 			//  file location
 				
-			  var $file_location;
+			var $file_location;
 			  
-			  protected $rdsql;	 
-			  protected $coach=array();
-			  protected $user_id;
-			  protected $month_short;
-			  
+			protected $rdsql;	 
+			protected $coach=array();
+			protected $user_id;
+			protected $month_short;
 				
 		// 1. create construct for db
 		
@@ -54,8 +53,8 @@
 					$this->user_id = $user_id;
 				}
 
-				public function getUserId(){				
-					return $this->user_id;
+				function getUserId(){				
+					return @$_SESSION['user_id'];
 				}
 	
 	/***************************************************************************************************************/			
@@ -2157,9 +2156,10 @@ function setEKV($entity_code,$key,$val){
 		$token=$this->getCleanAlphaNum($token);
 		return $this->rdsql->data_fetch_array($this->rdsql->exec_query("SELECT sn FROM entity_child_base WHERE token='$token'","ECB query"))[0];
 	}
-	
+
 } // end of class
     
+include(dirname(__FILE__)."/status.php");
     
 ////////////////////////////////////////////////////////////////////////
 // 18-Jul-2015 general.php table_no_rows->defined
