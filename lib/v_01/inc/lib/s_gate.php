@@ -421,6 +421,17 @@
 			
 		} // add user
 
+
+		
+		//camelCase
+		function getSessId(){
+			return @$_SESSION['PASS_ID'] ?? false;
+		}
+
+		function getSess($kv){
+			return @$_SESSION[$k] ?? false;
+		}
+
 	}//class						
 			
 ?>
