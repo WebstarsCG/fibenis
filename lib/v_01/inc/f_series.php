@@ -188,14 +188,14 @@
 				# for saving 				
 				if(isset($_POST['ADD']) || isset($_POST['SAVE'])){
 				
-						// action after add_update
+						//action after add_update
 						
-						if(is_object(@$F_SERIES['after_add_update'])){
-								
-							@$F_SERIES['after_add_update']($row_id);
-							
-						}else if(@$F_SERIES['after_add_update']==1){						
-								
+						if(is_object(@$F_SERIES['after_add_update'])){			
+
+							@$F_SERIES['after_add_update']($row_id);							
+						
+						}else if(@$F_SERIES['after_add_update']==1){					
+						
 							after_add_update($row_id);
 								
 						} // end
@@ -306,6 +306,13 @@
 																		'da'	=> @$_GET['default_addon'] // default addon
 																		]);				
 				} // end
+
+				// send to parent
+				if(is_array(@$F_SERIES['send_to_parent'])){
+					$F_MESSAGE['post_to_parent'] = 	array_merge($F_SERIES['send_to_parent'],
+																['id'	=> $row_id,
+																'da'	=> @$_GET['default_addon']]);
+				} // post to parent
 
 				// redirect
 				if(@$F_SERIES['redirect']){
