@@ -2123,6 +2123,15 @@ function setEKV($entity_code,$key,$val){
 		return preg_replace('/\D/i','',$in);
 	} // end	
 
+	//get number only
+	function getCleanAlpha($in){
+		return preg_replace('/[^a-zA-Z]/i','',$in);
+	} // end
+
+	function getCleanToken($in){
+		return preg_replace('/[^a-zA-Z\_]/i','',$in);
+	} // end
+
 	//////////////////////////////////////////
 	/// i/p -> string
 	//////////////////////////////////////////
