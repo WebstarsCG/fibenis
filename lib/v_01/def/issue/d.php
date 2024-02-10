@@ -317,7 +317,7 @@
 				
 				'show_query'=>0,
 				
-				'has_cross_border_relations'=>['status'],
+				'has_cross_border_relations'=>['status_update'],
 				
 				'is_load_by_scroll'=>0,
 				

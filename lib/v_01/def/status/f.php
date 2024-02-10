@@ -83,13 +83,15 @@
 				
 				'after_add_update'=>1,
 				
-				'get_last_insert'=>1,				
+				//'get_last_insert'=>1,				
 				
 				'is_cc'=>1,
 
 				'js'=>['is_top'=>1],
 				
-				'is_field_id_as_token'=>1
+				'is_field_id_as_token'=>1,
+
+				'send_to_parent'=>['status_update'=>1],
                                 
 			);
 			
@@ -124,21 +126,28 @@
 	
 	} // end
 			
-    
      function after_add_update($key_id){
 	
-	    global $rdsql;
+	    global $rdsql,$G,$F_SERIES;
 	    
 	    //$current_status = $_POST['X2'];
 	    
-	    $status_info = $rdsql->exec_query("SELECT status_code,entity_code,child_comm_id FROM status_info WHERE id=$key_id","GET STATUS DETAILS");
+	    $status_info = $rdsql->exec_query("SELECT status_code,get_ecb_sn_by_token(status_code),child_comm_id FROM status_info WHERE id=$key_id","GET STATUS DETAILS");
 		
 	    $status_info_row=$rdsql->data_fetch_row($status_info);
 	    
 	    $update = $rdsql->exec_query("UPDATE exav_addon_exa_token SET exa_value_token = '$status_info_row[0]' WHERE exa_token = 'ISST'  AND parent_id = '$status_info_row[2]'","Updation Failed");
 	    
-	    return null;	
-		
+		if(@$F_SERIES['send_to_parent']){
+			
+			$temp= ['status_code'=>$status_info_row[0],
+					'status_name'=>$status_info_row[1]];
+			
+			$F_SERIES['send_to_parent']=array_merge($F_SERIES['send_to_parent'],$temp);
+
+		} // end
+
+	    return null;		
     } 
 	
 ?>
