@@ -73,14 +73,37 @@ class Status extends General{
 		return $this;
 	}
 
+	function getStatus($key){
+		return @$this->status['key'][$key] ?? '';
+
+	} // end
+
 	function whereCurrentStatusAs($curr_status){
 		$this->setStatus('curr_status',$curr_status);
 		return $this;
 	}
 
+	function statusCheckSubQuery(){
+
+		$lv=(object) ['isNotEmpty'=>'','query'=>'','status'=>''];
+		
+		$lv->status     = $this->getStatus('curr_status');
+		$lv->status 	= (is_array($lv->status)==true)?implode(',',
+																array_map(function($p){ return "'$p'";},$lv->status)
+														):"'$lv->status'";
+		$lv->isNotEmpty = (strlen($lv->status)!=0)?true:false;
+
+		if($lv->isNotEmpty){
+			$lv->query= " AND exa_value_token IN ($lv->status)";
+		}
+
+		return $lv->query;
+
+	} // end
+
 	function run(){
 
-		$lv = (object) ['query'=>'','update_query'=>'','user_id'=>''];
+		$lv = (object) ['status_check_sub_query'=>'','query'=>'','update_query'=>'','user_id'=>''];
 
 		$status = (object) $this->status['key'];
 		$lv->user_id=$this->getUserId();
@@ -108,8 +131,8 @@ class Status extends General{
 									exa_value_token = '$status->new_status'
 								WHERE 
 									parent_id = $status->ec_id AND 
-									exa_token='$status->attr_code' AND
-									exa_value_token='$status->curr_status'";
+									exa_token='$status->attr_code'
+									".$this->statusCheckSubQuery();
 
 		if($this->isDebug==1){ echo "StatusUpdateQuery:$lv->update_query"; }							
 
