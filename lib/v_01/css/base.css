@@ -450,6 +450,11 @@
 		padding-left	: 2px;
 		vertical-align  : top !important;
 	}
+
+	.fbn-valid{font-size:1.4rem};
+	.fbn-valid-0{color:#a73318;};
+	.fbn-valid-1{color:green;};
+	
 	
 
 	fieldset{
