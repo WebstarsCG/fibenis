@@ -2162,8 +2162,11 @@ function setEKV($entity_code,$key,$val){
 	}
 
 	function getEcbShortNameByTokenCache($token){
-		$token=$this->getCleanAlphaNum($token);
-		return $this->rdsql->data_fetch_array($this->rdsql->exec_query("SELECT sn FROM entity_child_base WHERE token='$token'","ECB query"))[0];
+
+		if($token){
+			$token=$this->getCleanAlphaNum($token);			
+			return $this->rdsql->data_fetch_array($this->rdsql->exec_query("SELECT sn FROM entity_child_base WHERE token='$token'","ECB query"))[0];
+		}
 	}
 
 } // end of class
