@@ -13,6 +13,7 @@ class Status extends General{
 						]; // end of status
 
 	protected $isDebug=0;
+	protected $userId='';
 
 	function debugOn(){	$this->isDebug=1;}  // will prevent to run the query
 	function debugOff(){ $this->isDebug=0;}
@@ -57,6 +58,14 @@ class Status extends General{
 
 	} // end of status_info
 	
+	// set user id
+	function setStatusUserId($userId){
+		$this->userId=$userId ?? '';
+	}
+	
+	function getStatusUserId(){
+		return $this->userId;
+	}
 	
 	function getKey($attr_code){
 		$this->setStatus('attr_code',$attr_code);
@@ -106,7 +115,7 @@ class Status extends General{
 		$lv = (object) ['status_check_sub_query'=>'','query'=>'','update_query'=>'','user_id'=>''];
 
 		$status = (object) $this->status['key'];
-		$lv->user_id=$this->getUserId();
+		$lv->user_id=$this->getUserId() ?? $this->getStatusUserId();
 
 		// insert status
 		$lv->query 	=	"INSERT INTO 
@@ -121,7 +130,7 @@ class Status extends General{
 		if($this->isDebug==1){ echo "StatusInfoQuery:$lv->query"; }
 
 		if($this->isDebug==0){
-			$this->rdsql->exec_query($lv->query,'Status Query');
+			$this->rdsql->exec_query($lv->query,'Status Query'.$lv->query);
 		}
 
 		// update status
