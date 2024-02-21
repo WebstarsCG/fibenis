@@ -53,9 +53,9 @@
 			'back_to'  => array( 'is_back_button' =>0, 'back_link'=>'?d=user_role_permission', 'BACK_NAME'=>'Back'),
                                 
 			'prime_index'   => 1,
-			
-			
-		'is_cc'			=>1,
+
+			'flat_message'	=> 'User Role Permission Update Successfully',
+			'is_cc'			=>1,
                              
 	);
     
