@@ -268,12 +268,18 @@
 			
 			 <!---RM Customer			 --->
 			<TMPL_IF USER_TKM></TMPL_IF> 
+
+			<!--- Junior Physio -->
+			<TMPL_IF USER_JPY></TMPL_IF>
+			
+			<!--- Customer -->
+			<TMPL_IF USER_CUS></TMPL_IF>
 			 
 		    
 		     <TMPL_UNLESS NO_USER>
 			 
-				<li data-id="fbn-menu-divider"><a>|</a></li>
-				<li data-id="fbn-menu-user-all">			    
+				<li><a>|</a></li>
+				<li>			    
 			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
 				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>
 				<span class="caret"></span>
@@ -294,7 +300,7 @@
 				</li>
 				
 			   <li>
-			      <a href="JavaScript:get_out();" data-id="fbn-menu-logout" class="txt_clr_red"
+			      <a href="JavaScript:get_out();" class="txt_clr_red"
 				 rel="txtTooltip" title="Log Out" data-toggle="tooltip" data-placement="bottom"
 				 >
 			      
@@ -545,8 +551,8 @@
 		     
 		    
 		    <TMPL_UNLESS NO_USER>
-				<li data-id="fbn-menu-divider"><a>|</a></li>
-				<li data-id="fbn-menu-user-all">			    
+				<li><a>|</a></li>
+				<li>			    
 			    <a href="#" class="dropdown-toggle hint--left" data-hint="Manage your Profile" data-toggle="dropdown" role="button" aria-expanded="false">
 				<span class="glyphicon glyphicon-cog clr_gray_a more txt_size_18" aria-hidden="true"></span>
 				<span class="caret"></span>
@@ -574,7 +580,7 @@
 			 
 				
 			   <li>
-			      <a href="JavaScript:get_out();" class="txt_clr_red" data-id="fbn-menu-logout"
+			      <a href="JavaScript:get_out();" class="txt_clr_red"
 				 rel="txtTooltip" title="Log Out" data-toggle="tooltip" data-placement="bottom"
 				 >
 			      
