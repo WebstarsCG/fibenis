@@ -1055,6 +1055,7 @@
 												
 												$temp['left_length']   = $lv['allow_matches'][2];												
 												$temp['right_length']   = $lv['allow_matches'][4];
+												$temp['max_length']     = ($lv['allow_matches'][2]+$lv['allow_matches'][4]+1);
 										
 										}else if(@$lv['allow_matches'][2]){
 												
