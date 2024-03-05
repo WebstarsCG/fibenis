@@ -165,7 +165,10 @@
                     $rdsql->exec_query("UPDATE
                                                 user_role_permission
                                         SET
-                                                user_permission_ids=(SELECT ".$DC->group_concat('user_permission_id')." FROM user_role_permission_matrix WHERE user_role_id=$user_role_id)","User Role Permission Matrix Combine");
+                                                user_permission_ids=(SELECT ".$DC->group_concat('user_permission_id')." FROM user_role_permission_matrix as urpm WHERE urpm.user_role_id=$user_role_id)
+                                        WHERE
+                                                user_role_id = $user_role_id        
+                                        ","User Role Permission Matrix Combine");
                     
                 } // if user role permission                
                 
