@@ -164,6 +164,16 @@
 			).then(
 				(html)=>{
 
+					// post to parent
+					if(html.post_to_parent){
+							window.parent.postMessage(html.post_to_parent);
+					} 
+
+					// call for lnsert_action
+					if(html.call_last_insert_action){
+							f_series.lastInsertAction(html.call_last_insert_action);
+					}
+
 					if(html.hasOwnProperty('redirect')){
 							document.location.href=html.redirect;
 					}else{
@@ -173,15 +183,6 @@
 
 						G.bs_alert_success(html.message,'ADD','<TMPL_VAR TITLE>');
 						
-						// post to parent
-						if(html.post_to_parent){
-								window.parent.postMessage(html.post_to_parent);
-						} // posts tp parent
-
-						if(html.call_last_insert_action){
-								f_series.lastInsertAction(html.call_last_insert_action);
-						}
-
 						if(G.$('primary_id').value.length==0){
 							document.getElementById("PUB_A").reset();
 						}
