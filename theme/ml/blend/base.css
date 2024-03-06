@@ -850,13 +850,26 @@ ul.post-meta li a:hover {
 	.marquee a:hover{
 	    color          : #fffcfd;
 	    text-decoration: none; 
+	}	    
+	
+	.modal-backdrop.in{
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		background-color: #000;
+		width: 100%;
+		height: 100%;
+		display: block;
+		z-index: 100;
 	}
 	    
 	#my-message-box[style*='block'],
 	#my-message-box[style*='flex'],
-	#my-message-box[style*='flex'] div.modal-sm{
-		display:flex !important;
+	#my-message-box[style*='flex'] div.modal-sm,
+	.modal.in{
 		align-items: center;
+		display:flex !important;																										
 		justify-content: center;
 	}
 
